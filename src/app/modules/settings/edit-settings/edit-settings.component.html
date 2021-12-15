@@ -1,0 +1,125 @@
+<form class="form-group odd" id="name_field_box">
+  <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ settingsI18n?.nameI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
+    <input
+      [(ngModel)]="model.name"
+      id="field-name"
+      value="{{ model.name }}"
+      name="name"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+    <br />
+  </div>
+
+  <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ settingsI18n?.telephoneI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
+    <input
+      [(ngModel)]="model.telephone"
+      id="field-name"
+      value="{{ model.telephone }}"
+      name="telephone"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+    <br />
+  </div>
+
+  <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ settingsI18n?.addressI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
+    <input
+      [(ngModel)]="model.address"
+      id="field-name"
+      value="{{ model.address }}"
+      name="address"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+    <br />
+  </div>
+
+  <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ settingsI18n?.faxI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
+    <input
+      [(ngModel)]="model.fax"
+      id="field-name"
+      value="{{ model.fax }}"
+      name="fax"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+    <br />
+  </div>
+
+  <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ settingsI18n?.langI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
+    <input
+      [(ngModel)]="model.lang"
+      id="field-name"
+      value="{{ model.lang }}"
+      name="lang"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+    <br />
+  </div>
+  <button (click)="edit()" type="button" class="btn btn-info">
+    <i class="fas fa-save"></i>
+    {{ settingsI18n?.editButtonI18n }}
+  </button>
+</form>

@@ -1,0 +1,176 @@
+<form class="form-group odd" id="category_name_field_box">
+  <!-- book  -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ requestedBookI18n?.bookI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [(ngModel)]="model.book"
+      value="{{ model.book }}"
+      id="field-category_name"
+      name="book"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+  </div>
+
+  <!-- writer  -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ requestedBookI18n?.writerI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [(ngModel)]="model.writer"
+      value="{{ model.writer }}"
+      id="field-category_name"
+      name="writer"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+  </div>
+
+  <!-- category  -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ requestedBookI18n?.categoryI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [(ngModel)]="model.category"
+      value="{{ model.category }}"
+      id="field-category_name"
+      name="category"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+  </div>
+
+  <!-- edition  -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ requestedBookI18n?.editionI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [(ngModel)]="model.edition"
+      value="{{ model.edition }}"
+      id="field-category_name"
+      name="edition"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+  </div>
+
+  <!-- note  -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ requestedBookI18n?.noteI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [(ngModel)]="model.note"
+      value="{{ model.note }}"
+      id="field-category_name"
+      name="note"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+  </div>
+
+  <!-- member  -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ requestedBookI18n?.memberI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [(ngModel)]="model.member"
+      value="{{ model.member }}"
+      id="field-category_name"
+      name="member"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+  </div>
+
+  <br />
+  <!-- edit -->
+  <button (click)="edit()" type="button" class="btn btn-info">
+    <i class="fas fa-save"></i>
+    {{ requestedBookI18n?.editButtonI18n }}
+  </button>
+</form>

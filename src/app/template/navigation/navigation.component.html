@@ -1,0 +1,207 @@
+<ul
+  class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+  id="accordionSidebar"
+>
+  <a
+    class="sidebar-brand d-flex align-items-center justify-content-center"
+    style="background-color: white"
+  >
+    <div class="sidebar-brand-icon rotate-n-15"></div>
+    <div class="sidebar-brand-text mx-3">
+      <img style="object-fit: cover" src="assets/img/logo-admin.png" />
+    </div>
+  </a>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider my-0" />
+
+  <!-- Nav Item - Dashboard -->
+  <li class="nav-item active">
+    <a routerLinkActive="active" class="nav-link" routerLink="/dashboard">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>{{ menuI18n?.dashboardI18n }}</span></a
+    >
+  </li>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider" />
+
+  <!-- Heading 
+  <div class="sidebar-heading">Interface</div>-->
+
+  <!-- Nav Item - Pages Collapse Menu -->
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#collapseTwo"
+      aria-expanded="true"
+      aria-controls="collapseTwo"
+    >
+      <i class="fas fa-fw fa-book"></i>
+      <span>{{ menuI18n?.booksMenuI18n }}</span>
+    </a>
+    <div
+      id="collapseTwo"
+      class="collapse"
+      aria-labelledby="headingTwo"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">{{ menuI18n?.booksMenuI18n }} :</h6>
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/category"
+          >{{ menuI18n?.categoriesI18n }}</a
+        >
+        <a routerLinkActive="active" class="collapse-item" routerLink="/book">{{
+          menuI18n?.booksI18n
+        }}</a>
+        <!-- <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/archive"
+          >{{ menuI18n?.archivesI18n }}</a
+        >-->
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/requested-book"
+          >{{ menuI18n?.requesredBooksI18n }}</a
+        >
+        <!-- <a routerLinkActive="active" class="collapse-item" routerLink="/ebook"
+          >EBook</a-->
+      </div>
+    </div>
+  </li>
+
+  <!-- Nav Item - Utilities Collapse Menu -->
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#membreUtilities"
+      aria-expanded="true"
+      aria-controls="membreUtilities"
+    >
+      <i class="fas fa-fw fa-users"></i>
+      <span>{{ menuI18n?.membersI18n }}</span>
+    </a>
+    <div
+      id="membreUtilities"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">{{ menuI18n?.membersI18n }}</h6>
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/type-member"
+          >{{ menuI18n?.typeMembersI18n }}</a
+        >
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/member"
+          >{{ menuI18n?.membersI18n }}</a
+        >
+      </div>
+    </div>
+  </li>
+  <hr class="sidebar-divider" />
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#circulation"
+      aria-expanded="true"
+      aria-controls="circulation"
+    >
+      <i class="fas fa-fw fa-users"></i>
+      <span>{{ menuI18n?.circulationsMenuI18n }}</span>
+    </a>
+    <div
+      id="circulation"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">{{ menuI18n?.circulationsMenuI18n }}</h6>
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/circulation"
+          >{{ menuI18n?.circulationsI18n }}
+        </a>
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/circulation-status"
+          >{{ menuI18n?.circulationStatusI18n }}</a
+        >
+      </div>
+    </div>
+  </li>
+
+  <!-- Nav Item - Utilities Collapse Menu 
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#notificationUtilities"
+      aria-expanded="true" aria-controls="notificationUtilities">
+      <i class="fas fa-fw fa-bell"></i>
+      <span>Notifications</span>
+    </a>
+    <div id="notificationUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Notifications:</h6>
+        <a routerLinkActive="active" class="collapse-item" routerLink="/configurationsms">Paramètres SMS</a>
+      </div>
+    </div>
+  </li>
+-->
+  <hr class="sidebar-divider" />
+  <li class="nav-item">
+    <a routerLinkActive="active" class="nav-link" href="#" routerLink="/writer">
+      <i class="fas fa-fw fa-address-book"></i>
+      <span>{{ menuI18n?.weitersI18n }}</span>
+    </a>
+  </li>
+
+  <!-- Nav Item - Utilities Collapse Menu -->
+  <li class="nav-item">
+    <a routerLinkActive="active" class="nav-link" routerLink="/publisher">
+      <i class="fas fa-fw fa-glasses"></i>
+      <span>{{ menuI18n?.publishersI18n }}</span>
+    </a>
+  </li>
+  <hr class="sidebar-divider" />
+  <li class="nav-item">
+    <a routerLinkActive="active" class="nav-link" routerLink="/settings">
+      <i class="fas fa-fw fa-glasses"></i>
+      <span>{{ menuI18n?.settingsI18n }}</span>
+    </a>
+  </li>
+  <!--<div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+  </div>
+   Nav Item - Utilities Collapse Menu 
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#rapportUtilities" aria-expanded="true"
+      aria-controls="rapportUtilities">
+      <i class="fas fa-fw fa-comment-dollar"></i>
+      <span>Rapport</span>
+    </a>
+    <div id="rapportUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Rapport:</h6>
+        <a routerLinkActive="active" class="collapse-item" routerLink="/penalty">Amande</a>
+      </div>
+    </div>
+  </li>
+--></ul>

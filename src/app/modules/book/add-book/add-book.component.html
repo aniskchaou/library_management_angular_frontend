@@ -1,0 +1,287 @@
+<form class="form-horizontal" [formGroup]="bookForm">
+  <div class="box-body">
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit">{{ bookI18n?.isbnI18n }} </font>
+        </font>
+      </label>
+      <div class="col-md-12">
+        <input
+          [ngClass]="{ 'is-invalid': submitted && f.isbn.errors }"
+          formControlName="isbn"
+          name="isbn"
+          value=""
+          class="form-control"
+          type="text"
+        />
+        <div class="alert alert-danger" *ngIf="submitted && f.isbn.errors">
+          {{ msg.validationMessage.isbn }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit"
+            >{{ bookI18n?.titleI18n }} *
+          </font>
+        </font>
+      </label>
+      <div class="col-md-12">
+        <input
+          [ngClass]="{ 'is-invalid': submitted && f.title.errors }"
+          formControlName="title"
+          name="title"
+          value=""
+          class="form-control"
+          type="text"
+        />
+        <div class="alert alert-danger" *ngIf="submitted && f.title.errors">
+          {{ msg.validationMessage.title }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit"
+            >{{ bookI18n?.editionI18n }} *
+          </font>
+        </font>
+      </label>
+      <div class="col-md-12">
+        <input
+          [ngClass]="{ 'is-invalid': submitted && f.edition.errors }"
+          formControlName="edition"
+          name="edition"
+          value=""
+          class="form-control"
+          type="text"
+        />
+        <div class="alert alert-danger" *ngIf="submitted && f.edition.errors">
+          {{ msg.validationMessage.edition }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit"
+            >{{ bookI18n?.edition_yearI18n }}
+          </font>
+        </font>
+      </label>
+      <div class="col-md-12">
+        <input
+          [ngClass]="{ 'is-invalid': submitted && f.edition_year.errors }"
+          formControlName="edition_year"
+          name="edition_year"
+          class="form-control"
+          type="number"
+        />
+        <div
+          class="alert alert-danger"
+          *ngIf="submitted && f.edition_year.errors"
+        >
+          {{ msg.validationMessage.edition_year }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit"
+            >{{ bookI18n?.publisherI18n }}
+          </font>
+        </font>
+      </label>
+      <div class="col-md-12">
+        <select
+          [ngClass]="{ 'is-invalid': submitted && f.publisher.errors }"
+          formControlName="publisher"
+          name="publisher"
+          value=""
+          class="form-control"
+        >
+          <option *ngFor="let c of publishers$" value="{{ c.id }}">
+            {{ c.name }}
+          </option>
+        </select>
+        <div class="alert alert-danger" *ngIf="submitted && f.publisher.errors">
+          {{ msg.validationMessage.publisher }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit"
+            >{{ bookI18n?.authorI18n }}
+          </font>
+        </font>
+      </label>
+      <div class="col-md-12">
+        <select
+          [ngClass]="{ 'is-invalid': submitted && f.writer.errors }"
+          formControlName="writer"
+          name="editor"
+          value=""
+          class="form-control"
+        >
+          <option *ngFor="let c of writers$" value="{{ c.id }}">
+            {{ c.name }}
+          </option>
+        </select>
+        <div class="alert alert-danger" *ngIf="submitted && f.writer.errors">
+          {{ msg.validationMessage.writer }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit"
+            >{{ bookI18n?.categoryI18n }}
+          </font>
+        </font>
+      </label>
+      <div class="col-md-12">
+        <select
+          [ngClass]="{ 'is-invalid': submitted && f.category.errors }"
+          formControlName="category"
+          name="category"
+          value=""
+          class="form-control"
+        >
+          <option *ngFor="let c of categories$" value="{{ c.id }}">
+            {{ c.category_name }}
+          </option>
+        </select>
+        <div class="alert alert-danger" *ngIf="submitted && f.category.errors">
+          {{ msg.validationMessage.category }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit"
+            >{{ bookI18n?.publishing_yearI18n }}
+          </font>
+        </font>
+      </label>
+      <div class="col-md-12">
+        <input
+          [ngClass]="{ 'is-invalid': submitted && f.publishing_year.errors }"
+          formControlName="publishing_year"
+          name="publishing_year"
+          value=""
+          class="form-control"
+          type="number"
+        />
+        <div
+          class="alert alert-danger"
+          *ngIf="submitted && f.publishing_year.errors"
+        >
+          {{ msg.validationMessage.publishing_year }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit"
+            >{{ bookI18n?.publication_placeI18n }}
+          </font>
+        </font>
+      </label>
+      <div class="col-md-12">
+        <input
+          [ngClass]="{ 'is-invalid': submitted && f.publication_place.errors }"
+          formControlName="publication_place"
+          name="publication_place"
+          value=""
+          class="form-control"
+          type="text"
+        />
+        <div
+          class="alert alert-danger"
+          *ngIf="submitted && f.publication_place.errors"
+        >
+          {{ msg.validationMessage.publication_place }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit"
+            >{{ bookI18n?.number_of_pagesI18n }}
+          </font>
+        </font>
+      </label>
+      <div class="col-md-12">
+        <input
+          [ngClass]="{ 'is-invalid': submitted && f.number_of_pages.errors }"
+          formControlName="number_of_pages"
+          name="number_of_pages"
+          value=""
+          class="form-control"
+          type="number"
+        />
+
+        <div
+          class="alert alert-danger"
+          *ngIf="submitted && f.number_of_pages.errors"
+        >
+          <div *ngIf="submitted && f.number_of_pages.errors.required">
+            {{ msg.validationMessage.number_of_pages }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit"
+            >{{ bookI18n?.notesI18n }}
+          </font>
+        </font>
+      </label>
+      <div class="col-md-12">
+        <input
+          [ngClass]="{ 'is-invalid': submitted && f.notes.errors }"
+          formControlName="notes"
+          name="notes"
+          value=""
+          class="form-control"
+          type="text"
+        />
+        <div class="alert alert-danger" *ngIf="submitted && f.notes.errors">
+          {{ msg.validationMessage.notes }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.box-body -->
+  <div class="box-footer">
+    <div class="form-group">
+      <button (click)="add()" type="button" class="btn btn-info">
+        <i class="fas fa-save"></i>
+        {{ bookI18n?.addButtonI18n }}
+      </button>
+    </div>
+  </div>
+  <!-- /.box-footer -->
+</form>

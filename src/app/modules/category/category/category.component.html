@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div *ngIf="loading; else loaded">
+    <app-loading></app-loading>
+  </div>
+
+  <ng-template #loaded>
+    <h1 class="h3 mb-2 text-gray-800">{{ categoryI18n?.allTitleI18n }}</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <!-- add category -->
+        <app-add-button [itemI18n]="categoryI18n"></app-add-button>
+
+        <div class="table-responsive">
+          <!-- category list -->
+          <app-category-list
+            (editEvent)="edit($event)"
+            (deleteEvent)="delete($event)"
+            [categories]="categorys$"
+            [categoryI18n]="categoryI18n"
+          ></app-category-list>
+
+          <!-- modal category -->
+          <app-modal-category
+            [categoryI18n]="categoryI18n"
+            [id]="id"
+          ></app-modal-category>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

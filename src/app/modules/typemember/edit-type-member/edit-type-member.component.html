@@ -1,0 +1,46 @@
+<form
+  method="post"
+  class="form-horizontal"
+  id="crudForm"
+  autocomplete="off"
+  accept-charset="utf-8"
+>
+  <div class="form-div">
+    <div class="form-group odd" id="member_type_name_field_box">
+      <label
+        class="col-sm-3 control-label"
+        for="name"
+        id="member_type_name_display_as_box"
+      >
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit">
+            {{ typeMemberI18n?.member_type_nameI18n }}
+          </font> </font
+        ><span class="required">
+          <font style="vertical-align: inherit">
+            <font style="vertical-align: inherit">*</font>
+          </font>
+        </span>
+      </label>
+      <div class="col-sm-9 col-md-6 col-lg-6" id="name">
+        <input
+          id="field-member_type_name"
+          name="name"
+          type="text"
+          class="form-control"
+          maxlength="99"
+          [(ngModel)]="model.name"
+          value="{{ model.name }}"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="pDiv">
+    <button (click)="edit()" type="button" class="btn btn-info">
+      <i class="fas fa-save"></i>
+      {{ typeMemberI18n?.editButtonI18n }}
+    </button>
+
+    <div class="clear"></div>
+  </div>
+</form>

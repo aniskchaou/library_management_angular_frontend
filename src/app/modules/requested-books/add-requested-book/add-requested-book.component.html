@@ -1,0 +1,164 @@
+<form
+  class="form-group odd"
+  id="category_name_field_box"
+  [formGroup]="requestedBookForm"
+>
+  <!-- book -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ requestedBookI18n?.bookI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <!-- input select field-->
+    <select
+      [ngClass]="{ 'is-invalid': submitted && f.book.errors }"
+      formControlName="book"
+      id="field-category_name"
+      name="book"
+      class="form-control"
+    >
+      <option *ngFor="let c of books$" value="{{ c.id }}">
+        {{ c.title }}
+      </option>
+    </select>
+
+    <!-- book validation-->
+    <div *ngIf="submitted && f.book.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.book.errors.required">
+        {{ msg.validationMessage.book }}
+      </div>
+    </div>
+  </div>
+
+  <!-- writer -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ requestedBookI18n?.writerI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <!-- writer -->
+    <select
+      [ngClass]="{ 'is-invalid': submitted && f.writer.errors }"
+      formControlName="writer"
+      id="field-category_name"
+      name="writer"
+      class="form-control"
+    >
+      <option *ngFor="let c of writers$" value="{{ c.id }}">
+        {{ c.name }}
+      </option>
+    </select>
+    <!-- writer validation -->
+    <div *ngIf="submitted && f.writer.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.writer.errors.required">
+        {{ msg.validationMessage.writer }}
+      </div>
+    </div>
+  </div>
+
+  <!-- category -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ requestedBookI18n?.ctagoryI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <!-- category select field -->
+    <select
+      [ngClass]="{ 'is-invalid': submitted && f.ctagory.errors }"
+      formControlName="ctagory"
+      id="field-category_name"
+      name="ctagory"
+      class="form-control"
+    >
+      <option *ngFor="let c of categories$" value="{{ c.id }}">
+        {{ c.category_name }}
+      </option>
+    </select>
+
+    <!-- category validation-->
+    <div *ngIf="submitted && f.ctagory.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.ctagory.errors.required">
+        {{ msg.validationMessage.ctagory }}
+      </div>
+    </div>
+  </div>
+
+  <!-- member -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ requestedBookI18n?.memberI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <!-- member select field -->
+    <select
+      [ngClass]="{ 'is-invalid': submitted && f.member.errors }"
+      formControlName="member"
+      id="field-category_name"
+      name="member"
+      class="form-control"
+    >
+      <option *ngFor="let m of members$" value="{{ m.id }}">
+        {{ m.name }}
+      </option>
+    </select>
+
+    <!-- member validation-->
+    <div *ngIf="submitted && f.member.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.member.errors.required">
+        {{ msg.validationMessage.member }}
+      </div>
+    </div>
+  </div>
+
+  <br />
+  <!-- add button -->
+  <button (click)="add()" type="button" class="btn btn-info">
+    <i class="fas fa-save"></i>
+    {{ requestedBookI18n?.addButtonI18n }}
+  </button>
+</form>

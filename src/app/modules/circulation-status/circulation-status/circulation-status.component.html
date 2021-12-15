@@ -1,0 +1,25 @@
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800" appStatus defaultColor="red">
+    {{ circulationStatusI18n$.allTitleI18n }}
+  </h1>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <div class="table-responsive">
+        <app-add-button [itemI18n]="circulationStatusI18n$"></app-add-button>
+
+        <app-circulation-status-list
+          (idEvent)="edit($event)"
+          [circulationStatus]="circulationStatus$"
+          [circulationStatusI18n]="circulationStatusI18n$"
+        ></app-circulation-status-list>
+        <app-circulation-status-modal
+          [circulationStatusI18n]="circulationStatusI18n$"
+          [id]="id"
+        ></app-circulation-status-modal>
+      </div>
+    </div>
+  </div>
+</div>

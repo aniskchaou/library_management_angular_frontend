@@ -1,0 +1,31 @@
+<form class="form-group odd" id="name_field_box">
+  <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ publisherI18n?.editTitleI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
+    <!-- publisher name -->
+    <input
+      [(ngModel)]="model.name"
+      id="field-name"
+      value="{{ model.name }}"
+      name="name"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+    <br />
+  </div>
+  <!-- edit publisher -->
+  <button (click)="edit()" type="button" class="btn btn-info">
+    <i class="fas fa-save"></i>
+    {{ publisherI18n?.editButtonI18n }}
+  </button>
+</form>

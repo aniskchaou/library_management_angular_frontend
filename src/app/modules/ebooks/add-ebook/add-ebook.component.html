@@ -1,0 +1,170 @@
+<form
+  class="form-group odd"
+  id="category_name_field_box"
+  [formGroup]="categoryForm"
+>
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit"> isbn </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.isbn.errors }"
+      formControlName="isbn"
+      id="field-category_name"
+      name="category_name"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+
+    <div *ngIf="submitted && f.isbn.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.isbn.errors.required">
+        {{ msg.validationMessage.isbn }}
+      </div>
+    </div>
+  </div>
+
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit"> name </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+      formControlName="name"
+      id="field-category_name"
+      name="category_name"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+
+    <div *ngIf="submitted && f.name.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.name.errors.required">
+        {{ msg.validationMessage.name }}
+      </div>
+    </div>
+  </div>
+
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit"> edition </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.edition.errors }"
+      formControlName="edition"
+      id="field-category_name"
+      name="category_name"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+
+    <div *ngIf="submitted && f.edition.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.edition.errors.required">
+        {{ msg.validationMessage.edition }}
+      </div>
+    </div>
+  </div>
+
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit"> language </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.language.errors }"
+      formControlName="language"
+      id="field-category_name"
+      name="language"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+
+    <div *ngIf="submitted && f.language.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.language.errors.required">
+        {{ msg.validationMessage.language }}
+      </div>
+    </div>
+  </div>
+
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit"> author </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.author.errors }"
+      formControlName="author"
+      id="field-category_name"
+      name="author"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+
+    <div *ngIf="submitted && f.author.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.author.errors.required">
+        {{ msg.validationMessage.author }}
+      </div>
+    </div>
+  </div>
+
+  <br />
+  <button (click)="add()" type="button" class="btn btn-info">
+    <i class="fas fa-save"></i>
+    Sauvegarder
+  </button>
+  <button (click)="reset()" type="button" class="btn btn-danger">
+    <i class="fas fa-times"></i>
+    Annuler
+  </button>
+</form>

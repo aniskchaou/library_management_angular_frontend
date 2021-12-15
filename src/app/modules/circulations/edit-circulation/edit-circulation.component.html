@@ -1,0 +1,275 @@
+<form class="form-group odd" id="category_name_field_box" *ngIf="model">
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.memberNameI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <select
+      [(ngModel)]="model.memberName"
+      value="{{ model.memberName }}"
+      id="field-category_name"
+      name="memberName"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    >
+      <option value="{{ model.memberName }}" *ngFor="let c of memberNames$">
+        {{ c.name }}
+      </option>
+    </select>
+  </div>
+
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.bookNameI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <select
+      [(ngModel)]="model.bookName"
+      value="{{ model.bookName }}"
+      id="field-category_name"
+      name="bookName"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    >
+      <option value="{{ model.bookName }}" *ngFor="let c of bookNames$">
+        {{ c.title }}
+      </option>
+    </select>
+  </div>
+
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.writerI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <select
+      [(ngModel)]="model.writer"
+      value="{{ model.writer }}"
+      id="field-category_name"
+      name="writer"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    >
+      <option value="{{ model.writer }}" *ngFor="let c of writers$">
+        {{ c.name }}
+      </option>
+    </select>
+  </div>
+
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.issueDateI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [(ngModel)]="model.issueDate"
+      value="{{ model.issueDate }}"
+      id="field-category_name"
+      name="issueDate"
+      class="form-control"
+      type="date"
+      maxlength="99"
+    />
+  </div>
+
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.lastDateI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [(ngModel)]="model.lastDate"
+      value="{{ model.lastDate }}"
+      id="field-category_name"
+      name="lastDate"
+      class="form-control"
+      type="date"
+      maxlength="99"
+    />
+  </div>
+
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.toReturnI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [(ngModel)]="model.toReturn"
+      value="{{ model.toReturn }}"
+      id="field-category_name"
+      name="toReturn"
+      class="form-control"
+      type="date"
+      maxlength="99"
+    />
+  </div>
+
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.categoryI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [(ngModel)]="model.category_name"
+      value="{{ model.category_name }}"
+      id="field-category_name"
+      name="category_name"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+  </div>
+
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.penaltyI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [(ngModel)]="model.penalty"
+      value="{{ model.penalty }}"
+      id="field-category_name"
+      name="penalty"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+  </div>
+
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.returnStatusI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <select
+      [(ngModel)]="model.returnStatus"
+      value="{{ model.returnStatus }}"
+      id="field-category_name"
+      name="returnStatus"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    >
+      <option value="{{ model.returnStatus }}" *ngFor="let c of returnStatus$">
+        {{ c.name }}
+      </option>
+    </select>
+  </div>
+
+  <br />
+  <button (click)="edit()" type="button" class="btn btn-info">
+    <i class="fas fa-save"></i>
+    {{ circulationI18n?.editButtonI18n }}
+  </button>
+</form>

@@ -1,0 +1,6 @@
+.navbar-nav li > .active{
+    font-weight: bold;
+    font-size:large;
+    background-color: #fafafa;
+    color: #4e73df!important;
+}

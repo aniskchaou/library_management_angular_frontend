@@ -1,0 +1,329 @@
+<form
+  class="form-group odd"
+  id="category_name_field_box"
+  [formGroup]="circulationForm"
+>
+  <!-- membre name-->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.memberNameI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <select
+      [ngClass]="{ 'is-invalid': submitted && f.memberName.errors }"
+      formControlName="memberName"
+      id="field-category_name"
+      name="memberName"
+      class="form-control"
+    >
+      <option *ngFor="let c of memberNames$" value="{{ c.id }}">
+        {{ c.name }}
+      </option>
+    </select>
+
+    <div *ngIf="submitted && f.memberName.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.memberName.errors.required">
+        {{ msg.validationMessage.memberName }}
+      </div>
+    </div>
+  </div>
+  <!-- book name-->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.bookNameI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <select
+      [ngClass]="{ 'is-invalid': submitted && f.bookName.errors }"
+      formControlName="bookName"
+      id="field-category_name"
+      name="bookName"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    >
+      <option *ngFor="let c of bookNames$" value="{{ c.id }}">
+        {{ c.title }}
+      </option>
+    </select>
+
+    <div *ngIf="submitted && f.bookName.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.bookName.errors.required">
+        {{ msg.validationMessage.bookName }}
+      </div>
+    </div>
+  </div>
+  <!-- writer -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.writerI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <select
+      [ngClass]="{ 'is-invalid': submitted && f.writer.errors }"
+      formControlName="writer"
+      id="field-category_name"
+      name="writer"
+      class="form-control"
+    >
+      <option *ngFor="let c of writers$" value="{{ c.id }}">
+        {{ c.name }}
+      </option>
+    </select>
+
+    <div *ngIf="submitted && f.writer.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.writer.errors.required">
+        {{ msg.validationMessage.writer }}
+      </div>
+    </div>
+  </div>
+  <!-- issue date -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.issueDateI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.issueDate.errors }"
+      formControlName="issueDate"
+      id="field-category_name"
+      name="issueDate"
+      class="form-control"
+      type="date"
+      maxlength="99"
+    />
+
+    <div *ngIf="submitted && f.issueDate.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.issueDate.errors.required">
+        {{ msg.validationMessage.issueDate }}
+      </div>
+    </div>
+  </div>
+  <!-- last date -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.lastDateI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.lastDate.errors }"
+      formControlName="lastDate"
+      id="field-category_name"
+      name="lastDate"
+      class="form-control"
+      type="date"
+      maxlength="99"
+    />
+
+    <div *ngIf="submitted && f.lastDate.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.lastDate.errors.required">
+        {{ msg.validationMessage.lastDate }}
+      </div>
+    </div>
+  </div>
+  <!-- to return -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.toReturnI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.toReturn.errors }"
+      formControlName="toReturn"
+      id="field-category_name"
+      name="toReturn"
+      class="form-control"
+      type="date"
+      maxlength="99"
+    />
+
+    <div *ngIf="submitted && f.toReturn.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.toReturn.errors.required">
+        {{ msg.validationMessage.toReturn }}
+      </div>
+    </div>
+  </div>
+
+  <!-- return date -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.returnDateI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.returnDate.errors }"
+      formControlName="returnDate"
+      id="field-category_name"
+      name="category_name"
+      class="form-control"
+      type="date"
+      maxlength="99"
+    />
+
+    <div *ngIf="submitted && f.returnDate.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.returnDate.errors.required">
+        {{ msg.validationMessage.returnDate }}
+      </div>
+    </div>
+  </div>
+  <!-- penalty -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.penaltyI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.penalty.errors }"
+      formControlName="penalty"
+      id="field-category_name"
+      name="penalty"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+
+    <div *ngIf="submitted && f.penalty.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.penalty.errors.required">
+        {{ msg.validationMessage.penalty }}
+      </div>
+    </div>
+  </div>
+  <!-- return status -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationI18n?.returnStatusI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <select
+      [ngClass]="{ 'is-invalid': submitted && f.returnStatus.errors }"
+      formControlName="returnStatus"
+      id="field-category_name"
+      name="returnStatus"
+      class="form-control"
+    >
+      <option *ngFor="let c of returnStatus$" value="{{ c.id }}">
+        {{ c.name }}
+      </option>
+    </select>
+    <div *ngIf="submitted && f.returnStatus.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.returnStatus.errors.required">
+        {{ msg.validationMessage.returnStatus }}
+      </div>
+    </div>
+  </div>
+
+  <br />
+  <!-- add button -->
+  <button (click)="add()" type="button" class="btn btn-info">
+    <i class="fas fa-save"></i>
+    {{ circulationI18n?.addButtonI18n }}
+  </button>
+</form>

@@ -1,0 +1,33 @@
+<form class="form-group odd" id="category_name_field_box">
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationStatusI18n?.nameI18n }}</font
+      > </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [(ngModel)]="model.name"
+      value="{{ model.category_name }}"
+      id="field-category_name"
+      name="category_name"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+    <br />
+    <button (click)="edit()" type="button" class="btn btn-info">
+      <i class="fas fa-save"></i>
+      {{ circulationStatusI18n?.addButtonI18n }}
+    </button>
+  </div>
+</form>

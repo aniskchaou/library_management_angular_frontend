@@ -1,0 +1,44 @@
+<form
+  class="form-group odd"
+  id="category_name_field_box"
+  [formGroup]="circulationStatusForm"
+>
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ circulationStatusI18n?.nameI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+      formControlName="name"
+      id="field-category_name"
+      name="name"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+
+    <div *ngIf="submitted && f.name.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.name.errors.required">
+        {{ msg.validationMessage.name }}
+      </div>
+    </div>
+
+    <br />
+    <button (click)="add()" type="button" class="btn btn-info">
+      <i class="fas fa-save"></i>
+      {{ circulationStatusI18n?.createButtonI18n }}
+    </button>
+  </div>
+</form>

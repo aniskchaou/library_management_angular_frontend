@@ -1,0 +1,24 @@
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">{{ memberI18n.allTitleI18n }}</h1>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <div class="table-responsive">
+        <app-add-button [itemI18n]="memberI18n"></app-add-button>
+        <app-member-list
+          (editEvent)="edit($event)"
+          (viewEvent)="view($event)"
+          (deleteEvent)="delete($event)"
+          [members]="members$"
+          [memberI18n]="memberI18n"
+        ></app-member-list>
+        <app-member-modal
+          [memberI18n]="memberI18n"
+          [id]="id"
+        ></app-member-modal>
+      </div>
+    </div>
+  </div>
+</div>

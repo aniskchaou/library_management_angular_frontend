@@ -1,0 +1,250 @@
+<form
+  method="post"
+  class="form-horizontal"
+  id="crudForm"
+  autocomplete="off"
+  enctype="multipart/form-data"
+  accept-charset="utf-8"
+>
+  <div class="form-div">
+    <div class="form-group odd" id="name_field_box">
+      <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit">
+            {{ memberI18n.nameI18n }}
+          </font> </font
+        ><span class="required">
+          <font style="vertical-align: inherit">
+            <font style="vertical-align: inherit">*</font>
+          </font>
+        </span>
+      </label>
+      <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
+        <input
+          class="form-control"
+          id="field-name"
+          name="name"
+          type="text"
+          [(ngModel)]="model.name"
+          value="{{ model.name }}"
+          maxlength="99"
+        />
+      </div>
+    </div>
+
+    <div class="form-group even" id="user_type_field_box">
+      <label
+        class="col-sm-3 control-label"
+        for="name"
+        id="user_type_display_as_box"
+      >
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit">
+            {{ memberI18n.MemberI18n }}
+          </font> </font
+        ><span class="required">
+          <font style="vertical-align: inherit">
+            <font style="vertical-align: inherit">*</font>
+          </font>
+        </span>
+      </label>
+      <div class="col-sm-9 col-md-6 col-lg-6" id="user_type_input_box">
+        <select class="form-control" name="user_type" id="field-user_type">
+          <option value=""></option>
+          <option value="Member" selected="yes">
+            <font style="vertical-align: inherit">
+              <font style="vertical-align: inherit">Membre</font>
+            </font>
+          </option>
+          <option value="Admin">
+            <font style="vertical-align: inherit">
+              <font style="vertical-align: inherit">Administrateur</font>
+            </font>
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group odd" id="type_id_field_box">
+      <label
+        class="col-sm-3 control-label"
+        for="name"
+        id="type_id_display_as_box"
+      >
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit">
+            {{ memberI18n.type_idI18n }}
+          </font>
+        </font>
+      </label>
+      <div class="col-sm-9 col-md-6 col-lg-6" id="type_id_input_box">
+        <select class="form-control" id="field-type_id" name="type_id">
+          <option value=""></option>
+          <option value="150">
+            <font style="vertical-align: inherit">
+              <font style="vertical-align: inherit">Professeur</font>
+            </font>
+          </option>
+          <option value="151">
+            <font style="vertical-align: inherit">
+              <font style="vertical-align: inherit">Etudiant</font>
+            </font>
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group even" id="email_field_box">
+      <label
+        class="col-sm-3 control-label"
+        for="name"
+        id="email_display_as_box"
+      >
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit">
+            {{ memberI18n.emailI18n }}
+          </font> </font
+        ><span class="required">
+          <font style="vertical-align: inherit">
+            <font style="vertical-align: inherit">*</font>
+          </font>
+        </span>
+      </label>
+      <div class="col-sm-9 col-md-6 col-lg-6" id="email_input_box">
+        <input
+          class="form-control"
+          id="field-email"
+          name="email"
+          type="text"
+          [(ngModel)]="model.email"
+          value="{{ model.email }}"
+          maxlength="250"
+        />
+        <!-- <span class="red"></span> -->
+      </div>
+    </div>
+
+    <div class="form-group odd" id="mobile_field_box">
+      <label
+        class="col-sm-3 control-label"
+        for="name"
+        id="mobile_display_as_box"
+      >
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit">
+            {{ memberI18n.mobileI18n }}
+          </font> </font
+        ><span class="required">
+          <font style="vertical-align: inherit">
+            <font style="vertical-align: inherit">*</font>
+          </font>
+        </span>
+      </label>
+      <div class="col-sm-9 col-md-6 col-lg-6" id="mobile_input_box">
+        <input
+          class="form-control"
+          id="field-mobile"
+          name="mobile"
+          type="text"
+          [(ngModel)]="model.mobile"
+          maxlength="100"
+          value="{{ model.mobile }}"
+        />
+        <!-- <span class="red"></span> -->
+      </div>
+    </div>
+
+    <div class="form-group even" id="password_field_box">
+      <label
+        class="col-sm-3 control-label"
+        for="name"
+        id="password_display_as_box"
+      >
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit">
+            {{ memberI18n.passwordI18n }}
+          </font> </font
+        ><span class="required">
+          <font style="vertical-align: inherit">
+            <font style="vertical-align: inherit">*</font>
+          </font>
+        </span>
+      </label>
+      <div class="col-sm-9 col-md-6 col-lg-6" id="password_input_box">
+        <input
+          class="form-control"
+          id="field-password"
+          name="password"
+          type="password"
+          [(ngModel)]="model.password"
+          value="{{ model.password }}"
+          maxlength="99"
+        />
+      </div>
+    </div>
+
+    <div class="form-group odd" id="address_field_box">
+      <label
+        class="col-sm-3 control-label"
+        for="name"
+        id="address_display_as_box"
+      >
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit">
+            {{ memberI18n.addressI18n }}
+          </font> </font
+        ><span class="required">
+          <font style="vertical-align: inherit">
+            <font style="vertical-align: inherit">*</font>
+          </font>
+        </span>
+      </label>
+      <div class="col-sm-9 col-md-6 col-lg-6" id="address_input_box">
+        <textarea
+          class="form-control"
+          id="field-address"
+          name="address"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="form-group even" id="status_field_box">
+      <label
+        class="col-sm-3 control-label"
+        for="name"
+        id="status_display_as_box"
+      >
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit">
+            {{ memberI18n.statusI18n }}
+          </font> </font
+        ><span class="required">
+          <font style="vertical-align: inherit">
+            <font style="vertical-align: inherit">*</font>
+          </font>
+        </span>
+      </label>
+      <div class="col-sm-9 col-md-6 col-lg-6" id="status_input_box">
+        <select name="status" class="form-control" id="field-status">
+          <option value="0">
+            <font style="vertical-align: inherit">
+              <font style="vertical-align: inherit">Inactif</font>
+            </font>
+          </option>
+          <option value="1" selected="selected">
+            <font style="vertical-align: inherit">
+              <font style="vertical-align: inherit">actif</font>
+            </font>
+          </option>
+        </select>
+        <!-- <span class="red"></span> -->
+      </div>
+    </div>
+  </div>
+  <div class="pDiv">
+    <button (click)="edit()" type="button" class="btn btn-info">
+      <i class="fas fa-save"></i>
+      {{ memberI18n.editButtonI18n }}
+    </button>
+  </div>
+</form>

@@ -1,0 +1,56 @@
+<form
+  method="post"
+  class="form-horizontal"
+  id="crudForm"
+  autocomplete="off"
+  accept-charset="utf-8"
+  [formGroup]="typeMemberForm"
+>
+  <!-- type member -->
+  <div class="form-div">
+    <div class="form-group odd" id="member_type_name_field_box">
+      <label
+        class="col-sm-3 control-label"
+        for="name"
+        id="member_type_name_display_as_box"
+      >
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit">
+            {{ typeMemberI18n?.member_type_nameI18n }}
+          </font> </font
+        ><span class="required">
+          <font style="vertical-align: inherit">
+            <font style="vertical-align: inherit">*</font>
+          </font>
+        </span>
+      </label>
+      <div class="col-sm-9 col-md-6 col-lg-6" id="member_type_name_input_box">
+        <!-- type member input text -->
+        <input
+          [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+          formControlName="name"
+          id="field-member_name"
+          name="name"
+          type="text"
+          class="form-control"
+          maxlength="99"
+        />
+        <!-- type meber validation -->
+        <div *ngIf="submitted && f.name.errors" class="alert alert-danger">
+          <div *ngIf="submitted && f.name.errors.required">
+            {{ msg.validationMessage.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pDiv">
+    <!-- add button -->
+    <button (click)="add()" type="button" class="btn btn-info">
+      <i class="fas fa-save"></i>
+      {{ typeMemberI18n?.addButtonI18n }}
+    </button>
+
+    <div class="clear"></div>
+  </div>
+</form>

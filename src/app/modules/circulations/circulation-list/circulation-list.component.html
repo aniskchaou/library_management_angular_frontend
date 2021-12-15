@@ -1,0 +1,61 @@
+<table
+  class="table table-bordered"
+  id="table"
+  width="100%"
+  cellspacing="0"
+  *ngIf="circulations"
+>
+  <thead>
+    <tr>
+      <th>{{ circulationI18n?.memberNameI18n }}</th>
+      <th>{{ circulationI18n?.bookNameI18n }}</th>
+      <th>{{ circulationI18n?.writerI18n }}</th>
+      <th>{{ circulationI18n?.issueDateI18n }}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>{{ circulationI18n?.memberNameI18n }}</th>
+      <th>{{ circulationI18n?.bookNameI18n }}</th>
+      <th>{{ circulationI18n?.writerI18n }}</th>
+      <th>{{ circulationI18n?.issueDateI18n }}</th>
+      <th></th>
+    </tr>
+  </tfoot>
+  <tbody>
+    <tr *ngFor="let t of circulations">
+      <td>{{ t?.memberName?.name }}</td>
+      <td>{{ t?.bookName?.title }}</td>
+      <td>{{ t?.writer?.name }}</td>
+      <td>{{ t?.issueDate }}</td>
+      <td>
+        <button
+          (click)="view(t.id)"
+          href="#view"
+          role="button"
+          data-toggle="modal"
+          class="btn btn-primary btn-sm"
+        >
+          <i class="fas fa-eye"></i>
+        </button>
+        <button
+          type="button"
+          data-toggle="modal"
+          (click)="edit(t.id)"
+          data-target="#edit"
+          class="btn btn-warning btn-sm"
+        >
+          <i class="fas fa-edit"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger btn-sm"
+          (click)="delete(t.id)"
+        >
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
