@@ -41,7 +41,7 @@ export class EditMemberComponent extends URLLoader implements OnInit {
         this.model = new Member(0, '', '', '', '', '', '', '', '');
       }
     });*/
-    this.getMemberByLang(CONFIG.LANG);
+    this.getMemberByLang(CONFIG.getInstance().getLang());
   }
 
   getMemberByLang(lang) {

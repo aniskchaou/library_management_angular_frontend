@@ -34,7 +34,7 @@ export class EditRequestedBookComponent extends URLLoader implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getRequestedBookByLang(CONFIG.LANG);
+    this.getRequestedBookByLang(CONFIG.getInstance().getLang());
   }
 
   ngOnChanges(changes: any) {

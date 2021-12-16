@@ -118,7 +118,7 @@
 
 <br /><br />
 <div *ngIf="hasRoute('login')">
-  <app-login></app-login>
+  <app-login (reloadMenu)="reloadMenu()"></app-login>
 </div>
 <!-- Bootstrap core JavaScript-->
 <script src="assets/vendor/jquery/jquery.min.js"></script>

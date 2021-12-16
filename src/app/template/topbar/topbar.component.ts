@@ -9,7 +9,7 @@ import { AuthentificationService } from 'src/app/main/security/authentification.
 })
 export class TopbarComponent implements OnInit {
   @Input() menuI18n;
-
+  user = sessionStorage.getItem('username');
   constructor(
     private authService: AuthentificationService,
     private router: Router

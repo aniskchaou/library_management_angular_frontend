@@ -36,7 +36,7 @@ export class EditWriterComponent extends URLLoader implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getWriterByLang(CONFIG.LANG);
+    this.getWriterByLang(CONFIG.getInstance().getLang());
   }
 
   ngOnChanges(changes: any) {

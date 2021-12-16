@@ -4,7 +4,7 @@
       <th>{{ settingsI18n?.nameI18n }}</th>
       <th>{{ settingsI18n?.telephoneI18n }}</th>
       <th>{{ settingsI18n?.addressI18n }}</th>
-      <th>{{ settingsI18n?.langI18n }}</th>
+      <th>{{ settingsI18n?.languageI18n }}</th>
       <th></th>
     </tr>
   </thead>
@@ -13,7 +13,7 @@
       <th>{{ settingsI18n?.nameI18n }}</th>
       <th>{{ settingsI18n?.telephoneI18n }}</th>
       <th>{{ settingsI18n?.addressI18n }}</th>
-      <th>{{ settingsI18n?.langI18n }}</th>
+      <th>{{ settingsI18n?.languageI18n }}</th>
       <th></th>
     </tr>
   </tfoot>
@@ -22,7 +22,7 @@
       <td>{{ t.name }}</td>
       <td>{{ t.telephone }}</td>
       <td>{{ t.address }}</td>
-      <td>{{ t.lang }}</td>
+      <td>{{ showLanguage(t.lang) }}</td>
       <td>
         <button
           type="button"

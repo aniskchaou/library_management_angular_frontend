@@ -45,7 +45,7 @@ export class EditCirculationStatusComponent
         this.model = this.model = this.create();
       }
     });
-    this.getCirculationStatusByLang(CONFIG.LANG);
+    this.getCirculationStatusByLang(CONFIG.getInstance().getLang());
   }
 
   ngOnChanges(changes: any) {

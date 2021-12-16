@@ -1,4 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import Settings from 'src/app/main/models/Settings';
+import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
   selector: 'app-navigation',

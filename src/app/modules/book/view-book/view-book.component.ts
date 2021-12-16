@@ -20,12 +20,12 @@ export class ViewBookComponent extends URLLoader implements OnInit {
   ngOnInit(): void {
     console.log(this.book);
     this.viewBook(this.id);
-    this.getBookByLang(CONFIG.LANG);
+    this.getBookByLang(CONFIG.getInstance().getLang());
   }
 
   ngOnChanges(changes: any) {
     this.viewBook(this.id);
-    this.getBookByLang(CONFIG.LANG);
+    this.getBookByLang(CONFIG.getInstance().getLang());
   }
   viewBook(id: any) {
     if (this.id) {

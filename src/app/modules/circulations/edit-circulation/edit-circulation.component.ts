@@ -58,7 +58,7 @@ export class EditCirculationComponent extends URLLoader implements OnInit {
     this.getWriters();
     this.getMembers();
     this.getCirculationStatus();
-    this.getCirculationByLang(CONFIG.LANG);
+    this.getCirculationByLang(CONFIG.getInstance().getLang());
   }
 
   edit() {

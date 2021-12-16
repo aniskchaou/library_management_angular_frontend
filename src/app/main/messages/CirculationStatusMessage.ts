@@ -6,30 +6,34 @@ import CONFIG from '../urls/urls';
 })
 export default class CirculationStatusMessage {
   addConfirmation = {
-    FR: 'element a été ajouté',
+    FR: "L'élément a été ajouté",
     EN: 'Item has been added',
+    AR: 'تمت إضافة العنصر',
   };
 
   editConfirmation = {
-    FR: 'element a été ajouté',
+    FR: "L'élément a été modifié",
     EN: 'Item has been modified',
+    AR: 'تم تعديل العنصر',
   };
 
   deleteConfirmation = {
-    FR: 'element a été ajouté',
+    FR: "L'élément a été supprimé",
     EN: 'Item has been removed',
+    AR: 'تم حذف العنصر',
   };
 
   titleConfirmation = {
     FR: 'Confirmation',
     EN: 'Message',
+    AR: 'تأكيد',
   };
 
   confirmationMessages = {
-    title: this.titleConfirmation[CONFIG.LANG],
-    add: this.addConfirmation[CONFIG.LANG],
-    edit: this.editConfirmation[CONFIG.LANG],
-    delete: this.deleteConfirmation[CONFIG.LANG],
+    title: this.titleConfirmation[CONFIG.getInstance().getLang()],
+    add: this.addConfirmation[CONFIG.getInstance().getLang()],
+    edit: this.editConfirmation[CONFIG.getInstance().getLang()],
+    delete: this.deleteConfirmation[CONFIG.getInstance().getLang()],
   };
 
   validationMessage = {

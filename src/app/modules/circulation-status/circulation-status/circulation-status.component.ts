@@ -16,6 +16,7 @@ export class CirculationStatusComponent extends URLLoader implements OnInit {
   circulationStatus$ = [{}];
   circulationStatusI18n$: any = {};
   id;
+  loading = false;
   circulation;
   edit(id) {
     this.id = id;
@@ -33,12 +34,6 @@ export class CirculationStatusComponent extends URLLoader implements OnInit {
   delete(id) {
     var r = confirm('Voulez-vous supprimer cet enregistrement ?');
     if (r) {
-      /* this.categoryTestService.remove(parseInt(id));
-      super.show(
-        'Confirmation',
-        this.messageService.confirmationMessages.delete,
-        'success'
-      );*/
       this.httpService.remove(CONFIG.URL_BASE + '/circulation/delete/' + id);
       super.show(
         'Confirmation',
@@ -51,7 +46,7 @@ export class CirculationStatusComponent extends URLLoader implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
-    this.getTranslationByLang(CONFIG.LANG);
+    this.getTranslationByLang(CONFIG.getInstance().getLang());
   }
   reloadPage() {
     this.router
@@ -62,16 +57,16 @@ export class CirculationStatusComponent extends URLLoader implements OnInit {
   }
 
   getAll() {
-    // this.appointements$ = this.appointmentTestService.getAll()
+    this.loading = true;
     this.httpService
       .getAll(CONFIG.URL_BASE + '/circulationstatus/all')
       .subscribe(
         (data: CirculationStatus[]) => {
           this.circulationStatus$ = data;
-          console.log(this.circulationStatus$);
+          this.loading = false;
         },
         (err: HttpErrorResponse) => {
-          super.show('Error', err.message, 'error');
+          super.show('Error', err.message, 'warning');
         }
       );
   }

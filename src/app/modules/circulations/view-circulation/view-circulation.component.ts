@@ -20,12 +20,12 @@ export class ViewCirculationComponent extends URLLoader implements OnInit {
 
   ngOnInit(): void {
     this.viewCirculation(this.id);
-    this.getCirculationByLang(CONFIG.LANG);
+    this.getCirculationByLang(CONFIG.getInstance().getLang());
   }
 
   ngOnChanges(changes: any) {
     this.viewCirculation(this.id);
-    this.getCirculationByLang(CONFIG.LANG);
+    this.getCirculationByLang(CONFIG.getInstance().getLang());
   }
   viewCirculation(id: any) {
     if (this.id) {

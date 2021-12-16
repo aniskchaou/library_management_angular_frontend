@@ -20,7 +20,7 @@ export class ViewMemberComponent implements OnInit {
 
   ngOnChanges(changes: any) {
     this.viewMember(this.id);
-    this.getMemberByLang(CONFIG.LANG);
+    this.getMemberByLang(CONFIG.getInstance().getLang());
   }
   viewMember(id: any) {
     this.httpService.getAll(CONFIG.URL_BASE + '/member/' + id).subscribe(

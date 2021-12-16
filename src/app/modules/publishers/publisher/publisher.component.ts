@@ -16,6 +16,7 @@ export class PublisherComponent extends URLLoader implements OnInit {
   publishers$ = [{}];
   id;
   publisherI18n;
+  loading = false;
 
   constructor(
     private httpService: HTTPService,
@@ -31,7 +32,7 @@ export class PublisherComponent extends URLLoader implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
-    this.getPublisherByLang(CONFIG.LANG);
+    this.getPublisherByLang(CONFIG.getInstance().getLang());
   }
 
   reloadPage() {
@@ -69,9 +70,11 @@ export class PublisherComponent extends URLLoader implements OnInit {
   }
 
   getAll() {
+    this.loading = true;
     this.httpService.getAll(CONFIG.URL_BASE + '/publisher/all').subscribe(
       (data: Publisher[]) => {
         this.publishers$ = data;
+        this.loading = false;
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'warning');

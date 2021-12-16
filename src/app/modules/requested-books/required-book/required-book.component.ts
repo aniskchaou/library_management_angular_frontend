@@ -16,6 +16,7 @@ export class RequiredBookComponent extends URLLoader implements OnInit {
   requiredBook$ = [{}];
   id;
   requestedBookI18n;
+  loading = false;
 
   constructor(
     private httpService: HTTPService,
@@ -44,7 +45,7 @@ export class RequiredBookComponent extends URLLoader implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
-    this.getRequestedBookByLang(CONFIG.LANG);
+    this.getRequestedBookByLang(CONFIG.getInstance().getLang());
   }
 
   resolve() {
@@ -56,9 +57,11 @@ export class RequiredBookComponent extends URLLoader implements OnInit {
   }
 
   getAll() {
+    this.loading = true;
     this.httpService.getAll(CONFIG.URL_BASE + '/requestedbook/all').subscribe(
       (data: RequestedBook[]) => {
         this.requiredBook$ = data;
+        this.loading = false;
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'warning');

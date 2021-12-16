@@ -50,7 +50,7 @@ export class AddCirculationStatusComponent extends URLLoader implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCirculationStatusByLang(CONFIG.LANG);
+    this.getCirculationStatusByLang(CONFIG.getInstance().getLang());
   }
 
   reset() {

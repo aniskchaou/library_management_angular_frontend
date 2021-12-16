@@ -37,7 +37,7 @@ export class EditPublisherComponent extends URLLoader implements OnInit {
 
   ngOnInit(): void {
     this.getPublisher();
-    this.getPublisherByLang(CONFIG.LANG);
+    this.getPublisherByLang(CONFIG.getInstance().getLang());
   }
 
   ngOnChanges(changes: any) {

@@ -50,7 +50,7 @@ export class AddRequestedBookComponent extends URLLoader implements OnInit {
     this.getCategories();
     this.getMembers();
     this.getWriters();
-    this.getRequestedBookByLang(CONFIG.LANG);
+    this.getRequestedBookByLang(CONFIG.getInstance().getLang());
   }
 
   reloadPage() {

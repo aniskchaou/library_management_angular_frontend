@@ -119,7 +119,7 @@ export class EditBookComponent extends URLLoader implements OnInit {
   ngOnInit(): void {
     this.getPublishers();
     this.getWriters();
-    this.getBookByLang(CONFIG.LANG);
+    this.getBookByLang(CONFIG.getInstance().getLang());
     this.getcategories();
   }
 

@@ -48,7 +48,7 @@ export class AddCategoryComponent extends URLLoader implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCategoryByLang('EN');
+    this.getCategoryByLang(CONFIG.getInstance().getLang());
   }
 
   reset() {
@@ -65,7 +65,11 @@ export class AddCategoryComponent extends URLLoader implements OnInit {
       this.categoryForm.reset();
       this.closeModal();
       this.goBack();
-      super.show('Confirmation', this.msg.confirmationMessages.add, 'success');
+      super.show(
+        'Confirmation',
+        this.msg.addConfirmation[CONFIG.getInstance().getLang()],
+        'success'
+      );
     }
   }
 

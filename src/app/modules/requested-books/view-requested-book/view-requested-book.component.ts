@@ -19,7 +19,7 @@ export class ViewRequestedBookComponent implements OnInit {
 
   ngOnChanges(changes: any) {
     this.viewRequestedBook(this.id);
-    this.getRequestedbookByLang(CONFIG.LANG);
+    this.getRequestedbookByLang(CONFIG.getInstance().getLang());
   }
 
   viewRequestedBook(id: any) {

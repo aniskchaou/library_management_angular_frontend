@@ -16,6 +16,7 @@ export class CirculationComponent extends URLLoader implements OnInit {
   circulations$ = [];
   id;
   circulationI18n;
+  loading = false;
 
   edit(id) {
     if (id != undefined) {
@@ -68,14 +69,15 @@ export class CirculationComponent extends URLLoader implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
-    this.getCirculationByLang(CONFIG.LANG);
+    this.getCirculationByLang(CONFIG.getInstance().getLang());
   }
 
   getAll() {
+    this.loading = true;
     this.httpService.getAll(CONFIG.URL_BASE + '/circulation/all').subscribe(
       (data: Circulation[]) => {
         this.circulations$ = data;
-        console.log(this.circulations$);
+        this.loading = false;
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'error');

@@ -44,12 +44,12 @@ export class EditCategoryComponent extends URLLoader implements OnInit {
 
   ngOnInit(): void {
     this.getCategory();
-    this.getCategoryByLang(CONFIG.LANG);
+    this.getCategoryByLang(CONFIG.getInstance().getLang());
   }
 
   ngOnChanges(changes: any) {
     this.getCategory();
-    this.getCategoryByLang(CONFIG.LANG);
+    this.getCategoryByLang(CONFIG.getInstance().getLang());
   }
 
   getCategory() {

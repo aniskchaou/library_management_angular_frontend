@@ -1,23 +1,29 @@
 <div class="container-fluid">
-  <!-- Page Heading -->
-  <h1 class="h3 mb-2 text-gray-800">{{ publisherI18n?.allTitleI18n }}</h1>
+  <div *ngIf="loading; else loaded">
+    <app-loading></app-loading>
+  </div>
 
-  <!-- DataTales Example -->
-  <div class="card shadow mb-4">
-    <div class="card-body">
-      <div class="table-responsive">
-        <app-add-button [itemI18n]="publisherI18n"></app-add-button>
-        <app-publisher-list
-          (deleteEvent)="delete($event)"
-          (editEvent)="edit($event)"
-          [publishers]="publishers$"
-          [publisherI18n]="publisherI18n"
-        ></app-publisher-list>
-        <app-publisher-modal
-          [publisherI18n]="publisherI18n"
-          [id]="id"
-        ></app-publisher-modal>
+  <ng-template #loaded>
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">{{ publisherI18n?.allTitleI18n }}</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <app-add-button [itemI18n]="publisherI18n"></app-add-button>
+          <app-publisher-list
+            (deleteEvent)="delete($event)"
+            (editEvent)="edit($event)"
+            [publishers]="publishers$"
+            [publisherI18n]="publisherI18n"
+          ></app-publisher-list>
+          <app-publisher-modal
+            [publisherI18n]="publisherI18n"
+            [id]="id"
+          ></app-publisher-modal>
+        </div>
       </div>
     </div>
-  </div>
+  </ng-template>
 </div>

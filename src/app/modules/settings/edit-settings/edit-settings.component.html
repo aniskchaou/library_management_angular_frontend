@@ -107,15 +107,16 @@
     </span>
   </label>
   <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
-    <input
+    <select
       [(ngModel)]="model.lang"
       id="field-name"
-      value="{{ model.lang }}"
       name="lang"
       class="form-control"
-      type="text"
       maxlength="99"
-    />
+    >
+      <option value="EN">ENGLISH</option>
+      <option value="AR">عربى</option>
+    </select>
     <br />
   </div>
   <button (click)="edit()" type="button" class="btn btn-info">

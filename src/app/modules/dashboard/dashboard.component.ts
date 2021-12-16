@@ -24,14 +24,9 @@ export class DashboardComponent extends URLLoader implements OnInit {
 
     this.drawNumberBooksByCategory();
 
-    this.getDashboardByLang(CONFIG.LANG);
+    this.getDashboardByLang(CONFIG.getInstance().getLang());
 
     this.getDashboardAnalytics();
-    /*super.show(
-      'Library Lab',
-      'cette application est en cours de développement.',
-      'info'
-    );*/
   }
 
   ngOnChanges() {
@@ -39,7 +34,7 @@ export class DashboardComponent extends URLLoader implements OnInit {
 
     this.drawNumberBooksByCategory();
 
-    this.getDashboardByLang(CONFIG.LANG);
+    this.getDashboardByLang(CONFIG.getInstance().getLang());
 
     this.getDashboardAnalytics();
   }
@@ -50,8 +45,6 @@ export class DashboardComponent extends URLLoader implements OnInit {
       .subscribe(
         (data: DashboardAnalytics) => {
           this.dashboardAnalytics = data;
-          //console.log(this.circulationI18n);
-          //document.getElementById('table').DataTable().ajax.reload();
         },
         (err: HttpErrorResponse) => {
           super.show('Error', err.message, 'error');
@@ -66,13 +59,9 @@ export class DashboardComponent extends URLLoader implements OnInit {
       .getAll(CONFIG.URL_BASE + '/analytics/booksbycategory')
       .subscribe(
         (response: BookCategoryAnalytics) => {
-          // this.menuI18n = data;
-          //CONFIG.LANG = this.settings$.lang;
-          //document.getElementById('table').DataTable().ajax.reload();
           console.log(response);
           let data = response.books;
           let labels = response.categories;
-          //  var ctx1 = document.getElementsByClassName('book-chart');
 
           this.renderPie(
             data,
@@ -82,20 +71,13 @@ export class DashboardComponent extends URLLoader implements OnInit {
             'rgba(253, 13, 13, 1)',
             'rgb(23, 56, 132)'
           );
-
-          //this.renderChart(data, labels, ctx2, '#4e73df');
         },
-        (err: HttpErrorResponse) => {
-          //super.show('Error', err.message, 'error');
-        }
+        (err: HttpErrorResponse) => {}
       );
   }
   drawNumberBooksByDays() {
     this.httpService.getAll(CONFIG.URL_BASE + '/analytics/books').subscribe(
       (response: BookAnalytics) => {
-        // this.menuI18n = data;
-        //CONFIG.LANG = this.settings$.lang;
-        //document.getElementById('table').DataTable().ajax.reload();
         console.log(response);
         let data = response.numberIssueBook;
         let labels = response.days;
@@ -149,14 +131,11 @@ export class DashboardComponent extends URLLoader implements OnInit {
   }
 
   getDashboardByLang(lang) {
-    // this.appointements$ = this.appointmentTestService.getAll()
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/dashboard/' + lang)
       .subscribe(
         (data) => {
           this.dashboardI18n = data;
-          //console.log(this.circulationI18n);
-          //document.getElementById('table').DataTable().ajax.reload();
         },
         (err: HttpErrorResponse) => {
           super.show('Error', err.message, 'error');

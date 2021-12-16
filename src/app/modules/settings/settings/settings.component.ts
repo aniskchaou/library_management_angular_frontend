@@ -16,6 +16,7 @@ export class SettingsComponent extends URLLoader implements OnInit {
   settings$ = [{}];
   id = 0;
   settingsI18n;
+  loading = false;
   constructor(
     private httpService: HTTPService,
     private router: Router,
@@ -30,7 +31,7 @@ export class SettingsComponent extends URLLoader implements OnInit {
   }
   ngOnInit(): void {
     this.getAll();
-    this.getSettingsByLang(CONFIG.LANG);
+    this.getSettingsByLang(CONFIG.getInstance().getLang());
   }
 
   reloadPage() {
@@ -49,7 +50,7 @@ export class SettingsComponent extends URLLoader implements OnInit {
           this.settingsI18n = data;
         },
         (err: HttpErrorResponse) => {
-          super.show('Error', err.message, 'error');
+          super.show('Error', err.message, 'warning');
         }
       );
   }
@@ -68,12 +69,14 @@ export class SettingsComponent extends URLLoader implements OnInit {
   }
 
   getAll() {
+    this.loading = true;
     this.httpService.getAll(CONFIG.URL_BASE + '/settings/all').subscribe(
       (data: Settings[]) => {
         this.settings$ = data;
+        this.loading = false;
       },
       (err: HttpErrorResponse) => {
-        super.show('Error', err.message, 'error');
+        super.show('Error', err.message, 'warning');
       }
     );
   }

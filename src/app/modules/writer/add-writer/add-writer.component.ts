@@ -57,7 +57,7 @@ export class AddWriterComponent extends URLLoader implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getWriterByLang(CONFIG.LANG);
+    this.getWriterByLang(CONFIG.getInstance().getLang());
   }
 
   reset() {

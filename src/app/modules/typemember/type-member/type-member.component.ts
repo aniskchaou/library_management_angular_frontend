@@ -16,6 +16,7 @@ import CONFIG from 'src/app/main/urls/urls';
 export class TypeMemberComponent extends URLLoader implements OnInit {
   showsummary: boolean = false;
   showgraphic: boolean = false;
+  loading = false;
   typeMembers$;
   id = 0;
   typeMemberI18n;
@@ -52,13 +53,15 @@ export class TypeMemberComponent extends URLLoader implements OnInit {
 
   ngOnInit() {
     this.getAll();
-    this.getTypeMemberByLang(CONFIG.LANG);
+    this.getTypeMemberByLang(CONFIG.getInstance().getLang());
   }
 
   getAll() {
+    this.loading = true;
     this.httpService.getAll(CONFIG.URL_BASE + '/typemember/all').subscribe(
       (data: TypeMember[]) => {
         this.typeMembers$ = data;
+        this.loading = false;
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'error');

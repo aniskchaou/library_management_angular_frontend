@@ -49,7 +49,7 @@ export class AddPublisherComponent extends URLLoader implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getPublisherByLang(CONFIG.LANG);
+    this.getPublisherByLang(CONFIG.getInstance().getLang());
   }
 
   getPublisherByLang(lang) {

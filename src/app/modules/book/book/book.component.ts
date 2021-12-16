@@ -16,7 +16,8 @@ import CONFIG from 'src/app/main/urls/urls';
 export class BookComponent extends URLLoader implements OnInit {
   showsummary: boolean = false;
   showgraphic: boolean = false;
-  books$ = [{}, {}];
+  loading = false;
+  books$ = [];
   id = 0;
   bookI18n;
   @Output() viewEvent = new EventEmitter<string>();
@@ -78,7 +79,7 @@ export class BookComponent extends URLLoader implements OnInit {
 
   ngOnInit() {
     this.getAll();
-    this.getBookByLang(CONFIG.LANG);
+    this.getBookByLang(CONFIG.getInstance().getLang());
   }
 
   view(id) {
@@ -86,10 +87,11 @@ export class BookComponent extends URLLoader implements OnInit {
   }
 
   getAll() {
+    this.loading = true;
     this.httpService.getAll(CONFIG.URL_BASE + '/book/all').subscribe(
       (data: Book[]) => {
         this.books$ = data;
-        console.log(this.books$);
+        this.loading = false;
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'warning');

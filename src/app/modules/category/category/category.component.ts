@@ -47,7 +47,7 @@ export class CategoryComponent extends URLLoader implements OnInit {
 
   ngOnInit() {
     this.getAll();
-    this.getCategoryByLang(CONFIG.LANG);
+    this.getCategoryByLang(CONFIG.getInstance().getLang());
   }
 
   getAll() {

@@ -21,6 +21,23 @@ export class SettingsListComponent extends URLLoader implements OnInit {
     this.editSettings(id);
   }
 
+  showLanguage(language) {
+    var lang = '';
+    switch (language) {
+      case 'EN':
+        lang = 'English';
+        break;
+      case 'AR':
+        lang = 'عربى';
+        break;
+      default:
+        lang = 'N/A';
+        break;
+    }
+
+    return lang;
+  }
+
   editSettings(value: string) {
     this.idEvent.emit(value);
   }

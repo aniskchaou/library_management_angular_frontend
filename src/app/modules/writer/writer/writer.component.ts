@@ -16,6 +16,7 @@ export class WriterComponent extends URLLoader implements OnInit {
   writers$ = [{}];
   id;
   writerI18n;
+  loading = false;
 
   constructor(
     private httpService: HTTPService,
@@ -27,13 +28,15 @@ export class WriterComponent extends URLLoader implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
-    this.getWriterByLang(CONFIG.LANG);
+    this.getWriterByLang(CONFIG.getInstance().getLang());
   }
 
   getAll() {
+    this.loading = true;
     this.httpService.getAll(CONFIG.URL_BASE + '/writer/all').subscribe(
       (data: Writer[]) => {
         this.writers$ = data;
+        this.loading = false;
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'error');

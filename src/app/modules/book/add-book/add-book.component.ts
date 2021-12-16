@@ -61,7 +61,7 @@ export class AddBookComponent extends URLLoader implements OnInit {
     this.getcategories();
     this.getWriters();
     this.getPublishers();
-    this.getBookByLang(CONFIG.LANG);
+    this.getBookByLang(CONFIG.getInstance().getLang());
   }
 
   getcategories() {

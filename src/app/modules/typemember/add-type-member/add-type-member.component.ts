@@ -50,7 +50,7 @@ export class AddTypeMemberComponent extends URLLoader implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getTypeMemberByLang(CONFIG.LANG);
+    this.getTypeMemberByLang(CONFIG.getInstance().getLang());
   }
 
   reset() {

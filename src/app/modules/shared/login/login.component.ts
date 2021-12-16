@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
@@ -14,6 +14,7 @@ export class LoginComponent extends URLLoader implements OnInit {
   password = 'admin';
   invalidLogin = false;
   errorMessage = '';
+  @Output() reloadMenu = new EventEmitter();
 
   constructor(
     private router: Router,
@@ -41,6 +42,7 @@ export class LoginComponent extends URLLoader implements OnInit {
               .then(() => {
                 this.router.navigate(['/dashboard']);
               });
+            this.reloadMenu.emit();
           }
         },
         (error) => {

@@ -67,13 +67,20 @@ export class AppComponent {
     this.loadScripts();
     this.getSettings();
     this.getMenuItems();
+    console.log('before ' + CONFIG.getInstance().getLang());
+  }
+
+  reloadMenu() {
+    this.getSettings();
+    this.getMenuItems();
+    console.log('after ' + CONFIG.getInstance().getLang());
   }
 
   getSettings() {
     this.httpService.getAll(CONFIG.URL_BASE + '/settings/1').subscribe(
       (data: Settings) => {
         this.settings$ = data;
-        CONFIG.LANG = this.settings$.lang;
+        CONFIG.getInstance().setLang(this.settings$.lang);
       },
       (err: HttpErrorResponse) => {
         //super.show('Error', err.message, 'warning');
@@ -83,7 +90,7 @@ export class AppComponent {
 
   getMenuItems() {
     this.httpService
-      .getAll(CONFIG.URL_BASE + '/i18n/menu/' + CONFIG.LANG)
+      .getAll(CONFIG.URL_BASE + '/i18n/menu/' + CONFIG.getInstance().getLang())
       .subscribe(
         (data: Settings) => {
           this.menuI18n = data;

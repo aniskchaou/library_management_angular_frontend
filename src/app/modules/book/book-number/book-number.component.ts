@@ -19,7 +19,7 @@ export class BookNumberComponent extends URLLoader implements OnInit {
 
   ngOnInit(): void {
     this.getDashboardAnalytics();
-    this.getDashboardByLang(CONFIG.LANG);
+    this.getDashboardByLang(CONFIG.getInstance().getLang());
   }
 
   getDashboardByLang(lang) {

@@ -62,7 +62,7 @@ export class AddCirculationComponent extends URLLoader implements OnInit {
     this.getCirculationStatus();
     this.getMembers();
     this.getWriters();
-    this.getCirculationByLang(CONFIG.LANG);
+    this.getCirculationByLang(CONFIG.getInstance().getLang());
   }
 
   getCirculationByLang(lang) {

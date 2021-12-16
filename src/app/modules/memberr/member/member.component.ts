@@ -19,6 +19,7 @@ export class MemberComponent extends URLLoader implements OnInit {
   members$;
   id = 0;
   memberI18n;
+  loading = false;
 
   constructor(
     private memberTestService: MemberTestService,
@@ -30,12 +31,9 @@ export class MemberComponent extends URLLoader implements OnInit {
   }
 
   getMemberByLang(lang) {
-    // this.appointements$ = this.appointmentTestService.getAll()
     this.httpService.getAll(CONFIG.URL_BASE + '/i18n/member/' + lang).subscribe(
       (data) => {
         this.memberI18n = data;
-        console.log(this.memberI18n);
-        //document.getElementById('table').DataTable().ajax.reload();
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'error');
@@ -49,7 +47,6 @@ export class MemberComponent extends URLLoader implements OnInit {
 
   edit(id) {
     this.setId(id);
-    //this.memberTestService.ID.next(id.toString());
   }
 
   view(id) {
@@ -57,10 +54,10 @@ export class MemberComponent extends URLLoader implements OnInit {
   }
 
   ngOnInit() {
-    //super.loadScripts();
     this.getAll();
-    this.getMemberByLang(CONFIG.LANG);
+    this.getMemberByLang(CONFIG.getInstance().getLang());
   }
+
   reloadPage() {
     this.router
       .navigateByUrl('/dashboard', { skipLocationChange: true })
@@ -72,12 +69,6 @@ export class MemberComponent extends URLLoader implements OnInit {
   delete(id) {
     var r = confirm('Do you want to delete this recording ?');
     if (r) {
-      /* this.categoryTestService.remove(parseInt(id));
-      super.show(
-        'Confirmation',
-        this.messageService.confirmationMessages.delete,
-        'success'
-      );*/
       this.httpService.remove(CONFIG.URL_BASE + '/member/delete/' + id);
       super.show(
         'Confirmation',
@@ -88,17 +79,12 @@ export class MemberComponent extends URLLoader implements OnInit {
     }
   }
 
-  /*getAll() {
-    this.members$ = this.memberTestService.getAll()
-
-  }*/
-
   getAll() {
-    // this.appointements$ = this.appointmentTestService.getAll()
+    this.loading = true;
     this.httpService.getAll(CONFIG.URL_BASE + '/member/all').subscribe(
       (data: Member[]) => {
         this.members$ = data;
-        // console.log(this.books$);
+        this.loading = false;
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'error');

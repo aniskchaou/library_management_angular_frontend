@@ -37,7 +37,7 @@ export class EditSettingsComponent extends URLLoader implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getSettingsByLang(CONFIG.LANG);
+    this.getSettingsByLang(CONFIG.getInstance().getLang());
   }
 
   ngOnChanges(changes: any) {
@@ -56,9 +56,11 @@ export class EditSettingsComponent extends URLLoader implements OnInit {
         this.router.navigate(['/settings']);
       });
   }
+
   edit() {
     this.httpService.create(CONFIG.URL_BASE + '/settings/create', this.model);
-    console.log(this.model);
+    CONFIG.getInstance().setLang(this.model.lang);
+    console.log(this.model.lang);
     this.closeModal();
     this.goBack();
     super.show(
@@ -66,6 +68,11 @@ export class EditSettingsComponent extends URLLoader implements OnInit {
       this.message.confirmationMessages.edit,
       'success'
     );
+    this.router
+      .navigateByUrl('/dashboard', { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate(['/login']);
+      });
   }
 
   getSettingsByLang(lang) {

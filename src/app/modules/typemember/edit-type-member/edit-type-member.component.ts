@@ -35,7 +35,7 @@ export class EditTypeMemberComponent extends URLLoader implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getTypeMemberByLang(CONFIG.LANG);
+    this.getTypeMemberByLang(CONFIG.getInstance().getLang());
   }
 
   reloadPage() {
