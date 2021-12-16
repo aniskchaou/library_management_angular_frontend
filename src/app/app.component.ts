@@ -56,6 +56,7 @@ export class AppComponent {
 
   settings$: Settings;
   menuI18n;
+  loading = false;
 
   constructor(private _router: Router, private httpService: HTTPService) {}
 

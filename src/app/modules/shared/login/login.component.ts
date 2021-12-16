@@ -40,9 +40,11 @@ export class LoginComponent extends URLLoader implements OnInit {
             this.router
               .navigateByUrl('/book', { skipLocationChange: true })
               .then(() => {
+                //
+                this.reloadMenu.emit();
+                // window.location.replace('/')
                 this.router.navigate(['/dashboard']);
               });
-            this.reloadMenu.emit();
           }
         },
         (error) => {

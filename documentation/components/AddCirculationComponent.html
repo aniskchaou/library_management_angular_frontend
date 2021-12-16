@@ -1,0 +1,1770 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>my-app-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">my-app-angular documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  AddCirculationComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/modules/circulations/add-circulation/add-circulation.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../classes/URLLoader.html" target="_self" >URLLoader</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-add-circulation</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./add-circulation.component.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./add-circulation.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#bookNames$" >bookNames$</a>
+                            </li>
+                            <li>
+                                <a href="#circulationForm" >circulationForm</a>
+                            </li>
+                            <li>
+                                <a href="#circulationI18n" >circulationI18n</a>
+                            </li>
+                            <li>
+                                <a href="#memberNames$" >memberNames$</a>
+                            </li>
+                            <li>
+                                <a href="#msg" >msg</a>
+                            </li>
+                            <li>
+                                <a href="#returnStatus$" >returnStatus$</a>
+                            </li>
+                            <li>
+                                <a href="#submitted" >submitted</a>
+                            </li>
+                            <li>
+                                <a href="#writers$" >writers$</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#add" >add</a>
+                            </li>
+                            <li>
+                                <a href="#closeModal" >closeModal</a>
+                            </li>
+                            <li>
+                                <a href="#getBooks" >getBooks</a>
+                            </li>
+                            <li>
+                                <a href="#getCirculationByLang" >getCirculationByLang</a>
+                            </li>
+                            <li>
+                                <a href="#getCirculationStatus" >getCirculationStatus</a>
+                            </li>
+                            <li>
+                                <a href="#getMembers" >getMembers</a>
+                            </li>
+                            <li>
+                                <a href="#getWriters" >getWriters</a>
+                            </li>
+                            <li>
+                                <a href="#goBack" >goBack</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#reset" >reset</a>
+                            </li>
+                            <li>
+                                <a href="#loadScripts" >loadScripts</a>
+                            </li>
+                            <li>
+                                <a href="#show" >show</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#closeModalEvent" >closeModalEvent</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#f" >f</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(validation: <a href="../injectables/CirculationValidation.html" target="_self">CirculationValidation</a>, message: <a href="../injectables/CirculationMessage.html" target="_self">CirculationMessage</a>, httpService: <a href="../injectables/HTTPService.html" target="_self">HTTPService</a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:47</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>validation</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CirculationValidation.html" target="_self" >CirculationValidation</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>message</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CirculationMessage.html" target="_self" >CirculationMessage</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>httpService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/HTTPService.html" target="_self" >HTTPService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="closeModalEvent"></a>
+                        <b>closeModalEvent</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:30</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="add"></a>
+                    <span class="name">
+                        <span ><b>add</b></span>
+                        <a href="#add"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>add()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="85"
+                            class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:85</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeModal"></a>
+                    <span class="name">
+                        <span ><b>closeModal</b></span>
+                        <a href="#closeModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeModal()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="33"
+                            class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:33</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getBooks"></a>
+                    <span class="name">
+                        <span ><b>getBooks</b></span>
+                        <a href="#getBooks"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getBooks()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:127</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCirculationByLang"></a>
+                    <span class="name">
+                        <span ><b>getCirculationByLang</b></span>
+                        <a href="#getCirculationByLang"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCirculationByLang(lang)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="68"
+                            class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:68</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>lang</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCirculationStatus"></a>
+                    <span class="name">
+                        <span ><b>getCirculationStatus</b></span>
+                        <a href="#getCirculationStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCirculationStatus()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="150"
+                            class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:150</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getMembers"></a>
+                    <span class="name">
+                        <span ><b>getMembers</b></span>
+                        <a href="#getMembers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getMembers()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="115"
+                            class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:115</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getWriters"></a>
+                    <span class="name">
+                        <span ><b>getWriters</b></span>
+                        <a href="#getWriters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getWriters()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="139"
+                            class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:139</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goBack"></a>
+                    <span class="name">
+                        <span ><b>goBack</b></span>
+                        <a href="#goBack"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goBack()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:37</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="60"
+                            class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:60</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reset"></a>
+                    <span class="name">
+                        <span ><b>reset</b></span>
+                        <a href="#reset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>reset()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="81"
+                            class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:81</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadScripts"></a>
+                    <span class="name">
+                        <span ><b>loadScripts</b></span>
+                        <a href="#loadScripts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadScripts()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/URLLoader.html" target="_self" >URLLoader</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/URLLoader.html#source" target="_self" >URLLoader:9</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="show"></a>
+                    <span class="name">
+                        <span ><b>show</b></span>
+                        <a href="#show"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>show(title, message, type)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/URLLoader.html" target="_self" >URLLoader</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/URLLoader.html#source" target="_self" >URLLoader:5</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>title</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>message</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>type</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="bookNames$"></a>
+                    <span class="name">
+                        <span ><b>bookNames$</b></span>
+                        <a href="#bookNames$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="circulationForm"></a>
+                    <span class="name">
+                        <span ><b>circulationForm</b></span>
+                        <a href="#circulationForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="circulationI18n"></a>
+                    <span class="name">
+                        <span ><b>circulationI18n</b></span>
+                        <a href="#circulationI18n"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="memberNames$"></a>
+                    <span class="name">
+                        <span ><b>memberNames$</b></span>
+                        <a href="#memberNames$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="msg"></a>
+                    <span class="name">
+                        <span ><b>msg</b></span>
+                        <a href="#msg"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/CirculationMessage.html" target="_self" >CirculationMessage</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="returnStatus$"></a>
+                    <span class="name">
+                        <span ><b>returnStatus$</b></span>
+                        <a href="#returnStatus$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitted"></a>
+                    <span class="name">
+                        <span ><b>submitted</b></span>
+                        <a href="#submitted"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="writers$"></a>
+                    <span class="name">
+                        <span ><b>writers$</b></span>
+                        <a href="#writers$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="f"></a>
+                        <span class="name"><b>f</b><a href="#f"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>f()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/modules/circulations/add-circulation/add-circulation.component.ts:45</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpErrorResponse } from &#x27;@angular/common/http&#x27;;
+import { Component, EventEmitter, OnInit, Output } from &#x27;@angular/core&#x27;;
+import { FormGroup } from &#x27;@angular/forms&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { URLLoader } from &#x27;src/app/main/configs/URLLoader&#x27;;
+import BookMessage from &#x27;src/app/main/messages/BookMessage&#x27;;
+import CirculationMessage from &#x27;src/app/main/messages/CirculationMessage&#x27;;
+import Book from &#x27;src/app/main/models/Book&#x27;;
+import CirculationStatus from &#x27;src/app/main/models/CirculationStatus&#x27;;
+import Member from &#x27;src/app/main/models/Member&#x27;;
+import { HTTPService } from &#x27;src/app/main/services/HTTPService&#x27;;
+import CONFIG from &#x27;src/app/main/urls/urls&#x27;;
+import CirculationValidation from &#x27;src/app/main/validations/CirculationValidation&#x27;;
+import { URL } from &#x27;url&#x27;;
+
+@Component({
+  selector: &#x27;app-add-circulation&#x27;,
+  templateUrl: &#x27;./add-circulation.component.html&#x27;,
+  styleUrls: [&#x27;./add-circulation.component.css&#x27;],
+})
+export class AddCirculationComponent extends URLLoader implements OnInit {
+  circulationForm: FormGroup;
+  msg: CirculationMessage;
+  submitted &#x3D; false;
+  memberNames$ &#x3D; [];
+  bookNames$ &#x3D; [];
+  returnStatus$ &#x3D; [];
+  writers$ &#x3D; [];
+
+  @Output() closeModalEvent &#x3D; new EventEmitter&lt;string&gt;();
+  circulationI18n;
+
+  closeModal() {
+    this.closeModalEvent.emit();
+  }
+
+  goBack() {
+    this.router
+      .navigateByUrl(&#x27;/dashboard&#x27;, { skipLocationChange: true })
+      .then(() &#x3D;&gt; {
+        this.router.navigate([&#x27;/circulation&#x27;]);
+      });
+  }
+
+  get f() {
+    return this.circulationForm.controls;
+  }
+
+  constructor(
+    private validation: CirculationValidation,
+    private message: CirculationMessage,
+    private httpService: HTTPService,
+    private router: Router
+  ) {
+    super();
+    this.circulationForm &#x3D; this.validation.formGroupInstance;
+    this.msg &#x3D; this.message;
+  }
+
+  ngOnInit(): void {
+    this.getBooks();
+    this.getCirculationStatus();
+    this.getMembers();
+    this.getWriters();
+    this.getCirculationByLang(CONFIG.getInstance().getLang());
+  }
+
+  getCirculationByLang(lang) {
+    this.httpService
+      .getAll(CONFIG.URL_BASE + &#x27;/i18n/circulation/&#x27; + lang)
+      .subscribe(
+        (data) &#x3D;&gt; {
+          this.circulationI18n &#x3D; data;
+        },
+        (err: HttpErrorResponse) &#x3D;&gt; {
+          super.show(&#x27;Error&#x27;, err.message, &#x27;error&#x27;);
+        }
+      );
+  }
+
+  reset() {
+    this.circulationForm.reset();
+  }
+
+  add() {
+    this.submitted &#x3D; true;
+    this.circulationForm.value.memberName &#x3D; this.memberNames$.filter(
+      (x) &#x3D;&gt; x.id &#x3D;&#x3D; parseInt(this.circulationForm.value.memberName)
+    )[0];
+    this.circulationForm.value.bookName &#x3D; this.bookNames$.filter(
+      (x) &#x3D;&gt; x.id &#x3D;&#x3D; parseInt(this.circulationForm.value.bookName)
+    )[0];
+    this.circulationForm.value.returnStatus &#x3D; this.returnStatus$.filter(
+      (x) &#x3D;&gt; x.id &#x3D;&#x3D; parseInt(this.circulationForm.value.returnStatus)
+    )[0];
+    this.circulationForm.value.writer &#x3D; this.writers$.filter(
+      (x) &#x3D;&gt; x.id &#x3D;&#x3D; parseInt(this.circulationForm.value.writer)
+    )[0];
+    if (this.validation.checkValidation()) {
+      console.log(this.circulationForm.value);
+      this.httpService
+        .create(
+          CONFIG.URL_BASE + &#x27;/circulation/create&#x27;,
+          this.circulationForm.value
+        )
+        .then(() &#x3D;&gt; {
+          console.log(this.circulationForm.value);
+          this.closeModal();
+          this.goBack();
+        });
+      super.show(&#x27;Confirmation&#x27;, this.msg.confirmationMessages.add, &#x27;success&#x27;);
+    }
+  }
+
+  getMembers() {
+    this.httpService.getAll(CONFIG.URL_BASE + &#x27;/member/all&#x27;).subscribe(
+      (data: Member[]) &#x3D;&gt; {
+        this.memberNames$ &#x3D; data;
+        console.log(this.memberNames$);
+      },
+      (err: HttpErrorResponse) &#x3D;&gt; {
+        super.show(&#x27;Error&#x27;, err.message, &#x27;error&#x27;);
+      }
+    );
+  }
+
+  getBooks() {
+    this.httpService.getAll(CONFIG.URL_BASE + &#x27;/book/all&#x27;).subscribe(
+      (data: Book[]) &#x3D;&gt; {
+        this.bookNames$ &#x3D; data;
+        console.log(this.bookNames$);
+      },
+      (err: HttpErrorResponse) &#x3D;&gt; {
+        super.show(&#x27;Error&#x27;, err.message, &#x27;error&#x27;);
+      }
+    );
+  }
+
+  getWriters() {
+    this.httpService.getAll(CONFIG.URL_BASE + &#x27;/writer/all&#x27;).subscribe(
+      (data: Book[]) &#x3D;&gt; {
+        this.writers$ &#x3D; data;
+      },
+      (err: HttpErrorResponse) &#x3D;&gt; {
+        super.show(&#x27;Error&#x27;, err.message, &#x27;error&#x27;);
+      }
+    );
+  }
+
+  getCirculationStatus() {
+    this.httpService
+      .getAll(CONFIG.URL_BASE + &#x27;/circulationstatus/all&#x27;)
+      .subscribe(
+        (data: CirculationStatus[]) &#x3D;&gt; {
+          this.returnStatus$ &#x3D; data;
+        },
+        (err: HttpErrorResponse) &#x3D;&gt; {
+          super.show(&#x27;Error&#x27;, err.message, &#x27;error&#x27;);
+        }
+      );
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;form
+  class&#x3D;&quot;form-group odd&quot;
+  id&#x3D;&quot;category_name_field_box&quot;
+  [formGroup]&#x3D;&quot;circulationForm&quot;
+&gt;
+  &lt;!-- membre name--&gt;
+  &lt;label
+    class&#x3D;&quot;col-sm-3 control-label&quot;
+    for&#x3D;&quot;name&quot;
+    id&#x3D;&quot;category_name_display_as_box&quot;
+  &gt;
+    &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        {{ circulationI18n?.memberNameI18n }}
+      &lt;/font&gt; &lt;/font
+    &gt;&lt;span class&#x3D;&quot;required&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;*&lt;/font&gt;
+      &lt;/font&gt;
+    &lt;/span&gt;
+  &lt;/label&gt;
+
+  &lt;div class&#x3D;&quot;col-sm-9 col-md-6 col-lg-6&quot; id&#x3D;&quot;category_name_input_box&quot;&gt;
+    &lt;select
+      [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.memberName.errors }&quot;
+      formControlName&#x3D;&quot;memberName&quot;
+      id&#x3D;&quot;field-category_name&quot;
+      name&#x3D;&quot;memberName&quot;
+      class&#x3D;&quot;form-control&quot;
+    &gt;
+      &lt;option *ngFor&#x3D;&quot;let c of memberNames$&quot; value&#x3D;&quot;{{ c.id }}&quot;&gt;
+        {{ c.name }}
+      &lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.memberName.errors&quot; class&#x3D;&quot;alert alert-danger&quot;&gt;
+      &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.memberName.errors.required&quot;&gt;
+        {{ msg.validationMessage.memberName }}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- book name--&gt;
+  &lt;label
+    class&#x3D;&quot;col-sm-3 control-label&quot;
+    for&#x3D;&quot;name&quot;
+    id&#x3D;&quot;category_name_display_as_box&quot;
+  &gt;
+    &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        {{ circulationI18n?.bookNameI18n }}
+      &lt;/font&gt; &lt;/font
+    &gt;&lt;span class&#x3D;&quot;required&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;*&lt;/font&gt;
+      &lt;/font&gt;
+    &lt;/span&gt;
+  &lt;/label&gt;
+
+  &lt;div class&#x3D;&quot;col-sm-9 col-md-6 col-lg-6&quot; id&#x3D;&quot;category_name_input_box&quot;&gt;
+    &lt;select
+      [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.bookName.errors }&quot;
+      formControlName&#x3D;&quot;bookName&quot;
+      id&#x3D;&quot;field-category_name&quot;
+      name&#x3D;&quot;bookName&quot;
+      class&#x3D;&quot;form-control&quot;
+      type&#x3D;&quot;text&quot;
+      maxlength&#x3D;&quot;99&quot;
+    &gt;
+      &lt;option *ngFor&#x3D;&quot;let c of bookNames$&quot; value&#x3D;&quot;{{ c.id }}&quot;&gt;
+        {{ c.title }}
+      &lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.bookName.errors&quot; class&#x3D;&quot;alert alert-danger&quot;&gt;
+      &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.bookName.errors.required&quot;&gt;
+        {{ msg.validationMessage.bookName }}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- writer --&gt;
+  &lt;label
+    class&#x3D;&quot;col-sm-3 control-label&quot;
+    for&#x3D;&quot;name&quot;
+    id&#x3D;&quot;category_name_display_as_box&quot;
+  &gt;
+    &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        {{ circulationI18n?.writerI18n }}
+      &lt;/font&gt; &lt;/font
+    &gt;&lt;span class&#x3D;&quot;required&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;*&lt;/font&gt;
+      &lt;/font&gt;
+    &lt;/span&gt;
+  &lt;/label&gt;
+
+  &lt;div class&#x3D;&quot;col-sm-9 col-md-6 col-lg-6&quot; id&#x3D;&quot;category_name_input_box&quot;&gt;
+    &lt;select
+      [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.writer.errors }&quot;
+      formControlName&#x3D;&quot;writer&quot;
+      id&#x3D;&quot;field-category_name&quot;
+      name&#x3D;&quot;writer&quot;
+      class&#x3D;&quot;form-control&quot;
+    &gt;
+      &lt;option *ngFor&#x3D;&quot;let c of writers$&quot; value&#x3D;&quot;{{ c.id }}&quot;&gt;
+        {{ c.name }}
+      &lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.writer.errors&quot; class&#x3D;&quot;alert alert-danger&quot;&gt;
+      &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.writer.errors.required&quot;&gt;
+        {{ msg.validationMessage.writer }}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- issue date --&gt;
+  &lt;label
+    class&#x3D;&quot;col-sm-3 control-label&quot;
+    for&#x3D;&quot;name&quot;
+    id&#x3D;&quot;category_name_display_as_box&quot;
+  &gt;
+    &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        {{ circulationI18n?.issueDateI18n }}
+      &lt;/font&gt; &lt;/font
+    &gt;&lt;span class&#x3D;&quot;required&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;*&lt;/font&gt;
+      &lt;/font&gt;
+    &lt;/span&gt;
+  &lt;/label&gt;
+
+  &lt;div class&#x3D;&quot;col-sm-9 col-md-6 col-lg-6&quot; id&#x3D;&quot;category_name_input_box&quot;&gt;
+    &lt;input
+      [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.issueDate.errors }&quot;
+      formControlName&#x3D;&quot;issueDate&quot;
+      id&#x3D;&quot;field-category_name&quot;
+      name&#x3D;&quot;issueDate&quot;
+      class&#x3D;&quot;form-control&quot;
+      type&#x3D;&quot;date&quot;
+      maxlength&#x3D;&quot;99&quot;
+    /&gt;
+
+    &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.issueDate.errors&quot; class&#x3D;&quot;alert alert-danger&quot;&gt;
+      &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.issueDate.errors.required&quot;&gt;
+        {{ msg.validationMessage.issueDate }}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- last date --&gt;
+  &lt;label
+    class&#x3D;&quot;col-sm-3 control-label&quot;
+    for&#x3D;&quot;name&quot;
+    id&#x3D;&quot;category_name_display_as_box&quot;
+  &gt;
+    &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        {{ circulationI18n?.lastDateI18n }}
+      &lt;/font&gt; &lt;/font
+    &gt;&lt;span class&#x3D;&quot;required&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;*&lt;/font&gt;
+      &lt;/font&gt;
+    &lt;/span&gt;
+  &lt;/label&gt;
+
+  &lt;div class&#x3D;&quot;col-sm-9 col-md-6 col-lg-6&quot; id&#x3D;&quot;category_name_input_box&quot;&gt;
+    &lt;input
+      [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.lastDate.errors }&quot;
+      formControlName&#x3D;&quot;lastDate&quot;
+      id&#x3D;&quot;field-category_name&quot;
+      name&#x3D;&quot;lastDate&quot;
+      class&#x3D;&quot;form-control&quot;
+      type&#x3D;&quot;date&quot;
+      maxlength&#x3D;&quot;99&quot;
+    /&gt;
+
+    &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.lastDate.errors&quot; class&#x3D;&quot;alert alert-danger&quot;&gt;
+      &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.lastDate.errors.required&quot;&gt;
+        {{ msg.validationMessage.lastDate }}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- to return --&gt;
+  &lt;label
+    class&#x3D;&quot;col-sm-3 control-label&quot;
+    for&#x3D;&quot;name&quot;
+    id&#x3D;&quot;category_name_display_as_box&quot;
+  &gt;
+    &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        {{ circulationI18n?.toReturnI18n }}
+      &lt;/font&gt; &lt;/font
+    &gt;&lt;span class&#x3D;&quot;required&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;*&lt;/font&gt;
+      &lt;/font&gt;
+    &lt;/span&gt;
+  &lt;/label&gt;
+
+  &lt;div class&#x3D;&quot;col-sm-9 col-md-6 col-lg-6&quot; id&#x3D;&quot;category_name_input_box&quot;&gt;
+    &lt;input
+      [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.toReturn.errors }&quot;
+      formControlName&#x3D;&quot;toReturn&quot;
+      id&#x3D;&quot;field-category_name&quot;
+      name&#x3D;&quot;toReturn&quot;
+      class&#x3D;&quot;form-control&quot;
+      type&#x3D;&quot;date&quot;
+      maxlength&#x3D;&quot;99&quot;
+    /&gt;
+
+    &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.toReturn.errors&quot; class&#x3D;&quot;alert alert-danger&quot;&gt;
+      &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.toReturn.errors.required&quot;&gt;
+        {{ msg.validationMessage.toReturn }}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- return date --&gt;
+  &lt;label
+    class&#x3D;&quot;col-sm-3 control-label&quot;
+    for&#x3D;&quot;name&quot;
+    id&#x3D;&quot;category_name_display_as_box&quot;
+  &gt;
+    &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        {{ circulationI18n?.returnDateI18n }}
+      &lt;/font&gt; &lt;/font
+    &gt;&lt;span class&#x3D;&quot;required&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;*&lt;/font&gt;
+      &lt;/font&gt;
+    &lt;/span&gt;
+  &lt;/label&gt;
+
+  &lt;div class&#x3D;&quot;col-sm-9 col-md-6 col-lg-6&quot; id&#x3D;&quot;category_name_input_box&quot;&gt;
+    &lt;input
+      [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.returnDate.errors }&quot;
+      formControlName&#x3D;&quot;returnDate&quot;
+      id&#x3D;&quot;field-category_name&quot;
+      name&#x3D;&quot;category_name&quot;
+      class&#x3D;&quot;form-control&quot;
+      type&#x3D;&quot;date&quot;
+      maxlength&#x3D;&quot;99&quot;
+    /&gt;
+
+    &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.returnDate.errors&quot; class&#x3D;&quot;alert alert-danger&quot;&gt;
+      &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.returnDate.errors.required&quot;&gt;
+        {{ msg.validationMessage.returnDate }}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- penalty --&gt;
+  &lt;label
+    class&#x3D;&quot;col-sm-3 control-label&quot;
+    for&#x3D;&quot;name&quot;
+    id&#x3D;&quot;category_name_display_as_box&quot;
+  &gt;
+    &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        {{ circulationI18n?.penaltyI18n }}
+      &lt;/font&gt; &lt;/font
+    &gt;&lt;span class&#x3D;&quot;required&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;*&lt;/font&gt;
+      &lt;/font&gt;
+    &lt;/span&gt;
+  &lt;/label&gt;
+
+  &lt;div class&#x3D;&quot;col-sm-9 col-md-6 col-lg-6&quot; id&#x3D;&quot;category_name_input_box&quot;&gt;
+    &lt;input
+      [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.penalty.errors }&quot;
+      formControlName&#x3D;&quot;penalty&quot;
+      id&#x3D;&quot;field-category_name&quot;
+      name&#x3D;&quot;penalty&quot;
+      class&#x3D;&quot;form-control&quot;
+      type&#x3D;&quot;text&quot;
+      maxlength&#x3D;&quot;99&quot;
+    /&gt;
+
+    &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.penalty.errors&quot; class&#x3D;&quot;alert alert-danger&quot;&gt;
+      &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.penalty.errors.required&quot;&gt;
+        {{ msg.validationMessage.penalty }}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- return status --&gt;
+  &lt;label
+    class&#x3D;&quot;col-sm-3 control-label&quot;
+    for&#x3D;&quot;name&quot;
+    id&#x3D;&quot;category_name_display_as_box&quot;
+  &gt;
+    &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        {{ circulationI18n?.returnStatusI18n }}
+      &lt;/font&gt; &lt;/font
+    &gt;&lt;span class&#x3D;&quot;required&quot;&gt;
+      &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;*&lt;/font&gt;
+      &lt;/font&gt;
+    &lt;/span&gt;
+  &lt;/label&gt;
+
+  &lt;div class&#x3D;&quot;col-sm-9 col-md-6 col-lg-6&quot; id&#x3D;&quot;category_name_input_box&quot;&gt;
+    &lt;select
+      [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.returnStatus.errors }&quot;
+      formControlName&#x3D;&quot;returnStatus&quot;
+      id&#x3D;&quot;field-category_name&quot;
+      name&#x3D;&quot;returnStatus&quot;
+      class&#x3D;&quot;form-control&quot;
+    &gt;
+      &lt;option *ngFor&#x3D;&quot;let c of returnStatus$&quot; value&#x3D;&quot;{{ c.id }}&quot;&gt;
+        {{ c.name }}
+      &lt;/option&gt;
+    &lt;/select&gt;
+    &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.returnStatus.errors&quot; class&#x3D;&quot;alert alert-danger&quot;&gt;
+      &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.returnStatus.errors.required&quot;&gt;
+        {{ msg.validationMessage.returnStatus }}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;br /&gt;
+  &lt;!-- add button --&gt;
+  &lt;button (click)&#x3D;&quot;add()&quot; type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-info&quot;&gt;
+    &lt;i class&#x3D;&quot;fas fa-save&quot;&gt;&lt;/i&gt;
+    {{ circulationI18n?.addButtonI18n }}
+  &lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./add-circulation.component.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><form  class="form-group odd"  id="category_name_field_box"  [formGroup]="circulationForm">  <!-- membre name-->  <label    class="col-sm-3 control-label"    for="name"    id="category_name_display_as_box"  >    <font style="vertical-align: inherit">      <font style="vertical-align: inherit">        {{ circulationI18n?.memberNameI18n }}      </font> </font    ><span class="required">      <font style="vertical-align: inherit">        <font style="vertical-align: inherit">*</font>      </font>    </span>  </label>  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">    <select      [ngClass]="{ \'is-invalid\': submitted && f.memberName.errors }"      formControlName="memberName"      id="field-category_name"      name="memberName"      class="form-control"    >      <option *ngFor="let c of memberNames$" value="{{ c.id }}">        {{ c.name }}      </option>    </select>    <div *ngIf="submitted && f.memberName.errors" class="alert alert-danger">      <div *ngIf="submitted && f.memberName.errors.required">        {{ msg.validationMessage.memberName }}      </div>    </div>  </div>  <!-- book name-->  <label    class="col-sm-3 control-label"    for="name"    id="category_name_display_as_box"  >    <font style="vertical-align: inherit">      <font style="vertical-align: inherit">        {{ circulationI18n?.bookNameI18n }}      </font> </font    ><span class="required">      <font style="vertical-align: inherit">        <font style="vertical-align: inherit">*</font>      </font>    </span>  </label>  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">    <select      [ngClass]="{ \'is-invalid\': submitted && f.bookName.errors }"      formControlName="bookName"      id="field-category_name"      name="bookName"      class="form-control"      type="text"      maxlength="99"    >      <option *ngFor="let c of bookNames$" value="{{ c.id }}">        {{ c.title }}      </option>    </select>    <div *ngIf="submitted && f.bookName.errors" class="alert alert-danger">      <div *ngIf="submitted && f.bookName.errors.required">        {{ msg.validationMessage.bookName }}      </div>    </div>  </div>  <!-- writer -->  <label    class="col-sm-3 control-label"    for="name"    id="category_name_display_as_box"  >    <font style="vertical-align: inherit">      <font style="vertical-align: inherit">        {{ circulationI18n?.writerI18n }}      </font> </font    ><span class="required">      <font style="vertical-align: inherit">        <font style="vertical-align: inherit">*</font>      </font>    </span>  </label>  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">    <select      [ngClass]="{ \'is-invalid\': submitted && f.writer.errors }"      formControlName="writer"      id="field-category_name"      name="writer"      class="form-control"    >      <option *ngFor="let c of writers$" value="{{ c.id }}">        {{ c.name }}      </option>    </select>    <div *ngIf="submitted && f.writer.errors" class="alert alert-danger">      <div *ngIf="submitted && f.writer.errors.required">        {{ msg.validationMessage.writer }}      </div>    </div>  </div>  <!-- issue date -->  <label    class="col-sm-3 control-label"    for="name"    id="category_name_display_as_box"  >    <font style="vertical-align: inherit">      <font style="vertical-align: inherit">        {{ circulationI18n?.issueDateI18n }}      </font> </font    ><span class="required">      <font style="vertical-align: inherit">        <font style="vertical-align: inherit">*</font>      </font>    </span>  </label>  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">    <input      [ngClass]="{ \'is-invalid\': submitted && f.issueDate.errors }"      formControlName="issueDate"      id="field-category_name"      name="issueDate"      class="form-control"      type="date"      maxlength="99"    />    <div *ngIf="submitted && f.issueDate.errors" class="alert alert-danger">      <div *ngIf="submitted && f.issueDate.errors.required">        {{ msg.validationMessage.issueDate }}      </div>    </div>  </div>  <!-- last date -->  <label    class="col-sm-3 control-label"    for="name"    id="category_name_display_as_box"  >    <font style="vertical-align: inherit">      <font style="vertical-align: inherit">        {{ circulationI18n?.lastDateI18n }}      </font> </font    ><span class="required">      <font style="vertical-align: inherit">        <font style="vertical-align: inherit">*</font>      </font>    </span>  </label>  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">    <input      [ngClass]="{ \'is-invalid\': submitted && f.lastDate.errors }"      formControlName="lastDate"      id="field-category_name"      name="lastDate"      class="form-control"      type="date"      maxlength="99"    />    <div *ngIf="submitted && f.lastDate.errors" class="alert alert-danger">      <div *ngIf="submitted && f.lastDate.errors.required">        {{ msg.validationMessage.lastDate }}      </div>    </div>  </div>  <!-- to return -->  <label    class="col-sm-3 control-label"    for="name"    id="category_name_display_as_box"  >    <font style="vertical-align: inherit">      <font style="vertical-align: inherit">        {{ circulationI18n?.toReturnI18n }}      </font> </font    ><span class="required">      <font style="vertical-align: inherit">        <font style="vertical-align: inherit">*</font>      </font>    </span>  </label>  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">    <input      [ngClass]="{ \'is-invalid\': submitted && f.toReturn.errors }"      formControlName="toReturn"      id="field-category_name"      name="toReturn"      class="form-control"      type="date"      maxlength="99"    />    <div *ngIf="submitted && f.toReturn.errors" class="alert alert-danger">      <div *ngIf="submitted && f.toReturn.errors.required">        {{ msg.validationMessage.toReturn }}      </div>    </div>  </div>  <!-- return date -->  <label    class="col-sm-3 control-label"    for="name"    id="category_name_display_as_box"  >    <font style="vertical-align: inherit">      <font style="vertical-align: inherit">        {{ circulationI18n?.returnDateI18n }}      </font> </font    ><span class="required">      <font style="vertical-align: inherit">        <font style="vertical-align: inherit">*</font>      </font>    </span>  </label>  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">    <input      [ngClass]="{ \'is-invalid\': submitted && f.returnDate.errors }"      formControlName="returnDate"      id="field-category_name"      name="category_name"      class="form-control"      type="date"      maxlength="99"    />    <div *ngIf="submitted && f.returnDate.errors" class="alert alert-danger">      <div *ngIf="submitted && f.returnDate.errors.required">        {{ msg.validationMessage.returnDate }}      </div>    </div>  </div>  <!-- penalty -->  <label    class="col-sm-3 control-label"    for="name"    id="category_name_display_as_box"  >    <font style="vertical-align: inherit">      <font style="vertical-align: inherit">        {{ circulationI18n?.penaltyI18n }}      </font> </font    ><span class="required">      <font style="vertical-align: inherit">        <font style="vertical-align: inherit">*</font>      </font>    </span>  </label>  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">    <input      [ngClass]="{ \'is-invalid\': submitted && f.penalty.errors }"      formControlName="penalty"      id="field-category_name"      name="penalty"      class="form-control"      type="text"      maxlength="99"    />    <div *ngIf="submitted && f.penalty.errors" class="alert alert-danger">      <div *ngIf="submitted && f.penalty.errors.required">        {{ msg.validationMessage.penalty }}      </div>    </div>  </div>  <!-- return status -->  <label    class="col-sm-3 control-label"    for="name"    id="category_name_display_as_box"  >    <font style="vertical-align: inherit">      <font style="vertical-align: inherit">        {{ circulationI18n?.returnStatusI18n }}      </font> </font    ><span class="required">      <font style="vertical-align: inherit">        <font style="vertical-align: inherit">*</font>      </font>    </span>  </label>  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">    <select      [ngClass]="{ \'is-invalid\': submitted && f.returnStatus.errors }"      formControlName="returnStatus"      id="field-category_name"      name="returnStatus"      class="form-control"    >      <option *ngFor="let c of returnStatus$" value="{{ c.id }}">        {{ c.name }}      </option>    </select>    <div *ngIf="submitted && f.returnStatus.errors" class="alert alert-danger">      <div *ngIf="submitted && f.returnStatus.errors.required">        {{ msg.validationMessage.returnStatus }}      </div>    </div>  </div>  <br />  <!-- add button -->  <button (click)="add()" type="button" class="btn btn-info">    <i class="fas fa-save"></i>    {{ circulationI18n?.addButtonI18n }}  </button></form></div>'
+    var COMPONENTS = [{'name': 'AddBookComponent', 'selector': 'app-add-book'},{'name': 'AddButtonComponent', 'selector': 'app-add-button'},{'name': 'AddCategoryComponent', 'selector': 'app-add-category'},{'name': 'AddCirculationComponent', 'selector': 'app-add-circulation'},{'name': 'AddCirculationStatusComponent', 'selector': 'app-add-circulation-status'},{'name': 'AddEbookComponent', 'selector': 'app-add-ebook'},{'name': 'AddMemberComponent', 'selector': 'app-add-member'},{'name': 'AddPublisherComponent', 'selector': 'app-add-publisher'},{'name': 'AddRequestedBookComponent', 'selector': 'app-add-requested-book'},{'name': 'AddTypeMemberComponent', 'selector': 'app-add-type-member'},{'name': 'AddWriterComponent', 'selector': 'app-add-writer'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BookComponent', 'selector': 'app-book'},{'name': 'BookListComponent', 'selector': 'app-book-list'},{'name': 'BookNumberComponent', 'selector': 'app-book-number'},{'name': 'CategoryComponent', 'selector': 'app-category'},{'name': 'CategoryListComponent', 'selector': 'app-category-list'},{'name': 'CirculationComponent', 'selector': 'app-circulation'},{'name': 'CirculationListComponent', 'selector': 'app-circulation-list'},{'name': 'CirculationModalComponent', 'selector': 'app-circulation-modal'},{'name': 'CirculationStatusComponent', 'selector': 'app-circulation-status'},{'name': 'CirculationStatusListComponent', 'selector': 'app-circulation-status-list'},{'name': 'CirculationStatusModalComponent', 'selector': 'app-circulation-status-modal'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'EbookComponent', 'selector': 'app-ebook'},{'name': 'EbookListComponent', 'selector': 'app-ebook-list'},{'name': 'EbookModalComponent', 'selector': 'app-ebook-modal'},{'name': 'EditBookComponent', 'selector': 'app-edit-book'},{'name': 'EditCategoryComponent', 'selector': 'app-edit-category'},{'name': 'EditCirculationComponent', 'selector': 'app-edit-circulation'},{'name': 'EditCirculationStatusComponent', 'selector': 'app-edit-circulation-status'},{'name': 'EditEbookComponent', 'selector': 'app-edit-ebook'},{'name': 'EditMemberComponent', 'selector': 'app-edit-member'},{'name': 'EditPublisherComponent', 'selector': 'app-edit-publisher'},{'name': 'EditRequestedBookComponent', 'selector': 'app-edit-requested-book'},{'name': 'EditSettingsComponent', 'selector': 'app-edit-settings'},{'name': 'EditTypeMemberComponent', 'selector': 'app-edit-type-member'},{'name': 'EditWriterComponent', 'selector': 'app-edit-writer'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'LoadingComponent', 'selector': 'app-loading'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberComponent', 'selector': 'app-member'},{'name': 'MemberListComponent', 'selector': 'app-member-list'},{'name': 'MemberModalComponent', 'selector': 'app-member-modal'},{'name': 'ModalBookComponent', 'selector': 'app-modal-book'},{'name': 'ModalCategoryComponent', 'selector': 'app-modal-category'},{'name': 'ModalTypeMemberComponent', 'selector': 'app-modal-type-member'},{'name': 'NavigationComponent', 'selector': 'app-navigation'},{'name': 'PublisherComponent', 'selector': 'app-publisher'},{'name': 'PublisherListComponent', 'selector': 'app-publisher-list'},{'name': 'PublisherModalComponent', 'selector': 'app-publisher-modal'},{'name': 'RequestedBookListComponent', 'selector': 'app-requested-book-list'},{'name': 'RequestedBookModalComponent', 'selector': 'app-requested-book-modal'},{'name': 'RequiredBookComponent', 'selector': 'app-required-book'},{'name': 'SettingsComponent', 'selector': 'app-settings'},{'name': 'SettingsListComponent', 'selector': 'app-settings-list'},{'name': 'SettingsModalComponent', 'selector': 'app-settings-modal'},{'name': 'StatisticMemberComponent', 'selector': 'app-statistic-member'},{'name': 'StatisticsBookComponent', 'selector': 'app-statistics-book'},{'name': 'TopbarComponent', 'selector': 'app-topbar'},{'name': 'TypeMemberComponent', 'selector': 'app-type-member'},{'name': 'TypememberListComponent', 'selector': 'app-typemember-list'},{'name': 'ViewBookComponent', 'selector': 'app-view-book'},{'name': 'ViewCirculationComponent', 'selector': 'app-view-circulation'},{'name': 'ViewMemberComponent', 'selector': 'app-view-member'},{'name': 'ViewRequestedBookComponent', 'selector': 'app-view-requested-book'},{'name': 'WriterComponent', 'selector': 'app-writer'},{'name': 'WriterListComponent', 'selector': 'app-writer-list'},{'name': 'WriterModalComponent', 'selector': 'app-writer-modal'}];
+    var DIRECTIVES = [{'name': 'StatusDirective', 'selector': '[appStatus]'}];
+    var ACTUAL_COMPONENT = {'name': 'AddCirculationComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AddCirculationComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

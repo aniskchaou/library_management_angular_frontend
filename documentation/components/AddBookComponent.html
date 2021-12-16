@@ -1,0 +1,1649 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>my-app-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">my-app-angular documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  AddBookComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/modules/book/add-book/add-book.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../classes/URLLoader.html" target="_self" >URLLoader</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-add-book</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./add-book.component.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./add-book.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#bookForm" >bookForm</a>
+                            </li>
+                            <li>
+                                <a href="#bookI18n" >bookI18n</a>
+                            </li>
+                            <li>
+                                <a href="#categories$" >categories$</a>
+                            </li>
+                            <li>
+                                <a href="#msg" >msg</a>
+                            </li>
+                            <li>
+                                <a href="#publishers$" >publishers$</a>
+                            </li>
+                            <li>
+                                <a href="#submitted" >submitted</a>
+                            </li>
+                            <li>
+                                <a href="#writers$" >writers$</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#add" >add</a>
+                            </li>
+                            <li>
+                                <a href="#closeModal" >closeModal</a>
+                            </li>
+                            <li>
+                                <a href="#getBookByLang" >getBookByLang</a>
+                            </li>
+                            <li>
+                                <a href="#getcategories" >getcategories</a>
+                            </li>
+                            <li>
+                                <a href="#getPublishers" >getPublishers</a>
+                            </li>
+                            <li>
+                                <a href="#getWriters" >getWriters</a>
+                            </li>
+                            <li>
+                                <a href="#goBack" >goBack</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#reset" >reset</a>
+                            </li>
+                            <li>
+                                <a href="#loadScripts" >loadScripts</a>
+                            </li>
+                            <li>
+                                <a href="#show" >show</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#closeModalEvent" >closeModalEvent</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#f" >f</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(validation: <a href="../injectables/BookValidation.html" target="_self">BookValidation</a>, message: <a href="../injectables/BookMessage.html" target="_self">BookMessage</a>, httpService: <a href="../injectables/HTTPService.html" target="_self">HTTPService</a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:45</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>validation</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/BookValidation.html" target="_self" >BookValidation</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>message</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/BookMessage.html" target="_self" >BookMessage</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>httpService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/HTTPService.html" target="_self" >HTTPService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="closeModalEvent"></a>
+                        <b>closeModalEvent</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:27</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="add"></a>
+                    <span class="name">
+                        <span ><b>add</b></span>
+                        <a href="#add"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>add()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="118"
+                            class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:118</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeModal"></a>
+                    <span class="name">
+                        <span ><b>closeModal</b></span>
+                        <a href="#closeModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeModal()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="31"
+                            class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:31</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getBookByLang"></a>
+                    <span class="name">
+                        <span ><b>getBookByLang</b></span>
+                        <a href="#getBookByLang"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getBookByLang(lang)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="147"
+                            class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:147</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>lang</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getcategories"></a>
+                    <span class="name">
+                        <span ><b>getcategories</b></span>
+                        <a href="#getcategories"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getcategories()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="67"
+                            class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:67</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPublishers"></a>
+                    <span class="name">
+                        <span ><b>getPublishers</b></span>
+                        <a href="#getPublishers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getPublishers()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="105"
+                            class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:105</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getWriters"></a>
+                    <span class="name">
+                        <span ><b>getWriters</b></span>
+                        <a href="#getWriters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getWriters()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="92"
+                            class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:92</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goBack"></a>
+                    <span class="name">
+                        <span ><b>goBack</b></span>
+                        <a href="#goBack"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goBack()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="35"
+                            class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:35</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="60"
+                            class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:60</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reset"></a>
+                    <span class="name">
+                        <span ><b>reset</b></span>
+                        <a href="#reset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>reset()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="78"
+                            class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:78</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadScripts"></a>
+                    <span class="name">
+                        <span ><b>loadScripts</b></span>
+                        <a href="#loadScripts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadScripts()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/URLLoader.html" target="_self" >URLLoader</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/URLLoader.html#source" target="_self" >URLLoader:9</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="show"></a>
+                    <span class="name">
+                        <span ><b>show</b></span>
+                        <a href="#show"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>show(title, message, type)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/URLLoader.html" target="_self" >URLLoader</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/URLLoader.html#source" target="_self" >URLLoader:5</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>title</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>message</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>type</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="bookForm"></a>
+                    <span class="name">
+                        <span ><b>bookForm</b></span>
+                        <a href="#bookForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:21</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="bookI18n"></a>
+                    <span class="name">
+                        <span ><b>bookI18n</b></span>
+                        <a href="#bookI18n"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="categories$"></a>
+                    <span class="name">
+                        <span ><b>categories$</b></span>
+                        <a href="#categories$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="msg"></a>
+                    <span class="name">
+                        <span ><b>msg</b></span>
+                        <a href="#msg"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/BookMessage.html" target="_self" >BookMessage</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="publishers$"></a>
+                    <span class="name">
+                        <span ><b>publishers$</b></span>
+                        <a href="#publishers$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitted"></a>
+                    <span class="name">
+                        <span ><b>submitted</b></span>
+                        <a href="#submitted"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="writers$"></a>
+                    <span class="name">
+                        <span ><b>writers$</b></span>
+                        <a href="#writers$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="f"></a>
+                        <span class="name"><b>f</b><a href="#f"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>f()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/modules/book/add-book/add-book.component.ts:43</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpErrorResponse } from &#x27;@angular/common/http&#x27;;
+import { Component, EventEmitter, OnInit, Output } from &#x27;@angular/core&#x27;;
+import { FormGroup } from &#x27;@angular/forms&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { URLLoader } from &#x27;src/app/main/configs/URLLoader&#x27;;
+import BookMessage from &#x27;src/app/main/messages/BookMessage&#x27;;
+import BookTestService from &#x27;src/app/main/mocks/BookTestService&#x27;;
+import Category from &#x27;src/app/main/models/Category&#x27;;
+import Publisher from &#x27;src/app/main/models/Publisher&#x27;;
+import Writer from &#x27;src/app/main/models/Writer&#x27;;
+import { HTTPService } from &#x27;src/app/main/services/HTTPService&#x27;;
+import CONFIG from &#x27;src/app/main/urls/urls&#x27;;
+import BookValidation from &#x27;src/app/main/validations/BookValidation&#x27;;
+
+@Component({
+  selector: &#x27;app-add-book&#x27;,
+  templateUrl: &#x27;./add-book.component.html&#x27;,
+  styleUrls: [&#x27;./add-book.component.css&#x27;],
+})
+export class AddBookComponent extends URLLoader implements OnInit {
+  bookForm: FormGroup;
+  msg: BookMessage;
+  submitted &#x3D; false;
+  writers$ &#x3D; [];
+  publishers$ &#x3D; [];
+
+  @Output() closeModalEvent &#x3D; new EventEmitter&lt;string&gt;();
+  bookI18n;
+  categories$ &#x3D; [];
+
+  closeModal() {
+    this.closeModalEvent.emit();
+  }
+
+  goBack() {
+    this.router
+      .navigateByUrl(&#x27;/dashboard&#x27;, { skipLocationChange: true })
+      .then(() &#x3D;&gt; {
+        this.router.navigate([&#x27;/book&#x27;]);
+      });
+  }
+
+  get f() {
+    return this.bookForm.controls;
+  }
+
+  constructor(
+    private validation: BookValidation,
+    private message: BookMessage,
+    //private bookTestService: BookTestService,
+    private httpService: HTTPService,
+    private router: Router
+  ) {
+    super();
+    this.bookForm &#x3D; this.validation.formGroupInstance;
+    this.msg &#x3D; this.message;
+    //console.log(this.msg.validationMessage.isbn);
+  }
+
+  ngOnInit(): void {
+    this.getcategories();
+    this.getWriters();
+    this.getPublishers();
+    this.getBookByLang(CONFIG.getInstance().getLang());
+  }
+
+  getcategories() {
+    this.httpService.getAll(CONFIG.URL_BASE + &#x27;/category/all&#x27;).subscribe(
+      (data: Category[]) &#x3D;&gt; {
+        this.categories$ &#x3D; data;
+      },
+      (err: HttpErrorResponse) &#x3D;&gt; {
+        super.show(&#x27;Error&#x27;, err.message, &#x27;warning&#x27;);
+      }
+    );
+  }
+
+  reset() {
+    this.bookForm.reset();
+  }
+
+  /* add() {
+    this.submitted &#x3D; true;
+
+    if (this.validation.checkValidation()) {
+      this.bookTestService.create(this.bookForm.value)
+      super.show(&#x27;Confirmation&#x27;, this.msg.confirmationMessages.add, &#x27;success&#x27;)
+
+    }
+  }*/
+
+  getWriters() {
+    // this.appointements$ &#x3D; this.appointmentTestService.getAll()
+    this.httpService.getAll(CONFIG.URL_BASE + &#x27;/writer/all&#x27;).subscribe(
+      (data: Writer[]) &#x3D;&gt; {
+        this.writers$ &#x3D; data;
+        console.log(this.writers$);
+      },
+      (err: HttpErrorResponse) &#x3D;&gt; {
+        super.show(&#x27;Error&#x27;, err.message, &#x27;error&#x27;);
+      }
+    );
+  }
+
+  getPublishers() {
+    // this.appointements$ &#x3D; this.appointmentTestService.getAll()
+    this.httpService.getAll(CONFIG.URL_BASE + &#x27;/publisher/all&#x27;).subscribe(
+      (data: Publisher[]) &#x3D;&gt; {
+        this.publishers$ &#x3D; data;
+        //console.log(this.publishers$);
+      },
+      (err: HttpErrorResponse) &#x3D;&gt; {
+        super.show(&#x27;Error&#x27;, err.message, &#x27;error&#x27;);
+      }
+    );
+  }
+
+  add() {
+    this.submitted &#x3D; true;
+    this.bookForm.value.publisher &#x3D; this.publishers$.filter(
+      (x) &#x3D;&gt; x.id &#x3D;&#x3D; parseInt(this.bookForm.value.publisher)
+    )[0];
+    this.bookForm.value.writer &#x3D; this.writers$.filter(
+      (x) &#x3D;&gt; x.id &#x3D;&#x3D; parseInt(this.bookForm.value.writer)
+    )[0];
+    this.bookForm.value.category &#x3D; this.categories$.filter(
+      (x) &#x3D;&gt; x.id &#x3D;&#x3D; parseInt(this.bookForm.value.category)
+    )[0];
+
+    if (this.validation.checkValidation()) {
+      console.log(this.bookForm.value);
+      this.httpService
+        .create(CONFIG.URL_BASE + &#x27;/book/create&#x27;, this.bookForm.value)
+        .then(() &#x3D;&gt; {
+          this.reset();
+          this.closeModal();
+          this.goBack();
+          super.show(
+            &#x27;Confirmation&#x27;,
+            this.msg.confirmationMessages.add,
+            &#x27;success&#x27;
+          );
+        });
+    }
+  }
+
+  getBookByLang(lang) {
+    this.httpService.getAll(CONFIG.URL_BASE + &#x27;/i18n/book/&#x27; + lang).subscribe(
+      (data) &#x3D;&gt; {
+        this.bookI18n &#x3D; data;
+      },
+      (err: HttpErrorResponse) &#x3D;&gt; {
+        super.show(&#x27;Error&#x27;, err.message, &#x27;error&#x27;);
+      }
+    );
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;form class&#x3D;&quot;form-horizontal&quot; [formGroup]&#x3D;&quot;bookForm&quot;&gt;
+  &lt;div class&#x3D;&quot;box-body&quot;&gt;
+    &lt;div class&#x3D;&quot;form-group&quot;&gt;
+      &lt;label class&#x3D;&quot;col-sm-3 control-label&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+          &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;{{ bookI18n?.isbnI18n }} &lt;/font&gt;
+        &lt;/font&gt;
+      &lt;/label&gt;
+      &lt;div class&#x3D;&quot;col-md-12&quot;&gt;
+        &lt;input
+          [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.isbn.errors }&quot;
+          formControlName&#x3D;&quot;isbn&quot;
+          name&#x3D;&quot;isbn&quot;
+          value&#x3D;&quot;&quot;
+          class&#x3D;&quot;form-control&quot;
+          type&#x3D;&quot;text&quot;
+        /&gt;
+        &lt;div class&#x3D;&quot;alert alert-danger&quot; *ngIf&#x3D;&quot;submitted &amp;&amp; f.isbn.errors&quot;&gt;
+          {{ msg.validationMessage.isbn }}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;form-group&quot;&gt;
+      &lt;label class&#x3D;&quot;col-sm-3 control-label&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+          &lt;font style&#x3D;&quot;vertical-align: inherit&quot;
+            &gt;{{ bookI18n?.titleI18n }} *
+          &lt;/font&gt;
+        &lt;/font&gt;
+      &lt;/label&gt;
+      &lt;div class&#x3D;&quot;col-md-12&quot;&gt;
+        &lt;input
+          [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.title.errors }&quot;
+          formControlName&#x3D;&quot;title&quot;
+          name&#x3D;&quot;title&quot;
+          value&#x3D;&quot;&quot;
+          class&#x3D;&quot;form-control&quot;
+          type&#x3D;&quot;text&quot;
+        /&gt;
+        &lt;div class&#x3D;&quot;alert alert-danger&quot; *ngIf&#x3D;&quot;submitted &amp;&amp; f.title.errors&quot;&gt;
+          {{ msg.validationMessage.title }}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;form-group&quot;&gt;
+      &lt;label class&#x3D;&quot;col-sm-3 control-label&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+          &lt;font style&#x3D;&quot;vertical-align: inherit&quot;
+            &gt;{{ bookI18n?.editionI18n }} *
+          &lt;/font&gt;
+        &lt;/font&gt;
+      &lt;/label&gt;
+      &lt;div class&#x3D;&quot;col-md-12&quot;&gt;
+        &lt;input
+          [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.edition.errors }&quot;
+          formControlName&#x3D;&quot;edition&quot;
+          name&#x3D;&quot;edition&quot;
+          value&#x3D;&quot;&quot;
+          class&#x3D;&quot;form-control&quot;
+          type&#x3D;&quot;text&quot;
+        /&gt;
+        &lt;div class&#x3D;&quot;alert alert-danger&quot; *ngIf&#x3D;&quot;submitted &amp;&amp; f.edition.errors&quot;&gt;
+          {{ msg.validationMessage.edition }}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;form-group&quot;&gt;
+      &lt;label class&#x3D;&quot;col-sm-3 control-label&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+          &lt;font style&#x3D;&quot;vertical-align: inherit&quot;
+            &gt;{{ bookI18n?.edition_yearI18n }}
+          &lt;/font&gt;
+        &lt;/font&gt;
+      &lt;/label&gt;
+      &lt;div class&#x3D;&quot;col-md-12&quot;&gt;
+        &lt;input
+          [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.edition_year.errors }&quot;
+          formControlName&#x3D;&quot;edition_year&quot;
+          name&#x3D;&quot;edition_year&quot;
+          class&#x3D;&quot;form-control&quot;
+          type&#x3D;&quot;number&quot;
+        /&gt;
+        &lt;div
+          class&#x3D;&quot;alert alert-danger&quot;
+          *ngIf&#x3D;&quot;submitted &amp;&amp; f.edition_year.errors&quot;
+        &gt;
+          {{ msg.validationMessage.edition_year }}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;form-group&quot;&gt;
+      &lt;label class&#x3D;&quot;col-sm-3 control-label&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+          &lt;font style&#x3D;&quot;vertical-align: inherit&quot;
+            &gt;{{ bookI18n?.publisherI18n }}
+          &lt;/font&gt;
+        &lt;/font&gt;
+      &lt;/label&gt;
+      &lt;div class&#x3D;&quot;col-md-12&quot;&gt;
+        &lt;select
+          [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.publisher.errors }&quot;
+          formControlName&#x3D;&quot;publisher&quot;
+          name&#x3D;&quot;publisher&quot;
+          value&#x3D;&quot;&quot;
+          class&#x3D;&quot;form-control&quot;
+        &gt;
+          &lt;option *ngFor&#x3D;&quot;let c of publishers$&quot; value&#x3D;&quot;{{ c.id }}&quot;&gt;
+            {{ c.name }}
+          &lt;/option&gt;
+        &lt;/select&gt;
+        &lt;div class&#x3D;&quot;alert alert-danger&quot; *ngIf&#x3D;&quot;submitted &amp;&amp; f.publisher.errors&quot;&gt;
+          {{ msg.validationMessage.publisher }}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;form-group&quot;&gt;
+      &lt;label class&#x3D;&quot;col-sm-3 control-label&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+          &lt;font style&#x3D;&quot;vertical-align: inherit&quot;
+            &gt;{{ bookI18n?.authorI18n }}
+          &lt;/font&gt;
+        &lt;/font&gt;
+      &lt;/label&gt;
+      &lt;div class&#x3D;&quot;col-md-12&quot;&gt;
+        &lt;select
+          [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.writer.errors }&quot;
+          formControlName&#x3D;&quot;writer&quot;
+          name&#x3D;&quot;editor&quot;
+          value&#x3D;&quot;&quot;
+          class&#x3D;&quot;form-control&quot;
+        &gt;
+          &lt;option *ngFor&#x3D;&quot;let c of writers$&quot; value&#x3D;&quot;{{ c.id }}&quot;&gt;
+            {{ c.name }}
+          &lt;/option&gt;
+        &lt;/select&gt;
+        &lt;div class&#x3D;&quot;alert alert-danger&quot; *ngIf&#x3D;&quot;submitted &amp;&amp; f.writer.errors&quot;&gt;
+          {{ msg.validationMessage.writer }}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;form-group&quot;&gt;
+      &lt;label class&#x3D;&quot;col-sm-3 control-label&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+          &lt;font style&#x3D;&quot;vertical-align: inherit&quot;
+            &gt;{{ bookI18n?.categoryI18n }}
+          &lt;/font&gt;
+        &lt;/font&gt;
+      &lt;/label&gt;
+      &lt;div class&#x3D;&quot;col-md-12&quot;&gt;
+        &lt;select
+          [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.category.errors }&quot;
+          formControlName&#x3D;&quot;category&quot;
+          name&#x3D;&quot;category&quot;
+          value&#x3D;&quot;&quot;
+          class&#x3D;&quot;form-control&quot;
+        &gt;
+          &lt;option *ngFor&#x3D;&quot;let c of categories$&quot; value&#x3D;&quot;{{ c.id }}&quot;&gt;
+            {{ c.category_name }}
+          &lt;/option&gt;
+        &lt;/select&gt;
+        &lt;div class&#x3D;&quot;alert alert-danger&quot; *ngIf&#x3D;&quot;submitted &amp;&amp; f.category.errors&quot;&gt;
+          {{ msg.validationMessage.category }}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;form-group&quot;&gt;
+      &lt;label class&#x3D;&quot;col-sm-3 control-label&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+          &lt;font style&#x3D;&quot;vertical-align: inherit&quot;
+            &gt;{{ bookI18n?.publishing_yearI18n }}
+          &lt;/font&gt;
+        &lt;/font&gt;
+      &lt;/label&gt;
+      &lt;div class&#x3D;&quot;col-md-12&quot;&gt;
+        &lt;input
+          [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.publishing_year.errors }&quot;
+          formControlName&#x3D;&quot;publishing_year&quot;
+          name&#x3D;&quot;publishing_year&quot;
+          value&#x3D;&quot;&quot;
+          class&#x3D;&quot;form-control&quot;
+          type&#x3D;&quot;number&quot;
+        /&gt;
+        &lt;div
+          class&#x3D;&quot;alert alert-danger&quot;
+          *ngIf&#x3D;&quot;submitted &amp;&amp; f.publishing_year.errors&quot;
+        &gt;
+          {{ msg.validationMessage.publishing_year }}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;form-group&quot;&gt;
+      &lt;label class&#x3D;&quot;col-sm-3 control-label&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+          &lt;font style&#x3D;&quot;vertical-align: inherit&quot;
+            &gt;{{ bookI18n?.publication_placeI18n }}
+          &lt;/font&gt;
+        &lt;/font&gt;
+      &lt;/label&gt;
+      &lt;div class&#x3D;&quot;col-md-12&quot;&gt;
+        &lt;input
+          [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.publication_place.errors }&quot;
+          formControlName&#x3D;&quot;publication_place&quot;
+          name&#x3D;&quot;publication_place&quot;
+          value&#x3D;&quot;&quot;
+          class&#x3D;&quot;form-control&quot;
+          type&#x3D;&quot;text&quot;
+        /&gt;
+        &lt;div
+          class&#x3D;&quot;alert alert-danger&quot;
+          *ngIf&#x3D;&quot;submitted &amp;&amp; f.publication_place.errors&quot;
+        &gt;
+          {{ msg.validationMessage.publication_place }}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;form-group&quot;&gt;
+      &lt;label class&#x3D;&quot;col-sm-3 control-label&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+          &lt;font style&#x3D;&quot;vertical-align: inherit&quot;
+            &gt;{{ bookI18n?.number_of_pagesI18n }}
+          &lt;/font&gt;
+        &lt;/font&gt;
+      &lt;/label&gt;
+      &lt;div class&#x3D;&quot;col-md-12&quot;&gt;
+        &lt;input
+          [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.number_of_pages.errors }&quot;
+          formControlName&#x3D;&quot;number_of_pages&quot;
+          name&#x3D;&quot;number_of_pages&quot;
+          value&#x3D;&quot;&quot;
+          class&#x3D;&quot;form-control&quot;
+          type&#x3D;&quot;number&quot;
+        /&gt;
+
+        &lt;div
+          class&#x3D;&quot;alert alert-danger&quot;
+          *ngIf&#x3D;&quot;submitted &amp;&amp; f.number_of_pages.errors&quot;
+        &gt;
+          &lt;div *ngIf&#x3D;&quot;submitted &amp;&amp; f.number_of_pages.errors.required&quot;&gt;
+            {{ msg.validationMessage.number_of_pages }}
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;form-group&quot;&gt;
+      &lt;label class&#x3D;&quot;col-sm-3 control-label&quot;&gt;
+        &lt;font style&#x3D;&quot;vertical-align: inherit&quot;&gt;
+          &lt;font style&#x3D;&quot;vertical-align: inherit&quot;
+            &gt;{{ bookI18n?.notesI18n }}
+          &lt;/font&gt;
+        &lt;/font&gt;
+      &lt;/label&gt;
+      &lt;div class&#x3D;&quot;col-md-12&quot;&gt;
+        &lt;input
+          [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: submitted &amp;&amp; f.notes.errors }&quot;
+          formControlName&#x3D;&quot;notes&quot;
+          name&#x3D;&quot;notes&quot;
+          value&#x3D;&quot;&quot;
+          class&#x3D;&quot;form-control&quot;
+          type&#x3D;&quot;text&quot;
+        /&gt;
+        &lt;div class&#x3D;&quot;alert alert-danger&quot; *ngIf&#x3D;&quot;submitted &amp;&amp; f.notes.errors&quot;&gt;
+          {{ msg.validationMessage.notes }}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- /.box-body --&gt;
+  &lt;div class&#x3D;&quot;box-footer&quot;&gt;
+    &lt;div class&#x3D;&quot;form-group&quot;&gt;
+      &lt;button (click)&#x3D;&quot;add()&quot; type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-info&quot;&gt;
+        &lt;i class&#x3D;&quot;fas fa-save&quot;&gt;&lt;/i&gt;
+        {{ bookI18n?.addButtonI18n }}
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- /.box-footer --&gt;
+&lt;/form&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./add-book.component.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><form class="form-horizontal" [formGroup]="bookForm">  <div class="box-body">    <div class="form-group">      <label class="col-sm-3 control-label">        <font style="vertical-align: inherit">          <font style="vertical-align: inherit">{{ bookI18n?.isbnI18n }} </font>        </font>      </label>      <div class="col-md-12">        <input          [ngClass]="{ \'is-invalid\': submitted && f.isbn.errors }"          formControlName="isbn"          name="isbn"          value=""          class="form-control"          type="text"        />        <div class="alert alert-danger" *ngIf="submitted && f.isbn.errors">          {{ msg.validationMessage.isbn }}        </div>      </div>    </div>    <div class="form-group">      <label class="col-sm-3 control-label">        <font style="vertical-align: inherit">          <font style="vertical-align: inherit"            >{{ bookI18n?.titleI18n }} *          </font>        </font>      </label>      <div class="col-md-12">        <input          [ngClass]="{ \'is-invalid\': submitted && f.title.errors }"          formControlName="title"          name="title"          value=""          class="form-control"          type="text"        />        <div class="alert alert-danger" *ngIf="submitted && f.title.errors">          {{ msg.validationMessage.title }}        </div>      </div>    </div>    <div class="form-group">      <label class="col-sm-3 control-label">        <font style="vertical-align: inherit">          <font style="vertical-align: inherit"            >{{ bookI18n?.editionI18n }} *          </font>        </font>      </label>      <div class="col-md-12">        <input          [ngClass]="{ \'is-invalid\': submitted && f.edition.errors }"          formControlName="edition"          name="edition"          value=""          class="form-control"          type="text"        />        <div class="alert alert-danger" *ngIf="submitted && f.edition.errors">          {{ msg.validationMessage.edition }}        </div>      </div>    </div>    <div class="form-group">      <label class="col-sm-3 control-label">        <font style="vertical-align: inherit">          <font style="vertical-align: inherit"            >{{ bookI18n?.edition_yearI18n }}          </font>        </font>      </label>      <div class="col-md-12">        <input          [ngClass]="{ \'is-invalid\': submitted && f.edition_year.errors }"          formControlName="edition_year"          name="edition_year"          class="form-control"          type="number"        />        <div          class="alert alert-danger"          *ngIf="submitted && f.edition_year.errors"        >          {{ msg.validationMessage.edition_year }}        </div>      </div>    </div>    <div class="form-group">      <label class="col-sm-3 control-label">        <font style="vertical-align: inherit">          <font style="vertical-align: inherit"            >{{ bookI18n?.publisherI18n }}          </font>        </font>      </label>      <div class="col-md-12">        <select          [ngClass]="{ \'is-invalid\': submitted && f.publisher.errors }"          formControlName="publisher"          name="publisher"          value=""          class="form-control"        >          <option *ngFor="let c of publishers$" value="{{ c.id }}">            {{ c.name }}          </option>        </select>        <div class="alert alert-danger" *ngIf="submitted && f.publisher.errors">          {{ msg.validationMessage.publisher }}        </div>      </div>    </div>    <div class="form-group">      <label class="col-sm-3 control-label">        <font style="vertical-align: inherit">          <font style="vertical-align: inherit"            >{{ bookI18n?.authorI18n }}          </font>        </font>      </label>      <div class="col-md-12">        <select          [ngClass]="{ \'is-invalid\': submitted && f.writer.errors }"          formControlName="writer"          name="editor"          value=""          class="form-control"        >          <option *ngFor="let c of writers$" value="{{ c.id }}">            {{ c.name }}          </option>        </select>        <div class="alert alert-danger" *ngIf="submitted && f.writer.errors">          {{ msg.validationMessage.writer }}        </div>      </div>    </div>    <div class="form-group">      <label class="col-sm-3 control-label">        <font style="vertical-align: inherit">          <font style="vertical-align: inherit"            >{{ bookI18n?.categoryI18n }}          </font>        </font>      </label>      <div class="col-md-12">        <select          [ngClass]="{ \'is-invalid\': submitted && f.category.errors }"          formControlName="category"          name="category"          value=""          class="form-control"        >          <option *ngFor="let c of categories$" value="{{ c.id }}">            {{ c.category_name }}          </option>        </select>        <div class="alert alert-danger" *ngIf="submitted && f.category.errors">          {{ msg.validationMessage.category }}        </div>      </div>    </div>    <div class="form-group">      <label class="col-sm-3 control-label">        <font style="vertical-align: inherit">          <font style="vertical-align: inherit"            >{{ bookI18n?.publishing_yearI18n }}          </font>        </font>      </label>      <div class="col-md-12">        <input          [ngClass]="{ \'is-invalid\': submitted && f.publishing_year.errors }"          formControlName="publishing_year"          name="publishing_year"          value=""          class="form-control"          type="number"        />        <div          class="alert alert-danger"          *ngIf="submitted && f.publishing_year.errors"        >          {{ msg.validationMessage.publishing_year }}        </div>      </div>    </div>    <div class="form-group">      <label class="col-sm-3 control-label">        <font style="vertical-align: inherit">          <font style="vertical-align: inherit"            >{{ bookI18n?.publication_placeI18n }}          </font>        </font>      </label>      <div class="col-md-12">        <input          [ngClass]="{ \'is-invalid\': submitted && f.publication_place.errors }"          formControlName="publication_place"          name="publication_place"          value=""          class="form-control"          type="text"        />        <div          class="alert alert-danger"          *ngIf="submitted && f.publication_place.errors"        >          {{ msg.validationMessage.publication_place }}        </div>      </div>    </div>    <div class="form-group">      <label class="col-sm-3 control-label">        <font style="vertical-align: inherit">          <font style="vertical-align: inherit"            >{{ bookI18n?.number_of_pagesI18n }}          </font>        </font>      </label>      <div class="col-md-12">        <input          [ngClass]="{ \'is-invalid\': submitted && f.number_of_pages.errors }"          formControlName="number_of_pages"          name="number_of_pages"          value=""          class="form-control"          type="number"        />        <div          class="alert alert-danger"          *ngIf="submitted && f.number_of_pages.errors"        >          <div *ngIf="submitted && f.number_of_pages.errors.required">            {{ msg.validationMessage.number_of_pages }}          </div>        </div>      </div>    </div>    <div class="form-group">      <label class="col-sm-3 control-label">        <font style="vertical-align: inherit">          <font style="vertical-align: inherit"            >{{ bookI18n?.notesI18n }}          </font>        </font>      </label>      <div class="col-md-12">        <input          [ngClass]="{ \'is-invalid\': submitted && f.notes.errors }"          formControlName="notes"          name="notes"          value=""          class="form-control"          type="text"        />        <div class="alert alert-danger" *ngIf="submitted && f.notes.errors">          {{ msg.validationMessage.notes }}        </div>      </div>    </div>  </div>  <!-- /.box-body -->  <div class="box-footer">    <div class="form-group">      <button (click)="add()" type="button" class="btn btn-info">        <i class="fas fa-save"></i>        {{ bookI18n?.addButtonI18n }}      </button>    </div>  </div>  <!-- /.box-footer --></form></div>'
+    var COMPONENTS = [{'name': 'AddBookComponent', 'selector': 'app-add-book'},{'name': 'AddButtonComponent', 'selector': 'app-add-button'},{'name': 'AddCategoryComponent', 'selector': 'app-add-category'},{'name': 'AddCirculationComponent', 'selector': 'app-add-circulation'},{'name': 'AddCirculationStatusComponent', 'selector': 'app-add-circulation-status'},{'name': 'AddEbookComponent', 'selector': 'app-add-ebook'},{'name': 'AddMemberComponent', 'selector': 'app-add-member'},{'name': 'AddPublisherComponent', 'selector': 'app-add-publisher'},{'name': 'AddRequestedBookComponent', 'selector': 'app-add-requested-book'},{'name': 'AddTypeMemberComponent', 'selector': 'app-add-type-member'},{'name': 'AddWriterComponent', 'selector': 'app-add-writer'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BookComponent', 'selector': 'app-book'},{'name': 'BookListComponent', 'selector': 'app-book-list'},{'name': 'BookNumberComponent', 'selector': 'app-book-number'},{'name': 'CategoryComponent', 'selector': 'app-category'},{'name': 'CategoryListComponent', 'selector': 'app-category-list'},{'name': 'CirculationComponent', 'selector': 'app-circulation'},{'name': 'CirculationListComponent', 'selector': 'app-circulation-list'},{'name': 'CirculationModalComponent', 'selector': 'app-circulation-modal'},{'name': 'CirculationStatusComponent', 'selector': 'app-circulation-status'},{'name': 'CirculationStatusListComponent', 'selector': 'app-circulation-status-list'},{'name': 'CirculationStatusModalComponent', 'selector': 'app-circulation-status-modal'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'EbookComponent', 'selector': 'app-ebook'},{'name': 'EbookListComponent', 'selector': 'app-ebook-list'},{'name': 'EbookModalComponent', 'selector': 'app-ebook-modal'},{'name': 'EditBookComponent', 'selector': 'app-edit-book'},{'name': 'EditCategoryComponent', 'selector': 'app-edit-category'},{'name': 'EditCirculationComponent', 'selector': 'app-edit-circulation'},{'name': 'EditCirculationStatusComponent', 'selector': 'app-edit-circulation-status'},{'name': 'EditEbookComponent', 'selector': 'app-edit-ebook'},{'name': 'EditMemberComponent', 'selector': 'app-edit-member'},{'name': 'EditPublisherComponent', 'selector': 'app-edit-publisher'},{'name': 'EditRequestedBookComponent', 'selector': 'app-edit-requested-book'},{'name': 'EditSettingsComponent', 'selector': 'app-edit-settings'},{'name': 'EditTypeMemberComponent', 'selector': 'app-edit-type-member'},{'name': 'EditWriterComponent', 'selector': 'app-edit-writer'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'LoadingComponent', 'selector': 'app-loading'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberComponent', 'selector': 'app-member'},{'name': 'MemberListComponent', 'selector': 'app-member-list'},{'name': 'MemberModalComponent', 'selector': 'app-member-modal'},{'name': 'ModalBookComponent', 'selector': 'app-modal-book'},{'name': 'ModalCategoryComponent', 'selector': 'app-modal-category'},{'name': 'ModalTypeMemberComponent', 'selector': 'app-modal-type-member'},{'name': 'NavigationComponent', 'selector': 'app-navigation'},{'name': 'PublisherComponent', 'selector': 'app-publisher'},{'name': 'PublisherListComponent', 'selector': 'app-publisher-list'},{'name': 'PublisherModalComponent', 'selector': 'app-publisher-modal'},{'name': 'RequestedBookListComponent', 'selector': 'app-requested-book-list'},{'name': 'RequestedBookModalComponent', 'selector': 'app-requested-book-modal'},{'name': 'RequiredBookComponent', 'selector': 'app-required-book'},{'name': 'SettingsComponent', 'selector': 'app-settings'},{'name': 'SettingsListComponent', 'selector': 'app-settings-list'},{'name': 'SettingsModalComponent', 'selector': 'app-settings-modal'},{'name': 'StatisticMemberComponent', 'selector': 'app-statistic-member'},{'name': 'StatisticsBookComponent', 'selector': 'app-statistics-book'},{'name': 'TopbarComponent', 'selector': 'app-topbar'},{'name': 'TypeMemberComponent', 'selector': 'app-type-member'},{'name': 'TypememberListComponent', 'selector': 'app-typemember-list'},{'name': 'ViewBookComponent', 'selector': 'app-view-book'},{'name': 'ViewCirculationComponent', 'selector': 'app-view-circulation'},{'name': 'ViewMemberComponent', 'selector': 'app-view-member'},{'name': 'ViewRequestedBookComponent', 'selector': 'app-view-requested-book'},{'name': 'WriterComponent', 'selector': 'app-writer'},{'name': 'WriterListComponent', 'selector': 'app-writer-list'},{'name': 'WriterModalComponent', 'selector': 'app-writer-modal'}];
+    var DIRECTIVES = [{'name': 'StatusDirective', 'selector': '[appStatus]'}];
+    var ACTUAL_COMPONENT = {'name': 'AddBookComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AddBookComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
