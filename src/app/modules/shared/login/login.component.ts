@@ -75,7 +75,7 @@ export class LoginComponent extends URLLoader implements OnInit {
             );
             super.show('StockBay', 'Welcome !', 'success');
             super.loadScripts();
-            this.reloadMenu.emit();
+            // this.reloadMenu.emit();
 
             this.invalidLogin = false;
             this.reloadMenu.emit();

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as Chart from 'chart.js';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
@@ -19,18 +19,16 @@ export class DashboardComponent extends URLLoader implements OnInit {
   httpService: HTTPService;
   dashboardI18n;
   dashboardAnalytics;
+  reload = false;
   ngOnInit(): void {
-    if (this.authService.isUserLoggedIn()) {
-      super.loadScripts();
+    super.loadScripts();
 
-      this.drawNumberBooksByDays();
+    this.drawNumberBooksByDays();
 
-      this.drawNumberBooksByCategory();
+    this.drawNumberBooksByCategory();
+    this.getDashboardAnalytics();
+    this.getDashboardByLang(CONFIG.getInstance().getLang());
 
-      this.getDashboardByLang(CONFIG.getInstance().getLang());
-
-      this.getDashboardAnalytics();
-    }
     console.log(sessionStorage.getItem('username'));
     console.log(sessionStorage.getItem('password'));
   }
@@ -39,22 +37,23 @@ export class DashboardComponent extends URLLoader implements OnInit {
     this.drawNumberBooksByDays();
 
     this.drawNumberBooksByCategory();
-
-    this.getDashboardByLang(CONFIG.getInstance().getLang());
-
-    this.getDashboardAnalytics();
   }
 
   getDashboardAnalytics() {
+    this.reload = true;
     this.httpService
       .getAll(CONFIG.URL_BASE + '/analytics/dashboardanalytics')
       .subscribe(
         (data: DashboardAnalytics) => {
           this.dashboardAnalytics = data;
+          this.reload = false;
         },
         (err: HttpErrorResponse) => {
-          super.show('Error', err.message, 'warning');
-          this.reloadPage();
+          //super.show('Error', err.message, 'warning');
+          this.reload = true;
+          //this.reloadPage();
+          //this.router.navigate(['/']);
+          window.location.replace('/');
         }
       );
   }
@@ -89,12 +88,11 @@ export class DashboardComponent extends URLLoader implements OnInit {
         let data = response.numberIssueBook;
         let labels = response.days;
         var ctx1 = document.getElementsByClassName('book-chart');
-
         this.renderChart(data, labels, ctx1, '#4e73df');
       },
       (err: HttpErrorResponse) => {
-        super.show('Error', err.message, 'warning');
-        this.reloadPage();
+        //super.show('Error', err.message, 'warning');
+        //this.reload = true;
       }
     );
   }
@@ -158,8 +156,8 @@ export class DashboardComponent extends URLLoader implements OnInit {
           this.dashboardI18n = data;
         },
         (err: HttpErrorResponse) => {
-          super.show('Error', err.message, 'warning');
-          window.location.replace('/');
+          // super.show('Error', err.message, 'warning');
+          //this.reload = true;
         }
       );
   }
