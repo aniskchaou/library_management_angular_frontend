@@ -10,7 +10,10 @@
       aria-haspopup="true"
       aria-expanded="false"
     >
-      <i class="fas fa-flag fa-fw"></i>
+      <span *ngIf="sysLang == 'EN'" class="flag-icon flag-icon-us"></span>
+      <span *ngIf="sysLang == 'AR'" class="flag-icon flag-icon-ae"></span>
+      <span *ngIf="sysLang == 'HN'" class="flag-icon flag-icon-in"></span>
+      <span *ngIf="sysLang == 'BN'" class="flag-icon flag-icon-bd"></span>
 
       <span class="badge badge-danger badge-counter">4</span>
     </a>

@@ -16,6 +16,7 @@ export class TopbarComponent extends URLLoader implements OnInit {
   @Input() menuI18n;
   searchInput: string;
   user = sessionStorage.getItem('username');
+  sysLang;
   constructor(
     private authService: AuthentificationService,
     private router: Router,
@@ -25,19 +26,22 @@ export class TopbarComponent extends URLLoader implements OnInit {
     super();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.sysLang = CONFIG.getInstance().getLang();
+  }
 
   changeLang(lang) {
     this.httpService
       .get(CONFIG.URL_BASE + '/settings/updatelang/' + lang)
       .subscribe(
         (data) => {
+          CONFIG.getInstance().setLang(lang);
           super.show(
             'Information',
             this.settingsMessage.editConfirmation[lang],
             'info'
           );
-          this.reloadPage();
+          this.logout();
         },
         (err: HttpErrorResponse) => {
           super.show('Error', err.message, 'warning');
