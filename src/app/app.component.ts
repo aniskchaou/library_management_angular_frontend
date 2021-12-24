@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { URLLoader } from './main/configs/URLLoader';
 
 import Settings from './main/models/Settings';
+import { AuthentificationService } from './main/security/authentification.service';
 import { HTTPService } from './main/services/HTTPService';
 import CONFIG from './main/urls/urls';
 
@@ -57,8 +58,13 @@ export class AppComponent {
   settings$: Settings;
   menuI18n;
   loading = false;
+  searchInput: string;
 
-  constructor(private _router: Router, private httpService: HTTPService) {}
+  constructor(
+    private _router: Router,
+    private httpService: HTTPService,
+    private authService: AuthentificationService
+  ) {}
 
   hasRoute(route: string) {
     return this._router.url.includes(route);
@@ -66,8 +72,13 @@ export class AppComponent {
 
   ngOnInit() {
     this.loadScripts();
-    this.getSettings();
-    this.getMenuItems();
+    if (this.authService.isUserLoggedIn()) {
+      this.getSettings();
+      this.getMenuItems();
+    } else {
+      this._router.navigate(['/login']);
+    }
+
     console.log('before ' + CONFIG.getInstance().getLang());
   }
 
@@ -75,6 +86,12 @@ export class AppComponent {
     this.getSettings();
     this.getMenuItems();
     console.log('after ' + CONFIG.getInstance().getLang());
+    //this._router.navigate(['/dashboard']);
+    this._router
+      .navigateByUrl('/login', { skipLocationChange: true })
+      .then(() => {
+        this._router.navigate(['/dashboard']);
+      });
   }
 
   getSettings() {
@@ -100,5 +117,10 @@ export class AppComponent {
           //super.show('Error', err.message, 'warning');
         }
       );
+  }
+
+  search(value) {
+    console.log(value);
+    this._router.navigate(['/search/' + value]);
   }
 }

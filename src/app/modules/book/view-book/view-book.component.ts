@@ -13,8 +13,25 @@ export class ViewBookComponent extends URLLoader implements OnInit {
   @Input() id;
   book;
   bookI18n;
+  selectedFile: File;
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
+  imageName: any;
   constructor(private httpService: HTTPService) {
     super();
+  }
+
+  getImage(image) {
+    if (image) {
+      this.httpService
+        .getAll('http://localhost:8080/book/get/' + image)
+        .subscribe((res) => {
+          this.retrieveResonse = res;
+          this.base64Data = this.retrieveResonse.picByte;
+          this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+        });
+    }
   }
 
   ngOnInit(): void {
@@ -24,6 +41,9 @@ export class ViewBookComponent extends URLLoader implements OnInit {
   }
 
   ngOnChanges(changes: any) {
+    if (this.book) {
+      this.getImage(this.book?.photo);
+    }
     this.viewBook(this.id);
     this.getBookByLang(CONFIG.getInstance().getLang());
   }

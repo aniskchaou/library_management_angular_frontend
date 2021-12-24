@@ -45,12 +45,17 @@
             <input
               type="text"
               class="form-control bg-light border-0 small"
-              placeholder="Search for..."
+              placeholder="Search for Books, Authors,Categories, Publishers"
               aria-label="Search"
               aria-describedby="basic-addon2"
+              #searchInput
             />
             <div class="input-group-append">
-              <button class="btn btn-primary" type="button">
+              <button
+                class="btn btn-primary"
+                type="button"
+                (click)="search(searchInput.value)"
+              >
                 <i class="fas fa-search fa-sm"></i>
               </button>
             </div>
@@ -80,7 +85,6 @@
 </div>
 <!-- End of Page Wrapper -->
 
-<!-- Logout Modal
 <div
   class="modal fade"
   id="logoutModal"
@@ -114,7 +118,6 @@
     </div>
   </div>
 </div>
--->
 
 <br /><br />
 <div *ngIf="hasRoute('login')">

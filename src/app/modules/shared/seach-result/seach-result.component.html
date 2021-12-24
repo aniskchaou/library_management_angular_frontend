@@ -1,0 +1,92 @@
+<div class="container-fluid">
+  <div *ngIf="loading; else loaded">
+    <!-- <app-loading></app-loading>-->
+  </div>
+
+  <ng-template #loaded>
+    <h1 class="h3 mb-2 text-gray-800">
+      {{ resultI18n?.resultI18n }} {{ searchWord }}
+    </h1>
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              id="home-tab"
+              data-toggle="tab"
+              href="#home"
+              role="tab"
+              aria-controls="home"
+              aria-selected="true"
+              >{{ resultI18n?.bookI18n }}
+              <a href="#" class="badge badge-primary" *ngIf="bookNumber">
+                {{ bookNumber }}</a
+              ></a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="profile-tab"
+              data-toggle="tab"
+              href="#profile"
+              role="tab"
+              aria-controls="profile"
+              aria-selected="false"
+              >{{ resultI18n?.categoryI18n }}
+              <a href="#" class="badge badge-primary" *ngIf="categoryNumber">
+                {{ categoryNumber }}</a
+              ></a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="contact-tab"
+              data-toggle="tab"
+              href="#contact"
+              role="tab"
+              aria-controls="contact"
+              aria-selected="false"
+              >{{ resultI18n?.authorI18n }}
+              <a href="#" class="badge badge-primary" *ngIf="writerNumber">
+                {{ writerNumber }}</a
+              ></a
+            >
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent" *ngIf="searchWord">
+          <div
+            class="tab-pane fade show active"
+            id="home"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <app-book-result-list [word]="searchWord"></app-book-result-list>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="profile"
+            role="tabpanel"
+            aria-labelledby="profile-tab"
+          >
+            <app-category-result-list
+              [word]="searchWord"
+            ></app-category-result-list>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="contact"
+            role="tabpanel"
+            aria-labelledby="contact-tab"
+          >
+            <app-writer-result-list
+              [word]="searchWord"
+            ></app-writer-result-list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -1,10 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as Chart from 'chart.js';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookAnalytics from 'src/app/main/models/BookAnalytics';
 import BookCategoryAnalytics from 'src/app/main/models/BookCategoryAnalytics';
 import DashboardAnalytics from 'src/app/main/models/DashboardAnalytics';
+import { AuthentificationService } from 'src/app/main/security/authentification.service';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
@@ -18,15 +20,19 @@ export class DashboardComponent extends URLLoader implements OnInit {
   dashboardI18n;
   dashboardAnalytics;
   ngOnInit(): void {
-    super.loadScripts();
+    if (this.authService.isUserLoggedIn()) {
+      super.loadScripts();
 
-    this.drawNumberBooksByDays();
+      this.drawNumberBooksByDays();
 
-    this.drawNumberBooksByCategory();
+      this.drawNumberBooksByCategory();
 
-    this.getDashboardByLang(CONFIG.getInstance().getLang());
+      this.getDashboardByLang(CONFIG.getInstance().getLang());
 
-    this.getDashboardAnalytics();
+      this.getDashboardAnalytics();
+    }
+    console.log(sessionStorage.getItem('username'));
+    console.log(sessionStorage.getItem('password'));
   }
 
   ngOnChanges() {
@@ -47,7 +53,8 @@ export class DashboardComponent extends URLLoader implements OnInit {
           this.dashboardAnalytics = data;
         },
         (err: HttpErrorResponse) => {
-          super.show('Error', err.message, 'error');
+          super.show('Error', err.message, 'warning');
+          this.reloadPage();
         }
       );
   }
@@ -86,12 +93,25 @@ export class DashboardComponent extends URLLoader implements OnInit {
         this.renderChart(data, labels, ctx1, '#4e73df');
       },
       (err: HttpErrorResponse) => {
-        //super.show('Error', err.message, 'error');
+        super.show('Error', err.message, 'warning');
+        this.reloadPage();
       }
     );
   }
 
-  constructor(httpService: HTTPService) {
+  reloadPage() {
+    this.router
+      .navigateByUrl('/settings', { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate(['/dahsboard']);
+      });
+  }
+
+  constructor(
+    httpService: HTTPService,
+    private router: Router,
+    private authService: AuthentificationService
+  ) {
     super();
     this.httpService = httpService;
   }
@@ -138,7 +158,8 @@ export class DashboardComponent extends URLLoader implements OnInit {
           this.dashboardI18n = data;
         },
         (err: HttpErrorResponse) => {
-          super.show('Error', err.message, 'error');
+          super.show('Error', err.message, 'warning');
+          window.location.replace('/');
         }
       );
   }

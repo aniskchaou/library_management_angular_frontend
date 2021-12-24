@@ -22,7 +22,14 @@
       <td>{{ t.name }}</td>
       <td>{{ t.telephone }}</td>
       <td>{{ t.address }}</td>
-      <td>{{ showLanguage(t.lang) }}</td>
+      <td>
+        <span *ngIf="t.lang == 'EN'" class="flag-icon flag-icon-uk"></span>
+        <span *ngIf="t.lang == 'AR'" class="flag-icon flag-icon-ae"></span>
+        <span *ngIf="t.lang == 'HN'" class="flag-icon flag-icon-in"></span>
+        <span *ngIf="t.lang == 'BN'" class="flag-icon flag-icon-bd"></span>
+
+        {{ showLanguage(t.lang) }}
+      </td>
       <td>
         <button
           type="button"

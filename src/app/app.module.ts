@@ -51,8 +51,16 @@ import { CirculationComponent } from './modules/circulations/circulation/circula
 import { SettingsComponent } from './modules/settings/settings/settings.component';
 import { SettingsModule } from './modules/settings/settings.module';
 import { BookModule } from './modules/book/book.module';
+import { SeachResultComponent } from './modules/shared/seach-result/seach-result.component';
+import { BookResultListComponent } from './modules/shared/book-result-list/book-result-list.component';
 
 const routes: Routes = [
+  {
+    path: 'search/:search',
+    component: SeachResultComponent,
+    pathMatch: 'full',
+    canActivate: [AuthguardService],
+  },
   {
     path: 'book',
     component: BookComponent,

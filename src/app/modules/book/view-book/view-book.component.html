@@ -1,5 +1,16 @@
 <table class="center-table table">
   <tr>
+    <div *ngIf="!retrievedImage; else loaded">
+      <app-loading></app-loading>
+    </div>
+
+    <ng-template #loaded>
+      <td colspan="2">
+        <img [src]="retrievedImage" width="100" height="150" />
+      </td>
+    </ng-template>
+  </tr>
+  <tr>
     <td>
       <b>{{ bookI18n?.isbnI18n }} :</b>
     </td>

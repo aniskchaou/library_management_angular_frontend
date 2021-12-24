@@ -1,4 +1,5 @@
 import showMessage from '../notification/notification';
+
 export class URLLoader {
   constructor() {}
 

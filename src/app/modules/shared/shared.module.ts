@@ -10,9 +10,21 @@ import { CategoryModule } from '../category/category.module';
 import { RequestedBooksModule } from '../requested-books/requested-books.module';
 import { AuthguardService } from 'src/app/main/security/authguard-service.service';
 import { AuthentificationService } from 'src/app/main/security/authentification.service';
+import { SeachResultComponent } from './seach-result/seach-result.component';
+import { BookResultListComponent } from './book-result-list/book-result-list.component';
+import { CategoryResultListComponent } from './category-result-list/category-result-list.component';
+import { WriterResultListComponent } from './writer-result-list/writer-result-list.component';
 
 @NgModule({
-  declarations: [AddButtonComponent, LoadingComponent, LoadingComponent],
+  declarations: [
+    SeachResultComponent,
+    AddButtonComponent,
+    LoadingComponent,
+    LoadingComponent,
+    BookResultListComponent,
+    CategoryResultListComponent,
+    WriterResultListComponent,
+  ],
   imports: [
     BrowserModule,
     FormsModule,

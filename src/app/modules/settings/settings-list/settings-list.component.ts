@@ -30,6 +30,12 @@ export class SettingsListComponent extends URLLoader implements OnInit {
       case 'AR':
         lang = 'عربى';
         break;
+      case 'HN':
+        lang = 'हिन्दी';
+        break;
+      case 'BN':
+        lang = 'বাংলা';
+        break;
       default:
         lang = 'N/A';
         break;

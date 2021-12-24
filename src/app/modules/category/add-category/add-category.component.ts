@@ -20,6 +20,9 @@ export class AddCategoryComponent extends URLLoader implements OnInit {
   submitted = false;
   @Output() closeModalEvent = new EventEmitter<string>();
   categoryI18n;
+  selectedFile: File;
+  retrievedImage: any;
+  base64Data: any;
 
   constructor(
     private validation: CategoryValidation,

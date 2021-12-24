@@ -13,6 +13,12 @@ export class BookListComponent extends URLLoader implements OnInit {
   @Output() deleteEvent = new EventEmitter<string>();
   @Input() bookI18n;
   @Output() viewEvent = new EventEmitter<string>();
+  selectedFile: File;
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
+  imageName: any;
+
   constructor(private httpService: HTTPService) {
     super();
   }
@@ -38,5 +44,16 @@ export class BookListComponent extends URLLoader implements OnInit {
 
   deleteCategory(id) {
     this.deleteEvent.emit(id);
+  }
+
+  getImage(image) {
+    this.httpService
+      .getAll('http://localhost:8080/book/get/' + image)
+      .subscribe((res) => {
+        this.retrieveResonse = res;
+        this.base64Data = this.retrieveResonse.picByte;
+        this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+      });
+    return this.retrievedImage;
   }
 }

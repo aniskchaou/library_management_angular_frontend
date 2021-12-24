@@ -15,6 +15,8 @@ export default class SettingsMessage {
     FR: "L'élément a été modifié",
     EN: 'Item has been modified',
     AR: 'تم تعديل العنصر',
+    HN: 'आइटम संशोधित किया गया है',
+    BN: 'আইটেম পরিবর্তন করা হয়েছে',
   };
 
   deleteConfirmation = {

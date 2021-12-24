@@ -16,8 +16,8 @@ export class AuthentificationService {
     return this.httpClient
       .get(CONFIG.URL_BASE + '/member/all', { headers })
       .pipe((userData) => {
-        sessionStorage.setItem('username', username);
-        sessionStorage.setItem('password', password);
+        // sessionStorage.setItem('username', username);
+        //sessionStorage.setItem('password', password);
         console.log(userData);
         return userData;
       });
