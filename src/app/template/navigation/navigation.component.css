@@ -4,3 +4,10 @@ navbar-nav li > .active{
     background-color: #fafafa;
     color: #4e73df!important;
 }
+
+.isDisabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+}

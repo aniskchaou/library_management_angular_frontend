@@ -1,0 +1,84 @@
+<div class="container-fluid">
+  <h1 class="h3 mb-2 text-gray-800">{{ menu.memberReportI18n }}</h1>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <select
+        class="col-sm-2 custom-select"
+        id="inputGroupSelect04"
+        (change)="selectUserType($event.target.value)"
+      >
+        <option selected></option>
+        <option value="{{ c }}" *ngFor="let c of userType$">
+          {{ c }}
+        </option>
+      </select>
+
+      <select
+        class="col-sm-2 custom-select"
+        id="inputGroupSelect04"
+        (change)="selectStatus($event.target.value)"
+      >
+        <option selected></option>
+        <option value="{{ c }}" *ngFor="let c of status$">
+          {{ c }}
+        </option>
+      </select>
+
+      <button
+        (click)="search()"
+        href="#"
+        role="button"
+        class="btn btn-info btn-icon-split"
+      >
+        <span class="icon text-white-50">
+          <i class="fas fa-filter"></i>
+        </span>
+        <span class="text"></span>
+      </button>
+    </div>
+  </div>
+  <!-- Page Heading -->
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4" *ngIf="searchButtonClicked">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="table"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>{{ memberI18n.nameI18n }}</th>
+              <th>{{ memberI18n.type_idI18n }}</th>
+              <th>{{ memberI18n.emailI18n }}</th>
+              <th>{{ memberI18n.mobileI18n }}</th>
+              <th>{{ memberI18n.addressI18n }}</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>{{ memberI18n.nameI18n }}</th>
+              <th>{{ memberI18n.type_idI18n }}</th>
+              <th>{{ memberI18n.emailI18n }}</th>
+              <th>{{ memberI18n.mobileI18n }}</th>
+              <th>{{ memberI18n.addressI18n }}</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr *ngFor="let m of members">
+              <td>{{ m.name }}</td>
+              <td>{{ m.type_id }}</td>
+              <td>{{ m.email }}</td>
+              <td>{{ m.mobile }}</td>
+              <td>{{ m.address }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

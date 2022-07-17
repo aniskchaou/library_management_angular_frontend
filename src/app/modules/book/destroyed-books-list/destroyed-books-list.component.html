@@ -1,0 +1,49 @@
+<table id="table" class="table table-bordered" width="100%" cellspacing="0">
+  <thead>
+    <tr>
+      <th>{{ bookI18n?.isbnI18n }}</th>
+      <th>{{ bookI18n?.titleI18n }}</th>
+      <th>{{ bookI18n?.authorI18n }}</th>
+      <th>{{ bookI18n?.categoryI18n }}</th>
+      <th>{{ bookI18n?.publisherI18n }}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>
+        {{ bookI18n?.isbnI18n }}
+      </th>
+      <th>{{ bookI18n?.titleI18n }}</th>
+      <th>{{ bookI18n?.authorI18n }}</th>
+      <th>
+        {{ bookI18n?.categoryI18n }}
+      </th>
+      <th>{{ bookI18n?.publisherI18n }}</th>
+      <th></th>
+    </tr>
+  </tfoot>
+  <tbody>
+    <tr *ngFor="let b of books">
+      <td>
+        <span class="badge badge-primary">{{ b.isbn }}</span>
+      </td>
+      <td>{{ b.title }}</td>
+      <td>{{ b.writer?.name }}</td>
+      <td>
+        <span class="badge badge-warning">{{ b.category?.category_name }}</span>
+      </td>
+      <td>{{ b.publisher?.name }}</td>
+      <td>
+        <button
+          (click)="delete(b.id)"
+          type=" button"
+          class="btn btn-danger btn-sm"
+          onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?');"
+        >
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookMessage from 'src/app/main/messages/BookMessage';
 import BookTestService from 'src/app/main/mocks/BookTestService';
@@ -80,6 +81,7 @@ export class BookComponent extends URLLoader implements OnInit {
   ngOnInit() {
     this.getAll();
     this.getBookByLang(CONFIG.getInstance().getLang());
+    this.getMenuByLang(CONFIG.getInstance().getLang());
   }
 
   view(id) {
@@ -88,14 +90,157 @@ export class BookComponent extends URLLoader implements OnInit {
 
   getAll() {
     this.loading = true;
-    this.httpService.getAll(CONFIG.URL_BASE + '/book/all').subscribe(
-      (data: Book[]) => {
-        this.books$ = data;
-        this.loading = false;
+    this.httpService
+      .getAll(CONFIG.URL_BASE + '/book/all')
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        (data: Book[]) => {
+          this.books$ = data;
+          this.loading = false;
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+        }
+      );
+  }
+
+  getMenuByLang(lang) {
+    this.httpService.getAll(CONFIG.URL_BASE + '/i18n/menu/' + lang).subscribe(
+      (data) => {
+        console.log(data);
+        this.httpService.menuI18n.next(data);
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'warning');
+        //this.reload = true;
       }
     );
+  }
+
+  groupByAuthors() {
+    this.loading = true;
+    this.httpService
+      .getAll(CONFIG.URL_BASE + '/book/groupbyauthors')
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        (data: Book[]) => {
+          this.books$ = data;
+          this.loading = false;
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+        }
+      );
+  }
+
+  groupByCategories() {
+    this.loading = true;
+    this.httpService
+      .getAll(CONFIG.URL_BASE + '/book/groupbycategories')
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        (data: Book[]) => {
+          this.books$ = data;
+          this.loading = false;
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+        }
+      );
+  }
+
+  groupByEditionYears() {
+    this.loading = true;
+    this.httpService
+      .getAll(CONFIG.URL_BASE + '/book/groupbyeditionyears')
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        (data: Book[]) => {
+          this.books$ = data;
+          this.loading = false;
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+        }
+      );
+  }
+
+  groupByPublishers() {
+    this.loading = true;
+    this.httpService
+      .getAll(CONFIG.URL_BASE + '/book/groupbypublishers')
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        (data: Book[]) => {
+          this.books$ = data;
+          this.loading = false;
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+        }
+      );
+  }
+
+  filterByYears(year) {
+    this.loading = true;
+    this.httpService
+      .getAll(CONFIG.URL_BASE + '/book/filterbyyears/' + year)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        (data: Book[]) => {
+          this.books$ = data;
+          this.loading = false;
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+        }
+      );
+  }
+  filterByWriters(writers) {
+    this.loading = true;
+    this.httpService
+      .getAll(CONFIG.URL_BASE + '/book/filterbywriters/' + writers.id)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        (data: Book[]) => {
+          this.books$ = data;
+          this.loading = false;
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+        }
+      );
+  }
+  filterByCategories(category) {
+    this.loading = true;
+    this.httpService
+      .getAll(CONFIG.URL_BASE + '/book/filterbycategories/' + category)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        (data: Book[]) => {
+          this.books$ = data;
+          this.loading = false;
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+        }
+      );
+  }
+
+  destroy(id) {
+    this.httpService
+      .put(CONFIG.URL_BASE + '/book/destroybook/' + id)
+      .subscribe((data) => {
+        super.show('Confirmation', 'Book has been destroyed', 'success');
+        this.reloadPage();
+      });
+  }
+  archive(id) {
+    this.httpService
+      .put(CONFIG.URL_BASE + '/book/archivebook/' + id)
+      .subscribe((data) => {
+        super.show('Confirmation', 'Book has been archived', 'success');
+        this.reloadPage();
+      });
   }
 }

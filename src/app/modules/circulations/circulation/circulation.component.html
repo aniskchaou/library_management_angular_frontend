@@ -15,11 +15,13 @@
           <app-circulation-list
             (editEvent)="edit($event)"
             (viewEvent)="view($event)"
+            (contactEvent)="contact($event)"
             (deleteEvent)="delete($event)"
             [circulations]="circulations$"
             [circulationI18n]="circulationI18n"
           ></app-circulation-list>
           <app-circulation-modal
+            [email]="email"
             [circulationI18n]="circulationI18n"
             [circulations]="circulations$"
             [id]="id"

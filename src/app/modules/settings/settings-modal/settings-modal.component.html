@@ -38,7 +38,7 @@
 
 <div
   class="modal fade"
-  id="import-csv"
+  id="editemail"
   tabindex="-1"
   role="dialog"
   aria-labelledby="exampleModalCenterTitle"
@@ -58,10 +58,10 @@
         </button>
       </div>
       <div class="modal-body">
-        <input type="file" />
-        <button type="button" role="button" class="btn btn-primary btn-sm">
-          <i class="fas fa-file-import"></i> Import
-        </button>
+        <app-edit-settings
+          (closeModalEvent)="closeModalEdit()"
+          [id]="id"
+        ></app-edit-settings>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">

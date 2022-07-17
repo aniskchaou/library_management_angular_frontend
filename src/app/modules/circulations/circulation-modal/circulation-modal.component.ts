@@ -11,12 +11,19 @@ export class CirculationModalComponent implements OnInit {
   @Input() id: string;
   @Input() circulationI18n;
   @Input() circulations;
+  @Input() email;
 
   ngOnInit(): void {}
 
   closeModalAdd() {
     let element: HTMLElement = document.getElementsByClassName(
       'close'
+    )[0] as HTMLElement;
+    element.click();
+  }
+  closeModalContact() {
+    let element: HTMLElement = document.getElementsByClassName(
+      'closeContact'
     )[0] as HTMLElement;
     element.click();
   }

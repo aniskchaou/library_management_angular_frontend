@@ -1,0 +1,55 @@
+<div class="container-fluid">
+  <div *ngIf="loading; else loaded">
+    <app-loading></app-loading>
+  </div>
+
+  <ng-template #loaded>
+    <h1 class="h3 mb-2 text-gray-800">{{ menu.circulationReportI18n }}</h1>
+
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <select
+          class="col-sm-2 custom-select"
+          id="inputGroupSelect04"
+          (change)="selectMember($event.target.value)"
+        >
+          <option selected></option>
+          <option value="{{ c.id }}" *ngFor="let c of memberNames$">
+            {{ c.name }}
+          </option>
+        </select>
+
+        <select
+          class="col-sm-2 custom-select"
+          id="inputGroupSelect04"
+          (change)="selectReturnStatus($event.target.value)"
+        >
+          <option selected></option>
+          <option value="{{ c.id }}" *ngFor="let c of returnStatus$">
+            {{ c.name }}
+          </option>
+        </select>
+
+        <button
+          (click)="search()"
+          href="#"
+          role="button"
+          class="btn btn-info btn-icon-split"
+        >
+          <span class="icon text-white-50">
+            <i class="fas fa-filter"></i>
+          </span>
+          <span class="text"></span>
+        </button>
+      </div>
+    </div>
+    <!-- Page Heading -->
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4" *ngIf="searchButtonClicked">
+      <div class="card-body">
+        <div class="table-responsive"></div>
+      </div>
+    </div>
+  </ng-template>
+</div>

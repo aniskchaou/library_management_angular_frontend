@@ -1,0 +1,105 @@
+<div class="container-fluid">
+  <h1 class="h3 mb-2 text-gray-800">{{ menu.bookReportI18n }}</h1>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <select
+        class="col-sm-2 custom-select"
+        id="inputGroupSelect04"
+        (change)="selectPublisher($event.target.value)"
+      >
+        <option selected></option>
+        <option value="{{ c.id }}" *ngFor="let c of publishers$">
+          {{ c.name }}
+        </option>
+      </select>
+
+      <select
+        class="col-sm-2 custom-select"
+        id="inputGroupSelect04"
+        (change)="selectCategory($event.target.value)"
+      >
+        <option selected></option>
+        <option value="{{ c.id }}" *ngFor="let c of categories$">
+          {{ c.category_name }}
+        </option>
+      </select>
+
+      <select
+        class="col-sm-2 custom-select"
+        id="inputGroupSelect04"
+        (change)="selectWriter($event.target.value)"
+      >
+        <option selected></option>
+        <option value="{{ c.id }}" *ngFor="let c of writers$">
+          {{ c.name }}
+        </option>
+      </select>
+
+      <select
+        class="col-sm-2 custom-select"
+        id="inputGroupSelect04"
+        (change)="selectYear($event.target.value)"
+      >
+        <option selected></option>
+        <option value="2022">2022</option>
+        <option value="2021">2021</option>
+        <option value="2020">2020</option>
+      </select>
+      <button
+        (click)="search()"
+        href="#"
+        role="button"
+        class="btn btn-info btn-icon-split"
+      >
+        <span class="icon text-white-50">
+          <i class="fas fa-filter"></i>
+        </span>
+        <span class="text"></span>
+      </button>
+    </div>
+  </div>
+  <!-- Page Heading -->
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4" *ngIf="searchButtonClicked">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          id="table"
+          class="table table-bordered"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>{{ bookI18n?.isbnI18n }}</th>
+              <th>{{ bookI18n?.titleI18n }}</th>
+              <th>{{ bookI18n?.authorI18n }}</th>
+              <th>{{ bookI18n?.categoryI18n }}</th>
+              <th>{{ bookI18n?.publisherI18n }}</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>{{ bookI18n?.isbnI18n }}</th>
+              <th>{{ bookI18n?.titleI18n }}</th>
+              <th>{{ bookI18n?.authorI18n }}</th>
+              <th>{{ bookI18n?.categoryI18n }}</th>
+              <th>{{ bookI18n?.publisherI18n }}</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr *ngFor="let b of books$">
+              <td>{{ b.isbn }}</td>
+              <td>{{ b.title }}</td>
+              <td>{{ b.writer?.name }}</td>
+              <td>{{ b.category?.category_name }}</td>
+              <td>{{ b.publisher?.name }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

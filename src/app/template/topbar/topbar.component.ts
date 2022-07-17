@@ -24,15 +24,25 @@ export class TopbarComponent extends URLLoader implements OnInit {
     private settingsMessage: SettingsMessage
   ) {
     super();
+    //this.getDashboardByLang(CONFIG.getInstance().getLang());
+    // this.getMenuByLang(CONFIG.getInstance().getLang());
+    //this.getCategoryByLang(CONFIG.getInstance().getLang());
   }
 
   ngOnInit(): void {
     this.sysLang = CONFIG.getInstance().getLang();
+    this.httpService.menuI18n$.subscribe((data) => {
+      this.menuI18n = data;
+    });
   }
 
   changeLang(lang) {
     this.httpService
-      .get(CONFIG.URL_BASE + '/settings/updatelang/' + lang)
+      .getAllLang(
+        CONFIG.URL_BASE + '/settings/updatelang/' + lang,
+        sessionStorage.getItem('username'),
+        sessionStorage.getItem('password')
+      )
       .subscribe(
         (data) => {
           CONFIG.getInstance().setLang(lang);
@@ -41,10 +51,59 @@ export class TopbarComponent extends URLLoader implements OnInit {
             this.settingsMessage.editConfirmation[lang],
             'info'
           );
+          this.getDashboardByLang(
+            CONFIG.getInstance().getLang(),
+            sessionStorage.getItem('username'),
+            sessionStorage.getItem('password')
+          );
+          this.getMenuByLang(
+            CONFIG.getInstance().getLang(),
+            sessionStorage.getItem('username'),
+            sessionStorage.getItem('password')
+          );
+          this.getCategoryByLang(
+            CONFIG.getInstance().getLang(),
+            sessionStorage.getItem('username'),
+            sessionStorage.getItem('password')
+          );
           this.logout();
         },
         (err: HttpErrorResponse) => {
           super.show('Error', err.message, 'warning');
+        }
+      );
+  }
+
+  getDashboardByLang(lang, username, password) {
+    this.httpService
+      .getAllLang(
+        CONFIG.URL_BASE + '/i18n/dashboard/' + lang,
+        username,
+        password
+      )
+      .subscribe(
+        (data) => {
+          console.log(data);
+          this.httpService.dashboardI18n.next(data);
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+          //this.reload = true;
+        }
+      );
+  }
+
+  getMenuByLang(lang, username, password) {
+    this.httpService
+      .getAllLang(CONFIG.URL_BASE + '/i18n/menu/' + lang, username, password)
+      .subscribe(
+        (data) => {
+          console.log(data);
+          this.httpService.menuI18n.next(data);
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+          //this.reload = true;
         }
       );
   }
@@ -59,5 +118,22 @@ export class TopbarComponent extends URLLoader implements OnInit {
       .then(() => {
         this.router.navigate(['/login']);
       });
+  }
+
+  getCategoryByLang(lang, username, password) {
+    this.httpService
+      .getAllLang(
+        CONFIG.URL_BASE + '/i18n/category/' + lang,
+        username,
+        password
+      )
+      .subscribe(
+        (data) => {
+          this.httpService.categoryI18n.next(data);
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+        }
+      );
   }
 }

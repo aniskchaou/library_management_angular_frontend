@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <div>
+    <!-- <app-loading></app-loading> -->
+  </div>
+
+  <h1 class="h3 mb-2 text-gray-800">Expenses</h1>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <button
+        href="#add"
+        role="button"
+        data-toggle="modal"
+        class="btn btn-success btn-icon-split"
+      >
+        <span class="icon text-white-50">
+          <i class="fas fa-plus"></i>
+        </span>
+        <span class="text">{{ expenseI18n?.addButtonI18n }}</span>
+      </button>
+      <div class="table-responsive">
+        <app-expense-list
+          [expenseI18n]="expenseI18n"
+          [expenses]="expenses$"
+          (deleteEvent)="delete($event)"
+        ></app-expense-list>
+        <app-modal-expense [expenseI18n]="expenseI18n"></app-modal-expense>
+      </div>
+    </div>
+  </div>
+</div>

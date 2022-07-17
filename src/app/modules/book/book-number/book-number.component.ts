@@ -11,40 +11,27 @@ import CONFIG from 'src/app/main/urls/urls';
   styleUrls: ['./book-number.component.css'],
 })
 export class BookNumberComponent extends URLLoader implements OnInit {
-  dashboardAnalytics: DashboardAnalytics;
+  dashboardAnalytics;
   dashboardI18n;
   constructor(private httpService: HTTPService) {
     super();
   }
 
   ngOnInit(): void {
-    this.getDashboardAnalytics();
-    this.getDashboardByLang(CONFIG.getInstance().getLang());
+    this.getAnalyticsNumbers();
+    this.httpService.dashboardI18n$.subscribe((data) => {
+      this.dashboardI18n = data;
+    });
   }
 
-  getDashboardByLang(lang) {
+  getAnalyticsNumbers() {
     this.httpService
-      .getAll(CONFIG.URL_BASE + '/i18n/dashboard/' + lang)
+      .getAll(CONFIG.URL_BASE + '/analytics/shortanalytics/')
       .subscribe(
         (data) => {
-          this.dashboardI18n = data;
-        },
-        (err: HttpErrorResponse) => {
-          super.show('Error', err.message, 'warning');
-        }
-      );
-  }
-
-  getDashboardAnalytics() {
-    this.httpService
-      .getAll(CONFIG.URL_BASE + '/analytics/dashboardanalytics')
-      .subscribe(
-        (data: DashboardAnalytics) => {
           this.dashboardAnalytics = data;
         },
-        (err: HttpErrorResponse) => {
-          super.show('Error', err.message, 'warning');
-        }
+        (err: HttpErrorResponse) => {}
       );
   }
 }

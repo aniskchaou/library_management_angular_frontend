@@ -1,0 +1,61 @@
+<div class="card shadow mb-4">
+  <div class="card-body">
+    <!-- create button  -->
+    <button
+      href="#add"
+      role="button"
+      data-toggle="modal"
+      class="btn btn-success btn-icon-split"
+    >
+      <span class="icon text-white-50">
+        <i class="fas fa-plus"></i>
+      </span>
+      <span class="text">{{ categoryI18n?.addButtonI18n }}</span>
+    </button>
+    <!-- filter button  -->
+
+    <!-- summary button-->
+    <button
+      href="#"
+      role="button"
+      class="btn btn-secondary btn-icon-split"
+      (click)="showChart()"
+    >
+      <span class="icon text-white-50">
+        <i class="fas fa-chart-line"></i>
+      </span>
+      <span class="text">{{ categoryI18n?.analyticsI18n }}</span>
+    </button>
+    <!-- refresh button -->
+    <button
+      href="#"
+      role="button"
+      class="btn btn-warning btn-icon-split"
+      (click)="reloadPage()"
+    >
+      <span class="icon text-white-50">
+        <i class="fas fa-redo"></i>
+      </span>
+      <span class="text">{{ categoryI18n?.reloadI18n }}</span>
+    </button>
+
+    <br /><br />
+
+    <div *ngIf="showsummary">
+      <ngx-charts-bar-vertical
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="data"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        (select)="onSelect($event)"
+      ></ngx-charts-bar-vertical>
+    </div>
+  </div>
+</div>

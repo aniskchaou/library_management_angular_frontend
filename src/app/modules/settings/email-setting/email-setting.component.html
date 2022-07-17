@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  <div *ngIf="loading; else loaded">
+    <app-loading></app-loading>
+  </div>
+
+  <ng-template #loaded>
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">{{ settingsI18n?.allTitleI18n }}</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <app-settings-email-list
+            (idEvent)="edit($event)"
+            [settings]="settings$"
+            [settingsI18n]="settingsI18n"
+          ></app-settings-email-list>
+          <app-settings-modal
+            [settingsI18n]="settingsI18n"
+            [id]="id"
+          ></app-settings-modal>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -14,6 +14,8 @@ import { SharedModule } from '../shared/shared.module';
 import BookValidation from 'src/app/main/validations/BookValidation';
 import { BookNumberComponent } from './book-number/book-number.component';
 import { StatisticsBookComponent } from './statistics-book/statistics-book.component';
+import { TagComponent } from './tag/tag.component';
+import { CirculationHistoryComponent } from './circulation-history/circulation-history.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { StatisticsBookComponent } from './statistics-book/statistics-book.compo
     StatisticsBookComponent,
     ViewBookComponent,
     BookNumberComponent,
+    TagComponent,
+    CirculationHistoryComponent,
   ],
   imports: [
     SharedModule,

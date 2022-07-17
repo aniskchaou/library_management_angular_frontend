@@ -1,6 +1,6 @@
 <table class="center-table table">
   <tr>
-    <div *ngIf="!retrievedImage; else loaded">
+    <div *ngIf="loadingImage; else loaded">
       <app-loading></app-loading>
     </div>
 

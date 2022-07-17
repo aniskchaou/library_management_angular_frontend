@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import Writer from 'src/app/main/models/Writer';
+import { HTTPService } from 'src/app/main/services/HTTPService';
+import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
   selector: 'app-circulation-list',
@@ -13,9 +16,10 @@ export class CirculationListComponent extends URLLoader implements OnInit {
   @Output() editEvent = new EventEmitter<string>();
   @Output() viewEvent = new EventEmitter<string>();
   @Output() deleteEvent = new EventEmitter<string>();
+  @Output() contactEvent = new EventEmitter<string>();
   writer: Writer;
 
-  constructor() {
+  constructor(private httpService: HTTPService, private router: Router) {
     super();
   }
 
@@ -38,8 +42,24 @@ export class CirculationListComponent extends URLLoader implements OnInit {
   delete(id) {
     this.deleteEvent.emit(id);
   }
+  contact(email) {
+    console.log(email);
+    this.contactEvent.emit(email);
+  }
 
   setEvent(value: string) {
     this.editEvent.emit(value);
+  }
+
+  return(id) {
+    this.httpService
+      .getAll(CONFIG.URL_BASE + '/circulation/return/' + id)
+      .subscribe((data) => {
+        this.router
+          .navigateByUrl('/dashboard', { skipLocationChange: true })
+          .then(() => {
+            this.router.navigate(['/circulation']);
+          });
+      });
   }
 }

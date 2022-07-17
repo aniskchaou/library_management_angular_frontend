@@ -15,6 +15,7 @@ import { SharedModule } from '../shared/shared.module';
     SettingsComponent,
     SettingsListComponent,
     SettingsModalComponent,
+    EditSettingsComponent,
   ],
   imports: [
     SharedModule,

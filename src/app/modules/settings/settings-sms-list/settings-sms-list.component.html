@@ -1,0 +1,46 @@
+<table class="table table-bordered" id="table" width="100%" cellspacing="0">
+  <thead>
+    <tr>
+      <th>{{ settingsI18n?.nameI18n }}</th>
+      <th>{{ settingsI18n?.telephoneI18n }}</th>
+      <th>{{ settingsI18n?.addressI18n }}</th>
+      <th>{{ settingsI18n?.languageI18n }}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>{{ settingsI18n?.nameI18n }}</th>
+      <th>{{ settingsI18n?.telephoneI18n }}</th>
+      <th>{{ settingsI18n?.addressI18n }}</th>
+      <th>{{ settingsI18n?.languageI18n }}</th>
+      <th></th>
+    </tr>
+  </tfoot>
+  <tbody>
+    <tr *ngFor="let t of settings">
+      <td>{{ t.name }}</td>
+      <td>{{ t.telephone }}</td>
+      <td>{{ t.address }}</td>
+      <td>
+        <span *ngIf="t.lang == 'EN'" class="flag-icon flag-icon-us"></span>
+        <span *ngIf="t.lang == 'AR'" class="flag-icon flag-icon-ae"></span>
+        <span *ngIf="t.lang == 'HN'" class="flag-icon flag-icon-in"></span>
+        <span *ngIf="t.lang == 'BN'" class="flag-icon flag-icon-bd"></span>
+
+        {{ showLanguage(t.lang) }}
+      </td>
+      <td>
+        <button
+          type="button"
+          data-toggle="modal"
+          (click)="edit(t.id)"
+          data-target="#edit"
+          class="btn btn-warning btn-sm"
+        >
+          <i class="fas fa-edit"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

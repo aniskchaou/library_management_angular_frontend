@@ -8,24 +8,38 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class HTTPService implements Service {
+  menuI18n = new BehaviorSubject<Object>(undefined);
+  menuI18n$ = this.menuI18n.asObservable();
+  dashboardI18n = new BehaviorSubject<Object>(undefined);
+  dashboardI18n$ = this.dashboardI18n.asObservable();
+  categoryI18n = new BehaviorSubject<Object>(undefined);
+  categoryI18n$ = this.categoryI18n.asObservable();
   public ID = new BehaviorSubject<string>(null);
   headers = { 'content-type': 'application/json' };
   model = '';
   header = new HttpHeaders({
-    Authorization:
-      'Basic ' +
-      btoa(
-        sessionStorage.getItem('username') +
-          ':' +
-          sessionStorage.getItem('password')
-      ),
+    Authorization: 'Basic ' + btoa('admin' + ':' + 'admin'),
   });
+  paymentI18n$: any;
   constructor(private http: HttpClient) {}
   async update(url, data) {
     await this.http.put(url, data);
   }
   getAll(url: string) {
+    console.log(sessionStorage.getItem('password'));
     return this.http.get(url, { headers: this.header });
+  }
+
+  put(url: string) {
+    console.log(sessionStorage.getItem('password'));
+    return this.http.put(url, {}, { headers: this.header });
+  }
+
+  getAllLang(url: string, username: string, password: string) {
+    let header = new HttpHeaders({
+      Authorization: 'Basic ' + btoa(username + ':' + password),
+    });
+    return this.http.get(url, { headers: header });
   }
   get(id: string) {
     return this.http.get(id, { headers: this.header });

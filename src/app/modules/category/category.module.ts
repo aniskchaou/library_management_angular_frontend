@@ -14,6 +14,9 @@ import CategoryValidation from 'src/app/main/validations/CategoryValidation';
 import { AddButtonComponent } from '../shared/add-button/add-button.component';
 import { LoadingComponent } from '../shared/loading/loading.component';
 import { SharedModule } from '../shared/shared.module';
+import { StatisticsCategoryComponent } from './statistics-category/statistics-category.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,7 @@ import { SharedModule } from '../shared/shared.module';
     ModalCategoryComponent,
     CategoryComponent,
     TitlecapitalPipe,
+    StatisticsCategoryComponent,
   ],
   imports: [
     SharedModule,
@@ -31,6 +35,8 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
+    NgxChartsModule,
+    BrowserAnimationsModule,
   ],
   exports: [
     BrowserModule,

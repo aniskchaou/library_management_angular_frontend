@@ -107,3 +107,77 @@
     </div>
   </div>
 </div>
+
+<div
+  class="modal fade"
+  id="payment"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          {{ circulationI18n?.allTitleI18n }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-payment-member></app-payment-member>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ circulationI18n?.closeButtonI18n }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="contact"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          {{ circulationI18n?.contactMemberTitleI18n }}
+        </h5>
+        <button
+          type="button"
+          class="closeContact"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-contact-member
+          [circulationI18n]="circulationI18n"
+          [email]="email"
+          (closeModalEvent)="closeModalContact()"
+        ></app-contact-member>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ circulationI18n?.closeButtonI18n }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

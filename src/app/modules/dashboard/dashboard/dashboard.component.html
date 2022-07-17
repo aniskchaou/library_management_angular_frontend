@@ -1,0 +1,192 @@
+<div class="container-fluid">
+  <div *ngIf="loading; else loaded">
+    <app-loading></app-loading>
+  </div>
+  <ng-template #loaded>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">{{ dashboardI18n?.titleI18n }}</h1>
+      <!--<a
+      href="#"
+      class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+      ><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a
+    >-->
+    </div>
+
+    <div class="row">
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                >
+                  {{ dashboardI18n?.booksNumberI18n }}
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  {{ dashboardAnalytics?.bookNumber }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                >
+                  {{ dashboardI18n?.membersNumberI18n }}
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  {{ dashboardAnalytics?.memberNumber }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-info text-uppercase mb-1"
+                >
+                  {{ dashboardI18n?.categoriesNumberI18n }}
+                </div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                      {{ dashboardAnalytics?.categoryNumber }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Requests Card Example -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+                >
+                  {{ dashboardI18n?.issueBookNumberI18n }}
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  {{ dashboardAnalytics?.issueBookNumber }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="mb-3">{{ dashboardI18n?.booksI18n }}</h4>
+            <ngx-charts-bar-vertical
+              [view]="view1"
+              [scheme]="colorScheme"
+              [results]="bookByAuthors"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="showLegend"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="yAxisLabel"
+              (select)="onSelect($event)"
+            >
+            </ngx-charts-bar-vertical>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="mb-3">{{ dashboardI18n?.categoriesI18n }}</h4>
+            <ngx-charts-pie-chart
+              [view]="view3"
+              [scheme]="colorScheme"
+              [results]="bookByCategories"
+              [gradient]="gradient"
+              [legend]="showLegend"
+              [legendPosition]="legendPosition"
+              [labels]="showLabels"
+              [doughnut]="isDoughnut"
+              (select)="onSelect($event)"
+              (activate)="onActivate($event)"
+              (deactivate)="onDeactivate($event)"
+            >
+            </ngx-charts-pie-chart>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="mb-3">{{ dashboardI18n?.incomesI18n }}</h4>
+            <ngx-charts-bar-vertical
+              [view]="view3"
+              [scheme]="colorSchemeExpenses"
+              [results]="incomes"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="false"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabelIncomes"
+              [yAxisLabel]="yAxisLabelExpensesIncomes"
+              (select)="onSelect($event)"
+            ></ngx-charts-bar-vertical>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="mb-3">{{ dashboardI18n?.expensesI18n }}</h4>
+            <ngx-charts-bar-vertical
+              [view]="view3"
+              [scheme]="colorSchemeIncomes"
+              [results]="expenses"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="false"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabelExpenses"
+              [yAxisLabel]="yAxisLabelExpensesIncomes"
+              (select)="onSelect($event)"
+            ></ngx-charts-bar-vertical>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+<br />
+<br />

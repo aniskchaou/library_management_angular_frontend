@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import Book from 'src/app/main/models/Book';
 import { HTTPService } from 'src/app/main/services/HTTPService';
@@ -19,7 +21,17 @@ export class StatisticsBookComponent extends URLLoader implements OnInit {
   filterForm: FormGroup;
   submitted: boolean = false;
   @Output() result = new EventEmitter();
+  @Output() groupByAuthors = new EventEmitter();
+  @Output() groupByPublishers = new EventEmitter();
+  @Output() getAll = new EventEmitter();
+  @Output() groupByCategories = new EventEmitter();
+  @Output() groupByEditionYears = new EventEmitter();
+  @Output() filterByYears = new EventEmitter();
+  @Output() filterByWriters = new EventEmitter();
+  @Output() filterByCategories = new EventEmitter();
   @Input() bookI18n;
+  categories;
+  writers;
 
   constructor(
     private router: Router,
@@ -28,9 +40,17 @@ export class StatisticsBookComponent extends URLLoader implements OnInit {
   ) {
     super();
     this.filterForm = this.validation.formGroupInstance;
+    for (let index = 2018; index < 2022; index++) {
+      this.years.push(index);
+    }
   }
 
-  ngOnInit(): void {}
+  years = [];
+
+  ngOnInit(): void {
+    this.getCategories();
+    this.getWriters();
+  }
 
   get f() {
     return this.filterForm.controls;
@@ -63,5 +83,57 @@ export class StatisticsBookComponent extends URLLoader implements OnInit {
         this.result.emit(data);
         this.showfilter = false;
       });
+  }
+
+  groupByAuthor() {
+    this.groupByAuthors.emit();
+  }
+
+  groupByPublisher() {
+    this.groupByPublishers.emit();
+  }
+  groupByEditionYear() {
+    this.groupByEditionYears.emit();
+  }
+  groupByCategory() {
+    this.groupByEditionYears.emit();
+  }
+
+  getBooks() {
+    this.getAll.emit();
+  }
+
+  getCategories() {
+    this.httpService.getAll(CONFIG.URL_BASE + '/category/all').subscribe(
+      (data) => {
+        this.categories = data;
+      },
+      (err: HttpErrorResponse) => {
+        //super.show('Error', err.message, 'warning');
+      }
+    );
+  }
+
+  getWriters() {
+    this.httpService.getAll(CONFIG.URL_BASE + '/writer/all').subscribe(
+      (data) => {
+        this.writers = data;
+      },
+      (err: HttpErrorResponse) => {
+        //super.show('Error', err.message, 'warning');
+      }
+    );
+  }
+
+  filterByWriter(writer) {
+    this.filterByWriters.emit(writer);
+  }
+
+  filterByCategory(category) {
+    this.filterByCategories.emit(category);
+  }
+
+  filterByYear(year) {
+    this.filterByYears.emit(year);
   }
 }

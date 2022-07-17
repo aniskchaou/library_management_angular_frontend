@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import CategoryMessage from 'src/app/main/messages/CategoryMessage';
 import Category from 'src/app/main/models/Category';
@@ -47,28 +48,27 @@ export class CategoryComponent extends URLLoader implements OnInit {
 
   ngOnInit() {
     this.getAll();
-    this.getCategoryByLang(CONFIG.getInstance().getLang());
+    this.httpService
+      .getAll(CONFIG.URL_BASE + '/i18n/category/' + CONFIG.getInstance().LANG)
+      .subscribe(
+        (data) => {
+          this.categoryI18n = data;
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+        }
+      );
   }
 
   getAll() {
     this.loading = true;
-    this.httpService.getAll(CONFIG.URL_BASE + '/category/all').subscribe(
-      (data: Category[]) => {
-        this.categorys$ = data;
-        this.loading = false;
-      },
-      (err: HttpErrorResponse) => {
-        super.show('Error', err.message, 'warning');
-      }
-    );
-  }
-
-  getCategoryByLang(lang) {
     this.httpService
-      .getAll(CONFIG.URL_BASE + '/i18n/category/' + lang)
+      .getAll(CONFIG.URL_BASE + '/category/all')
+      .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        (data) => {
-          this.categoryI18n = data;
+        (data: Category[]) => {
+          this.categorys$ = data;
+          this.loading = false;
         },
         (err: HttpErrorResponse) => {
           super.show('Error', err.message, 'warning');

@@ -25,10 +25,14 @@
     <tr *ngFor="let m of members">
       <td>{{ m.name }}</td>
       <td>{{ m.type_id }}</td>
-      <td>{{ m.email }}</td>
+      <td>
+        <span class="badge badge-info">{{ m.email }}</span>
+      </td>
       <td>{{ m.mobile }}</td>
       <td>{{ m.address }}</td>
-      <td>Active</td>
+      <td>
+        <span class="badge badge-primary">{{ m.status }}</span>
+      </td>
       <td>
         <button
           type="button"

@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import Settings from 'src/app/main/models/Settings';
+import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
@@ -9,9 +10,13 @@ import CONFIG from 'src/app/main/urls/urls';
   styleUrls: ['./navigation.component.css'],
 })
 export class NavigationComponent implements OnInit {
-  @Input() menuI18n;
+  menuI18n;
 
-  constructor() {}
+  constructor(private httpService: HTTPService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.httpService.menuI18n$.subscribe((data) => {
+      this.menuI18n = data;
+    });
+  }
 }

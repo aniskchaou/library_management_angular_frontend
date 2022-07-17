@@ -1,0 +1,55 @@
+<div class="container-fluid">
+  <!--<div *ngIf="loading; else loaded">
+    <app-loading></app-loading>
+  </div>-->
+  <h1 class="h3 mb-2 text-gray-800">{{ menu.bookAnalayticsI18n }}</h1>
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <ngx-charts-bar-vertical
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="bookByCategories"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel1"
+        [yAxisLabel]="yAxisLabel"
+        (select)="onSelect($event)"
+      ></ngx-charts-bar-vertical>
+
+      <ngx-charts-bar-vertical
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="bookByAuthors"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel2"
+        [yAxisLabel]="yAxisLabel"
+        (select)="onSelect($event)"
+      ></ngx-charts-bar-vertical>
+
+      <ngx-charts-bar-vertical
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="bookByPublishers"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel3"
+        [yAxisLabel]="yAxisLabel"
+        (select)="onSelect($event)"
+      ></ngx-charts-bar-vertical>
+    </div>
+  </div>
+</div>

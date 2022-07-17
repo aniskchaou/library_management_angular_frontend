@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <div *ngIf="loading; else loaded">
+    <app-loading></app-loading>
+  </div>
+
+  <ng-template #loaded>
+    <app-statistics-book
+      [bookI18n]="bookI18n"
+      (result)="filter($event)"
+    ></app-statistics-book>
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">{{ bookI18n?.allTitleI18n }}</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <app-destroyed-books-list
+            (idEvent)="edit($event)"
+            (viewEvent)="view($event)"
+            (deleteEvent)="delete($event)"
+            [books]="books$"
+            [bookI18n]="bookI18n"
+          ></app-destroyed-books-list>
+          <app-modal-book [bookI18n]="bookI18n" [id]="id"></app-modal-book>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

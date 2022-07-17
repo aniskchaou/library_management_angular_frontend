@@ -21,6 +21,7 @@ export class LoginComponent extends URLLoader implements OnInit {
   @Output() reloadMenu = new EventEmitter();
   settings$: Settings;
   menuI18n: Settings;
+  buttonLoginClicked = false;
 
   constructor(
     private router: Router,
@@ -30,33 +31,41 @@ export class LoginComponent extends URLLoader implements OnInit {
     super();
   }
 
-  getMenuItems() {
-    this.httpService
-      .getAll(CONFIG.URL_BASE + '/i18n/menu/' + CONFIG.getInstance().getLang())
-      .subscribe(
-        (data: Settings) => {
-          this.menuI18n = data;
-        },
-        (err: HttpErrorResponse) => {
-          //super.show('Error', err.message, 'warning');
-        }
-      );
-  }
-
   ngOnInit() {
     super.loadScripts();
   }
 
-  getSettings() {
-    this.httpService.getAll(CONFIG.URL_BASE + '/settings/1').subscribe(
-      (data: Settings) => {
-        this.settings$ = data;
-        CONFIG.getInstance().setLang(this.settings$.lang);
-      },
-      (err: HttpErrorResponse) => {
-        //super.show('Error', err.message, 'warning');
-      }
-    );
+  getDashboardByLang(lang, username, password) {
+    this.httpService
+      .getAllLang(
+        CONFIG.URL_BASE + '/i18n/dashboard/' + lang,
+        username,
+        password
+      )
+      .subscribe(
+        (data) => {
+          this.httpService.dashboardI18n.next(data);
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+          //this.reload = true;
+        }
+      );
+  }
+
+  getMenuByLang(lang, username, password) {
+    this.httpService
+      .getAllLang(CONFIG.URL_BASE + '/i18n/menu/' + lang, username, password)
+      .subscribe(
+        (data) => {
+          console.log(data);
+          this.httpService.menuI18n.next(data);
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+          //this.reload = true;
+        }
+      );
   }
 
   doLogin(loginform: NgForm) {
@@ -75,16 +84,19 @@ export class LoginComponent extends URLLoader implements OnInit {
             );
             super.show('StockBay', 'Welcome !', 'success');
             super.loadScripts();
-            // this.reloadMenu.emit();
-
+            this.buttonLoginClicked = true;
             this.invalidLogin = false;
-            this.reloadMenu.emit();
-
-            /* this.router
-              .navigateByUrl('/login', { skipLocationChange: true })
-              .then(() => {
-                this.router.navigate(['/dashboard']);
-              });*/
+            this.getDashboardByLang(
+              CONFIG.getInstance().getLang(),
+              loginform.value.username,
+              loginform.value.password
+            );
+            this.getMenuByLang(
+              CONFIG.getInstance().getLang(),
+              loginform.value.username,
+              loginform.value.password
+            );
+            this.router.navigate(['/dashboard']);
           }
         },
         (error) => {

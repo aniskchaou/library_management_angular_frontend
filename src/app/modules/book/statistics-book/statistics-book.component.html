@@ -87,6 +87,144 @@
       </div>
     </span>
 
+    <span style="margin: 3px" class="dropdown">
+      <button
+        class="btn btn-danger dropdown-toggle btn-icon-split"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <span class="icon text-white-50">
+          <i class="fas fa-filter"></i>
+        </span>
+        <span class="text">{{ bookI18n?.filtersI18n }}</span>
+      </button>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="navbar-collapse text-center" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {{ bookI18n?.authorI18n }}
+              </a>
+              <div
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <a
+                  class="dropdown-item"
+                  (click)="filterByWriter(w)"
+                  *ngFor="let w of writers"
+                  href="#"
+                  >{{ w.name }}</a
+                >
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {{ bookI18n?.edition_yearI18n }}
+              </a>
+              <div
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+                *ngFor="let y of years"
+              >
+                <a class="dropdown-item" (click)="filterByYear(y)">{{ y }}</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {{ bookI18n?.categoryI18n }}
+              </a>
+              <div
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <a
+                  class="dropdown-item"
+                  *ngFor="let c of categories"
+                  (click)="filterByCategory(c.id)"
+                  >{{ c.category_name }}</a
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </span>
+
+    <span style="margin: 3px" class="dropdown">
+      <button
+        class="btn btn-danger dropdown-toggle btn-icon-split"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <span class="icon text-white-50">
+          <i class="fas fa-bars"></i>
+        </span>
+        <span class="text">{{ bookI18n?.groupByI18n }}</span>
+      </button>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item toggle-vis" (click)="getBooks()" data-column="2"
+          >All</a
+        >
+        <a
+          class="dropdown-item toggle-vis"
+          (click)="groupByAuthor()"
+          data-column="2"
+          >{{ bookI18n?.authorI18n }}</a
+        >
+        <a
+          class="dropdown-item toggle-vis"
+          (click)="groupByCategory()"
+          data-column="3"
+          >{{ bookI18n?.categoryI18n }}</a
+        >
+        <a
+          class="dropdown-item toggle-vis"
+          (click)="groupByPublisher()"
+          data-column="4"
+          >{{ bookI18n?.publisherI18n }}</a
+        >
+        <a
+          class="dropdown-item toggle-vis"
+          (click)="groupByEditionYear()"
+          data-column="5"
+          >{{ bookI18n?.edition_yearI18n }}</a
+        >
+      </div>
+    </span>
+
     <br /><br />
 
     <div *ngIf="showfilter">

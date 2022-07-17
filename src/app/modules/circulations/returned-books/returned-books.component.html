@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <div *ngIf="loading; else loaded">
+    <app-loading></app-loading>
+  </div>
+
+  <ng-template #loaded>
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">{{ circulationI18n?.allTitleI18n }}</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <app-add-button [itemI18n]="circulationI18n"></app-add-button>
+          <app-circulation-list
+            (editEvent)="edit($event)"
+            (viewEvent)="view($event)"
+            (deleteEvent)="delete($event)"
+            [circulations]="circulations$"
+            [circulationI18n]="circulationI18n"
+          ></app-circulation-list>
+          <app-circulation-modal
+            [circulationI18n]="circulationI18n"
+            [circulations]="circulations$"
+            [id]="id"
+          ></app-circulation-modal>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

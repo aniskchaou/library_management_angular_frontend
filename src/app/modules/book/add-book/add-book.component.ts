@@ -79,18 +79,7 @@ export class AddBookComponent extends URLLoader implements OnInit {
     this.bookForm.reset();
   }
 
-  /* add() {
-    this.submitted = true;
-
-    if (this.validation.checkValidation()) {
-      this.bookTestService.create(this.bookForm.value)
-      super.show('Confirmation', this.msg.confirmationMessages.add, 'success')
-
-    }
-  }*/
-
   getWriters() {
-    // this.appointements$ = this.appointmentTestService.getAll()
     this.httpService.getAll(CONFIG.URL_BASE + '/writer/all').subscribe(
       (data: Writer[]) => {
         this.writers$ = data;
@@ -103,7 +92,6 @@ export class AddBookComponent extends URLLoader implements OnInit {
   }
 
   getPublishers() {
-    // this.appointements$ = this.appointmentTestService.getAll()
     this.httpService.getAll(CONFIG.URL_BASE + '/publisher/all').subscribe(
       (data: Publisher[]) => {
         this.publishers$ = data;

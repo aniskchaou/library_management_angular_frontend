@@ -7,6 +7,14 @@
     <app-statistics-book
       [bookI18n]="bookI18n"
       (result)="filter($event)"
+      (groupByAuthors)="groupByAuthors($event)"
+      (groupByPublishers)="groupByPublishers($event)"
+      (groupByCategories)="groupByCategories($event)"
+      (groupByEditionYears)="groupByEditionYears($event)"
+      (filterByYears)="filterByYears($event)"
+      (filterByWriters)="filterByWriters($event)"
+      (filterByCategories)="filterByCategories($event)"
+      (getAll)="getAll($event)"
     ></app-statistics-book>
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">{{ bookI18n?.allTitleI18n }}</h1>
@@ -19,6 +27,8 @@
             (idEvent)="edit($event)"
             (viewEvent)="view($event)"
             (deleteEvent)="delete($event)"
+            (destroyEvent)="destroy($event)"
+            (archiveEvent)="archive($event)"
             [books]="books$"
             [bookI18n]="bookI18n"
           ></app-book-list>

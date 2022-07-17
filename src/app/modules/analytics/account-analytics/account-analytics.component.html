@@ -1,0 +1,40 @@
+<div class="container-fluid">
+  <!--<div *ngIf="loading; else loaded">
+    <app-loading></app-loading>
+  </div>-->
+  <h1 class="h3 mb-2 text-gray-800">{{ menu.accountAnalyticsI18n }}</h1>
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <ngx-charts-bar-vertical
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="incomes"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        (select)="onSelect($event)"
+      ></ngx-charts-bar-vertical>
+
+      <ngx-charts-bar-vertical
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="expenses"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel1"
+        [yAxisLabel]="yAxisLabel"
+        (select)="onSelect($event)"
+      ></ngx-charts-bar-vertical>
+    </div>
+  </div>
+</div>

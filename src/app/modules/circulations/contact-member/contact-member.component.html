@@ -1,0 +1,42 @@
+<div *ngIf="sending; else sent">
+  <app-loading></app-loading>
+</div>
+
+<ng-template #sent>
+  <form
+    class="form-group odd"
+    id="category_name_field_box"
+    [formGroup]="contactForm"
+  >
+    <label
+      class="col-sm-3 control-label"
+      for="name"
+      id="payment_name_display_as_box"
+    >
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">
+          {{ circulationI18n.messageI18n }}
+        </font> </font
+      ><span class="required">
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit">*</font>
+        </font>
+      </span>
+    </label>
+    <div class="col-sm-9 col-md-6 col-lg-6" id="payment_name_input_box">
+      <textarea
+        formControlName="body"
+        id="field-payment_name"
+        name="body"
+        class="form-control"
+        type="text"
+        maxlength="99"
+      ></textarea>
+    </div>
+    <br />
+    <button (click)="add()" type="button" class="btn btn-info">
+      <i class="fas fa-save"></i>
+      {{ circulationI18n?.sendEmailI18n }}
+    </button>
+  </form>
+</ng-template>

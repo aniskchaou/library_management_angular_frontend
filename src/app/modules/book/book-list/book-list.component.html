@@ -11,21 +11,31 @@
   </thead>
   <tfoot>
     <tr>
-      <th>{{ bookI18n?.isbnI18n }}</th>
+      <th>
+        {{ bookI18n?.isbnI18n }}
+      </th>
       <th>{{ bookI18n?.titleI18n }}</th>
       <th>{{ bookI18n?.authorI18n }}</th>
-      <th>{{ bookI18n?.categoryI18n }}</th>
+      <th>
+        {{ bookI18n?.categoryI18n }}
+      </th>
       <th>{{ bookI18n?.publisherI18n }}</th>
       <th></th>
     </tr>
   </tfoot>
   <tbody>
     <tr *ngFor="let b of books">
-      <td>{{ b.isbn }}</td>
-      <td>{{ b.title }}</td>
+      <td>
+        <span class="badge badge-primary">{{ b.isbn }}</span>
+      </td>
+      <td>
+        <b>{{ b.title }}</b>
+      </td>
       <td>{{ b.writer?.name }}</td>
       <td>{{ b.category?.category_name }}</td>
-      <td>{{ b.publisher?.name }}</td>
+      <td>
+        <span class="badge badge-warning">{{ b.publisher?.name }}</span>
+      </td>
       <td>
         <button
           (click)="view(b.id)"
@@ -52,6 +62,20 @@
           onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?');"
         >
           <i class="fas fa-trash-alt"></i>
+        </button>
+        <button
+          (click)="archiveBook(b.id)"
+          *ngIf="b.status.id == 1"
+          class="btn btn-warning btn-sm"
+        >
+          <i class="fas fa-archive"></i>
+        </button>
+        <button
+          (click)="destroyBook(b.id)"
+          *ngIf="b.status.id == 1"
+          class="btn btn-info btn-sm"
+        >
+          <i class="fas fa-minus"></i>
         </button>
       </td>
     </tr>

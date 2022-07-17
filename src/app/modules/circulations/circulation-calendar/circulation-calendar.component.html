@@ -1,0 +1,13 @@
+<!-- Page Heading -->
+
+<div style="margin-left: 5px; height: 80%; width: 96%">
+  <h1 class="h3 mb-2 text-gray-800">{{ menu?.calendarI18n }}</h1>
+  <ngx-event-calendar
+    [showAddButton]="false"
+    [language]="'en'"
+    [dataSource]="dataArray"
+    (dayEvents)="selectDay($event)"
+    (newEvent)="addEvent($event)"
+  >
+  </ngx-event-calendar>
+</div>

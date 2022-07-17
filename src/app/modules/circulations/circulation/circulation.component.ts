@@ -17,7 +17,7 @@ export class CirculationComponent extends URLLoader implements OnInit {
   id;
   circulationI18n;
   loading = false;
-
+  email;
   edit(id) {
     if (id != undefined) {
       this.id = id;
@@ -70,6 +70,11 @@ export class CirculationComponent extends URLLoader implements OnInit {
   ngOnInit(): void {
     this.getAll();
     this.getCirculationByLang(CONFIG.getInstance().getLang());
+    this.getMenuByLang(
+      CONFIG.getInstance().getLang(),
+      sessionStorage.getItem('username'),
+      sessionStorage.getItem('password')
+    );
   }
 
   getAll() {
@@ -83,5 +88,24 @@ export class CirculationComponent extends URLLoader implements OnInit {
         super.show('Error', err.message, 'error');
       }
     );
+  }
+
+  getMenuByLang(lang, username, password) {
+    this.httpService
+      .getAllLang(CONFIG.URL_BASE + '/i18n/menu/' + lang, username, password)
+      .subscribe(
+        (data) => {
+          console.log(data);
+          this.httpService.menuI18n.next(data);
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+          //this.reload = true;
+        }
+      );
+  }
+  contact(email) {
+    this.email = email;
+    console.log(email);
   }
 }

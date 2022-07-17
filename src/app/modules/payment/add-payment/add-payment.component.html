@@ -1,0 +1,144 @@
+<form
+  class="form-group odd"
+  id="category_name_field_box"
+  [formGroup]="paymentForm"
+>
+  <!-- member -->
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="category_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ paymentI18n?.nameI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+    <!-- member select field -->
+    <select
+      [ngClass]="{ 'is-invalid': submitted && f.memberName.errors }"
+      formControlName="memberName"
+      id="field-category_name"
+      name="memberName"
+      class="form-control"
+    >
+      <option *ngFor="let m of members$" value="{{ m.id }}">
+        {{ m.name }}
+      </option>
+    </select>
+
+    <!-- member validation-->
+    <div *ngIf="submitted && f.memberName.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.memberName.errors.required">
+        {{ msg.validationMessage.memberName }}
+      </div>
+    </div>
+  </div>
+
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="payment_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ paymentI18n?.dateI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="payment_name_input_box">
+    <!-- payment text field-->
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.date.errors }"
+      formControlName="date"
+      id="field-payment_name"
+      name="date"
+      class="form-control"
+      type="date"
+      maxlength="99"
+    />
+    <!-- payment Validation message -->
+    <div *ngIf="submitted && f.date.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.date.errors.required">
+        {{ msg.validationMessage.date }}
+      </div>
+    </div>
+  </div>
+
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="payment_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ paymentI18n?.amountI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="payment_name_input_box">
+    <!-- payment text field-->
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.amount.errors }"
+      formControlName="amount"
+      id="field-payment_name"
+      name="amount"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    />
+    <!-- payment Validation message -->
+    <div *ngIf="submitted && f.amount.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.amount.errors.required">
+        {{ msg.validationMessage.amount }}
+      </div>
+    </div>
+  </div>
+  <label
+    class="col-sm-3 control-label"
+    for="name"
+    id="payment_name_display_as_box"
+  >
+    <font style="vertical-align: inherit">
+      <font style="vertical-align: inherit">
+        {{ paymentI18n?.noteI18n }}
+      </font> </font
+    ><span class="required">
+      <font style="vertical-align: inherit">
+        <font style="vertical-align: inherit">*</font>
+      </font>
+    </span>
+  </label>
+  <div class="col-sm-9 col-md-6 col-lg-6" id="payment_name_input_box">
+    <!-- payment text field-->
+    <textarea
+      formControlName="note"
+      id="field-payment_name"
+      name="note"
+      class="form-control"
+      type="text"
+      maxlength="99"
+    ></textarea>
+    <!-- payment Validation message -->
+  </div>
+  <br />
+  <!-- add button -->
+  <button (click)="add()" type="button" class="btn btn-info">
+    <i class="fas fa-save"></i>
+    {{ paymentI18n?.addButtonI18n }}
+  </button>
+</form>

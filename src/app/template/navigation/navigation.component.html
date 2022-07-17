@@ -59,12 +59,19 @@
         <a routerLinkActive="active" class="collapse-item" routerLink="/book">{{
           menuI18n?.booksI18n
         }}</a>
-        <!-- <a
+
+        <a
           routerLinkActive="active"
           class="collapse-item"
-          routerLink="/archive"
-          >{{ menuI18n?.archivesI18n }}</a
-        >-->
+          routerLink="/archived-books"
+          >{{ menuI18n?.archivedBookI18n }}</a
+        >
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/destroyed-books"
+          >{{ menuI18n?.destroyedBookI18n }}</a
+        >
         <a
           routerLinkActive="active"
           class="collapse-item"
@@ -143,6 +150,12 @@
         <a
           routerLinkActive="active"
           class="collapse-item"
+          routerLink="/circulation-calendar"
+          >{{ menuI18n?.calendarI18n }}</a
+        >
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
           routerLink="/circulation-status"
           >{{ menuI18n?.circulationStatusI18n }}</a
         >
@@ -150,21 +163,42 @@
     </div>
   </li>
 
-  <!-- Nav Item - Utilities Collapse Menu 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#notificationUtilities"
-      aria-expanded="true" aria-controls="notificationUtilities">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#accountUtilities"
+      aria-expanded="true"
+      aria-controls="accountUtilities"
+    >
       <i class="fas fa-fw fa-bell"></i>
-      <span>Notifications</span>
+      <span>{{ menuI18n?.account18n }}</span>
     </a>
-    <div id="notificationUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+    <div
+      id="accountUtilities"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
       <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Notifications:</h6>
-        <a routerLinkActive="active" class="collapse-item" routerLink="/configurationsms">Paramètres SMS</a>
+        <h6 class="collapse-header">{{ menuI18n?.account18n }}:</h6>
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/expense"
+          >{{ menuI18n?.expenseI18n }}</a
+        >
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/income"
+          >{{ menuI18n?.income18n }}</a
+        >
       </div>
     </div>
   </li>
--->
+
   <hr class="sidebar-divider" />
   <li class="nav-item">
     <a routerLinkActive="active" class="nav-link" href="#" routerLink="/writer">
@@ -180,28 +214,148 @@
       <span>{{ menuI18n?.publishersI18n }}</span>
     </a>
   </li>
-  <hr class="sidebar-divider" />
   <li class="nav-item">
-    <a routerLinkActive="active" class="nav-link" routerLink="/settings">
-      <i class="fas fa-fw fa-glasses"></i>
-      <span>{{ menuI18n?.settingsI18n }}</span>
-    </a>
-  </li>
-  <!--<div class="text-center d-none d-md-inline">
-    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-  </div>
-   Nav Item - Utilities Collapse Menu 
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#rapportUtilities" aria-expanded="true"
-      aria-controls="rapportUtilities">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#memberUtilities"
+      aria-expanded="true"
+      aria-controls="memberUtilities"
+    >
       <i class="fas fa-fw fa-comment-dollar"></i>
-      <span>Rapport</span>
+      <span>{{ menuI18n?.membershipI18n }}</span>
     </a>
-    <div id="rapportUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+    <div
+      id="memberUtilities"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
       <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Rapport:</h6>
-        <a routerLinkActive="active" class="collapse-item" routerLink="/penalty">Amande</a>
+        <h6 class="collapse-header">{{ menuI18n?.membershipI18n }}:</h6>
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/payment"
+          >{{ menuI18n?.paymentI18n }}</a
+        >
       </div>
     </div>
   </li>
---></ul>
+
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#rapportUtilities"
+      aria-expanded="true"
+      aria-controls="rapportUtilities"
+    >
+      <i class="fas fa-fw fa-comment-dollar"></i>
+      <span>{{ menuI18n?.reportI18n }}</span>
+    </a>
+    <div
+      id="rapportUtilities"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">{{ menuI18n?.reportI18n }}:</h6>
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/book-report"
+          >{{ menuI18n?.bookReportI18n }}</a
+        >
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/member-report"
+          >{{ menuI18n?.memberReportI18n }}</a
+        >
+        <!-- <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/circulation-report"
+          >{{ menuI18n?.circulationReportI18n }}</a
+        >-->
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#analyticsUtilities"
+      aria-expanded="true"
+      aria-controls="analyticsUtilities"
+    >
+      <i class="fas fa-fw fa-comment-dollar"></i>
+      <span>{{ menuI18n?.analyticsI18n }}</span>
+    </a>
+    <div
+      id="analyticsUtilities"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">{{ menuI18n?.analyticsI18n }}:</h6>
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/bookanalytics"
+          >{{ menuI18n?.bookAnalayticsI18n }}</a
+        >
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/account-analytics"
+          >{{ menuI18n?.accountAnalyticsI18n }}</a
+        >
+      </div>
+    </div>
+  </li>
+
+  <hr class="sidebar-divider" />
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#settingsMenu"
+      aria-expanded="true"
+      aria-controls="settingsMenu"
+    >
+      <i class="fas fa-fw fa-comment-dollar"></i>
+      <span>{{ menuI18n?.settingsI18n }}</span>
+    </a>
+    <div
+      id="settingsMenu"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">{{ menuI18n?.accountI18n }}</h6>
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/settings"
+          >{{ menuI18n?.generalSettingsI18n }}</a
+        >
+        <a
+          routerLinkActive="active"
+          class="collapse-item"
+          routerLink="/emailsettings"
+          >{{ menuI18n?.emailSettingsI18n }}</a
+        >
+      </div>
+    </div>
+  </li>
+</ul>

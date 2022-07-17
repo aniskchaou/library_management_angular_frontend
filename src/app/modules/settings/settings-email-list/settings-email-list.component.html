@@ -1,0 +1,28 @@
+<table class="table table-bordered" id="table" width="100%" cellspacing="0">
+  <thead>
+    <tr>
+      <th>{{ settingsI18n?.authI18n }}</th>
+      <th>{{ settingsI18n?.enableTLS }}</th>
+      <th>{{ settingsI18n?.hostI18n }}</th>
+      <th>{{ settingsI18n?.emailI18n }}</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>{{ settingsI18n?.authI18n }}</th>
+      <th>{{ settingsI18n?.enableTLS }}</th>
+      <th>{{ settingsI18n?.hostI18n }}</th>
+      <th>{{ settingsI18n?.emailI18n }}</th>
+    </tr>
+  </tfoot>
+  <tbody>
+    <tr>
+      <td>{{ settings.auth }}</td>
+      <td>{{ settings.enableTLS }}</td>
+      <td>{{ settings.host }}</td>
+      <td>
+        {{ settings.email }}
+      </td>
+    </tr>
+  </tbody>
+</table>

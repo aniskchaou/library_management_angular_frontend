@@ -19,18 +19,13 @@
     </a>
 
     <div
-      class="
-        dropdown-list dropdown-menu dropdown-menu-right
-        shadow
-        animated--grow-in
-      "
+      class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
       aria-labelledby="alertsDropdown"
     >
       <!-- <h6 class="dropdown-header">Alerts Center</h6>-->
       <a
         (click)="changeLang('EN')"
         class="dropdown-item d-flex align-items-center"
-        href="#"
       >
         <div class="mr-3"><span class="flag-icon flag-icon-us"></span></div>
         <div>
@@ -40,7 +35,6 @@
       <a
         (click)="changeLang('AR')"
         class="dropdown-item d-flex align-items-center"
-        href="#"
       >
         <div class="mr-3"><span class="flag-icon flag-icon-ae"></span></div>
         <div>
@@ -51,7 +45,6 @@
       <a
         (click)="changeLang('HN')"
         class="dropdown-item d-flex align-items-center"
-        href="#"
       >
         <div class="mr-3"><span class="flag-icon flag-icon-in"></span></div>
         <div>
@@ -62,7 +55,6 @@
       <a
         (click)="changeLang('BN')"
         class="dropdown-item d-flex align-items-center"
-        href="#"
       >
         <div class="mr-3"><span class="flag-icon flag-icon-bd"></span></div>
         <div>
@@ -141,7 +133,7 @@
                           </a>-->
       <a routerLink="/settings" class="dropdown-item" href="#">
         <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-        {{ menuI18n?.settingsI18n }}
+        {{ menuI18n.settingsI18n }}
       </a>
       <!--  <a class="dropdown-item" href="#">
                               <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -150,7 +142,7 @@
       <div class="dropdown-divider"></div>
       <a routerLink="/" (click)="logout()" class="dropdown-item">
         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-        {{ menuI18n?.logOutI18n }}
+        {{ menuI18n.logOutI18n }}
       </a>
     </div>
   </li>

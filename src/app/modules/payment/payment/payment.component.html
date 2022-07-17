@@ -1,0 +1,32 @@
+<div class="container-fluid">
+  <div>
+    <!-- <app-loading></app-loading> -->
+  </div>
+
+  <h1 class="h3 mb-2 text-gray-800">{{ paymentI18n?.allTitleI18n }}</h1>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <button
+        href="#add"
+        role="button"
+        data-toggle="modal"
+        class="btn btn-success btn-icon-split"
+      >
+        <span class="icon text-white-50">
+          <i class="fas fa-plus"></i>
+        </span>
+        <span class="text">{{ paymentI18n?.addButtonI18n }}</span>
+      </button>
+      <div class="table-responsive">
+        <app-payment-list
+          [paymentI18n]="paymentI18n"
+          (editEvent)="edit($event)"
+          (deleteEvent)="delete($event)"
+          [payments]="payments$"
+        ></app-payment-list>
+        <app-modal-payment [paymentI18n]="paymentI18n"></app-modal-payment>
+      </div>
+    </div>
+  </div>
+</div>

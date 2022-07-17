@@ -6,11 +6,12 @@
   <ng-template #loaded>
     <h1 class="h3 mb-2 text-gray-800">{{ categoryI18n?.allTitleI18n }}</h1>
     <!-- DataTales Example -->
+    <app-statistics-category
+      [categoryI18n]="categoryI18n"
+    ></app-statistics-category>
     <div class="card shadow mb-4">
       <div class="card-body">
         <!-- add category -->
-        <app-add-button [itemI18n]="categoryI18n"></app-add-button>
-
         <div class="table-responsive">
           <!-- category list -->
           <app-category-list
