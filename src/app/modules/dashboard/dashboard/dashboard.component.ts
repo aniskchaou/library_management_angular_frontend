@@ -71,6 +71,16 @@ export class DashboardComponent extends URLLoader implements OnInit {
     this.getExpenses();
     this.getIncomes();
     this.getAnalyticsNumbers();
+    this.getDashboardByLang(
+      CONFIG.getInstance().getLang(),
+      sessionStorage.getItem('username'),
+      sessionStorage.getItem('password')
+    );
+    this.getMenuByLang(
+      CONFIG.getInstance().getLang(),
+      sessionStorage.getItem('username'),
+      sessionStorage.getItem('password')
+    );
   }
 
   getAnalyticsNumbers() {
@@ -149,4 +159,38 @@ export class DashboardComponent extends URLLoader implements OnInit {
     console.log(event);
   }
   addEvent(event) {}
+
+  getDashboardByLang(lang, username, password) {
+    this.httpService
+      .getAllLang(
+        CONFIG.URL_BASE + '/i18n/dashboard/' + lang,
+        username,
+        password
+      )
+      .subscribe(
+        (data) => {
+          console.log(data);
+          this.httpService.dashboardI18n.next(data);
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+          //this.reload = true;
+        }
+      );
+  }
+
+  getMenuByLang(lang, username, password) {
+    this.httpService
+      .getAllLang(CONFIG.URL_BASE + '/i18n/menu/' + lang, username, password)
+      .subscribe(
+        (data) => {
+          console.log(data);
+          this.httpService.menuI18n.next(data);
+        },
+        (err: HttpErrorResponse) => {
+          super.show('Error', err.message, 'warning');
+          //this.reload = true;
+        }
+      );
+  }
 }
