@@ -6,7 +6,7 @@ import SettingsMessage from 'src/app/main/messages/SettingsMessage';
 import { AuthentificationService } from 'src/app/main/security/authentification.service';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
-
+import { HostListener } from '@angular/core';
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
@@ -27,6 +27,11 @@ export class TopbarComponent extends URLLoader implements OnInit {
     //this.getDashboardByLang(CONFIG.getInstance().getLang());
     // this.getMenuByLang(CONFIG.getInstance().getLang());
     //this.getCategoryByLang(CONFIG.getInstance().getLang());
+  }
+
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event) {
+    this.logout();
   }
 
   ngOnInit(): void {

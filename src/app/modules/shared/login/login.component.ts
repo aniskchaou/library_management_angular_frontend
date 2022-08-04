@@ -69,6 +69,7 @@ export class LoginComponent extends URLLoader implements OnInit {
   }
 
   doLogin(loginform: NgForm) {
+    this.buttonLoginClicked = true;
     this.loginservice
       .authenticate(loginform.value.username, loginform.value.password)
       .subscribe(
@@ -84,7 +85,7 @@ export class LoginComponent extends URLLoader implements OnInit {
             );
             super.show('StockBay', 'Welcome !', 'success');
             super.loadScripts();
-            this.buttonLoginClicked = true;
+            this.buttonLoginClicked = false;
             this.invalidLogin = false;
             this.getDashboardByLang(
               CONFIG.getInstance().getLang(),
