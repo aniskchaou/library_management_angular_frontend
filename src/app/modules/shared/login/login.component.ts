@@ -69,8 +69,13 @@ export class LoginComponent extends URLLoader implements OnInit {
   }
 
   doLogin(loginform: NgForm) {
-     this.buttonLoginClicked = true;
-     let username = sessionStorage.setItem(
+    this.buttonLoginClicked = true;
+    this.loginservice
+      .authenticate(loginform.value.username, loginform.value.password)
+      .subscribe(
+        (data) => {
+          if (data) {
+            let username = sessionStorage.setItem(
               'username',
               loginform.value.username
             );
@@ -93,6 +98,17 @@ export class LoginComponent extends URLLoader implements OnInit {
               loginform.value.password
             );
             this.router.navigate(['/dashboard']);
-    
+          }
+        },
+        (error) => {
+          this.invalidLogin = true;
+          this.errorMessage = error.message;
+          super.show(
+            'Error Authentification',
+            'Error password or username',
+            'warning'
+          );
+        }
+      );
   }
 }
