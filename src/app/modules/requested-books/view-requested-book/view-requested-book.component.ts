@@ -34,6 +34,7 @@ export class ViewRequestedBookComponent implements OnInit {
   }
 
   getRequestedbookByLang(lang) {
+     lang='EN'
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/requestedbook/' + lang)
       .subscribe(

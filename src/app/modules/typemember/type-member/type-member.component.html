@@ -1,17 +1,48 @@
 <div class="container-fluid">
-  <div *ngIf="loading; else loaded">
-    <app-loading></app-loading>
-  </div>
-
-  <ng-template #loaded>
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">{{ typeMemberI18n?.allTitleI18n }}</h1>
+  <!-- Page Title and Description -->
+  <h1 class="h3 mb-2 text-gray-800">
+    <i class="fas fa-users"></i> <!-- Replace with your desired icon -->
+    {{ typeMemberI18n?.allTitleI18n }}
+  </h1>
+  <p class="mb-4 text-muted">
+    The Type Members Management module allows you to efficiently manage various types of members within the system. You can view, add, edit, or delete member types as needed. This ensures that your system can accurately categorize and handle different roles or classifications of members, maintaining an organized and up-to-date membership structure.
+  </p>
+  
 
     <!-- DataTales Example -->
-    <div class="card shadow mb-4">
+    <div class="card mb-4">
       <div class="card-body">
         <div class="table-responsive">
-          <app-add-button [itemI18n]="typeMemberI18n"></app-add-button>
+         <!--  <app-add-button [itemI18n]="typeMemberI18n"></app-add-button> -->
+         <button
+         (click)="openAddDialog()"
+         class="btn btn-outline-success btn-icon-split"
+       >
+         <span class="icon text-success">
+           <i class="fas fa-plus"></i>
+         </span>
+         <span class="text">Create</span>
+       </button>
+       <button
+        href="#"
+        role="button"
+        class="btn btn-outline-warning btn-icon-split"
+        (click)="getAll()"
+      >
+        <span class="icon text-warning">
+          <i class="fas fa-redo"></i>
+        </span>
+        <span class="text">Reload</span>
+      </button>
+      <div *ngIf="loading; else loaded">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #loaded>
           <app-typemember-list
             (editEvent)="edit($event)"
             (deleteEvent)="delete($event)"
@@ -22,8 +53,9 @@
             [typeMemberI18n]="typeMemberI18n"
             [id]="id"
           ></app-modal-type-member>
+      </ng-template>    
         </div>
       </div>
     </div>
-  </ng-template>
+
 </div>

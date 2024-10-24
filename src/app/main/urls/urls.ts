@@ -1,10 +1,10 @@
 import { UrlSegment } from '@angular/router';
 
 export default class CONFIG {
-  static URL_BASE = 'https://library-lab-backend.herokuapp.com';
-  public LANG = 'EN';
+  static URL_BASE = 'http://localhost:8080';
 
   public static instance: CONFIG = null;
+  public LANG = 'EN';
 
   static getInstance(): CONFIG {
     return this.instance || (this.instance = new this());

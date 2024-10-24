@@ -34,7 +34,7 @@ export class AuthentificationService {
   }
 
   logOut() {
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('password');
+    sessionStorage.removeItem(undefined);
+    sessionStorage.removeItem(undefined);
   }
 }

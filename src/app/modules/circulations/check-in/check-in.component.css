@@ -1,0 +1,10 @@
+.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+div > .ng-input {
+    width: 700px;
+  }
+

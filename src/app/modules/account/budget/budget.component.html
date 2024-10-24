@@ -1,0 +1,105 @@
+<div class="container-fluid">
+  <div class="bg-white p-3 rounded">
+    <!-- Budgets Title with Icon -->
+    <h3 class="h3 mb-2 text-gray-800"><i class="fas fa-wallet"></i> Budgets</h3>
+    
+    <!-- Description -->
+    <p class="lead">The Budget module allows you to manage and track budgets effectively. You can add, edit, and delete budget entries, and perform various actions to maintain financial control.</p>
+
+    <!-- Button and Dropdown -->
+    
+      <button class="btn btn-outline-primary" (click)="openAddDialog()">Add Budget</button>
+      <button class="btn btn-outline-warning" (click)="loadBudgets()">Reload</button>
+      
+      <div *ngIf="loadingIndicator; else loaded">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #loaded>
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="budgets$"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="'auto'"
+            [limit]="10"
+            [loadingIndicator]="loadingIndicator"
+            [reorderable]="reorderable"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
+          >
+            <ngx-datatable-column name="Start Date" [prop]="'startDate'">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.startDate | date }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="End Date" [prop]="'endDate'">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.endDate | date }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Description" [prop]="'description'">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.description }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Total Amount" [prop]="'totalAmount'">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span style="color: blue;">{{ row.totalAmount | currency }}$</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <!-- <ngx-datatable-column name="Make Budget Active" [prop]="'makeBudgetActive'">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.makeBudgetActive ? 'Yes' : 'No' }}
+              </ng-template>
+            </ngx-datatable-column> -->
+
+            <ngx-datatable-column name="Lock Budget" [prop]="'lockBudget'">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span style="color: red;">{{ row.lockBudget ? 'Yes' : 'No' }}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Actions">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Actions
+              </button>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" (click)="openEditDialog(row)">
+                      <i class="fas fa-edit"></i> Edit
+                  </a>
+                  <a class="dropdown-item"  (click)="deleteBudget(row.id)">
+                      <i class="fas fa-trash"></i> Delete
+                  </a>
+                  <a class="dropdown-item" (click)="lockBudget(row)">
+                      <i class="fas fa-lock"></i> Lock Budget
+                  </a>
+              </div>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+
+
+   </ng-template>
+
+  </div>
+
+  <!-- Add Budget Modal -->
+</div>

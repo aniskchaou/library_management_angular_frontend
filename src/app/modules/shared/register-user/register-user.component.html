@@ -1,0 +1,137 @@
+<div class="bg-gradient-primary">
+    <div class="container">
+      <!-- Outer Row -->
+      <div class="row justify-content-center">
+        <div class="col-xl-10 col-lg-12 col-md-9">
+          <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+              <!-- Nested Row within Card Body -->
+              <div class="row">
+                <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                <div class="col-lg-6">
+                  <div class="p-5">
+                    <div class="text-center">
+                      <div>
+                        <img
+                          style="object-fit: cover"
+                          src="assets/img/logo.png"
+                        />
+                        <br /><br />
+                      </div>
+                      <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                    </div>
+
+                    <!-- <form class="user">
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="First Name">
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Last Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address">
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
+                            </div>
+                        </div>
+                        <a href="login.html" class="btn btn-primary btn-user btn-block">
+                            Register Account
+                        </a>
+                        <hr>
+                      
+                    </form> -->
+
+                    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate class="user">
+                      <div class="form-group row">
+                          <div class="col-sm-6 mb-3 mb-sm-0">
+                              <input type="text" formControlName="firstName" class="form-control form-control-user" id="exampleFirstName"
+                                     placeholder="First Name"
+                                     [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                              <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                                  <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                              </div>
+                          </div>
+                          <div class="col-sm-6">
+                              <input type="text" formControlName="lastName" class="form-control form-control-user" id="exampleLastName"
+                                     placeholder="Last Name"
+                                     [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                              <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                                  <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div class="form-group">
+                          <input type="email" formControlName="email" class="form-control form-control-user" id="exampleInputEmail"
+                                 placeholder="Email Address"
+                                 [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                              <div *ngIf="f.email.errors.required">Email is required</div>
+                              <div *ngIf="f.email.errors.email">Please enter a valid email</div>
+                          </div>
+                      </div>
+                      
+                      <!-- Username Field -->
+                      <div class="form-group">
+                          <input type="text" formControlName="username" class="form-control form-control-user" id="exampleInputUsername"
+                                 placeholder="Username"
+                                 [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                              <div *ngIf="f.username.errors.required">Username is required</div>
+                          </div>
+                      </div>
+                  
+                      <div class="form-group row">
+                          <div class="col-sm-6 mb-3 mb-sm-0">
+                              <input type="password" formControlName="password" class="form-control form-control-user" id="exampleInputPassword"
+                                     placeholder="Password"
+                                     [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                  <div *ngIf="f.password.errors.required">Password is required</div>
+                                  <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters long</div>
+                              </div>
+                          </div>
+                          <div class="col-sm-6">
+                              <input type="password" formControlName="confirmPassword" class="form-control form-control-user" id="exampleRepeatPassword"
+                                     placeholder="Repeat Password"
+                                     [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                              <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                                  <div *ngIf="f.confirmPassword.errors.required">Confirmation password is required</div>
+                                  <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords do not match</div>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div class="form-group">
+                          <input type="text" formControlName="phoneNumber" class="form-control form-control-user" id="examplePhoneNumber"
+                                 placeholder="Phone Number (Optional)" />
+                      </div>
+                  
+                      <button type="submit" class="btn btn-primary btn-user btn-block">
+                          Register Account
+                      </button>
+                      <hr>
+                  </form>
+                  
+                  
+                  
+                  <div class="text-center">
+                    <a class="small" routerLink="/login">Login!</a>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

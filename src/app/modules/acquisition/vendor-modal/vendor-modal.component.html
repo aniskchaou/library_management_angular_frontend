@@ -1,0 +1,126 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ vendor.id ? 'Edit' : 'Add' }} Vendor</h5>
+  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="onSaveClick()" #vendorForm="ngForm">
+    <div class="form-group">
+      <label for="name">
+        Name
+        <i class="fas fa-info-circle" title="<b>Description:</b> Enter the name of the vendor.<br><b>Example:</b> ACME Corp"></i>
+      </label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="vendor.name" name="name" placeholder="e.g., ACME Corp" required>
+    </div>
+    <div class="form-group">
+      <label for="address">
+        Address
+        <i class="fas fa-info-circle" title="<b>Description:</b> Enter the address of the vendor.<br><b>Example:</b> 123 Main St, City, Country"></i>
+      </label>
+      <input type="text" class="form-control" id="address" [(ngModel)]="vendor.address" name="address" placeholder="e.g., 123 Main St, City, Country" required>
+    </div>
+    <div class="form-group">
+      <label for="phone">
+        Phone
+        <i class="fas fa-info-circle" title="<b>Description:</b> Enter the contact phone number for the vendor.<br><b>Example:</b> (123) 456-7890"></i>
+      </label>
+      <input type="text" class="form-control" id="phone" [(ngModel)]="vendor.phone" name="phone" placeholder="e.g., (123) 456-7890" required>
+    </div>
+    <div class="form-group">
+      <label for="fax">
+        Fax
+        <i class="fas fa-info-circle" title="<b>Description:</b> Enter the fax number for the vendor.<br><b>Example:</b> (123) 456-7891"></i>
+      </label>
+      <input type="text" class="form-control" id="fax" [(ngModel)]="vendor.fax" name="fax" placeholder="e.g., (123) 456-7891">
+    </div>
+    <div class="form-group">
+      <label for="website">
+        Website
+        <i class="fas fa-info-circle" title="<b>Description:</b> Enter the vendor's website.<br><b>Example:</b> www.acme-corp.com"></i>
+      </label>
+      <input type="text" class="form-control" id="website" [(ngModel)]="vendor.website" name="website" placeholder="e.g., www.acme-corp.com">
+    </div>
+    <div class="form-group">
+      <label for="accountNumber">
+        Account Number
+        <i class="fas fa-info-circle" title="<b>Description:</b> Enter the vendor's account number.<br><b>Example:</b> 123456789"></i>
+      </label>
+      <input type="text" class="form-control" id="accountNumber" [(ngModel)]="vendor.accountNumber" name="accountNumber" placeholder="e.g., 123456789" required>
+    </div>
+    <div class="form-group">
+      <label for="position">
+        Position
+        <i class="fas fa-info-circle" title="<b>Description:</b> Enter the vendor's position or title.<br><b>Example:</b> Sales Manager"></i>
+      </label>
+      <input type="text" class="form-control" id="position" [(ngModel)]="vendor.position" name="position" placeholder="e.g., Sales Manager">
+    </div>
+    <div class="form-group">
+      <label for="alternativePhone">
+        Alternative Phone
+        <i class="fas fa-info-circle" title="<b>Description:</b> Enter an alternative contact phone number.<br><b>Example:</b> (987) 654-3210"></i>
+      </label>
+      <input type="text" class="form-control" id="alternativePhone" [(ngModel)]="vendor.alternativePhone" name="alternativePhone" placeholder="e.g., (987) 654-3210">
+    </div>
+    <div class="form-group">
+      <label for="email">
+        Email
+        <i class="fas fa-info-circle" title="<b>Description:</b> Enter the vendor's email address.<br><b>Example:</b> contact@acme-corp.com"></i>
+      </label>
+      <input type="email" class="form-control" id="email" [(ngModel)]="vendor.email" name="email" placeholder="e.g., contact@acme-corp.com" required>
+    </div>
+    <div class="form-group">
+      <label for="notes">
+        Notes
+        <i class="fas fa-info-circle" title="<b>Description:</b> Enter any additional information or notes about the vendor.<br><b>Example:</b> Preferred delivery methods"></i>
+      </label>
+      <textarea class="form-control" id="notes" [(ngModel)]="vendor.notes" name="notes" placeholder="e.g., Preferred delivery methods"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="taxNumberRegistered">
+        Tax Number Registered
+        <i class="fas fa-info-circle" title="<b>Description:</b> Indicate if the vendor has a registered tax number.<br><b>Example:</b> Yes or No"></i>
+      </label>
+      <input type="checkbox" id="taxNumberRegistered" [(ngModel)]="vendor.taxNumberRegistered" name="taxNumberRegistered">
+    </div>
+    <div class="form-group">
+      <label for="invoicePricesIncludeTax">
+        Invoice Prices Include Tax
+        <i class="fas fa-info-circle" title="<b>Description:</b> Indicate if the invoice prices include tax.<br><b>Example:</b> Yes or No"></i>
+      </label>
+      <input type="checkbox" id="invoicePricesIncludeTax" [(ngModel)]="vendor.invoicePricesIncludeTax" name="invoicePricesIncludeTax">
+    </div>
+    <div class="form-group">
+      <label for="taxRate">
+        Tax Rate
+        <i class="fas fa-info-circle" title="<b>Description:</b> Enter the tax rate applicable to the vendor.<br><b>Example:</b> 20.00"></i>
+      </label>
+      <input type="number" class="form-control" id="taxRate" [(ngModel)]="vendor.taxRate" name="taxRate" placeholder="e.g., 20.00" step="0.01">
+    </div>
+    <div class="form-group">
+      <label for="discount">
+        Discount
+        <i class="fas fa-info-circle" title="<b>Description:</b> Enter any discounts provided by the vendor.<br><b>Example:</b> 10.00"></i>
+      </label>
+      <input type="number" class="form-control" id="discount" [(ngModel)]="vendor.discount" name="discount" placeholder="e.g., 10.00" step="0.01">
+    </div>
+    <div class="form-group">
+      <label for="deliveryTime">
+        Delivery Time
+        <i class="fas fa-info-circle" title="<b>Description:</b> Enter the expected delivery time.<br><b>Example:</b> 3-5 business days"></i>
+      </label>
+      <input type="text" class="form-control" id="deliveryTime" [(ngModel)]="vendor.deliveryTime" name="deliveryTime" placeholder="e.g., 3-5 business days">
+    </div>
+    <div class="form-group">
+      <label for="additionalNotes">
+        Additional Notes
+        <i class="fas fa-info-circle" title="<b>Description:</b> Enter any additional information or notes about the vendor.<br><b>Example:</b> Preferred delivery methods"></i>
+      </label>
+      <textarea class="form-control" id="additionalNotes" [(ngModel)]="vendor.additionalNotes" name="additionalNotes" placeholder="e.g., Preferred delivery methods"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Cancel</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!vendorForm.form.valid">Save</button>
+    </div>
+  </form>
+</div>

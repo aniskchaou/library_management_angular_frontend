@@ -15,6 +15,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { NgxEventCalendarModule } from 'ngx-event-calendar';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { CirculationCalendarComponent } from '../circulations/circulation-calendar/circulation-calendar.component';
+import { CirculationsModule } from '../circulations/circulations.module';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -40,6 +42,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     BrowserAnimationsModule,
     NgxChartsModule,
     BrowserAnimationsModule,
+    CirculationsModule
   ],
 })
 export class DashboardModule {}

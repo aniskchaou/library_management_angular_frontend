@@ -1,0 +1,111 @@
+<div class="modal-header">
+  <h5 class="modal-title">Category Details</h5>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  
+  <div class="container">
+    <div class="row">
+      <!-- Left Column -->
+      <div class="col-md-6">
+        <!-- Image URL -->
+        <div class="form-group">
+          <p><img src="https://picsum.photos/200/300" /> </p>
+        </div>
+  
+        <!-- Name -->
+        <div class="form-group">
+          <p><strong>Name:</strong> {{ selectedItem.name }}</p>
+        </div>
+  
+        <!-- Code -->
+        <div class="form-group">
+          <p><strong>Code:</strong> {{ selectedItem.code }}</p>
+        </div>
+  
+        <!-- Parent Code -->
+        <div class="form-group">
+          <p><strong>Parent Code:</strong> {{ selectedItem.parentCode || 'N/A' }}</p>
+        </div>
+  
+        <!-- Search Category -->
+        <div class="form-group">
+          <p><strong>Search Category:</strong> {{ selectedItem.searchCategory }}</p>
+        </div>
+      </div>
+  
+      <!-- Right Column -->
+      <div class="col-md-6">
+        <!-- Not for Loan -->
+        <div class="form-group">
+          <p><strong>Not for Loan:</strong> {{ selectedItem.notForLoan ? 'Yes' : 'No' }}</p>
+        </div>
+  
+        <!-- Rental Charge -->
+        <div class="form-group">
+          <p><strong>Rental Charge:</strong> {{ selectedItem.rentalCharge }} USD</p>
+        </div>
+  
+        <!-- Daily Rental Charge -->
+        <div class="form-group">
+          <p><strong>Daily Rental Charge:</strong> {{ selectedItem.dailyRentalCharge }} USD/day</p>
+        </div>
+  
+        <!-- Hourly Rental Charge -->
+        <div class="form-group">
+          <p><strong>Hourly Rental Charge:</strong> {{ selectedItem.hourlyRentalCharge }} USD/hour</p>
+        </div>
+  
+        <!-- Default Replacement Cost -->
+        <div class="form-group">
+          <p><strong>Default Replacement Cost:</strong> {{ selectedItem.defaultReplacementCost }} USD</p>
+        </div>
+  
+        <!-- Processing Fee -->
+        <div class="form-group">
+          <p><strong>Processing Fee (when lost):</strong> {{ selectedItem.processingFee }} USD</p>
+        </div>
+  
+        <!-- Checkin Message -->
+        <div class="form-group">
+          <p><strong>Checkin Message:</strong> {{ selectedItem.checkinMessage }}</p>
+        </div>
+  
+        <!-- Library Limitations -->
+        <div class="form-group">
+          <p><strong>Library Limitations:</strong> {{ selectedItem.libraryLimitations || 'N/A' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    
+ 
+</div>
+
+<div class="modal-footer">
+ 
+  <div class="col-md-12 text-right d-flex justify-content-end align-items-center">
+    <!-- Close Button -->
+    <button type="button" class="btn btn-outline-secondary mr-2" (click)="closeModal()">
+      <i class="fas fa-times"></i> Close
+    </button>
+  
+    <!-- Dropdown for Actions -->
+    <div class="dropdown">
+      <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Actions
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <!-- <a class="dropdown-item" (click)="onEdit(selectedItem)">Edit</a> -->
+        <a class="dropdown-item" (click)="onDelete(selectedItem)">Delete</a>
+        <a class="dropdown-item" (click)="onEdit(selectedItem)">Disable Loan</a>
+      </div>
+    </div>
+  </div>
+  
+</div>
+

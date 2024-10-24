@@ -1,28 +1,171 @@
 <div class="container-fluid">
-  <div *ngIf="loading; else loaded">
-    <app-loading></app-loading>
+  <!-- Page Heading -->
+  <div class="page-heading mb-4">
+    <h1 class="h3 mb-2 text-gray-800">
+      <i class="fas fa-user-edit"></i> Authors
+    </h1>
+    <p class="mb-4">This module provides an overview and management of authors, including publication statistics and detailed listings.</p>
   </div>
 
-  <ng-template #loaded>
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">{{ writerI18n?.allTitleI18n }}</h1>
+  <!-- Nav Tabs -->
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="true">
+        <i class="fas fa-tachometer-alt"></i> Overview
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">
+        <i class="fas fa-list"></i> List
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#UserManual">
+        <i class="fas fa-book mr-2"></i> User Manual
+      </a>
+    </li>
+  </ul>
 
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-      <div class="card-body">
-        <div class="table-responsive">
-          <app-add-button [itemI18n]="writerI18n"></app-add-button>
-          <app-writer-list
-            (idEvent)="edit($event)"
-            [writers]="writers$"
-            [writerI18n]="writerI18n"
-          ></app-writer-list>
-          <app-writer-modal
-            [writerI18n]="writerI18n"
-            [id]="id"
-          ></app-writer-modal>
+  <!-- Tab Content -->
+  <div class="tab-content" id="myTabContent">
+    <!-- Dashboard Tab -->
+    <div class="tab-pane fade show active" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+      <div class="container bg-white p-3 mt-3 rounded">
+        <div class="row">
+          <div class="col-md-6">
+            <h4>Number of Publications by Authors</h4>
+            <ngx-charts-bar-vertical
+              [view]="view"
+              [scheme]="'cool'"
+              [results]="publicationsByAuthorsData"
+              [gradient]="gradient"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="showLegend"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'Author'"
+              [yAxisLabel]="'Publications'">
+            </ngx-charts-bar-vertical>
+          </div>
+          <div class="col-md-6">
+            <h4>Publication Distribution by Genre</h4>
+            <ngx-charts-pie-chart
+              [view]="view"
+              [scheme]="'cool'"
+              [results]="publicationsByGenreData"
+              [legend]="showLegend"
+              [labels]="showLabels"
+              [doughnut]="isDoughnut"
+              [gradient]="gradient">
+            </ngx-charts-pie-chart>
+          </div>
+          <div class="col-md-6">
+            <h4>Publication Trends Over Time</h4>
+            <ngx-charts-line-chart
+              [view]="view"
+              [scheme]="'cool'"
+              [results]="publicationTrendsData"
+              [gradient]="gradient"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="showLegend"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'Year'"
+              [yAxisLabel]="'Publications'">
+            </ngx-charts-line-chart>
+          </div>
+          <div class="col-md-6">
+            <h4>Top Authors by Borrow Count</h4>
+            <ngx-charts-bar-horizontal
+              [view]="view"
+              [scheme]="'cool'"
+              [results]="topAuthorsByBorrowCountData"
+              [gradient]="gradient"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="showLegend"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'Borrow Count'"
+              [yAxisLabel]="'Author'">
+            </ngx-charts-bar-horizontal>
+          </div>
         </div>
       </div>
     </div>
-  </ng-template>
+
+    <div id="UserManual" class="tab-pane custom-tab-pane">
+      <!-- User Manual content here -->
+      <div>
+         <!-- <markdown [src]="markdownContent" [data]="markdownContent"></markdown>  -->
+          <div  [innerHTML]="markdownContent"></div>
+      </div>
+    </div>
+
+    <!-- List Tab -->
+    <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
+      <div class="container bg-white p-3 mt-3 rounded">
+        <!-- Card for Actions -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <!-- Create Button -->
+            <button
+              style="margin: 3px"
+              type="button"
+              (click)="openAddDialog()"
+              class="btn btn-outline-success btn-icon-split"
+            >
+              <span class="icon text-white-50">
+                <i class="fas fa-plus"></i>
+              </span>
+              <span class="text">Create</span>
+            </button>
+
+            <!-- Reload Button -->
+            <button
+              type="button"
+              class="btn btn-outline-warning btn-icon-split"
+              (click)="getAll()"
+            >
+              <span class="icon text-white-50">
+                <i class="fas fa-redo"></i>
+              </span>
+              <span class="text">Reload</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Loading Spinner -->
+         <div *ngIf="loading; else loaded">
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+
+        
+        <ng-template #loaded>
+          <div class="table-responsive">
+            <div class="card mb-4">
+              <div class="card-body">
+                <app-writer-list
+                  (idEvent)="edit($event)"
+                  [writers]="writers$"
+                  [writerI18n]="writerI18n"
+                ></app-writer-list>
+                <app-writer-modal
+                  [writerI18n]="writerI18n"
+                  [id]="id"
+                ></app-writer-modal>
+              </div>
+            </div>
+          </div>
+        </ng-template> 
+      </div>
+    </div>
+  </div>
 </div>
+

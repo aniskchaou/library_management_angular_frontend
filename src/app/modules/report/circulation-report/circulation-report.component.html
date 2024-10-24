@@ -4,7 +4,15 @@
   </div>
 
   <ng-template #loaded>
-    <h1 class="h3 mb-2 text-gray-800">{{ menu.circulationReportI18n }}</h1>
+    <!-- Title with Icon -->
+    <h1 class="h3 mb-2 text-gray-800">
+      <i class="fas fa-calendar-check mr-2"></i>{{ menu.circulationReportI18n }}
+    </h1>
+
+    <!-- Description -->
+    <p class="lead mb-4">
+      This section provides detailed reports on the circulation of library items. You can filter the report by member and return status to analyze the usage and return patterns effectively. Use the filters below to customize your report.
+    </p>
 
     <div class="card shadow mb-4">
       <div class="card-body">
@@ -13,7 +21,7 @@
           id="inputGroupSelect04"
           (change)="selectMember($event.target.value)"
         >
-          <option selected></option>
+          <option selected>Select Member</option>
           <option value="{{ c.id }}" *ngFor="let c of memberNames$">
             {{ c.name }}
           </option>
@@ -24,7 +32,7 @@
           id="inputGroupSelect04"
           (change)="selectReturnStatus($event.target.value)"
         >
-          <option selected></option>
+          <option selected>Select Return Status</option>
           <option value="{{ c.id }}" *ngFor="let c of returnStatus$">
             {{ c.name }}
           </option>
@@ -39,11 +47,10 @@
           <span class="icon text-white-50">
             <i class="fas fa-filter"></i>
           </span>
-          <span class="text"></span>
+          <span class="text">Filter</span>
         </button>
       </div>
     </div>
-    <!-- Page Heading -->
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4" *ngIf="searchButtonClicked">
@@ -53,3 +60,4 @@
     </div>
   </ng-template>
 </div>
+

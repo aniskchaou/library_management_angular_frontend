@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import CategoryMessage from 'src/app/main/messages/CategoryMessage';
 import CirculationStatus from 'src/app/main/models/CirculationStatus';
@@ -16,22 +17,26 @@ export class EditCirculationStatusComponent
   extends URLLoader
   implements OnInit
 {
+  @Input()
   model;
   @Input() id;
   @Output() closeModalEvent = new EventEmitter<string>();
   circulationStatusI18n;
 
+  
   closeModal() {
     this.closeModalEvent.emit();
+    this.activeModal.dismiss();
   }
 
   constructor(
     private httpService: HTTPService,
     private message: CategoryMessage,
-    private router: Router
+    private router: Router,
+    private activeModal: NgbActiveModal
   ) {
     super();
-    this.model = this.create();
+    //this.model = this.create();
   }
 
   create() {
@@ -39,12 +44,12 @@ export class EditCirculationStatusComponent
   }
 
   ngOnInit(): void {
-    this.httpService.ID.subscribe((idd) => {
+  /*   this.httpService.ID.subscribe((idd) => {
       this.model = this.httpService.get(idd);
       if (this.model == undefined) {
         this.model = this.model = this.create();
       }
-    });
+    }); */
     this.getCirculationStatusByLang(CONFIG.getInstance().getLang());
   }
 

@@ -1,4 +1,4 @@
-<form
+<!-- <form
   method="post"
   class="form-horizontal"
   id="crudForm"
@@ -120,7 +120,6 @@
           value="{{ model.email }}"
           maxlength="250"
         />
-        <!-- <span class="red"></span> -->
       </div>
     </div>
 
@@ -150,7 +149,6 @@
           maxlength="100"
           value="{{ model.mobile }}"
         />
-        <!-- <span class="red"></span> -->
       </div>
     </div>
 
@@ -237,7 +235,6 @@
             </font>
           </option>
         </select>
-        <!-- <span class="red"></span> -->
       </div>
     </div>
   </div>
@@ -247,4 +244,216 @@
       {{ memberI18n.editButtonI18n }}
     </button>
   </div>
-</form>
+</form>  -->
+
+
+
+<div class="modal-header">
+  <h5 class="modal-title" id="emptyModalLabel">Modal Title</h5>
+  <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close">x</button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="memberForm" (ngSubmit)="onSubmit()">
+
+    <div class="row">
+      <!-- Surname -->
+      <div class="form-group col-md-6">
+        <label for="surname">
+          Surname
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the member's surname. Example: Smith"></i>
+        </label>
+        <input formControlName="surname" class="form-control" id="field-surname" name="surname" type="text" maxlength="99" placeholder="Enter surname" />
+      </div>
+  
+      <!-- First Name -->
+      <div class="form-group col-md-6">
+        <label for="firstname">
+          First Name
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the member's first name. Example: John"></i>
+        </label>
+        <input formControlName="firstname" class="form-control" id="field-firstname" name="firstname" type="text" maxlength="99" placeholder="Enter first name" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Date of Birth -->
+      <div class="form-group col-md-6">
+        <label for="dob">
+          Date of Birth
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the member's date of birth. Example: 1990-01-01"></i>
+        </label>
+        <input formControlName="dob" class="form-control" id="field-dob" name="dob" type="date" />
+      </div>
+  
+      <!-- Age (Read-only) -->
+      <div class="form-group col-md-6">
+        <label for="age">
+          Age
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="This field is auto-calculated based on the date of birth. Example: 21 years"></i>
+        </label>
+        <input formControlName="age" class="form-control" id="field-age" name="age" type="text" readonly />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Gender -->
+      <div class="form-group col-md-6">
+        <label for="gender">
+          Gender
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Select the member's gender."></i>
+        </label>
+        <select class="form-control" formControlName="gender" id="field-gender" name="gender">
+          <option value="Female">Female</option>
+          <option value="Male">Male</option>
+          <option value="Other">Other</option>
+          <option value="None specified">None specified</option>
+        </select>
+      </div>
+  
+      <!-- Street Number -->
+      <div class="form-group col-md-6">
+        <label for="street_number">
+          Street Number
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the street number. Example: 123"></i>
+        </label>
+        <input formControlName="street_number" class="form-control" id="field-street_number" name="street_number" type="text" placeholder="Enter street number" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Address -->
+      <div class="form-group col-md-6">
+        <label for="address">
+          Address
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the address. Example: 456 Elm St"></i>
+        </label>
+        <input formControlName="address" class="form-control" id="field-address" name="address" type="text" placeholder="Enter address" />
+      </div>
+  
+      <!-- City -->
+      <div class="form-group col-md-6">
+        <label for="city">
+          City
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the city. Example: Springfield"></i>
+        </label>
+        <input formControlName="city" class="form-control" id="field-city" name="city" type="text" placeholder="Enter city" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- State -->
+      <div class="form-group col-md-6">
+        <label for="state">
+          State
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the state. Example: IL"></i>
+        </label>
+        <input formControlName="state" class="form-control" id="field-state" name="state" type="text" placeholder="Enter state" />
+      </div>
+  
+      <!-- ZIP/Postal Code -->
+      <div class="form-group col-md-6">
+        <label for="zip">
+          ZIP/Postal Code
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the ZIP/Postal code. Example: 62704"></i>
+        </label>
+        <input formControlName="zip" class="form-control" id="field-zip" name="zip" type="text" placeholder="Enter ZIP/Postal code" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Country -->
+      <div class="form-group col-md-6">
+        <label for="country">
+          Country
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the country. Example: USA"></i>
+        </label>
+        <input formControlName="country" class="form-control" id="field-country" name="country" type="text" placeholder="Enter country" />
+      </div>
+  
+      <!-- Primary Phone -->
+      <div class="form-group col-md-6">
+        <label for="primary_phone">
+          Primary Phone
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the primary phone number. Example: (555) 555-5555"></i>
+        </label>
+        <input formControlName="primary_phone" class="form-control" id="field-primary_phone" name="primary_phone" type="text" placeholder="Enter primary phone" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Secondary Phone -->
+      <div class="form-group col-md-6">
+        <label for="secondary_phone">
+          Secondary Phone
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the secondary phone number (optional). Example: (555) 555-5556"></i>
+        </label>
+        <input formControlName="secondary_phone" class="form-control" id="field-secondary_phone" name="secondary_phone" type="text" placeholder="Enter secondary phone" />
+      </div>
+  
+      <!-- Primary Email -->
+      <div class="form-group col-md-6">
+        <label for="primary_email">
+          Primary Email
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the primary email address. Example: john.doe@example.com"></i>
+        </label>
+        <input formControlName="primary_email" class="form-control" id="field-primary_email" name="primary_email" type="email" placeholder="Enter primary email" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Secondary Email -->
+      <div class="form-group col-md-6">
+        <label for="secondary_email">
+          Secondary Email
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the secondary email address (optional). Example: jane.smith@example.com"></i>
+        </label>
+        <input formControlName="secondary_email" class="form-control" id="field-secondary_email" name="secondary_email" type="email" placeholder="Enter secondary email" />
+      </div>
+  
+      <!-- Head of Department -->
+      <div class="form-group col-md-6">
+        <label for="headOfDepartment">
+          Head of Department
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the name of the head of the department. Example: John Doe"></i>
+        </label>
+        <input formControlName="headOfDepartment" type="text" class="form-control" id="field-headOfDepartment" name="headOfDepartment" placeholder="e.g., John Doe, Jane Smith" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Salutation -->
+      <div class="form-group col-md-6">
+        <label for="salutation">
+          Salutation
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Select a salutation"></i>
+        </label>
+        <select formControlName="salutation" class="form-control" id="field-salutation" name="salutation">
+          <option value="Mr">Mr</option>
+          <option value="Mrs">Mrs</option>
+          <option value="Ms">Ms</option>
+          <option value="Dr">Dr</option>
+        </select>
+      </div>
+  
+      <!-- Booking Quota -->
+      <div class="form-group col-md-6">
+        <label for="bookingQuota">
+          Booking Quota
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the booking quota for the member"></i>
+        </label>
+        <input formControlName="bookingQuota" class="form-control" id="field-bookingQuota" name="bookingQuota" type="number" placeholder="Enter quota" />
+      </div>
+    </div>
+  
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="memberForm.invalid">Edit</button>
+      
+      </div>
+    </div>
+  
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+</div>

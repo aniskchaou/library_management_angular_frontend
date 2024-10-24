@@ -1,0 +1,180 @@
+<div class="container mt-4">
+  <!-- Title with Icon -->
+  <h1 class="h3 mb-2 text-gray-800">
+    <i class="fas fa-truck mr-2"></i> Vendors
+  </h1>
+
+  <!-- Description Below Title -->
+  <p class="lead mb-4">
+    Manage and view information about your vendors. Use the navigation tabs to switch between different views, such as detailed overviews, a list of vendors, and the user manual. The "Add Vendor" button allows you to include new vendors in the system.
+  </p>
+
+  <!-- Navigation Tabs -->
+  <ul class="nav nav-tabs">
+   <!--  <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#Overview">
+        <i class="fas fa-chart-bar mr-2"></i> Overview
+      </a>
+    </li> -->
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#List">
+        <i class="fas fa-list mr-2"></i> List
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#UserManual">
+        <i class="fas fa-book mr-2"></i> User Manual
+      </a>
+    </li>
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <!-- Overview tab content -->
+ <!--    <div id="Overview" class="tab-pane fade show active custom-tab-pane">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <ngx-charts-bar-vertical
+              [results]="barChartData"
+              [view]="[400,300]"
+              [scheme]="'cool'"
+              [gradient]="true"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="true"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              xAxisLabel="Category"
+              yAxisLabel="Number of Items">
+            </ngx-charts-bar-vertical>
+          </div>
+          <div class="col-md-6">
+            <ngx-charts-pie-chart
+              [results]="pieChartData"
+              [view]="[400,300]"
+              [scheme]="'cool'"
+              [legend]="true"
+              [explodeSlices]="false"
+              [labels]="true">
+            </ngx-charts-pie-chart>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <ngx-charts-line-chart
+              [results]="lineChartData"
+              [view]="[400,300]"
+              [scheme]="'cool'"
+              [legend]="true"
+              [xAxis]="true"
+              [yAxis]="true"
+              [autoScale]="true">
+            </ngx-charts-line-chart>
+          </div>
+          <div class="col-md-6">
+            <ngx-charts-pie-chart
+              [results]="doughnutChartData"
+              [view]="[400,300]"
+              [scheme]="'cool'"
+              [legend]="true"
+              [explodeSlices]="false"
+              [doughnut]="true"
+              [labels]="true">
+            </ngx-charts-pie-chart>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- List tab content -->
+    <div id="List" class="tab-pane fade show active custom-tab-pane">
+      <div class="container-fluid">
+        <!-- Add Vendor Button -->
+        <button class="btn btn-outline-primary mb-3" (click)="openAddDialog()">Add Vendor</button>
+        <button
+          href="#"
+          role="button"
+          class="btn btn-outline-warning btn-icon-split"
+          (click)="loadVendors()"
+        >
+          <span class="icon text-warning">
+            <i class="fas fa-redo"></i>
+          </span>
+          <span class="text">Reload</span>
+        </button>
+        <!-- Vendor Table using ngx-datatable -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <div *ngIf="loadingIndicator; else loaded">
+              <div class="d-flex justify-content-center">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+            </div>
+    
+            <ng-template #loaded>
+            <ngx-datatable
+              class="bootstrap"
+              [rows]="vendors"
+              [loadingIndicator]="loadingIndicator"
+              [columnMode]="'force'"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              [rowHeight]="'auto'"
+              [limit]="10">
+              <ngx-datatable-column name="Name" prop="name"></ngx-datatable-column>
+              <ngx-datatable-column name="Address" prop="address"></ngx-datatable-column>
+              <ngx-datatable-column name="Phone" prop="phone"></ngx-datatable-column>
+              <ngx-datatable-column name="Email" prop="email"></ngx-datatable-column>
+              <ngx-datatable-column name="Notes" prop="notes"></ngx-datatable-column>
+              <ngx-datatable-column name="Actions">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                 
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item"  (click)="openEditDialog(row)">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a class="dropdown-item"  (click)="deleteVendor(row.id)">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                      <!--   <a class="dropdown-item" >
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </a> -->
+                       <!--  <a class="dropdown-item" >
+                            <i class="fas fa-upload"></i> Upload Documents
+                        </a> -->
+                       <!--  <a class="dropdown-item" >
+                            <i class="fas fa-star"></i> View Ratings
+                        </a> -->
+                       <!--  <a class="dropdown-item" >
+                            <i class="fas fa-bell"></i> Notify
+                        </a> -->
+                    </div>
+                
+                
+                
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Manual tab content -->
+    <div id="UserManual" class="tab-pane custom-tab-pane">
+      <!-- User Manual content here -->
+      <div>
+         <!-- <markdown [src]="markdownContent" [data]="markdownContent"></markdown>  -->
+          <div  [innerHTML]="markdownContent"></div>
+      </div>
+    </div>
+
+  </div>
+</div>

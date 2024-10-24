@@ -23,6 +23,8 @@ export class CirculationStatusComponent extends URLLoader implements OnInit {
     console.log(this.id);
   }
 
+  
+
   constructor(
     private httpService: HTTPService,
     private messageService: BookMessage,

@@ -1,0 +1,125 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ shelf.id ? 'Edit' : 'Add' }} Shelf</h5>
+  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <!-- Shelf Name Field with Tooltip -->
+    <div class="form-group">
+      <label for="shelfName" id="shelfName_display_as_box">
+        Shelf Name
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the name of the shelf."></i>
+      </label>
+      <input
+        id="shelfName"
+        name="shelfName"
+        class="form-control"
+        type="text"
+        placeholder="e.g., Main Shelf"
+        [(ngModel)]="shelf.shelfName"
+      />
+    </div>
+
+    <!-- Shelf Code Field with Tooltip -->
+    <div class="form-group">
+      <label for="shelfCode" id="shelfCode_display_as_box">
+        Shelf Code
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the code for the shelf."></i>
+      </label>
+      <input
+        id="shelfCode"
+        name="shelfCode"
+        class="form-control"
+        type="text"
+        placeholder="e.g., SH001"
+        [(ngModel)]="shelf.shelfCode"
+      />
+    </div>
+
+    <!-- Location Field with Tooltip -->
+    <div class="form-group">
+      <label for="location" id="location_display_as_box">
+        Location
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the location of the shelf."></i>
+      </label>
+      <input
+        id="location"
+        name="location"
+        class="form-control"
+        type="text"
+        placeholder="e.g., Floor 2, Section B"
+        [(ngModel)]="shelf.location"
+      />
+    </div>
+
+    <!-- Capacity Field with Tooltip -->
+    <div class="form-group">
+      <label for="capacity" id="capacity_display_as_box">
+        Capacity
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the capacity of the shelf in terms of number of books it can hold."></i>
+      </label>
+      <input
+        id="capacity"
+        name="capacity"
+        class="form-control"
+        type="number"
+        placeholder="e.g., 50"
+        [(ngModel)]="shelf.capacity"
+      />
+    </div>
+
+    <!-- Material Field with Tooltip -->
+    <div class="form-group">
+      <label for="material" id="material_display_as_box">
+        Material
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the material of the shelf (e.g., wood, metal)."></i>
+      </label>
+      <input
+        id="material"
+        name="material"
+        class="form-control"
+        type="text"
+        placeholder="e.g., Wood"
+        [(ngModel)]="shelf.material"
+      />
+    </div>
+
+    <!-- Color Field with Tooltip -->
+    <div class="form-group">
+      <label for="color" id="color_display_as_box">
+        Color
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the color of the shelf."></i>
+      </label>
+      <input
+        id="color"
+        name="color"
+        class="form-control"
+        type="text"
+        placeholder="e.g., Brown"
+        [(ngModel)]="shelf.color"
+      />
+    </div>
+
+    <!-- Department Field with Tooltip -->
+    <div class="form-group">
+      <label for="department" id="department_display_as_box">
+        Department
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the department associated with this shelf."></i>
+      </label>
+      <select
+        id="department"
+        name="department"
+        class="form-control"
+        [(ngModel)]="shelf.department"
+      >
+        <option *ngFor="let department of departments" [ngValue]="department">{{ department?.departmentName }}</option>
+      </select>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Cancel</button>
+  <button type="button" class="btn btn-primary" (click)="saveShelf()">Save</button>
+</div>

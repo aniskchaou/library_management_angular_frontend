@@ -1,0 +1,26 @@
+<tbody *ngIf="departments.length > 0">
+    <tr *ngFor="let department of departments">
+     <td *ngIf="columns.name">{{ department.departmentName }}</td>
+     <td *ngIf="columns.code">{{ department.departmentCode }}</td>
+     <td *ngIf="columns.head">{{ department.headOfDepartment }}</td>
+     <td *ngIf="columns.location">{{ department.location }}</td>
+     <td *ngIf="columns.phone">{{ department.phone }}</td>
+     <td *ngIf="columns.email">{{ department.email }}</td>
+     <td *ngIf="columns.employees">{{ department.numberOfEmployees }}</td>
+     <td *ngIf="columns.actions">
+       <div class="dropdown">
+         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <i class="fas fa-cogs"></i> Actions
+         </button>
+         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+           <a class="dropdown-item" href="#" (click)="openEditDialog(department)">
+             <i class="fas fa-edit"></i> Edit
+           </a>
+           <a class="dropdown-item text-danger" href="#" (click)="deleteDepartment(department.id)">
+             <i class="fas fa-trash-alt"></i> Delete
+           </a>
+         </div>
+       </div>
+     </td>
+   </tr> 
+ </tbody>

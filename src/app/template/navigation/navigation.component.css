@@ -11,3 +11,34 @@ navbar-nav li > .active{
     opacity: 0.5;
     text-decoration: none;
 }
+
+.btn-star {
+    background: transparent;
+    border: none;
+    color: #ffc107;
+    cursor: pointer;
+    font-size: 12px;  /* Smaller font size for the star */
+    margin-left: auto;  /* Pushes the button to the extreme right */
+  }
+  
+  .btn-star i {
+    font-size: 8px;  /* Adjust icon size */
+  }
+  
+  
+  .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  /* Ensures space between text and the star */
+  }
+  
+  
+  .favorited {
+    color: #ffeb3b;
+  }
+  
+
+  .small-radius {
+    border-radius: 0.2rem; /* Adjust the value for the desired radius */
+  }
+  

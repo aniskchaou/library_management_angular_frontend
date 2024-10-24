@@ -1,54 +1,158 @@
-<form class="form-group odd" id="name_field_box">
-  <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ writerI18n?.editTitleI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-  <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
-    <input
-      [(ngModel)]="model.name"
-      id="field-name"
-      value="{{ model.name }}"
-      name="name"
-      class="form-control"
-      type="text"
-      maxlength="99"
-    />
-    <br />
-  </div>
-
-  <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ writerI18n?.noteI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-  <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
-    <input
-      [(ngModel)]="model.note"
-      id="field-name"
-      value="{{ model.note }}"
-      name="note"
-      class="form-control"
-      type="text"
-      maxlength="99"
-    />
-    <br />
-  </div>
-
-  <button (click)="edit()" type="button" class="btn btn-info">
-    <i class="fas fa-save"></i>
-    {{ writerI18n?.editButtonI18n }}
+<div class="modal-header">
+  <h5 class="modal-title">{{ author.id ? 'Edit' : 'Add' }} Author</h5>
+  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+    <span aria-hidden="true">&times;</span>
   </button>
-</form>
+</div>
+<div class="modal-body">
+  <form>
+    <!-- Author Name Field -->
+    <div class="form-group">
+      <label for="name" id="name_display_as_box">
+        Name
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the author's full name."></i>
+      </label>
+      <input
+        id="name"
+        name="name"
+        class="form-control"
+        type="text"
+        placeholder="e.g., Jane Doe"
+        [(ngModel)]="author.name"
+      />
+    </div>
+
+    <!-- Note Field -->
+    <div class="form-group">
+      <label for="note" id="note_display_as_box">
+        Note
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Additional notes about the author."></i>
+      </label>
+      <input
+        id="note"
+        name="note"
+        class="form-control"
+        type="text"
+        placeholder="e.g., Renowned novelist"
+        [(ngModel)]="author.note"
+      />
+    </div>
+
+    <!-- Date of Birth Field -->
+    <div class="form-group">
+      <label for="dateOfBirth" id="dateOfBirth_display_as_box">
+        Date of Birth
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the author's date of birth."></i>
+      </label>
+      <input
+        id="dateOfBirth"
+        name="dateOfBirth"
+        class="form-control"
+        type="date"
+        [(ngModel)]="author.dateOfBirth"
+      />
+    </div>
+
+    <!-- Died Field -->
+    <div class="form-group">
+      <label for="died" id="died_display_as_box">
+        Died
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Check if the author is deceased."></i>
+      </label>
+      <input
+        id="died"
+        name="died"
+        class="form-check-input"
+        type="checkbox"
+        [(ngModel)]="author.died"
+        (change)="onDiedChange()"
+      />
+    </div>
+
+    <!-- Date of Death Field -->
+    <div class="form-group" *ngIf="author.died">
+      <label for="dateOfDeath" id="dateOfDeath_display_as_box">
+        Date of Death
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the author's date of death."></i>
+      </label>
+      <input
+        id="dateOfDeath"
+        name="dateOfDeath"
+        class="form-control"
+        type="date"
+        [(ngModel)]="author.dateOfDeath"
+      />
+    </div>
+
+    <!-- Bio Field -->
+    <div class="form-group">
+      <label for="bio" id="bio_display_as_box">
+        Bio
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> A short biography of the author."></i>
+      </label>
+      <textarea
+        id="bio"
+        name="bio"
+        class="form-control"
+        rows="3"
+        placeholder="e.g., Jane Doe is a renowned author known for..."
+        [(ngModel)]="author.bio"
+      ></textarea>
+    </div>
+
+    <!-- Publications Field -->
+    <div class="form-group">
+      <label for="publications" id="publications_display_as_box">
+        Publications
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> List of publications by the author."></i>
+      </label>
+      <textarea
+        id="publications"
+        name="publications"
+        class="form-control"
+        rows="3"
+        placeholder="e.g., Book 1, Book 2"
+        [(ngModel)]="author.publications"
+      
+      ></textarea>
+    </div>
+
+    <!-- Awards Field -->
+    <div class="form-group">
+      <label for="awards" id="awards_display_as_box">
+        Awards
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> List of awards received by the author."></i>
+      </label>
+      <textarea
+        id="awards"
+        name="awards"
+        class="form-control"
+        rows="3"
+        placeholder="e.g., Pulitzer Prize"
+        [(ngModel)]="author.award"
+       
+      ></textarea>
+    </div>
+
+    <!-- References Field -->
+    <div class="form-group">
+      <label for="references" id="references_display_as_box">
+        References
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> List of references for the author."></i>
+      </label>
+      <textarea
+        id="references"
+        name="references"
+        class="form-control"
+        rows="3"
+        placeholder="e.g., Author's website, Wikipedia"
+        [(ngModel)]="author.references"
+        (ngModelChange)="author.references"
+      ></textarea>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
+  <button type="button" class="btn btn-outline-primary" (click)="saveAuthor()">Save</button>
+</div>

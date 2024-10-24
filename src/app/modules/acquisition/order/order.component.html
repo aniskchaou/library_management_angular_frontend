@@ -1,0 +1,146 @@
+<div class="container mt-4">
+  <!-- Title with Icon -->
+  <h1 class="h3 mb-2 text-gray-800">
+    <i class="fas fa-shopping-cart mr-2"></i> Orders
+  </h1>
+
+  <!-- Description Below Title -->
+  <p class="lead mb-4">
+    Manage your orders from this section. You can view details of all orders, add new orders, and edit or delete existing ones. Use the "Add Order" button to create a new order and manage all your order-related tasks efficiently.
+  </p>
+
+  <!-- Add Order Button -->
+  
+
+  <!-- Orders Table -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="table-responsive">
+
+        <button class="btn btn-outline-primary mb-3" (click)="openAddDialog()">Add Order</button>
+        <button
+          href="#"
+          role="button"
+          class="btn btn-outline-warning btn-icon-split"
+          (click)="loadOrders()"
+        >
+          <span class="icon text-warning">
+            <i class="fas fa-redo"></i>
+          </span>
+          <span class="text">Reload</span>
+        </button>
+        <!-- Loading Indicator -->
+        <div *ngIf="loadingIndicator; else loaded">
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #loaded>
+          <!-- ngx-datatable -->
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="orders"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="'auto'"
+            [limit]="10"
+            [loadingIndicator]="loadingIndicator"
+            [reorderable]="true"
+          >
+            <!-- Order Number Column -->
+            <ngx-datatable-column name="Order Number" [prop]="'orderNumber'">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span style="color: red;">{{ row.orderNumber }}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <!-- Order Date Column -->
+            <ngx-datatable-column name="Order Date" [prop]="'orderDate'">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.orderDate | date }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <!-- Vendor Column -->
+             <ngx-datatable-column name="Vendor" [prop]="'vendor.name'">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span style="color: blue;">{{ row.vendor?.name }}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <!-- Total Cost Column -->
+            <ngx-datatable-column name="Total Cost" [prop]="'totalCost'">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.totalCost | currency }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <!-- Status Column -->
+            <ngx-datatable-column name="Status" [prop]="'status'">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span style="color: green;">{{ row.status }}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <!-- Notes Column -->
+             <ngx-datatable-column name="Notes" [prop]="'notes'">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.notes }}
+              </ng-template>
+            </ngx-datatable-column> 
+
+            <!-- Contract Column -->
+           <!--  <ngx-datatable-column name="Contract" [prop]="'contract.name'">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.contract.name }}
+              </ng-template>
+            </ngx-datatable-column> -->
+
+            <!-- Invoice Column -->
+         <!--    <ngx-datatable-column name="Invoice" [prop]="'invoice.number'">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.invoice.number }}
+              </ng-template>
+            </ngx-datatable-column>
+ -->
+            <!-- Actions Column -->
+            <ngx-datatable-column name="Actions">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Actions
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item"  (click)="openEditDialog(row)">
+                  <i class="fas fa-edit"></i> Edit
+                </a>
+                <a class="dropdown-item"  (click)="deleteOrder(row.id)">
+                  <i class="fas fa-trash"></i> Delete
+                </a>
+                <a class="dropdown-item" >
+                  <i class="fas fa-info-circle"></i> Track Status
+                </a>
+                <a class="dropdown-item"  (click)="updateOrderStatus(row.id, 'Cancelled')">
+                  <i class="fas fa-times-circle"></i> Mark as Cancelled
+                </a>
+                <a class="dropdown-item"  (click)="updateOrderStatus(row.id, 'Shipped')">
+                  <i class="fas fa-truck"></i> Mark as Shipped
+                </a>
+                <a class="dropdown-item"  (click)="updateOrderStatus(row.id, 'Delivered')">
+                  <i class="fas fa-box-open"></i> Mark as Delivered
+                </a>
+                <a class="dropdown-item"  (click)="updateOrderStatus(row.id, 'Pending')">
+                  <i class="fas fa-clock"></i> Mark as Pending
+                </a>
+                
+              </div>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

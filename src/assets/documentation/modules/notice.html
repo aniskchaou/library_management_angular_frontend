@@ -1,0 +1,116 @@
+<h1>Notice Module Documentation</h1>
+
+<h2>Module Description</h2>
+<p>The Notice module is used to create, manage, and distribute notices within the library. This includes notices for library closures, maintenance, events, and other important information. The module allows customization of notice content, scheduling, and distribution methods.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">Title:</p>
+    <ul>
+        <li><strong>Description:</strong> The title of the notice.</li>
+        <li><strong>Usage:</strong> Enter a brief, descriptive title for the notice.</li>
+        <li><strong>Example:</strong> "Library Closure Notice"</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Content Template:</p>
+    <ul>
+        <li><strong>Description:</strong> The template or body content of the notice, which may include placeholders for dynamic content.</li>
+        <li><strong>Usage:</strong> Enter the main content of the notice, including placeholders like [receiverName], [startDate], and [endDate] for personalized details.</li>
+        <li><strong>Example:</strong> "Dear [receiverName], please be informed that the library will be closed for maintenance from [startDate] to [endDate]. We apologize for any inconvenience caused."</li>
+        <li><strong>Validation:</strong> Must be a valid string with placeholders replaced by actual data when the notice is issued.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Start Date:</p>
+    <ul>
+        <li><strong>Description:</strong> The date when the notice period begins.</li>
+        <li><strong>Usage:</strong> Enter the start date of the notice validity in the format yyyy-mm-dd.</li>
+        <li><strong>Example:</strong> "2024-06-15"</li>
+        <li><strong>Validation:</strong> Must be a valid date format (yyyy-mm-dd).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">End Date:</p>
+    <ul>
+        <li><strong>Description:</strong> The date when the notice period ends.</li>
+        <li><strong>Usage:</strong> Enter the end date of the notice validity in the format yyyy-mm-dd.</li>
+        <li><strong>Example:</strong> "2024-06-20"</li>
+        <li><strong>Validation:</strong> Must be a valid date format (yyyy-mm-dd).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Author:</p>
+    <ul>
+        <li><strong>Description:</strong> The person or entity who created the notice.</li>
+        <li><strong>Usage:</strong> Enter the name of the author or department responsible for the notice.</li>
+        <li><strong>Example:</strong> "Library Administration"</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Status:</p>
+    <ul>
+        <li><strong>Description:</strong> The current status of the notice.</li>
+        <li><strong>Usage:</strong> Select the status of the notice from the available options (e.g., Published).</li>
+        <li><strong>Example:</strong> "Published"</li>
+        <li><strong>Validation:</strong> Must be selected from predefined status options (e.g., Draft, Published).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Notification Methods:</p>
+    <ul>
+        <li><strong>Description:</strong> The methods through which the notice will be communicated.</li>
+        <li><strong>Usage:</strong> Select the notification methods to be used (e.g., SMS, Email, Member Portal).</li>
+        <li><strong>Example:</strong> "SMS, Email, Member Portal"</li>
+        <li><strong>Validation:</strong> Must be selected from available communication methods.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Receiver:</p>
+    <ul>
+        <li><strong>Description:</strong> The recipient or audience of the notice.</li>
+        <li><strong>Usage:</strong> Enter the identifier or name of the recipient, such as a member ID or group name.</li>
+        <li><strong>Example:</strong> "member123"</li>
+        <li><strong>Validation:</strong> Must be a valid recipient identifier.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Object:</p>
+    <ul>
+        <li><strong>Description:</strong> The subject or main topic of the notice.</li>
+        <li><strong>Usage:</strong> Enter the main topic or subject matter of the notice.</li>
+        <li><strong>Example:</strong> "Library Closure"</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Type:</p>
+    <ul>
+        <li><strong>Description:</strong> The category or type of notice.</li>
+        <li><strong>Usage:</strong> Enter or select the type of notice (e.g., Scheduled Maintenance).</li>
+        <li><strong>Example:</strong> "Scheduled Maintenance"</li>
+        <li><strong>Validation:</strong> Must be selected from predefined notice types.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Importance:</p>
+    <ul>
+        <li><strong>Description:</strong> The importance level of the notice.</li>
+        <li><strong>Usage:</strong> Specify the level of importance (e.g., High, Medium, Low).</li>
+        <li><strong>Example:</strong> "High"</li>
+        <li><strong>Validation:</strong> Must be selected from predefined importance levels.</li>
+    </ul>
+</div>

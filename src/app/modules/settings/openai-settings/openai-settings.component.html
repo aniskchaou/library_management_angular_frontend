@@ -1,0 +1,26 @@
+<!-- openai-settings.component.html -->
+<div class="container">
+    <h2>OpenAI API Settings</h2>
+  
+    <form [formGroup]="openaiForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="apiKey">API Key</label>
+        <input id="apiKey" formControlName="apiKey" class="form-control" />
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="!openaiForm.valid">
+        Update
+      </button>
+    </form>
+  
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="alert alert-success mt-2">
+      {{ successMessage }}
+    </div>
+  
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger mt-2">
+      {{ errorMessage }}
+    </div>
+  </div>
+  

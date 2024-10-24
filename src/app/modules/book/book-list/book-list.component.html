@@ -1,4 +1,4 @@
-<table id="table" class="table table-bordered" width="100%" cellspacing="0">
+<!-- <table id="dt_book" class="table table-bordered" width="100%" cellspacing="0">
   <thead>
     <tr>
       <th>{{ bookI18n?.isbnI18n }}</th>
@@ -6,7 +6,9 @@
       <th>{{ bookI18n?.authorI18n }}</th>
       <th>{{ bookI18n?.categoryI18n }}</th>
       <th>{{ bookI18n?.publisherI18n }}</th>
-      <th></th>
+      <th>Copies</th>
+      <th>Media Type</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tfoot>
@@ -20,64 +22,88 @@
         {{ bookI18n?.categoryI18n }}
       </th>
       <th>{{ bookI18n?.publisherI18n }}</th>
-      <th></th>
+      <th>Copies</th>
+      <th>Media Type</th>
+      <th>Actions</th>
     </tr>
   </tfoot>
   <tbody>
-    <tr *ngFor="let b of books">
-      <td>
-        <span class="badge badge-primary">{{ b.isbn }}</span>
-      </td>
-      <td>
-        <b>{{ b.title }}</b>
-      </td>
-      <td>{{ b.writer?.name }}</td>
-      <td>{{ b.category?.category_name }}</td>
-      <td>
-        <span class="badge badge-warning">{{ b.publisher?.name }}</span>
-      </td>
-      <td>
-        <button
-          (click)="view(b.id)"
-          href="#view"
-          role="button"
-          data-toggle="modal"
-          class="btn btn-primary btn-sm"
-        >
-          <i class="fas fa-eye"></i>
+    <tr>
+      <td>12526458</td>
+      <td>bo</td>
+      <td>qdfd</td>
+      <td>Comics</td>
+      <td>rzger</td>
+      <td>1</td>
+      <td>Books</td>
+      <th> 
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Actions
         </button>
-        <button
-          (click)="edit(b.id)"
-          href="#edit"
-          role="button"
-          data-toggle="modal"
-          class="btn btn-warning btn-sm"
-        >
-          <i class="fas fa-edit"></i>
-        </button>
-        <button
-          (click)="delete(b.id)"
-          type=" button"
-          class="btn btn-danger btn-sm"
-          onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?');"
-        >
-          <i class="fas fa-trash-alt"></i>
-        </button>
-        <button
-          (click)="archiveBook(b.id)"
-          *ngIf="b.status.id == 1"
-          class="btn btn-warning btn-sm"
-        >
-          <i class="fas fa-archive"></i>
-        </button>
-        <button
-          (click)="destroyBook(b.id)"
-          *ngIf="b.status.id == 1"
-          class="btn btn-info btn-sm"
-        >
-          <i class="fas fa-minus"></i>
-        </button>
-      </td>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#" onclick="handleAction('view')"><i class="fas fa-eye mr-2"></i> View</a>
+          <a class="dropdown-item" href="#" onclick="handleAction('edit')"><i class="fas fa-edit mr-2"></i> Edit</a>
+          <a class="dropdown-item" href="#" onclick="if(confirm('Êtes-vous sûr de vouloir supprimer cet employé ?')) handleAction('delete')"><i class="fas fa-trash-alt mr-2"></i> Delete</a>
+          <a class="dropdown-item" href="#" onclick="handleAction('archive')"><i class="fas fa-archive mr-2"></i> Archive</a>
+          <a class="dropdown-item" href="#" onclick="handleAction('minus')"><i class="fas fa-minus mr-2"></i> Minus</a>
+          <a class="dropdown-item" href="#" onclick="handleAction('addCopy')"><i class="fas fa-copy mr-2"></i> Add Copy</a>
+        </div>
+      </div>
+      
+
+ </th>
     </tr>
+   
   </tbody>
-</table>
+</table> -->
+<ngx-datatable
+class="bootstrap"
+[rows]="books"
+[columnMode]="'force'"
+[headerHeight]="50"
+[footerHeight]="50"
+[rowHeight]="'auto'"
+[limit]="10"
+[loadingIndicator]="loadingIndicator"
+[reorderable]="reorderable"
+>
+<ngx-datatable-column name="Title" prop="title" ><ng-template ngx-datatable-cell-template let-row="row"><span style="color: blue;">{{row.title}}</span></ng-template></ngx-datatable-column>
+<ngx-datatable-column name="ISBN" prop="isbn" ><ng-template ngx-datatable-cell-template let-row="row"><span style="color: red;">{{row.isbn}}</span></ng-template></ngx-datatable-column>
+<ngx-datatable-column name="Writer" prop="writer.name"></ngx-datatable-column>
+<ngx-datatable-column name="Publisher" prop="publisher.name"></ngx-datatable-column>
+<ngx-datatable-column name="Edition" prop="edition"></ngx-datatable-column>
+<ngx-datatable-column name="Category" prop="category.category_name"></ngx-datatable-column>
+<ngx-datatable-column name="Actions">
+  <ng-template ngx-datatable-cell-template let-row="row">
+    <!-- <button class="btn btn-sm btn-outline-primary" (click)="openViewDialog(row)">View</button> -->
+    <!-- <button class="btn btn-sm btn-danger" (click)="delete(row)">Delete</button> -->
+    <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Actions
+    </button>
+    <div style="z-index: 99999999;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" (click)="openViewDialog(row)"><i class="fas fa-eye"></i> View</a>
+      <a class="dropdown-item" (click)="openCheckinDialog(row)"><i class="fas fa-calendar-check"></i> Check-in</a>
+      <a class="dropdown-item" (click)="openCheckoutDialog(row)"><i class="fas fa-calendar-times"></i> Check-out</a>
+      <a class="dropdown-item" (click)="openEditDialog(row)"><i class="fas fa-edit"></i> Edit</a>
+      <!-- <a class="dropdown-item" href="#"><i class="fas fa-history"></i> Circulation History</a> -->
+      <a class="dropdown-item" (click)="openQRCodeViewDialog(row)"><i class="fas fa-barcode"></i> Generate Bar code</a>
+      <a class="dropdown-item" (click)="openBarCodeViewDialog(row)"><i class="fas fa-qrcode"></i> Generate QR code</a>
+      <a class="dropdown-item" (click)="delete(row.id)"><i class="fas fa-trash"></i> Delete</a>
+      <a class="dropdown-item" (click)="duplicate(row)"><i class="fas fa-clone"></i> Duplicate</a>
+     <!--  <a class="dropdown-item" href="#"><i class="fas fa-brain"></i> Add Smart</a> -->
+      <!-- <a class="dropdown-item" href="#"><i class="fas fa-pencil-alt"></i> Edit Item</a> -->
+      <a class="dropdown-item" (click)="openChangeCoverDialog(row)"><i class="fas fa-image"></i> Change Cover Photo</a>
+      <!-- <a class="dropdown-item" href="#"><i class="fas fa-book"></i> Add Manual</a> -->
+      <a class="dropdown-item" (click)="archiveBook(row.id)"><i class="fas fa-archive"></i> Archive</a>
+      <a class="dropdown-item" (click)="destroyBook(row.id)"><i class="fas fa-trash-alt"></i> Destroy</a>
+      <!-- <a class="dropdown-item" href="#"><i class="fas fa-copy"></i> Add New Copy</a> -->
+      <!-- <a class="dropdown-item" href="#"><i class="fas fa-trash"></i> Delete this Item</a> -->
+      <a class="dropdown-item" (click)="openOnHoldDialog(row)"><i class="fas fa-bookmark"></i> Place Hold</a>
+      <!-- <a class="dropdown-item" href="#"><i class="fas fa-search"></i> Track Condition</a> -->
+      <!-- <a class="dropdown-item" href="#"><i class="fas fa-eye"></i> View Circulation</a> -->
+    </div>
+  </ng-template>
+</ngx-datatable-column>
+</ngx-datatable>

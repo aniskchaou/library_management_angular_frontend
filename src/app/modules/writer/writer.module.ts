@@ -10,6 +10,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { SharedModule } from '../shared/shared.module';
 import WriterValidation from 'src/app/main/validations/WriterValidation';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,10 @@ import WriterValidation from 'src/app/main/validations/WriterValidation';
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
+    NgxChartsModule,
+    NgxDatatableModule,
+    //NgSelectComponent,
+    NgbModalModule
   ],
   providers: [WriterValidation],
 })

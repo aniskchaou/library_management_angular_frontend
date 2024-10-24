@@ -46,6 +46,7 @@ export class CategoryResultListComponent extends URLLoader implements OnInit {
   }
 
   getCategoryByLang(lang) {
+     lang='EN'
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/category/' + lang)
       .subscribe(

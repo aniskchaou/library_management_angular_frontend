@@ -2,13 +2,21 @@
   <!--<div *ngIf="loading; else loaded">
     <app-loading></app-loading>
   </div>-->
-  <h1 class="h3 mb-2 text-gray-800">{{ menu.accountAnalyticsI18n }}</h1>
+
+  <!-- Title with Icon -->
+  <h1 class="h3 mb-2 text-gray-800">
+    <i class="fas fa-chart-line mr-2"></i>{{ menu.accountAnalyticsI18n }}
+  </h1>
+
+  <!-- Description -->
+  <p class="lead">The Account Analytics module provides visual representations of your income and expenses, allowing you to easily track and analyze your financial data.</p>
+
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-body">
       <ngx-charts-bar-vertical
         [view]="view"
-        [scheme]="colorScheme"
+        [scheme]="'cool'"
         [results]="incomes"
         [gradient]="gradient"
         [xAxis]="showXAxis"
@@ -23,7 +31,7 @@
 
       <ngx-charts-bar-vertical
         [view]="view"
-        [scheme]="colorScheme"
+        [scheme]="'cool'"
         [results]="expenses"
         [gradient]="gradient"
         [xAxis]="showXAxis"
@@ -38,3 +46,4 @@
     </div>
   </div>
 </div>
+

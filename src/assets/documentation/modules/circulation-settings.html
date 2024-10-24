@@ -1,0 +1,46 @@
+<h1>Circulation Settings Module Documentation</h1>
+
+<h2>Module Description</h2>
+<p>The Circulation Settings module allows administrators to configure the parameters for managing the circulation of library materials. This includes settings related to item types, loan periods, renewals, and holds. Proper configuration of these settings ensures smooth operation and management of library resources.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">Item Type:</p>
+    <ul>
+        <li><strong>Description:</strong> Specifies the type of item to which the settings apply, such as books, DVDs, or journals.</li>
+        <li><strong>Usage:</strong> Select or enter the type of item for which you want to configure the circulation settings.</li>
+        <li><strong>Example:</strong> "Book", "DVD", "Magazine"</li>
+        <li><strong>Validation:</strong> Must correspond to a valid item type defined in the system.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Loan Period (days):</p>
+    <ul>
+        <li><strong>Description:</strong> Defines the standard loan duration for the selected item type, specified in days.</li>
+        <li><strong>Usage:</strong> Enter the number of days items of the specified type can be borrowed before they are due back.</li>
+        <li><strong>Example:</strong> "14" (for a 2-week loan period)</li>
+        <li><strong>Validation:</strong> Must be a positive integer representing the number of days.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Renewals Allowed:</p>
+    <ul>
+        <li><strong>Description:</strong> Indicates whether items of the specified type can be renewed, and if so, how many times.</li>
+        <li><strong>Usage:</strong> Choose "Yes" to allow renewals or specify the number of renewals allowed. Select "No" to disallow renewals.</li>
+        <li><strong>Example:</strong> "Yes, 3 times" or "No"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes/No) or specify the number of renewals allowed.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Holds Allowed:</p>
+    <ul>
+        <li><strong>Description:</strong> Determines whether items of the specified type can be placed on hold by users.</li>
+        <li><strong>Usage:</strong> Select "Yes" to allow holds or "No" to disallow users from placing holds on these items.</li>
+        <li><strong>Example:</strong> "Yes"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes/No).</li>
+    </ul>
+</div>

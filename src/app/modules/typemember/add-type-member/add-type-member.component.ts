@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import TypeMemberMessage from 'src/app/main/messages/TypeMemberMessage';
 import MemberTypeTestService from 'src/app/main/mocks/MemberTypeTestService';
@@ -21,9 +22,9 @@ export class AddTypeMemberComponent extends URLLoader implements OnInit {
   @Output() closeModalEvent = new EventEmitter<string>();
   typeMemberI18n;
 
-  closeModal() {
+/*   closeModal() {
     this.closeModalEvent.emit();
-  }
+  } */
 
   goBack() {
     this.router
@@ -42,7 +43,8 @@ export class AddTypeMemberComponent extends URLLoader implements OnInit {
     private message: TypeMemberMessage,
     private typeMemberTestService: MemberTypeTestService,
     private router: Router,
-    private httpService: HTTPService
+    private httpService: HTTPService,
+    private activeModal: NgbActiveModal
   ) {
     super();
     this.typeMemberForm = this.validation.formGroupInstance;
@@ -65,21 +67,23 @@ export class AddTypeMemberComponent extends URLLoader implements OnInit {
           CONFIG.URL_BASE + '/typemember/create',
           this.typeMemberForm.value
         )
-        .then(() => {
+        .finally(() => {
           this.reset();
+          //this.goBack();
+          super.show('Confirmation', this.msg.confirmationMessages.add, 'success');
           this.closeModal();
-          this.goBack();
-          super.show(
-            'Confirmation',
-            this.msg.confirmationMessages.add,
-            'success'
-          );
         });
-      super.show('Confirmation', this.msg.confirmationMessages.add, 'success');
+      
     }
   }
 
+  closeModal(): void {
+    this.activeModal.dismiss(); // Close the modal using NgbActiveModal
+  }
+
+
   getTypeMemberByLang(lang) {
+     lang='EN'
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/typemember/' + lang)
       .subscribe(

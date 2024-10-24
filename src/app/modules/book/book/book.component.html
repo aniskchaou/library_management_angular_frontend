@@ -1,40 +1,302 @@
-<div class="container-fluid">
-  <div *ngIf="loading; else loaded">
-    <app-loading></app-loading>
+<div class="container mt-4">
+  <h1 class="h3 mb-2 text-gray-800"><i class="fas fa-box"></i> Catalog Items</h1>
+  <p class="mb-4"> This module allows users to input and manage detailed information about each library item. Fields include ISBN, ISSN, media type, edition, subject, and more, enabling comprehensive cataloging and easy retrieval of items.</p>
+  
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link " id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false">
+        <i class="fas fa-chart-bar mr-2"></i> Overview
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="true">
+        <i class="fas fa-list mr-2"></i> List
+      </a>
+    </li>
+   <!--  <li class="nav-item">
+      <a class="nav-link" id="grid-tab" data-toggle="tab" href="#grid" role="tab" aria-controls="grid" aria-selected="false">
+        <i class="fas fa-th mr-2"></i> Grid
+      </a>
+    </li> -->
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#GoogleBooks">
+        <i class="fas fa-book mr-2"></i> Google Books
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#OpenLibrary">
+        <i class="fas fa-book-open mr-2"></i> Open Library
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#LibraryOfCongress">
+        <i class="fas fa-landmark mr-2"></i> Library of Congress
+      </a>
+    </li>
+   <!--  <li class="nav-item">
+      <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">
+        <i class="fas fa-cog mr-2"></i> Settings
+      </a>
+    </li> -->
+    <li class="nav-item">
+      <a class="nav-link" id="user-guide-tab" data-toggle="tab" href="#user-guide" role="tab" aria-controls="user-guide" aria-selected="false">
+        <i class="fas fa-question-circle mr-2"></i> User Guide
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="list-tab">
+      <div class="container-fluid mt-4 bg-white p-4">
+       
+        <app-statistics-book
+        [bookI18n]="bookI18n"
+        (result)="filter($event)"
+        (groupByAuthors)="groupByAuthors()"
+        (groupByPublishers)="groupByPublishers()"
+        (groupByCategories)="groupByCategories()"
+        (groupByEditionYears)="groupByEditionYears()"
+        (filterByYears)="filterByYears($event)"
+        (filterByWriters)="filterByWriters($event)"
+        (filterByCategories)="filterByCategories($event)"
+        (getAll)="getAll()"
+      ></app-statistics-book>
+      
+          <!-- Page Heading -->
+          <!-- <h1 class="h3 mb-2 text-gray-800">Catalog Items</h1> -->
+          <!-- DataTales Example -->
+          <div class="card mb-4">
+            <div class="card-body">
+
+              <div *ngIf="loading; else loaded">
+                
+                <div class="d-flex justify-content-center">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+              </div>
+      
+              <ng-template #loaded>
+                <div class="table-responsive">
+                <app-book-list
+                  (idEvent)="edit($event)"
+                  (viewEvent)="view($event)"
+                  (deleteEvent)="delete($event)"
+                  (destroyEvent)="destroy($event)"
+                  (archiveEvent)="archive($event)"
+                  [books]="books$"
+                  [bookI18n]="bookI18n"
+                ></app-book-list>
+                <app-modal-book [bookI18n]="bookI18n" [id]="id"></app-modal-book>
+              </div>
+            </ng-template>
+              
+            </div>
+          </div>
+        
+      </div>
+    </div>
+    <div class="tab-pane fade" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+
+        <!-- Add your Dashboard content here -->
+        <div class="container bg-white p-4 mt-3 rounded">
+          <div class="row">
+            <div class="col-md-6">
+              <h4>Number of Items by Category</h4>
+              <ngx-charts-bar-vertical
+                [view]="view"
+                [scheme]="'cool'"
+                [results]="itemsByCategoryData"
+                [gradient]="gradient"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="showLegend"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Category'"
+                [yAxisLabel]="'Items'">
+              </ngx-charts-bar-vertical>
+            </div>
+            <div class="col-md-6">
+              <h4>Items Distribution by Media Type</h4>
+              <ngx-charts-pie-chart
+                [view]="view"
+                [scheme]="'cool'"
+                [results]="itemsByMediaTypeData"
+                [legend]="showLegend"
+                [labels]="showLabels"
+                [doughnut]="isDoughnut"
+                [gradient]="gradient">
+              </ngx-charts-pie-chart>
+            </div>
+            <div class="col-md-6">
+              <h4>Acquisition Trends Over Time</h4>
+              <ngx-charts-line-chart
+                [view]="view"
+                [scheme]="'cool'"
+                [results]="acquisitionTrendsData"
+                [gradient]="gradient"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="showLegend"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Year'"
+                [yAxisLabel]="'Items'">
+              </ngx-charts-line-chart>
+            </div>
+            <div class="col-md-6">
+              <h4>Top Borrowed Items</h4>
+              <ngx-charts-bar-horizontal
+                [view]="view"
+                [scheme]="'cool'"
+                [results]="topBorrowedItemsData"
+                [gradient]="gradient"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="showLegend"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Borrow Count'"
+                [yAxisLabel]="'Item'">
+              </ngx-charts-bar-horizontal>
+            </div>
+          </div>
+          
+        </div>
+    </div>
+    <div class="tab-pane fade" id="grid" role="tabpanel" aria-labelledby="grid-tab">
+      <div class="container-fluid mt-4 bg-white p-4">
+        <h1 class="h3 mb-2 text-gray-800">Catalog Items
+        </h1>
+        <!-- Grid content -->
+        <div class="row">
+          <div class="col-md-12 d-flex flex-row flex-wrap">
+            <div class="card mb-4 shadow-sm mx-2" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">Book Title 1</h5>
+                <p class="card-text"><strong>ISBN:</strong> 1234567890</p>
+                <p class="card-text"><strong>Author:</strong> John Doe</p>
+                <p class="card-text">Other information...</p>
+                <button class="btn btn-primary" (click)="edit(1)">Edit</button>
+                <button class="btn btn-secondary" (click)="viewCatalog(1)">View</button>
+                <button class="btn btn-danger" (click)="delete(1)">Delete</button>
+                <button class="btn btn-warning" (click)="archive(1)">Archive</button>
+              </div>
+            </div>
+      
+            <div class="card mb-4 shadow-sm mx-2" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">Book Title 2</h5>
+                <p class="card-text"><strong>ISBN:</strong> 0987654321</p>
+                <p class="card-text"><strong>Author:</strong> Jane Smith</p>
+                <p class="card-text">Other information...</p>
+                <button class="btn btn-primary" (click)="edit(2)">Edit</button>
+                <button class="btn btn-secondary" (click)="viewCatalog(2)">View</button>
+                <button class="btn btn-danger" (click)="delete(2)">Delete</button>
+                <button class="btn btn-warning" (click)="archive(2)">Archive</button>
+              </div>
+            </div>
+      
+            <!-- Add more cards as needed -->
+      
+          </div>
+        </div>
+    </div>
   </div>
-
-  <ng-template #loaded>
-    <app-statistics-book
-      [bookI18n]="bookI18n"
-      (result)="filter($event)"
-      (groupByAuthors)="groupByAuthors($event)"
-      (groupByPublishers)="groupByPublishers($event)"
-      (groupByCategories)="groupByCategories($event)"
-      (groupByEditionYears)="groupByEditionYears($event)"
-      (filterByYears)="filterByYears($event)"
-      (filterByWriters)="filterByWriters($event)"
-      (filterByCategories)="filterByCategories($event)"
-      (getAll)="getAll($event)"
-    ></app-statistics-book>
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">{{ bookI18n?.allTitleI18n }}</h1>
-
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-      <div class="card-body">
-        <div class="table-responsive">
-          <app-book-list
-            (idEvent)="edit($event)"
-            (viewEvent)="view($event)"
-            (deleteEvent)="delete($event)"
-            (destroyEvent)="destroy($event)"
-            (archiveEvent)="archive($event)"
-            [books]="books$"
-            [bookI18n]="bookI18n"
-          ></app-book-list>
-          <app-modal-book [bookI18n]="bookI18n" [id]="id"></app-modal-book>
+    <div id="GoogleBooks" class="tab-pane fade">
+      <div class="container-fluid mt-4 bg-white p-4">
+        <h1 class="h3 mb-2 text-gray-800">Google Books</h1>
+        <!-- Google Books tab content -->
+        https://www.googleapis.com/books/v1/volumes?q=isbn:2-7654-1005-4
+        <form (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="isbn">ISBN</label>
+            <input type="text" class="form-control" id="isbn" [(ngModel)]="isbn" name="isbn" placeholder="Enter ISBN" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Import from Google Books</button>
+        </form>
+        
+      </div>
+    </div>
+    <div id="OpenLibrary" class="tab-pane fade">
+      <div class="container-fluid mt-4 bg-white p-4">
+        <h1 class="h3 mb-2 text-gray-800">Open Library</h1>
+        <!-- Open Library tab content -->
+        https://openlibrary.org/search.json?isbn=2-7654-1005-4
+        <form (ngSubmit)="onSubmitOpenLibrary()">
+          <div class="form-group">
+            <label for="isbn">ISBN:</label>
+            <input type="text" class="form-control" id="isbn" [(ngModel)]="isbn" name="isbn" placeholder="Enter ISBN" required>
+          </div>
+          <button type="submit" class="btn btn-primary" >Import from Open Library</button>
+        </form>
+        
+      </div>
+    </div>
+    <div id="LibraryOfCongress" class="tab-pane fade">
+      <div class="container-fluid mt-4 bg-white p-4">
+        <h1 class="h3 mb-2 text-gray-800">Library of Congress</h1>
+        <!-- Library of Congress tab content -->
+        <div class="container">
+          <form (ngSubmit)="onSubmitCongressLibrary()">
+            <div class="form-group">
+              <label for="isbn">ISBN:</label>
+              <input type="text" class="form-control" id="isbn" [(ngModel)]="isbn" name="isbn" placeholder="Enter ISBN" required>
+            </div>
+            <button type="submit" class="btn btn-primary" >Import from Library of Congress</button>
+          </form>
+          <!-- <form  >
+            <div class="form-group">
+              https://www.loc.gov/search/?q=63056292&fo=json
+              <label for="lccn">Library of Congress Control Number (LCCN):</label>
+              <input type="text" class="form-control" id="lccn" name="lccn">
+            </div>
+            <button type="button" class="btn btn-primary">Import Items</button>
+          </form> -->
         </div>
       </div>
     </div>
-  </ng-template>
+   <!--  <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+      <div class="container-fluid mt-4 bg-white p-4">
+        <h1 class="h3 mb-2 text-gray-800">Settings</h1>
+       
+        <form action="/save_display_settings" method="post">
+          <div class="form-group">
+            <input type="checkbox" id="show_thumbnails" name="show_thumbnails">
+            <label for="show_thumbnails">Show thumbnails</label><br>
+            <input type="checkbox" id="show_columns" name="show_columns">
+            <label for="show_columns">Show additional columns</label>
+          </div>
+        </form>
+        <form action="/save_search_settings" method="post">
+          <div class="form-group">
+            <label for="search_scope">Search Scope:</label>
+            <select id="search_scope" name="search_scope" class="form-control">
+              <option value="title">Title</option>
+              <option value="author">Author</option>
+              <option value="keyword">Keyword</option>
+            </select>
+          </div>
+        </form>
+        <form action="/save_notification_settings" method="post">
+          <div class="form-group">
+            <input type="checkbox" id="receive_alerts" name="receive_alerts">
+            <label for="receive_alerts">Receive alerts for item availability</label><br>
+            <input type="checkbox" id="receive_due_date" name="receive_due_date">
+            <label for="receive_due_date">Receive alerts for due dates</label>
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Save Settings</button>
+        </form>
+      </div>
+    </div> -->
+    <div class="tab-pane fade" id="user-guide" role="tabpanel" aria-labelledby="user-guide-tab">
+      <div class="container-fluid mt-4 bg-white p-4">
+        <h1 class="h3 mb-2 text-gray-800">User Guide</h1>
+        <!-- Add your user guide content here -->
+        <div [innerHTML]="markdownContent"></div>
+
+      </div>
+    </div>
+  </div>
 </div>

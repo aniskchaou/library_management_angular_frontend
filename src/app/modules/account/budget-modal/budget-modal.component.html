@@ -1,0 +1,39 @@
+ <div class="modal-header">
+    <h5 class="modal-title">{{ budget.id ? 'Edit' : 'Add' }} Budget</h5>
+    <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <input type="date" class="form-control" id="startDate" [(ngModel)]="budget.startDate" name="startDate" required>
+      </div>
+      <div class="form-group">
+        <label for="endDate">End Date</label>
+        <input type="date" class="form-control" id="endDate" [(ngModel)]="budget.endDate" name="endDate" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" [(ngModel)]="budget.description" name="description" maxlength="500" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="totalAmount">Total Amount</label>
+        <input type="number" class="form-control" id="totalAmount" [(ngModel)]="budget.totalAmount" name="totalAmount" required>
+      </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="makeBudgetActive" [(ngModel)]="budget.makeBudgetActive" name="makeBudgetActive">
+        <label class="form-check-label" for="makeBudgetActive">Make Budget Active</label>
+      </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="lockBudget" [(ngModel)]="budget.lockBudget" name="lockBudget">
+        <label class="form-check-label" for="lockBudget">Lock Budget</label>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="onSaveClick()">Save</button>
+  </div> 
+ 

@@ -1,26 +1,20 @@
-<form
-  class="form-group odd"
-  id="category_name_field_box"
-  [formGroup]="categoryForm"
->
-  <!--  Category Name-->
-  <label
-    class="col-sm-3 control-label"
-    for="name"
-    id="category_name_display_as_box"
-  >
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ categoryI18n?.category_nameI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
-    <!-- category text field-->
+
+<div class="modal-header">
+  <h5 class="modal-title">Create Category</h5>
+  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+<form class="form-group" id="category_name_field_box" [formGroup]="categoryForm">
+  
+  <!-- Category Name -->
+  <div class="form-group">
+    <label for="name" id="category_name_display_as_box">
+      {{ categoryI18n?.category_nameI18n }}
+      <span class="required">*</span>
+      <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the name of the category."></i>
+    </label>
     <input
       [ngClass]="{ 'is-invalid': submitted && f.category_name.errors }"
       formControlName="category_name"
@@ -29,19 +23,93 @@
       class="form-control"
       type="text"
       maxlength="99"
+      placeholder="e.g., Fiction, Non-Fiction"
     />
-    <!-- category Validation message -->
     <div *ngIf="submitted && f.category_name.errors" class="alert alert-danger">
       <div *ngIf="submitted && f.category_name.errors.required">
         {{ msg.validationMessage.category_name }}
       </div>
     </div>
-
-    <!-- submit button -->
-    <br />
-    <button (click)="add()" type="button" class="btn btn-info">
-      <i class="fas fa-save"></i>
-      {{ categoryI18n?.addButtonI18n }}
-    </button>
   </div>
+
+  <!-- Slug -->
+  <div class="form-group">
+    <label for="slug" id="slug_display_as_box">
+      Slug
+      <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter a slug for the category."></i>
+    </label>
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.slug.errors }"
+      formControlName="slug"
+      id="field-slug"
+      name="slug"
+      class="form-control"
+      type="text"
+      maxlength="99"
+      placeholder="e.g., fiction-category"
+    />
+    <div *ngIf="submitted && f.slug.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.slug.errors.required">
+        Slug is required.
+      </div>
+    </div>
+  </div>
+
+  <!-- Published -->
+  <div class="form-group">
+    <label for="published" id="published_display_as_box">
+      Published
+      <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Check if the category should be published."></i>
+    </label>
+    <input
+      [ngClass]="{ 'is-invalid': submitted && f.published.errors }"
+      formControlName="published"
+      id="field-published"
+      name="published"
+      class="form-control"
+      type="checkbox"
+    />
+    <div *ngIf="submitted && f.published.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.published.errors.required">
+        {{ msg.validationMessage.published }}
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="suggestions" class="alert alert-info" role="alert">
+    <h4 class="alert-heading">Suggestions Response:</h4>
+    <p>{{ suggestions }}</p>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="button-group">
+    <button class="btn btn-outline-primary btn-icon-split" (click)="suggest()">
+        <span class="icon text-primary">
+            <i class="fas fa-lightbulb"></i>
+        </span>
+        <span class="text">Get AI Suggestions</span>
+    </button>
+
+    <button (click)="add()" type="button" class="btn btn-outline-primary btn-icon-split">
+        <span class="icon text-primary">
+            <i class="fas fa-plus-circle"></i> <!-- Different icon for this button -->
+        </span>
+        <span class="text">{{ categoryI18n?.addButtonI18n }}</span>
+    </button>
+
+    <button (click)="addMore()" type="button" class="btn btn-outline-secondary btn-icon-split">
+        <span class="icon text-secondary">
+            <i class="fas fa-plus-square"></i> <!-- Different icon for this button -->
+        </span>
+        <span class="text">Create More</span>
+    </button>
+</div>
+
 </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Close</button>
+</div>
+
+
+

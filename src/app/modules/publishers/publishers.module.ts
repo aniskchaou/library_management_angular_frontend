@@ -11,6 +11,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { SharedModule } from '../shared/shared.module';
 import PublisherValidation from 'src/app/main/validations/PublisherValidation';
 import { PublisherComponent } from './publisher/publisher.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -27,6 +31,10 @@ import { PublisherComponent } from './publisher/publisher.component';
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
+    NgxChartsModule,
+    NgxDatatableModule,
+    NgSelectModule,
+    NgbModalModule
   ],
   providers: [PublisherValidation],
 })

@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import CategoryMessage from 'src/app/main/messages/CategoryMessage';
-import Book from 'src/app/main/models/Book';
+import CatalogItem from 'src/app/main/models/Book';
 import Circulation from 'src/app/main/models/Circulation';
 import CirculationStatus from 'src/app/main/models/CirculationStatus';
 import Member from 'src/app/main/models/Member';
@@ -20,9 +20,9 @@ export class EditCirculationComponent extends URLLoader implements OnInit {
   @Input() id: string;
   @Output() closeModalEvent = new EventEmitter<string>();
   memberNames$: Member[];
-  writers$: Book[];
+  writers$: CatalogItem[];
   returnStatus$: CirculationStatus[];
-  bookNames$: Book[];
+  bookNames$: CatalogItem[];
   circulationI18n: Object;
 
   closeModal() {
@@ -88,7 +88,7 @@ export class EditCirculationComponent extends URLLoader implements OnInit {
 
   getBooks() {
     this.httpService.getAll(CONFIG.URL_BASE + '/book/all').subscribe(
-      (data: Book[]) => {
+      (data: CatalogItem[]) => {
         this.bookNames$ = data;
       },
       (err: HttpErrorResponse) => {
@@ -99,7 +99,7 @@ export class EditCirculationComponent extends URLLoader implements OnInit {
 
   getWriters() {
     this.httpService.getAll(CONFIG.URL_BASE + '/writer/all').subscribe(
-      (data: Book[]) => {
+      (data: CatalogItem[]) => {
         this.writers$ = data;
       },
       (err: HttpErrorResponse) => {
@@ -109,6 +109,7 @@ export class EditCirculationComponent extends URLLoader implements OnInit {
   }
 
   getCirculationByLang(lang) {
+     lang='EN'
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/circulation/' + lang)
       .subscribe(

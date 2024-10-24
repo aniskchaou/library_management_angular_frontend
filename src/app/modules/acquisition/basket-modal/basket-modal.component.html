@@ -1,0 +1,65 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ basket.id ? 'Edit' : 'Add' }} Basket</h5>
+  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <label for="basketName">
+        Basket Name
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the name of the basket."></i>
+      </label>
+      <input type="text" class="form-control" id="basketName" [(ngModel)]="basket.basketName" name="basketName" placeholder="e.g., Grocery Basket">
+    </div>
+    <div class="form-group">
+      <label for="billingPlace">
+        Billing Place
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the billing address."></i>
+      </label>
+      <input type="text" class="form-control" id="billingPlace" [(ngModel)]="basket.billingPlace" name="billingPlace" placeholder="e.g., 123 Main St">
+    </div>
+    <div class="form-group">
+      <label for="deliveryPlace">
+        Delivery Place
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the delivery address."></i>
+      </label>
+      <input type="text" class="form-control" id="deliveryPlace" [(ngModel)]="basket.deliveryPlace" name="deliveryPlace" placeholder="e.g., 456 Elm St">
+    </div>
+    <div class="form-group">
+      <label for="vendor">
+        Vendor
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the vendor for the basket."></i>
+      </label>
+      <select class="form-control" id="vendor" [(ngModel)]="basket.vendor" name="vendor">
+        <option *ngFor="let vendor of vendors" [ngValue]="vendor">{{ vendor.name }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="internalNote">
+        Internal Note
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Add internal notes about the basket."></i>
+      </label>
+      <textarea class="form-control" id="internalNote" [(ngModel)]="basket.internalNote" name="internalNote" placeholder="e.g., Special instructions"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="vendorNote">
+        Vendor Note
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Add notes for the vendor."></i>
+      </label>
+      <textarea class="form-control" id="vendorNote" [(ngModel)]="basket.vendorNote" name="vendorNote" placeholder="e.g., Urgent delivery required"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="createItemsWhen">
+        Create Items When
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Set the date and time for item creation."></i>
+      </label>
+      <input type="datetime-local" class="form-control" id="createItemsWhen" [(ngModel)]="basket.createItemsWhen" name="createItemsWhen" placeholder="e.g., 2023-10-03T14:00">
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
+  <button type="button" class="btn btn-outline-primary" (click)="onSaveClick()">Save</button>
+</div>

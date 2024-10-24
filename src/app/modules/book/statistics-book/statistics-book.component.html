@@ -1,11 +1,9 @@
-<div class="card shadow mb-4">
+<div class="card mb-4">
   <div class="card-body">
     <!-- create button  -->
     <button
-      href="#add"
-      role="button"
-      data-toggle="modal"
-      class="btn btn-success btn-icon-split"
+      (click)="openAddDialog()"
+      class="btn btn-outline-success btn-icon-split"
     >
       <span class="icon text-white-50">
         <i class="fas fa-plus"></i>
@@ -16,16 +14,16 @@
     <button
       href="#"
       role="button"
-      class="btn btn-info btn-icon-split"
+      class="btn btn-outline-info btn-icon-split"
       (click)="showfilter = !showfilter"
     >
       <span class="icon text-white-50">
-        <i class="fas fa-filter"></i>
+        <i class="fas fa-search"></i>
       </span>
       <span class="text">{{ bookI18n?.filterI18n }}</span>
     </button>
     <!-- summary button-->
-    <button
+ <!--    <button
       href="#"
       role="button"
       class="btn btn-secondary btn-icon-split"
@@ -35,12 +33,12 @@
         <i class="fas fa-chart-line"></i>
       </span>
       <span class="text">{{ bookI18n?.summaryButtonI18n }}</span>
-    </button>
+    </button> -->
     <!-- refresh button -->
     <button
       href="#"
       role="button"
-      class="btn btn-warning btn-icon-split"
+      class="btn btn-outline-warning btn-icon-split"
       (click)="reloadPage()"
     >
       <span class="icon text-white-50">
@@ -50,7 +48,7 @@
     </button>
 
     <!-- show button -->
-    <span style="margin: 3px" class="dropdown">
+  <!--   <span style="margin: 3px" class="dropdown">
       <button
         class="btn btn-danger dropdown-toggle btn-icon-split"
         type="button"
@@ -85,11 +83,11 @@
           bookI18n?.StatusI18n
         }}</a>
       </div>
-    </span>
+    </span> -->
 
     <span style="margin: 3px" class="dropdown">
       <button
-        class="btn btn-danger dropdown-toggle btn-icon-split"
+        class="btn btn-outline-secondary dropdown-toggle btn-icon-split"
         type="button"
         id="dropdownMenuButton"
         data-toggle="dropdown"
@@ -181,7 +179,7 @@
 
     <span style="margin: 3px" class="dropdown">
       <button
-        class="btn btn-danger dropdown-toggle btn-icon-split"
+        class="btn btn-outline-danger dropdown-toggle btn-icon-split"
         type="button"
         id="dropdownMenuButton"
         data-toggle="dropdown"
@@ -297,8 +295,49 @@
       </form>
     </div>
 
-    <div *ngIf="showsummary">
+    <!-- <div *ngIf="showsummary">
       <app-book-number></app-book-number>
+    </div> -->
+
+    <div class="container mt-5">
+
+      <div class="row">
+          <div class="col-md-4 mb-4">
+              <div class="card text-center border">
+                  <div class="card-body">
+                      <h5 class="card-title text-dark">Total</h5>
+                      <p class="card-text h4">
+                          <span *ngIf="totalCount">{{ totalCount }}</span>
+                          <span *ngIf="!totalCount">Loading...</span>
+                      </p>
+                  </div>
+              </div>
+          </div>
+    
+          <div class="col-md-4 mb-4">
+              <div class="card text-center border">
+                  <div class="card-body">
+                      <h5 class="card-title text-primary">Archived</h5>
+                      <p class="card-text h4">
+                          <span *ngIf="archived">{{ archived }}</span>
+                          <span *ngIf="!archived">Loading...</span>
+                      </p>
+                  </div>
+              </div>
+          </div>
+    
+          <div class="col-md-4 mb-4">
+              <div class="card text-center border">
+                  <div class="card-body">
+                      <h5 class="card-title text-danger">Destroyed</h5>
+                      <p class="card-text h4">
+                          <span *ngIf="destroyed">{{ destroyed }}</span>
+                          <span *ngIf="!destroyed">Loading...</span>
+                      </p>
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>
   </div>
 </div>

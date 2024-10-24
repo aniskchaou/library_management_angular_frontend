@@ -1,4 +1,4 @@
-<form class="form-group odd" id="category_name_field_box">
+<!-- <form class="form-group odd" id="category_name_field_box">
   <label
     class="col-sm-3 control-label"
     for="name"
@@ -15,7 +15,7 @@
     </span>
   </label>
   <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
-    <!-- edit input text -->
+
     <input
       [(ngModel)]="model.category_name"
       id="field-category_name"
@@ -26,10 +26,99 @@
       maxlength="99"
     />
     <br />
-    <!-- edit button -->
+
     <button (click)="edit()" type="button" class="btn btn-info">
       <i class="fas fa-save"></i>
       {{ categoryI18n?.editButtonI18n }}
     </button>
   </div>
 </form>
+ -->
+
+<!-- Category Edit Modal -->
+<div class="modal-header">
+  <h5 class="modal-title">{{ category?.id ? 'Edit' : 'Add' }} Category</h5>
+  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form #categoryForm="ngForm">
+    <!-- Category Name Field -->
+    <div class="form-group row odd" id="category_name_field_box">
+      <label
+        class="col-sm-3 control-label"
+        for="categoryName"
+        id="category_name_display_as_box"
+      >
+        <span>
+          Category Name
+        </span>
+        <span class="required">*</span>
+        <i
+          class="fas fa-info-circle ml-2"
+          data-toggle="tooltip"
+          data-html="true"
+          title="<b>Description:</b> Enter the name of the category.<br><b>Example:</b> Electronics, Apparel"
+          aria-label="Category Name Information"
+        ></i>
+      </label>
+      <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
+        <!-- Input with Suggestions Button -->
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            id="categoryName"
+            [(ngModel)]="category.category_name"
+            name="categoryName"
+            placeholder="e.g., Electronics, Apparel"
+            maxlength="99"
+            required
+            #categoryName="ngModel"
+          />
+          <div class="input-group-append">
+            <button
+              type="button"
+              class="btn btn-link btn-sm"
+              (click)="toggleSuggestions()"
+              aria-label="Toggle Category Suggestions"
+            >
+              <i class="fas fa-magic"></i>
+            </button>
+          </div>
+        </div>
+        <!-- Validation Message -->
+        <div *ngIf="categoryName.invalid && (categoryName.dirty || categoryName.touched)" class="text-danger mt-1">
+          Category Name is required.
+        </div>
+        <!-- Suggestions List -->
+        <div *ngIf="showSuggestions" class="suggestions-container mt-2">
+          <div *ngFor="let suggestion of filteredCategories" class="suggestion-button mb-1">
+            <button
+              type="button"
+              class="btn btn-secondary btn-sm"
+              (click)="onSuggestionClick(suggestion)"
+            >
+              {{ suggestion.categoryName }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <div class="col-sm-12 text-right">
+    <button type="button" class="btn btn-outline-secondary mr-2" (click)="onCancelClick()">Cancel</button>
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="saveCategory()"
+      [disabled]="categoryForm.invalid"
+    >
+      <i class="fas fa-save"></i> Save
+    </button>
+  </div>
+</div>
+

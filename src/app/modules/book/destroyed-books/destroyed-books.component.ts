@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookMessage from 'src/app/main/messages/BookMessage';
 import BookTestService from 'src/app/main/mocks/BookTestService';
-import Book from 'src/app/main/models/Book';
+import CatalogItem from 'src/app/main/models/Book';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
@@ -67,6 +67,7 @@ export class DestroyedBooksComponent extends URLLoader implements OnInit {
   }
 
   getBookByLang(lang) {
+     lang='EN'
     this.httpService.getAll(CONFIG.URL_BASE + '/i18n/book/' + lang).subscribe(
       (data) => {
         this.bookI18n = data;
@@ -89,7 +90,7 @@ export class DestroyedBooksComponent extends URLLoader implements OnInit {
   getAll() {
     this.loading = true;
     this.httpService.getAll(CONFIG.URL_BASE + '/book/destroyed').subscribe(
-      (data: Book[]) => {
+      (data: CatalogItem[]) => {
         this.books$ = data;
         this.loading = false;
       },

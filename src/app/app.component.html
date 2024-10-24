@@ -1,5 +1,5 @@
 <!-- Page Wrapper -->
-<div id="wrapper" *ngIf="!hasRoute('login')">
+<div id="wrapper" *ngIf="!hasRoute('login')&& !hasRoute('register')&& !hasRoute('reset-password')&& !hasRoute('forgot-password')">
   <!-- Sidebar -->
   <app-navigation [menuI18n]="menuI18n"></app-navigation>
   <!-- End of Sidebar -->
@@ -82,10 +82,13 @@
     </a>
   </div>
   <!-- End of Content Wrapper -->
+  <app-chatbot></app-chatbot>
+
 </div>
 <!-- End of Page Wrapper -->
 
 <div
+*ngIf="!hasRoute('login')&& !hasRoute('register')"
   class="modal fade"
   id="logoutModal"
   tabindex="-1"
@@ -119,10 +122,23 @@
   </div>
 </div>
 
-<br /><br />
 <div *ngIf="hasRoute('login')">
   <app-login (reloadMenu)="reloadMenu()"></app-login>
 </div>
+
+<div *ngIf="hasRoute('register')">
+  <app-register-user (reloadMenu)="reloadMenu()"></app-register-user>
+</div>
+
+<div *ngIf="hasRoute('reset-password')">
+  <app-reset-password (reloadMenu)="reloadMenu()"></app-reset-password>
+</div>
+
+<div *ngIf="hasRoute('forgot-password')">
+  <app-forgot-password (reloadMenu)="reloadMenu()"></app-forgot-password>
+</div>
+
+
 <!-- Bootstrap core JavaScript-->
 <script src="assets/vendor/jquery/jquery.min.js"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -12,6 +12,8 @@ import { SharedModule } from '../shared/shared.module';
 import CirculationStatusValidation from 'src/app/main/validations/CirculationStatusValidation';
 import { AddCirculationStatusComponent } from './add-circulation-status/add-circulation-status.component';
 import { CirculationStatusModalComponent } from './circulation-status-modal/circulation-status-modal.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { CirculationStatusModalComponent } from './circulation-status-modal/circ
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
+    NgxDatatableModule,
+    NgbModalModule
   ],
   providers: [CirculationStatusValidation],
 })

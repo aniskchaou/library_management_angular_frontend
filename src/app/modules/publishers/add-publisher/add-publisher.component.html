@@ -1,37 +1,13 @@
-<form
-  class="form-group odd"
-  id="category_name_field_box"
-  [formGroup]="publisherForm"
->
-  <!-- publisher -->
-  <label
-    class="col-sm-3 control-label"
-    for="name"
-    id="category_name_display_as_box"
-  >
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ publisherI18n?.nameI18n }}</font
-      > </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
-    <!-- publisher input text -->
-    <input
-      [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
-      formControlName="name"
-      id="field-category_name"
-      name="name"
-      class="form-control"
-      type="text"
-      maxlength="99"
-    />
+<form style="background-color: white; padding: 20px; border-radius: 5px;" class="row" [formGroup]="publisherForm">
 
-    <!-- publisher validation -->
+  <!-- Publisher Name -->
+  <div class="form-group col-md-6">
+    <label for="name">Publisher Name:</label>
+    <i class="fas fa-info-circle" data-toggle="tooltip" 
+       title="Description: Enter the publisher's name. Example: Penguin Publishing"></i>
+    <input [ngClass]="{ 'is-invalid': submitted && f.name.errors }" formControlName="name" id="field-category_name" 
+           name="name" class="form-control" type="text" maxlength="99" placeholder="e.g., Penguin Publishing" />
+    <!-- Publisher Name Validation -->
     <div *ngIf="submitted && f.name.errors" class="alert alert-danger">
       <div *ngIf="submitted && f.name.errors.required">
         {{ msg.validationMessage.name }}
@@ -39,11 +15,76 @@
     </div>
   </div>
 
-  <br />
+  <!-- Address -->
+  <div class="form-group col-md-6">
+    <label for="address">Address:</label>
+    <i class="fas fa-info-circle" data-toggle="tooltip" 
+       title="Description: Enter the publisher's address. Example: 123 Publishing Street"></i>
+    <input
+       id="addressInput"
+       formControlName="address"
+       class="form-control"
+       type="text"
+       placeholder="e.g., 123 Publishing Street"
+     />
+     <div *ngIf="publisherForm.get('address').invalid && (publisherForm.get('address').dirty || publisherForm.get('address').touched)">
+       <small class="text-danger" *ngIf="publisherForm.get('address').errors.required">Address is required.</small>
+     </div>
+  </div>
 
-  <!-- add button -->
-  <button (click)="add()" type="button" class="btn btn-info">
-    <i class="fas fa-save"></i>
-    {{ publisherI18n?.addButtonI18n }}
-  </button>
+  <!-- Email -->
+  <div class="form-group col-md-6">
+    <label for="email">Email:</label>
+    <i class="fas fa-info-circle" data-toggle="tooltip" 
+       title="Description: Enter the publisher's email. Example: contact@publisher.com"></i>
+    <input formControlName="email" id="field-email" name="email" class="form-control" type="email" maxlength="99" placeholder="e.g., contact@publisher.com" />
+  </div>
+
+  <!-- Phone -->
+  <div class="form-group col-md-6">
+    <label for="phone">Phone:</label>
+    <i class="fas fa-info-circle" data-toggle="tooltip" 
+       title="Description: Enter the publisher's phone number. Example: +1-800-123-456"></i>
+    <input formControlName="phone" id="field-phone" name="phone" class="form-control" type="text" maxlength="99" placeholder="e.g., +1-800-123-456" />
+  </div>
+
+  <!-- Country -->
+  <div class="form-group col-md-6">
+    <label for="country">Country:</label>
+    <i class="fas fa-info-circle" data-toggle="tooltip" 
+       title="Description: Select the publisher's country."></i>
+    <ng-select
+      [items]="countries"
+      bindLabel="name"
+      bindValue="code"
+      placeholder="Start typing to search for a country..."
+      formControlName="country"
+      [ngClass]="{ 'is-invalid': submitted && f.country.errors }"
+    >
+    </ng-select>
+    <div *ngIf="submitted && f.country.errors" class="alert alert-danger">
+      <div *ngIf="submitted && f.country.errors.required">
+        {{ msg.validationMessage.country }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Website -->
+  <div class="form-group col-md-6">
+    <label for="website">Website:</label>
+    <i class="fas fa-info-circle" data-toggle="tooltip" 
+       title="Description: Enter the publisher's website. Example: www.publisherwebsite.com"></i>
+    <input formControlName="website" id="field-website" name="website" class="form-control" type="text" maxlength="99" placeholder="e.g., www.publisherwebsite.com" />
+  </div>
+
+  <!-- Add Button -->
+  <div class="form-group col-md-12">
+    <button (click)="add()" type="button" class="btn btn-outline-info">
+      <i class="fas fa-save"></i>
+      {{ publisherI18n?.addButtonI18n }}
+    </button>
+  </div>
 </form>
+
+
+  

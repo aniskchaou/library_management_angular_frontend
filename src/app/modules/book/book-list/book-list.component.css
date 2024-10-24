@@ -1,0 +1,29 @@
+.dropdown-menu {
+    max-height: 150px; /* Set max height for dropdown */
+    overflow-y: auto; /* Enable vertical scrolling */
+    min-width: 250px; /* Minimum width for dropdown */
+    scrollbar-width: thin; /* Make scrollbar thinner */
+      scrollbar-color: #888 #f1f1f1; /* Thumb color and track color */
+    
+  }
+
+  .dropdown-menu::-webkit-scrollbar-track {
+    background: #f1f1f1;  
+  }
+
+  .dropdown-menu::-webkit-scrollbar-thumb {
+    background-color: #888;     /* Scrollbar handle color (grey) */
+    border-radius: 10px;        /* Rounded corners */
+    border: 3px solid #f1f1f1;  /* Padding around handle */
+  }
+
+  .dropdown-menu::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    border-radius: 10px;    
+  }
+
+  .dropdown-menu::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+
+  

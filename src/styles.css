@@ -32,3 +32,102 @@ button {
   margin-left: auto;
   margin-right: auto;
 }
+
+
+.tooltip {
+  position: absolute;
+  background-color: #333;
+  color: #ff0077;
+  padding: 5px 10px;
+  border-radius: 4px;
+  z-index: 99999999;
+  white-space: nowrap;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  line-height: 1.4;
+}
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/themes/dark.scss';
+@import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
+::ng-deep .ngx-datatable.bootstrap .datatable-header {
+  background-color: #f5f5f5;
+}
+
+/* Customizing the width of the dropdown items */
+.custom-dropdown-item .dropdown-item {
+  width: 100px; /* Set the width to 50px */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide any overflow text */
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
+  
+}
+
+/* Adjust the width of the dropdown menu to match items */
+.custom-dropdown-item .dropdown-menu {
+  min-width: 120px; /* Ensure the dropdown menu is wide enough */
+}
+
+.custom-dropdown-item .btn-group {
+  position: relative; /* Ensure dropdown menu is positioned relative to this container */
+}
+
+.custom-dropdown-item .dropdown-menu {
+  width: 100px; /* Ensure the menu matches the width of the items */
+  min-width: 100px; /* Set a minimum width to accommodate items */
+  z-index: 9999; /* Ensure it appears above other elements */
+  max-height: 110px; /* Adjust height as needed */
+  overflow-y: auto; /* Add vertical scroll if the content overflows */
+}
+
+.ngx-datatable.bootstrap .datatable-footer {
+  background: #3058c9;
+  color: #ededed;
+  margin-top: -1px;
+}
+
+/* For Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 12px;              /* Width of the scrollbar */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;        /* Track color */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #888;     /* Scrollbar handle color (grey) */
+  border-radius: 10px;        /* Rounded corners */
+  border: 3px solid #f1f1f1;  /* Padding around handle */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;     /* Darker grey when hovering */
+}
+
+/* For Firefox (scrollbar styling through scrollbar-width and scrollbar-color) */
+body {
+  scrollbar-width: thin;      /* Makes the scrollbar thinner */
+  scrollbar-color: #888 #f1f1f1;  /* Handle color and track color */
+}
+
+.custom-tab-pane {
+  background-color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.markdown-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@import '~ngx-toastr/toastr.css';

@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import CategoryMessage from 'src/app/main/messages/CategoryMessage';
 import Publisher from 'src/app/main/models/Publisher';
@@ -12,78 +13,34 @@ import CONFIG from 'src/app/main/urls/urls';
   templateUrl: './edit-publisher.component.html',
   styleUrls: ['./edit-publisher.component.css'],
 })
-export class EditPublisherComponent extends URLLoader implements OnInit {
-  model: Publisher;
-  @Input() id: string;
-  @Output() closeModalEvent = new EventEmitter<string>();
-  publisherI18n;
+export class EditPublisherComponent  implements OnInit {
+  @Input() publisher
+  
+  countries: string[] = ['USA', 'Canada', 'UK', 'Australia', 'India']; // Example country list
 
-  closeModal() {
-    this.closeModalEvent.emit();
-  }
-
-  constructor(
-    private httpService: HTTPService,
-    private message: CategoryMessage,
-    private router: Router
-  ) {
-    super();
-    this.model = this.create();
-  }
-
-  create() {
-    return new Publisher(0, '');
-  }
+  constructor(public activeModal: NgbActiveModal,
+              private publisherService: HTTPService) { }
 
   ngOnInit(): void {
-    this.getPublisher();
-    this.getPublisherByLang(CONFIG.getInstance().getLang());
+    // Initialization logic if needed
   }
 
-  ngOnChanges(changes: any) {
-    this.getPublisher();
+  onSaveClick(): void {
+    this.activeModal.close(this.publisher);
   }
 
-  getPublisher() {
-    if (this.id != undefined) {
-      this.httpService
-        .get(CONFIG.URL_BASE + '/publisher/' + this.id)
-        .subscribe((data: Publisher) => {
-          this.model = data;
-          console.log(this.model);
-        });
-    }
+  onCancelClick(): void {
+    this.activeModal.dismiss();
   }
 
-  goBack() {
-    this.router
-      .navigateByUrl('/dashboard', { skipLocationChange: true })
-      .then(() => {
-        this.router.navigate(['/publisher']);
-      });
+  savePublisher(): void {
+    this.publisherService.create(CONFIG.URL_BASE + '/publisher/create', this.publisher).then((data)=>{
+      console.log(data)
+    });
+    
   }
 
-  edit() {
-    this.httpService.create(CONFIG.URL_BASE + '/publisher/create', this.model);
-    this.closeModal();
-    this.goBack();
-    super.show(
-      'Confirmation',
-      this.message.confirmationMessages.edit,
-      'success'
-    );
-  }
+  
 
-  getPublisherByLang(lang) {
-    this.httpService
-      .getAll(CONFIG.URL_BASE + '/i18n/publisher/' + lang)
-      .subscribe(
-        (data) => {
-          this.publisherI18n = data;
-        },
-        (err: HttpErrorResponse) => {
-          super.show('Error', err.message, 'warning');
-        }
-      );
-  }
+
 }

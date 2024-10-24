@@ -1,0 +1,137 @@
+<div class="container-fluid">
+  <!-- Funds Title with Icon -->
+  <h3 class="h3 mb-2 text-gray-800"><i class="fas fa-piggy-bank"></i> Funds</h3>
+
+  <!-- Description -->
+  <p class="lead">The Funds module allows you to manage and oversee various funds. You can add, edit, and delete fund entries, monitor fund amounts, set warning levels, and assign budgets.</p>
+
+  
+
+  <div class="card mb-4">
+    <div class="card-body">
+      
+      <button class="btn btn-outline-primary mb-3" (click)="openAddDialog()">
+        
+        <span class="icon text-white-50">
+          <i class="fas fa-plus"></i>
+        </span>
+        <span class="text">Add Fund</span>
+      </button>
+      <button class="btn btn-outline-info btn-icon-split mb-3" (click)="loadFunds()">
+        <span class="icon text-white-50">
+          <i class="fas fa-sync-alt"></i>
+        </span>
+        <span class="text">Refresh</span>
+      </button>
+
+
+      <div *ngIf="loadingIndicator; else loaded">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #loaded>
+      
+        <div>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search by fund name..."
+            (input)="updateFilter($event)"
+          />
+        </div>
+
+        <ngx-datatable
+          class="bootstrap"
+          [rows]="funds"
+          [columnMode]="'force'"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="'auto'"
+          [limit]="10"
+          [loadingIndicator]="loadingIndicator"
+          [reorderable]="reorderable"
+          (select)="onSelect($event)"
+          (activate)="onActivate($event)"
+        >
+        <ngx-datatable-column name="Fund Name" [prop]="'fundName'">
+          <ng-template ngx-datatable-cell-template let-row="row">
+            <span style="color: red;">{{ row.fundName }}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        
+          <ngx-datatable-column name="Fund Code" [prop]="'fundCode'">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              {{ row.fundCode }}
+            </ng-template>
+          </ngx-datatable-column>
+
+         
+
+          <ngx-datatable-column name="Amount" [prop]="'amount'">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <span style="color: blue;">{{ row.amount }}$</span>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Warning at Percentage" [prop]="'warningAtPercentage'">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              {{ row.warningAtPercentage }}%
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Warning at Amount" [prop]="'warningAtAmount'">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              {{ row.warningAtAmount }}$
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Owner" [prop]="'owner'">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              {{ row.owner }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Notes" [prop]="'notes'">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              {{ row.notes }}
+            </ng-template>
+          </ngx-datatable-column>
+
+        <!--   <ngx-datatable-column name="Budget" [prop]="'budget.name'">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              {{ row.budget.name }}
+            </ng-template>
+          </ngx-datatable-column> -->
+
+          <ngx-datatable-column name="Actions">
+            <ng-template ngx-datatable-cell-template let-row="row">
+            <!--   <button (click)="openEditDialog(row)" class="btn btn-outline-primary">Edit</button>
+              <button (click)="deleteFund(row.id)" class="btn btn-outline-danger">Delete</button> -->
+              <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Actions
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li>
+                <a class="dropdown-item"  (click)="openEditDialog(row)">
+                    <i class="fas fa-pencil-alt"></i> Edit
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item text-danger"  (click)="deleteFund(row.id)">
+                    <i class="fas fa-trash-alt"></i> Delete
+                </a>
+            </li>
+            </ul>
+            
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </ng-template>
+    </div>
+  </div>
+</div>

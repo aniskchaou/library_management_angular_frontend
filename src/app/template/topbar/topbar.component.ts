@@ -7,21 +7,32 @@ import { AuthentificationService } from 'src/app/main/security/authentification.
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 import { HostListener } from '@angular/core';
+import { User } from 'src/app/modules/shared/view-user-profile/view-user-profile.component';
+import { UploadAppLogoComponent } from 'src/app/modules/shared/upload-app-logo/upload-app-logo.component';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UploadProfilePhotoComponent } from 'src/app/modules/shared/upload-profile-photo/upload-profile-photo.component';
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
   styleUrls: ['./topbar.component.css'],
 })
 export class TopbarComponent extends URLLoader implements OnInit {
+  currentLang='EN'
   @Input() menuI18n;
   searchInput: string;
   user = sessionStorage.getItem('username');
   sysLang;
+  userObject: User;
+  retrievedImage: string;
+  notifications: Notification[];
+  //retrievedLogoImage: string;
   constructor(
     private authService: AuthentificationService,
     private router: Router,
     private httpService: HTTPService,
-    private settingsMessage: SettingsMessage
+    private settingsMessage: SettingsMessage,
+    //private activeModal: NgbActiveModal,
+    private modalService: NgbModal,
   ) {
     super();
     //this.getDashboardByLang(CONFIG.getInstance().getLang());
@@ -35,10 +46,24 @@ export class TopbarComponent extends URLLoader implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    this.retrievedImage=CONFIG.URL_BASE+'/users/get/' +sessionStorage.getItem('username') +'/'+sessionStorage.getItem('username')+'_profile.png';
     this.sysLang = CONFIG.getInstance().getLang();
     this.httpService.menuI18n$.subscribe((data) => {
       this.menuI18n = data;
     });
+
+    this.httpService
+    .getAll(CONFIG.URL_BASE + '/users/username/'+sessionStorage.getItem('username'))
+    .subscribe(
+      (data:User) => {
+        this.userObject = data;
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err)
+      }
+    );
+    this.generateDummyNotifications()
   }
 
   changeLang(lang) {
@@ -82,7 +107,7 @@ export class TopbarComponent extends URLLoader implements OnInit {
   getDashboardByLang(lang, username, password) {
     this.httpService
       .getAllLang(
-        CONFIG.URL_BASE + '/i18n/dashboard/' + lang,
+        CONFIG.URL_BASE + '/i18n/dashboard/EN',
         username,
         password
       )
@@ -100,7 +125,7 @@ export class TopbarComponent extends URLLoader implements OnInit {
 
   getMenuByLang(lang, username, password) {
     this.httpService
-      .getAllLang(CONFIG.URL_BASE + '/i18n/menu/' + lang, username, password)
+      .getAllLang(CONFIG.URL_BASE + '/i18n/menu/EN', username, password)
       .subscribe(
         (data) => {
           console.log(data);
@@ -128,7 +153,7 @@ export class TopbarComponent extends URLLoader implements OnInit {
   getCategoryByLang(lang, username, password) {
     this.httpService
       .getAllLang(
-        CONFIG.URL_BASE + '/i18n/category/' + lang,
+        CONFIG.URL_BASE + '/i18n/category/EN',
         username,
         password
       )
@@ -141,4 +166,118 @@ export class TopbarComponent extends URLLoader implements OnInit {
         }
       );
   }
+
+  toggleFullScreen() {
+    const elem = document.documentElement as HTMLElement;  // Get the document's root element
+  
+    if (!document.fullscreenElement) {
+      // Request full-screen (modern method)
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if ((elem as any).webkitRequestFullscreen) { // Safari
+        (elem as any).webkitRequestFullscreen();
+      } else if ((elem as any).msRequestFullscreen) { // IE11
+        (elem as any).msRequestFullscreen();
+      }
+    } else {
+      // Exit full-screen mode
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if ((document as any).webkitExitFullscreen) { // Safari
+        (document as any).webkitExitFullscreen();
+      } else if ((document as any).msExitFullscreen) { // IE11
+        (document as any).msExitFullscreen();
+      }
+    }
+  }
+
+   openLogoDialog(): void {
+    const modalRef = this.modalService.open(UploadAppLogoComponent);
+    modalRef.componentInstance.department = {};
+
+    modalRef.result.then(result => {
+      if (result) {
+     
+      }
+    }).catch(error => console.log(error));
+  } 
+  
+  openProfilePhotoDialog(): void {
+    const modalRef = this.modalService.open(UploadProfilePhotoComponent);
+    modalRef.componentInstance.department = {};
+
+    modalRef.result.then(result => {
+      if (result) {
+     
+      }
+    }).catch(error => console.log(error));
+  } 
+
+
+
+
+
+
+
+
+  private generateDummyNotifications() {
+   /*  this.notifications = [
+      {
+        id: 1,
+        content: 'A new book has been added to the library: "The Great Gatsby".',
+        date: new Date().toISOString(),
+        type: 'info',
+      },
+      {
+        id: 2,
+        content: 'Your book "1984" is due tomorrow. Please return it on time.',
+        date: new Date(new Date().setDate(new Date().getDate() - 1)).toISOString(),
+        type: 'warning',
+      },
+      {
+        id: 3,
+        content: 'You have successfully renewed your membership.',
+        date: new Date(new Date().setDate(new Date().getDate() - 2)).toISOString(),
+        type: 'success',
+      },
+      {
+        id: 4,
+        content: 'An error occurred while trying to fetch new books. Please try again later.',
+        date: new Date(new Date().setDate(new Date().getDate() - 3)).toISOString(),
+        type: 'error',
+      },
+    ]; */
+
+    this.httpService
+      .getAll(CONFIG.URL_BASE + '/notification/')
+      .subscribe(
+        (data:Notification[]) => {
+          this.notifications = data;
+        },
+        (err: HttpErrorResponse) => {}
+      );
+  }
+
+  onNotificationClick() {
+    // You can perform any action here, such as marking notifications as read, etc.
+    this.httpService
+      .getAll(CONFIG.URL_BASE + '/notification/')
+      .subscribe(
+        (data:Notification[]) => {
+          this.notifications = data;
+        },
+        (err: HttpErrorResponse) => {}
+      );
+  }
+
+  getNotifications(): Notification[] {
+    return this.notifications;
+  }
+}
+// notification.model.ts
+export interface Notification {
+  id: number;
+  content: string;
+  date: string; // ISO date string
+  type: 'info' | 'warning' | 'success' | 'error'; // Define types of notifications
 }

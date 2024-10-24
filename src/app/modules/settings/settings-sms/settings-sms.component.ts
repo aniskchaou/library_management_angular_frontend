@@ -43,6 +43,7 @@ export class SettingsSmsComponent extends URLLoader implements OnInit {
   }
 
   getSettingsByLang(lang) {
+     lang='EN'
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/settings/' + lang)
       .subscribe(

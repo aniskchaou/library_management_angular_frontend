@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h5 class="modal-title">QR Details</h5>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <img [src]="retrievedImage">
+    <p><strong>ISBN:</strong> {{ qrCode?.isbn }}</p>
+    <p><strong>Width:</strong> {{ qrCode?.width }} cm</p>
+    <p><strong>Height:</strong> {{ qrCode?.height }} cm</p>
+    <p><strong>Margin:</strong> {{ qrCode?.margin }} cm</p>
+</div>
+
+<div class="modal-footer">
+<button type="button" class="btn btn-outline-success" (click)="closeModal()">
+            <i class="fas fa-paper-plane"></i> Close
+        </button>
+</div>
+

@@ -1,12 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import MemberTypeMessage from 'src/app/main/messages/TypeMemberMessage';
 import MemberTypeTestService from 'src/app/main/mocks/MemberTypeTestService';
 import TypeMember from 'src/app/main/models/TypeMember';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
+import { AddTypeMemberComponent } from '../add-type-member/add-type-member.component';
 
 @Component({
   selector: 'app-type-member',
@@ -25,9 +27,11 @@ export class TypeMemberComponent extends URLLoader implements OnInit {
     private typeMemberTestService: MemberTypeTestService,
     private messageService: MemberTypeMessage,
     private httpService: HTTPService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
     super();
+    super.loadScripts()
   }
 
   setId(id) {
@@ -36,6 +40,18 @@ export class TypeMemberComponent extends URLLoader implements OnInit {
 
   edit(id) {
     this.setId(id);
+  }
+
+  openAddDialog(): void {
+    const modalRef = this.modalService.open(AddTypeMemberComponent,{size: 'xl', 
+            centered: true,});
+    modalRef.componentInstance.typeMemeber = {} 
+
+    modalRef.result.then(result => {
+      if (result) {
+        this.getAll()
+      }
+    }).catch(error => console.log(error));
   }
 
   delete(id) {
@@ -78,6 +94,7 @@ export class TypeMemberComponent extends URLLoader implements OnInit {
   }
 
   getTypeMemberByLang(lang) {
+     lang='EN'
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/typemember/' + lang)
       .subscribe(

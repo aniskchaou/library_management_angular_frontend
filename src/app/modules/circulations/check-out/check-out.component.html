@@ -1,0 +1,68 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="checkoutModalLabel"><i class="fas fa-shopping-cart"></i> Checkout Form</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<!-- Modal Body (Form) -->
+<div class="modal-body">
+  <form [formGroup]="checkoutForm">
+    <!-- Member Selection -->
+    <div class="form-group">
+      <label for="member">Member:</label>
+      <i class="fas fa-info-circle" data-toggle="tooltip" 
+         title="Description: Select the member checking out the item."></i>
+      <ng-select class="form-control" id="member" name="member"
+                 [items]="members$"
+                 bindLabel="firstname" bindValue="id"
+                 formControlName="member"
+                 placeholder="Select a member"
+                 [loading]="loading">
+      </ng-select>
+    </div>
+
+    <!-- Item Barcode -->
+    <div class="form-group">
+      <label for="itemBarcode">Item Barcode:</label>
+      <i class="fas fa-info-circle" data-toggle="tooltip" 
+         title="Description: Select the barcode of the item you wish to check out."></i>
+      <ng-select class="form-control" id="itemBarcode" name="itemBarcode"
+                 [items]="books$"
+                 bindLabel="title" bindValue="id"
+                 formControlName="itemBarcode"
+                 placeholder="Select a barcode"
+                 [loading]="loading">
+      </ng-select>
+    </div>
+
+    <!-- Due Date -->
+    <div class="form-group">
+      <label for="dueDate">Due Date (MM/DD/YYYY):</label>
+      <i class="fas fa-info-circle" data-toggle="tooltip" 
+         title="Description: Enter the due date for the item to be returned."></i>
+      <input type="date" class="form-control" id="dueDate" name="dueDate" formControlName="dueDate">
+    </div>
+
+    <!-- Automatic Renewal -->
+    <div class="form-group">
+      <label>Automatic Renewal:</label>
+      <i class="fas fa-info-circle" data-toggle="tooltip" 
+         title="Description: Choose whether the item should be automatically renewed upon expiry."></i>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="automaticRenewal" id="automaticRenewalYes" value="yes" formControlName="automaticRenewal">
+        <label class="form-check-label" for="automaticRenewalYes">Yes</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="automaticRenewal" id="automaticRenewalNo" value="no" formControlName="automaticRenewal">
+        <label class="form-check-label" for="automaticRenewalNo">No</label>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Modal Footer -->
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+  <button type="button" class="btn btn-outline-primary" (click)="add()">Check Out</button>
+</div> 

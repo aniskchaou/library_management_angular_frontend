@@ -22,6 +22,7 @@ export class LoginComponent extends URLLoader implements OnInit {
   settings$: Settings;
   menuI18n: Settings;
   buttonLoginClicked = false;
+  retrievedImage: string;
 
   constructor(
     private router: Router,
@@ -33,12 +34,14 @@ export class LoginComponent extends URLLoader implements OnInit {
 
   ngOnInit() {
     super.loadScripts();
+    this.retrievedImage=CONFIG.URL_BASE+'/version/get/logo';
+    this.httpService
   }
 
   getDashboardByLang(lang, username, password) {
     this.httpService
       .getAllLang(
-        CONFIG.URL_BASE + '/i18n/dashboard/' + lang,
+        CONFIG.URL_BASE + '/i18n/dashboard/EN',
         username,
         password
       )
@@ -55,7 +58,7 @@ export class LoginComponent extends URLLoader implements OnInit {
 
   getMenuByLang(lang, username, password) {
     this.httpService
-      .getAllLang(CONFIG.URL_BASE + '/i18n/menu/' + lang, username, password)
+      .getAllLang(CONFIG.URL_BASE + '/i18n/menu/EN', username, password)
       .subscribe(
         (data) => {
           console.log(data);
@@ -74,29 +77,33 @@ export class LoginComponent extends URLLoader implements OnInit {
       .authenticate(loginform.value.username, loginform.value.password)
       .subscribe(
         (data) => {
+          let username = sessionStorage.setItem(
+            'username',
+            loginform.value.username
+          );
+          let password = sessionStorage.setItem(
+            'password',
+            loginform.value.password
+          );
           if (data) {
-            let username = sessionStorage.setItem(
-              'username',
-              loginform.value.username
-            );
-            let password = sessionStorage.setItem(
-              'password',
-              loginform.value.password
-            );
+            console.log(loginform.value)
+            
+            console.log(password)
             super.show('StockBay', 'Welcome !', 'success');
             super.loadScripts();
             this.buttonLoginClicked = false;
             this.invalidLogin = false;
             this.getDashboardByLang(
-              CONFIG.getInstance().getLang(),
+              'EN',
               loginform.value.username,
               loginform.value.password
             );
             this.getMenuByLang(
-              CONFIG.getInstance().getLang(),
+              'EN',
               loginform.value.username,
               loginform.value.password
             );
+            this.buttonLoginClicked=false
             this.router.navigate(['/dashboard']);
           }
         },
@@ -108,6 +115,7 @@ export class LoginComponent extends URLLoader implements OnInit {
             'Error password or username',
             'warning'
           );
+          this.buttonLoginClicked=false
         }
       );
   }

@@ -1,0 +1,38 @@
+.disabled {
+    pointer-events: none;  /* Disable clicking */
+  opacity: 0.1;          /* Make it semi-transparent */
+  cursor: no-drop;   /* Show a not-allowed cursor */
+  }
+
+
+.notification-scroll {
+    max-height: 300px; /* Set the maximum height of the notification dropdown */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border-radius: 10px;
+}
+
+/* Custom scrollbar styles for WebKit browsers (Chrome, Safari, Edge) */
+.notification-scroll::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+    border-radius: 10px;
+}
+
+.notification-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background of the scrollbar track */
+    border-radius: 20px; /* Round the corners of the track */
+}
+
+.notification-scroll::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+    border-radius: 20px; /* Round the corners of the thumb */
+}
+
+.notification-scroll::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color of the thumb on hover */
+}
+
+/* Custom scrollbar styles for Firefox */
+.notification-scroll {
+    scrollbar-width: thin; /* Use a thin scrollbar */
+    scrollbar-color: #888 #f1f1f1; /* thumb color and track color */
+}

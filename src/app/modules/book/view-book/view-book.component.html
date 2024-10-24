@@ -1,85 +1,418 @@
-<table class="center-table table">
-  <tr>
-    <div *ngIf="loadingImage; else loaded">
-      <app-loading></app-loading>
-    </div>
+<div class="modal-header">
+  <h5 class="modal-title">View catalog</h5>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 
-    <ng-template #loaded>
-      <td colspan="2">
-        <img [src]="retrievedImage" width="100" height="150" />
-      </td>
-    </ng-template>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ bookI18n?.isbnI18n }} :</b>
-    </td>
-    <td>{{ book?.isbn }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ bookI18n?.authorI18n }} :</b>
-    </td>
-    <td>{{ book?.writer.name }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ bookI18n?.titleI18n }} :</b>
-    </td>
-    <td>{{ book?.title }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ bookI18n?.editionI18n }} :</b>
-    </td>
-    <td>{{ book?.edition }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ bookI18n?.edition_yearI18n }} :</b>
-    </td>
-    <td>{{ book?.edition_year }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ bookI18n?.editionI18n }} :</b>
-    </td>
-    <td>{{ book?.edition }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ bookI18n?.publisherI18n }} :</b>
-    </td>
-    <td>{{ book?.publisher.name }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ bookI18n?.publishing_yearI18n }} :</b>
-    </td>
-    <td>{{ book?.publishing_year }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ bookI18n?.publication_placeI18n }} :</b>
-    </td>
-    <td>{{ book?.publication_place }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ bookI18n?.number_of_pagesI18n }} :</b>
-    </td>
-    <td>{{ book?.number_of_pages }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ bookI18n?.notesI18n }} :</b>
-    </td>
-    <td>{{ book?.notes }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ bookI18n?.categoryI18n }} :</b>
-    </td>
-    <td>{{ book?.category.category_name }}</td>
-  </tr>
-</table>
+<div class="modal-body">
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-md-6">
+        <div *ngIf="loadingImage; else loaded">
+          <app-loading></app-loading>
+        </div>
+        <ng-template #loaded>
+          <img [src]="retrievedImage" width="300" height="450" onerror="this.onerror=null;this.src='assets/images/book_default.jpg';"/>
+        </ng-template>
+     
+        
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <b>{{ bookI18n?.isbnI18n }} :</b>
+          </div>
+          <div class="col-md-6">
+            {{ book?.isbn }}
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-6">
+            <b>{{ bookI18n?.authorI18n }} :</b>
+          </div>
+          <div class="col-md-6">
+            {{ book?.writer.name }}
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-6">
+            <b>{{ bookI18n?.titleI18n }} :</b>
+          </div>
+          <div class="col-md-6">
+            {{ book?.title }}
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-6">
+            <b>{{ bookI18n?.editionI18n }} :</b>
+          </div>
+          <div class="col-md-6">
+            {{ book?.edition }}
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-6">
+            <b>{{ bookI18n?.edition_yearI18n }} :</b>
+          </div>
+          <div class="col-md-6">
+            {{ book?.edition_year }}
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-6">
+            <b>{{ bookI18n?.publisherI18n }} :</b>
+          </div>
+          <div class="col-md-6">
+            {{ book?.publisher.name }}
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-6">
+            <b>{{ bookI18n?.publishing_yearI18n }} :</b>
+          </div>
+          <div class="col-md-6">
+            {{ book?.publishing_year }}
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-6">
+            <b>{{ bookI18n?.publication_placeI18n }} :</b>
+          </div>
+          <div class="col-md-6">
+            {{ book?.publication_place }}
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-6">
+            <b>{{ bookI18n?.number_of_pagesI18n }} :</b>
+          </div>
+          <div class="col-md-6">
+            {{ book?.number_of_pages }}
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-6">
+            <b>{{ bookI18n?.notesI18n }} :</b>
+          </div>
+          <div class="col-md-6">
+            {{ book?.notes }}
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-6">
+            <b>{{ bookI18n?.categoryI18n }} :</b>
+          </div>
+          <div class="col-md-6">
+            {{ book?.category?.category_name }}
+          </div>
+        </div>
+
+       
+        
+      </div>
+    </div>
+  </div>
+
+  
+
+ 
+
+<!-- <table class="table table-striped">
+  <thead>
+      <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Accession No</th>
+          <th scope="col">Copy No</th>
+          <th scope="col">Branch</th>
+          <th scope="col">Location</th>
+          <th scope="col">Booked?</th>
+          <th scope="col">Active?</th>
+          <th scope="col">Actions</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>12345</td>
+          <td>1</td>
+          <td>Main Branch</td>
+          <td>Shelf A</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>
+            <div class="btn-group">
+              <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bars"></i> Actions
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-sign-in-alt"></i> Check-in
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-sign-out-alt"></i> Check-out
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-edit"></i> Edit
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-history"></i> Circulation History
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-barcode"></i> Generate Bar code
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-qrcode"></i> Generate QR code
+                </a>
+                <a class="dropdown-item text-danger" href="#">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-copy"></i> Duplicate
+              </a>
+              </div>
+            </div>
+            
+          </td>
+      </tr>
+      
+  </tbody>
+</table> -->
+  
+</div>
+
+
+<div class="modal-footer">
+  
+    
+      <!-- <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-bars"></i> Actions
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">
+          <i class="fas fa-plus"></i> Add Smart
+        </a>
+        <a class="dropdown-item" href="#">
+          <i class="fas fa-edit"></i> Edit Item
+        </a>
+        <a class="dropdown-item" href="#">
+          <i class="fas fa-image"></i> Change Cover Photo
+        </a>
+        <a class="dropdown-item" href="#">
+          <i class="fas fa-hand-point-up"></i> Add Manual
+        </a>
+        <a class="dropdown-item" href="#">
+          <i class="fas fa-archive"></i> Archive
+        </a>
+        <a class="dropdown-item" href="#">
+          <i class="fas fa-trash"></i> Destroy
+        </a>
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#formModal">
+          <i class="fas fa-copy"></i> Add New Copy
+        </a>
+        <a class="dropdown-item text-danger" href="#">
+          <i class="fas fa-trash-alt"></i> Delete this Item
+        </a>
+        <a class="dropdown-item" href="#">
+          <i class="fas fa-folder-plus"></i> Place Hold
+      </a>
+      <a class="dropdown-item" href="#">
+          <i class="fas fa-tracking"></i> Track Condition
+      </a>
+      <a class="dropdown-item" href="#">
+          <i class="fas fa-eye"></i> View Circulation
+      </a>
+      </div>
+     -->
+    <button type="button" class="btn btn-outline-primary" (click)="closeModal()">
+      <i class="fas fa-times"></i> Close
+    </button>
+
+    
+    
+</div>
+
+
+<div class="container mt-4">
+
+  <!-- Modal -->
+  <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="formModalLabel">Item Details</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <form method="post" class="form-horizontal" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8">
+                      <!-- Accession No -->
+                      <div class="form-group">
+                          <label for="accession_no">Accession No</label>
+                          <input type="text" class="form-control" id="accession_no" name="accession_no">
+                      </div>
+
+                      <!-- Copy No -->
+                      <div class="form-group">
+                          <label for="copy_no">Copy No</label>
+                          <input type="text" class="form-control" id="copy_no" name="copy_no">
+                      </div>
+
+                      <!-- Library Branch Main -->
+                      <div class="form-group">
+                          <label for="library_branch_main">Library Branch Main</label>
+                          <input type="text" class="form-control" id="library_branch_main" name="library_branch_main">
+                      </div>
+
+                      <!-- Edition -->
+                      <div class="form-group">
+                          <label for="edition">Edition</label>
+                          <input type="text" class="form-control" id="edition" name="edition">
+                      </div>
+
+                      <!-- Location -->
+                      <div class="form-group">
+                          <label for="location">Location</label>
+                          <input type="text" class="form-control" id="location" name="location">
+                      </div>
+
+                      <!-- Active -->
+                      <div class="form-group">
+                          <label>Active</label><br>
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="active" id="active_yes" value="yes">
+                              <label class="form-check-label" for="active_yes">Yes</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="active" id="active_no" value="no">
+                              <label class="form-check-label" for="active_no">No</label>
+                          </div>
+                      </div>
+
+                      <!-- Published -->
+                      <div class="form-group">
+                          <label>Published</label><br>
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="published" id="published_yes" value="yes">
+                              <label class="form-check-label" for="published_yes">Yes</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="published" id="published_no" value="no">
+                              <label class="form-check-label" for="published_no">No</label>
+                          </div>
+                      </div>
+
+                      <!-- Circulation -->
+                      <div class="form-group">
+                          <label>Circulation</label><br>
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="circulation" id="circulation_yes" value="yes">
+                              <label class="form-check-label" for="circulation_yes">Yes</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="circulation" id="circulation_no" value="no">
+                              <label class="form-check-label" for="circulation_no">No</label>
+                          </div>
+                      </div>
+
+                      <!-- Booked? -->
+                      <div class="form-group">
+                          <label for="booked">Booked?</label>
+                          <input type="text" class="form-control" id="booked" name="booked">
+                      </div>
+
+                      <!-- Condition -->
+                      <div class="form-group">
+                          <label for="condition">Condition</label>
+                          <select class="form-control" id="condition" name="condition">
+                              <option value="good">Good</option>
+                              <option value="medium">Medium</option>
+                              <option value="low">Low</option>
+                          </select>
+                      </div>
+
+                      <!-- Price -->
+                      <div class="form-group">
+                          <label for="price">Price</label>
+                          <input type="text" class="form-control" id="price" name="price">
+                      </div>
+
+                      <!-- Included Materials -->
+                      <div class="form-group">
+                          <label for="included_materials">Included Materials</label>
+                          <input type="text" class="form-control" id="included_materials" name="included_materials">
+                      </div>
+
+                      <!-- Remarks -->
+                      <div class="form-group">
+                          <label for="remarks">Remarks</label>
+                          <input type="text" class="form-control" id="remarks" name="remarks">
+                      </div>
+
+                      <!-- Replacement Price -->
+                      <div class="form-group">
+                          <label for="replacement_price">Replacement Price</label>
+                          <input type="text" class="form-control" id="replacement_price" name="replacement_price" value="0.00">
+                      </div>
+
+                      <!-- Checkout Status -->
+                      <div class="form-group">
+                          <label for="checkout_status">Checkout Status</label>
+                          <input type="text" class="form-control" id="checkout_status" name="checkout_status">
+                      </div>
+
+                      <!-- Current Renewals -->
+                      <div class="form-group">
+                          <label for="current_renewals">Current Renewals</label>
+                          <input type="text" class="form-control" id="current_renewals" name="current_renewals">
+                      </div>
+
+                      <!-- Lost Status -->
+                      <div class="form-group">
+                          <label for="lost_status">Lost Status</label>
+                          <select class="form-control" id="lost_status" name="lost_status">
+                              <option value="long overdue">Long Overdue</option>
+                              <option value="lost">Lost</option>
+                              <option value="missing">Missing</option>
+                              <option value="lost and paid for">Lost and Paid For</option>
+                          </select>
+                      </div>
+
+                      <!-- Damaged Status -->
+                      <div class="form-group">
+                          <label for="damaged_status">Damaged Status</label>
+                          <select class="form-control" id="damaged_status" name="damaged_status">
+                              <option value="damaged">Damaged</option>
+                              <option value="not damaged">Not Damaged</option>
+                          </select>
+                      </div>
+
+                      <!-- Withdrawn Status -->
+                      <div class="form-group">
+                          <label for="withdrawn_status">Withdrawn Status</label>
+                          <select class="form-control" id="withdrawn_status" name="withdrawn_status">
+                              <option value="withdrawn">Withdrawn</option>
+                              <option value="not withdrawn">Not Withdrawn</option>
+                          </select>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

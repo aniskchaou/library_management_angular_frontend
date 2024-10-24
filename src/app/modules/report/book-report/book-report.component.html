@@ -1,6 +1,15 @@
 <div class="container-fluid">
-  <h1 class="h3 mb-2 text-gray-800">{{ menu.bookReportI18n }}</h1>
+  <!-- Title with Icon -->
+  <h1 class="h3 mb-2 text-gray-800">
+    <i class="fas fa-book mr-2"></i>{{ menu.bookReportI18n }}
+  </h1>
 
+  <!-- Description -->
+  <p class="lead mb-4">
+    This report provides detailed information on books, including their ISBN, titles, authors, categories, and publishers. Use the filters below to narrow down the report based on publisher, category, writer, or year. Click "Search" to view the filtered data.
+  </p>
+
+  <!-- Filters and Search Button -->
   <div class="card shadow mb-4">
     <div class="card-body">
       <select
@@ -8,7 +17,7 @@
         id="inputGroupSelect04"
         (change)="selectPublisher($event.target.value)"
       >
-        <option selected></option>
+        <option selected>Select Publisher</option>
         <option value="{{ c.id }}" *ngFor="let c of publishers$">
           {{ c.name }}
         </option>
@@ -19,7 +28,7 @@
         id="inputGroupSelect04"
         (change)="selectCategory($event.target.value)"
       >
-        <option selected></option>
+        <option selected>Select Category</option>
         <option value="{{ c.id }}" *ngFor="let c of categories$">
           {{ c.category_name }}
         </option>
@@ -30,7 +39,7 @@
         id="inputGroupSelect04"
         (change)="selectWriter($event.target.value)"
       >
-        <option selected></option>
+        <option selected>Select Writer</option>
         <option value="{{ c.id }}" *ngFor="let c of writers$">
           {{ c.name }}
         </option>
@@ -41,11 +50,12 @@
         id="inputGroupSelect04"
         (change)="selectYear($event.target.value)"
       >
-        <option selected></option>
-        <option value="2022">2022</option>
-        <option value="2021">2021</option>
-        <option value="2020">2020</option>
+        <option selected>Select Year</option>
+        <option value="{{ y.year }}" *ngFor="let y of years">
+          {{ y.year}}
+        </option>
       </select>
+
       <button
         (click)="search()"
         href="#"
@@ -55,13 +65,12 @@
         <span class="icon text-white-50">
           <i class="fas fa-filter"></i>
         </span>
-        <span class="text"></span>
+        <span class="text">Filter</span>
       </button>
     </div>
   </div>
-  <!-- Page Heading -->
 
-  <!-- DataTales Example -->
+  <!-- Data Table -->
   <div class="card shadow mb-4" *ngIf="searchButtonClicked">
     <div class="card-body">
       <div class="table-responsive">

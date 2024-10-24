@@ -1,93 +1,521 @@
-<table
-  class="table table-bordered"
-  id="table"
-  width="100%"
-  cellspacing="0"
-  *ngIf="circulations"
->
-  <thead>
-    <tr>
-      <th>{{ circulationI18n?.memberNameI18n }}</th>
-      <th>{{ circulationI18n?.bookNameI18n }}</th>
-      <th>{{ circulationI18n?.writerI18n }}</th>
-      <th>{{ circulationI18n?.issueDateI18n }}</th>
-      <th>{{ circulationI18n?.returnDateI18n }}</th>
-      <th>{{ circulationI18n?.returnStatusI18n }}</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tfoot>
-    <tr>
-      <th>{{ circulationI18n?.memberNameI18n }}</th>
-      <th>{{ circulationI18n?.bookNameI18n }}</th>
-      <th>{{ circulationI18n?.writerI18n }}</th>
-      <th>{{ circulationI18n?.issueDateI18n }}</th>
-      <th>{{ circulationI18n?.returnDateI18n }}</th>
-      <th>{{ circulationI18n?.returnStatusI18n }}</th>
 
-      <th></th>
-    </tr>
-  </tfoot>
-  <tbody>
-    <tr *ngFor="let t of circulations">
-      <td>
-        <span class="badge badge-success">{{ t?.memberName?.name }}</span>
-      </td>
-      <td>{{ t?.bookName?.title }}</td>
-      <td>{{ t?.writer?.name }}</td>
-      <td>
-        <span class="badge badge-primary">{{ t?.returnDate }}</span>
-      </td>
-      <td>
-        <span class="badge badge-danger">{{ t?.issueDate }}</span>
-      </td>
-      <td>
-        <span class="badge badge-info">{{ t?.returnStatus?.name }}</span>
-      </td>
-      <td>
-        <button
-          (click)="view(t.id)"
-          href="#view"
-          role="button"
-          data-toggle="modal"
-          class="btn btn-primary btn-sm"
-        >
-          <i class="fas fa-eye"></i>
+<button class="btn btn-outline-primary btn-icon-split" (click)="openCheckIn()"> <span class="icon text-primary">
+  <i class="fas fa-plus"></i>
+</span> <span class="text">CheckIn</span> </button>
+
+<button class="btn btn-outline-warning btn-icon-split" (click)="openCheckOut()"> <span class="icon text-warning">
+  <i class="fas fa-plus"></i>
+</span> <span class="text">CheckOut</span> </button>
+
+
+<button class="btn btn-outline-info btn-icon-split" (click)="openRenew()"> <span class="icon text-info">
+<i class="fas fa-plus"></i>
+</span> <span class="text">Renew</span> </button>
+
+<button class="btn btn-outline-secondary btn-icon-split" (click)="openPutOnHold()"> <span class="icon text-secondary">
+<i class="fas fa-plus"></i>
+</span> <span class="text">Put On Hold</span> </button>
+
+
+<button
+  href="#"
+  role="button"
+  class="btn btn-outline-warning btn-icon-split"
+  (click)="reload()"
+>
+  <span class="icon text-warning">
+    <i class="fas fa-redo"></i>
+  </span>
+  <span class="text">Reload</span>
+</button>
+ <br>
+
+
+
+
+
+
+
+ <div class="container mt-5">
+
+  <div class="row">
+      <div class="col-md-4 mb-4">
+          <div class="card text-center border">
+              <div class="card-body">
+                  <h5 class="card-title text-dark">Total</h5>
+                  <p class="card-text h3">
+                      <span *ngIf="total">{{ total }}</span>
+                      <span *ngIf="!total">Loading...</span>
+                  </p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+          <div class="card text-center border">
+              <div class="card-body">
+                  <h5 class="card-title text-success">Checkin</h5>
+                  <p class="card-text h3">
+                      <span *ngIf="checkin">{{ checkin }}</span>
+                      <span *ngIf="!checkin">Loading...</span>
+                  </p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+          <div class="card text-center border">
+              <div class="card-body">
+                  <h5 class="card-title text-danger">Checkout</h5>
+                  <p class="card-text h3">
+                      <span *ngIf="checkout">{{ checkout }}</span>
+                      <span *ngIf="!checkout">Loading...</span>
+                  </p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+          <div class="card text-center border">
+              <div class="card-body">
+                  <h5 class="card-title text-warning">Renewal</h5>
+                  <p class="card-text h3">
+                      <span *ngIf="renewal">{{ renewal }}</span>
+                      <span *ngIf="!renewal">Loading...</span>
+                  </p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+          <div class="card text-center border">
+              <div class="card-body">
+                  <h5 class="card-title text-info">On Hold</h5>
+                  <p class="card-text h3">
+                      <span *ngIf="onHold">{{ onHold }}</span>
+                      <span *ngIf="!onHold">Loading...</span>
+                  </p>
+              </div>
+          </div>
+      </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div>
+  <!-- Bootstrap Tabs with Icons -->
+  <ul class="nav nav-tabs" id="circulationTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">
+        <i class="fas fa-info-circle"></i> Overview
+      </a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="false">
+        <i class="fas fa-list"></i> All
+      </a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="checkin-tab" data-toggle="tab" href="#checkin" role="tab" aria-controls="checkin" aria-selected="false">
+        <i class="fas fa-sign-in-alt"></i> Checkin
+      </a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="checkout-tab" data-toggle="tab" href="#checkout" role="tab" aria-controls="checkout" aria-selected="false">
+        <i class="fas fa-sign-out-alt"></i> Checkout
+      </a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="renewal-tab" data-toggle="tab" href="#renewal" role="tab" aria-controls="renewal" aria-selected="false">
+        <i class="fas fa-sync"></i> Renewal
+      </a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="on-hold-tab" data-toggle="tab" href="#on-hold" role="tab" aria-controls="on-hold" aria-selected="false">
+        <i class="fas fa-pause-circle"></i> On Hold
+      </a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="user-manual-tab" data-toggle="tab" href="#user-manual" role="tab" aria-controls="user-manual" aria-selected="false">
+        <i class="fas fa-book"></i> User Manual
+      </a>
+    </li>
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-content" id="circulationTabsContent">
+    <!-- Overview Tab -->
+    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+      <br>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <h4>Number of Circulations by Member Type</h4>
+            <ngx-charts-bar-vertical
+              [results]="memberTypeData"
+              [view]="[400, 300]"
+              [scheme]="'cool'"
+              [gradient]="true"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="false"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              xAxisLabel="Member Type"
+              yAxisLabel="Number of Circulations">
+            </ngx-charts-bar-vertical>
+          </div>
+      
+          <div class="col-md-6">
+            <h4>Number of items borrowed by category</h4>
+            <ngx-charts-pie-chart
+              [results]="borrowedItemsCategoryData"
+              [view]="[400, 300]"
+              [scheme]="'cool'"
+              [legend]="false"
+              [explodeSlices]="false"
+              [labels]="true">
+            </ngx-charts-pie-chart>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col-md-6">
+            <h4>Total penalties collected</h4>
+          <!--   <ngx-charts-line-chart
+              [results]="totalPenalties"
+              [view]="[400, 300]"
+              [scheme]="'cool'"
+              [legend]="false"
+              [xAxis]="true"
+              [yAxis]="true"
+              [autoScale]="true">
+            </ngx-charts-line-chart> -->
+            <ngx-charts-bar-vertical
+              [results]="memberTypeData"
+              [view]="[400, 300]"
+              [scheme]="'cool'"
+              [gradient]="true"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="false"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              xAxisLabel="Member Type"
+              yAxisLabel="Number of Circulations">
+            </ngx-charts-bar-vertical>
+          </div>
+      
+          <div class="col-md-6">
+            <h4>Circulation Status Distribution</h4>
+            <ngx-charts-pie-chart
+              [results]="circulationStatusData"
+              [view]="[400, 300]"
+              [scheme]="'cool'"
+              [legend]="false"
+              [explodeSlices]="false"
+              [doughnut]="true"
+              [labels]="true">
+            </ngx-charts-pie-chart>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <!-- All Tab with ngx-datatable -->
+    <div class="tab-pane fade" id="all" role="tabpanel" aria-labelledby="all-tab">
+      <ngx-datatable
+        class="bootstrap"
+        [rows]="circulations"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [loadingIndicator]="loadingIndicator"
+        [reorderable]="reorderable"
+      >
+        <!-- <ngx-datatable-column name="ID" prop="id"></ngx-datatable-column> -->
+        <ngx-datatable-column name="Member Name" prop="memberName.firstname"></ngx-datatable-column>
+      <ngx-datatable-column name="Book Name" prop="catalogItemName.title"></ngx-datatable-column>
+      <ngx-datatable-column name="Writer" prop="catalogItemName.writer.name"></ngx-datatable-column>
+        <ngx-datatable-column name="Issue Date" prop="issueDate"></ngx-datatable-column>
+        <ngx-datatable-column name="Last Date" prop="lastDate"></ngx-datatable-column>
+        <ngx-datatable-column name="To Return" prop="toReturn"></ngx-datatable-column>
+        <ngx-datatable-column name="Return Date" prop="returnDate"></ngx-datatable-column>
+       <!--  <ngx-datatable-column name="Penalty" prop="penalty"></ngx-datatable-column> -->
+        <ngx-datatable-column name="Return Status" prop="returnStatus.name"></ngx-datatable-column>
+        <ngx-datatable-column name="Actions">
+          <ng-template ngx-datatable-cell-template let-row="row">
+           <!--  <button class="btn btn-sm btn-outline-primary" (click)="openViewDialog(row)">View</button> -->
+           <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Actions
         </button>
-        <button
-          type="button"
-          data-toggle="modal"
-          (click)="edit(t.id)"
-          data-target="#edit"
-          class="btn btn-warning btn-sm"
-        >
-          <i class="fas fa-edit"></i>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" (click)="openViewDialog(row)">
+            <i class="fas fa-eye"></i> View
+           </a>
+            <a class="dropdown-item" (click)="openCheckOut()">
+                <i class="fas fa-shopping-cart"></i> Checkout
+            </a>
+            <a class="dropdown-item" (click)="openCheckIn()">
+                <i class="fas fa-undo"></i> Checkin
+            </a>
+            <a class="dropdown-item" (click)="openRenew()">
+                <i class="fas fa-redo"></i> Renew
+            </a>
+            <a class="dropdown-item" (click)="openPutOnHold()">
+                <i class="fas fa-pause-circle"></i> On Hold
+            </a>
+        </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+
+    <!-- Checkin Tab -->
+    <div class="tab-pane fade" id="checkin" role="tabpanel" aria-labelledby="checkin-tab">
+      <ngx-datatable
+      class="bootstrap"
+      [rows]="checkins"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [loadingIndicator]="loadingIndicator"
+      [reorderable]="reorderable"
+    >
+      <!-- <ngx-datatable-column name="ID" prop="id"></ngx-datatable-column> -->
+      <ngx-datatable-column name="Member Name" prop="memberName.firstname"></ngx-datatable-column>
+      <ngx-datatable-column name="Book Name" prop="catalogItemName.title"></ngx-datatable-column>
+      <ngx-datatable-column name="Writer" prop="catalogItemName.writer.name"></ngx-datatable-column>
+      <ngx-datatable-column name="Issue Date" prop="issueDate"></ngx-datatable-column>
+      <ngx-datatable-column name="Last Date" prop="lastDate"></ngx-datatable-column>
+      <ngx-datatable-column name="To Return" prop="toReturn"></ngx-datatable-column>
+      <ngx-datatable-column name="Return Date" prop="returnDate"></ngx-datatable-column>
+      <!-- <ngx-datatable-column name="Penalty" prop="penalty"></ngx-datatable-column> -->
+      <ngx-datatable-column name="Return Status" prop="returnStatus.name"></ngx-datatable-column>
+      <ngx-datatable-column name="Actions">
+        <ng-template ngx-datatable-cell-template let-row="row">
+        <!--   <button class="btn btn-sm btn-outline-primary" (click)="openViewDialog(row)">View</button> -->
+        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Actions
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" (click)="openViewDialog(row)">
+          <i class="fas fa-eye"></i> View
+         </a>
+          <a class="dropdown-item" (click)="openCheckOut()">
+              <i class="fas fa-shopping-cart"></i> Checkout
+          </a>
+          <a class="dropdown-item" (click)="openCheckIn()">
+              <i class="fas fa-undo"></i> Checkin
+          </a>
+          <a class="dropdown-item" (click)="openRenew()">
+              <i class="fas fa-redo"></i> Renew
+          </a>
+          <a class="dropdown-item" (click)="openPutOnHold()">
+              <i class="fas fa-pause-circle"></i> On Hold
+          </a>
+      </div>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+    </div>
+
+    <!-- Checkout Tab -->
+    <div class="tab-pane fade" id="checkout" role="tabpanel" aria-labelledby="checkout-tab">
+      <ngx-datatable
+      class="bootstrap"
+      [rows]="checkouts"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [loadingIndicator]="loadingIndicator"
+      [reorderable]="reorderable"
+    >
+      <!-- <ngx-datatable-column name="ID" prop="id"></ngx-datatable-column> -->
+      <ngx-datatable-column name="Member Name" prop="memberName.firstname"></ngx-datatable-column>
+      <ngx-datatable-column name="Book Name" prop="catalogItemName.title"></ngx-datatable-column>
+      <ngx-datatable-column name="Writer" prop="catalogItemName.writer.name"></ngx-datatable-column>
+      <ngx-datatable-column name="Issue Date" prop="issueDate"></ngx-datatable-column>
+      <ngx-datatable-column name="Last Date" prop="lastDate"></ngx-datatable-column>
+      <ngx-datatable-column name="To Return" prop="toReturn"></ngx-datatable-column>
+      <ngx-datatable-column name="Return Date" prop="returnDate"></ngx-datatable-column>
+      <!-- <ngx-datatable-column name="Penalty" prop="penalty"></ngx-datatable-column> -->
+      <ngx-datatable-column name="Return Status" prop="returnStatus.name"></ngx-datatable-column>
+      <ngx-datatable-column name="Actions">
+        <ng-template ngx-datatable-cell-template let-row="row">
+         <!--  <button class="btn btn-sm btn-outline-primary" (click)="openViewDialog(row)">View</button> -->
+         <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Actions
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" (click)="openViewDialog(row)">
+          <i class="fas fa-eye"></i> View
+         </a>
+          <a class="dropdown-item" (click)="openCheckOut()">
+              <i class="fas fa-shopping-cart"></i> Checkout
+          </a>
+          <a class="dropdown-item" (click)="openCheckIn()">
+              <i class="fas fa-undo"></i> Checkin
+          </a>
+          <a class="dropdown-item" (click)="openRenew()">
+              <i class="fas fa-redo"></i> Renew
+          </a>
+          <a class="dropdown-item" (click)="openPutOnHold()">
+              <i class="fas fa-pause-circle"></i> On Hold
+          </a>
+      </div>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+    </div>
+
+    <!-- Renewal Tab -->
+    <div class="tab-pane fade" id="renewal" role="tabpanel" aria-labelledby="renewal-tab">
+      <ngx-datatable
+      class="bootstrap"
+      [rows]="renewals"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [loadingIndicator]="loadingIndicator"
+      [reorderable]="reorderable"
+    >
+      <!-- <ngx-datatable-column name="ID" prop="id"></ngx-datatable-column> -->
+      <ngx-datatable-column name="Member Name" prop="memberName.firstname"></ngx-datatable-column>
+      <ngx-datatable-column name="Book Name" prop="catalogItemName.title"></ngx-datatable-column>
+      <ngx-datatable-column name="Writer" prop="catalogItemName.writer.name"></ngx-datatable-column>
+      <ngx-datatable-column name="Issue Date" prop="issueDate"></ngx-datatable-column>
+      <ngx-datatable-column name="Last Date" prop="lastDate"></ngx-datatable-column>
+      <ngx-datatable-column name="To Return" prop="toReturn"></ngx-datatable-column>
+      <ngx-datatable-column name="Return Date" prop="returnDate"></ngx-datatable-column>
+      <!-- <ngx-datatable-column name="Penalty" prop="penalty"></ngx-datatable-column> -->
+      <ngx-datatable-column name="Return Status" prop="returnStatus.name"></ngx-datatable-column>
+      <ngx-datatable-column name="Actions">
+        <ng-template ngx-datatable-cell-template let-row="row">
+         <!--  <button class="btn btn-sm btn-outline-primary" (click)="openViewDialog(row)">View</button> -->
+         <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Actions
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" (click)="openViewDialog(row)">
+          <i class="fas fa-eye"></i> View
+         </a>
+          <a class="dropdown-item" (click)="openCheckOut()">
+              <i class="fas fa-shopping-cart"></i> Checkout
+          </a>
+          <a class="dropdown-item" (click)="openCheckIn()">
+              <i class="fas fa-undo"></i> Checkin
+          </a>
+          <a class="dropdown-item" (click)="openRenew()">
+              <i class="fas fa-redo"></i> Renew
+          </a>
+          <a class="dropdown-item" (click)="openPutOnHold()">
+              <i class="fas fa-pause-circle"></i> On Hold
+          </a>
+      </div>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+    </div>
+
+    <!-- On Hold Tab -->
+    <div class="tab-pane fade" id="on-hold" role="tabpanel" aria-labelledby="on-hold-tab">
+      <ngx-datatable
+      class="bootstrap"
+      [rows]="onholds"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [loadingIndicator]="loadingIndicator"
+      [reorderable]="reorderable"
+    >
+      <!-- <ngx-datatable-column name="ID" prop="id"></ngx-datatable-column> -->
+      <ngx-datatable-column name="Member Name" prop="memberName.firstname"></ngx-datatable-column>
+      <ngx-datatable-column name="Book Name" prop="catalogItemName.title"></ngx-datatable-column>
+      <ngx-datatable-column name="Writer" prop="catalogItemName.writer.name"></ngx-datatable-column>
+      <ngx-datatable-column name="Issue Date" prop="issueDate"></ngx-datatable-column>
+      <ngx-datatable-column name="Last Date" prop="lastDate"></ngx-datatable-column>
+      <ngx-datatable-column name="To Return" prop="toReturn"></ngx-datatable-column>
+      <ngx-datatable-column name="Return Date" prop="returnDate"></ngx-datatable-column>
+     <!--  <ngx-datatable-column name="Penalty" prop="penalty"></ngx-datatable-column> -->
+      <ngx-datatable-column name="Return Status" prop="returnStatus.name"></ngx-datatable-column>
+      <ngx-datatable-column name="Actions">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <!-- <button class="btn btn-sm btn-outline-primary" (click)="openViewDialog(row)">View</button> -->
+          <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Actions
         </button>
-        <button
-          type="button"
-          class="btn btn-danger btn-sm"
-          (click)="delete(t.id)"
-        >
-          <i class="fas fa-trash-alt"></i>
-        </button>
-        <button
-          type="button"
-          class="btn btn-info btn-sm"
-          (click)="return(t.id)"
-        >
-          <i class="fas fa-undo"></i>
-        </button>
-        <button
-          type="button"
-          class="btn btn-secondary btn-sm"
-          href="#contact"
-          (click)="contact(t.memberName.email)"
-          data-target="#contact"
-          data-toggle="modal"
-        >
-          <i class="fas fa-envelope"></i>
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" (click)="openViewDialog(row)">
+            <i class="fas fa-eye"></i> View
+           </a>
+            <a class="dropdown-item" (click)="openCheckOut()">
+                <i class="fas fa-shopping-cart"></i> Checkout
+            </a>
+            <a class="dropdown-item" (click)="openCheckIn()">
+                <i class="fas fa-undo"></i> Checkin
+            </a>
+            <a class="dropdown-item" (click)="openRenew()">
+                <i class="fas fa-redo"></i> Renew
+            </a>
+            <a class="dropdown-item" (click)="openPutOnHold()">
+                <i class="fas fa-pause-circle"></i> On Hold
+            </a>
+        </div>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+    </div>
+
+    <!-- User Manual Tab -->
+    <div class="tab-pane fade" id="user-manual" role="tabpanel" aria-labelledby="user-manual-tab">
+      <div>
+        <!-- <markdown [src]="markdownContent" [data]="markdownContent"></markdown>  -->
+         <div  [innerHTML]="markdownContent"></div>
+     </div>
+    </div>
+  </div>
+</div>
+

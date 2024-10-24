@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
+import Circulation from 'src/app/main/models/Circulation';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
@@ -14,7 +16,7 @@ export class ViewCirculationComponent extends URLLoader implements OnInit {
   circulation;
   circulationI18n;
 
-  constructor(private httpService: HTTPService) {
+  constructor(private httpService: HTTPService,private activeModal: NgbActiveModal) {
     super();
   }
 
@@ -41,6 +43,7 @@ export class ViewCirculationComponent extends URLLoader implements OnInit {
   }
 
   getCirculationByLang(lang) {
+     lang='EN'
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/circulation/' + lang)
       .subscribe(
@@ -52,4 +55,10 @@ export class ViewCirculationComponent extends URLLoader implements OnInit {
         }
       );
   }
+
+  closeModal(): void {
+    this.activeModal.dismiss(); // Close the modal using NgbActiveModal
+  }
+
+
 }

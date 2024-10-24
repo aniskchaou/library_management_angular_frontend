@@ -108,6 +108,7 @@ export class AddRequestedBookComponent extends URLLoader implements OnInit {
   }
 
   getRequestedBookByLang(lang) {
+     lang='EN'
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/requestedbook/' + lang)
       .subscribe(

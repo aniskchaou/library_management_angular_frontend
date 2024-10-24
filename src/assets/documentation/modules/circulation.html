@@ -1,0 +1,64 @@
+<h1>Circulation Module Documentation</h1>
+
+<h2>Module Description</h2>
+<p>The Circulation module manages the borrowing and returning process of library items by members. It includes fields for entering member and book details, issue and return dates, penalties, and return status.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">Member Name *:</p>
+    <ul>
+        <li><strong>Description:</strong> The name of the member borrowing the item.</li>
+        <li><strong>Usage:</strong> Enter the member's full name.</li>
+        <li><strong>Example:</strong> "John Doe"</li>
+        <li><strong>Validation:</strong> Must be a valid string, required field.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Book Name *:</p>
+    <ul>
+        <li><strong>Description:</strong> The title of the book being borrowed.</li>
+        <li><strong>Usage:</strong> Enter the name of the book.</li>
+        <li><strong>Example:</strong> "To Kill a Mockingbird"</li>
+        <li><strong>Validation:</strong> Must be a valid string, required field.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Writer *:</p>
+    <ul>
+        <li><strong>Description:</strong> The author of the book being borrowed.</li>
+        <li><strong>Usage:</strong> Enter the author's name.</li>
+        <li><strong>Example:</strong> "Harper Lee"</li>
+        <li><strong>Validation:</strong> Must be a valid string, required field.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Issue Date *:</p>
+    <ul>
+        <li><strong>Description:</strong> The date when the book is issued to the member.</li>
+        <li><strong>Usage:</strong> Enter the issue date in the format dd/mm/yyyy.</li>
+        <li><strong>Example:</strong> "01/08/2024"</li>
+        <li><strong>Validation:</strong> Must be a valid date format (dd/mm/yyyy), required field.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Last Date *:</p>
+    <ul>
+        <li><strong>Description:</strong> The last date by which the book is expected to be returned.</li>
+        <li><strong>Usage:</strong> Enter the last date in the format dd/mm/yyyy.</li>
+        <li><strong>Example:</strong> "15/08/2024"</li>
+        <li><strong>Validation:</strong> Must be a valid date format (dd/mm/yyyy), required field.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">To Return *:</p>
+    <ul>
+        <li><strong>Description:</strong> The date by which the book is to be returned, same as the last date.</li>
+        <li><strong>Usage:</strong> Enter the return date in the format dd/mm/yyyy.</li>
+        <li><strong>Example:</strong> "15/08/2024"</li>
+        <li

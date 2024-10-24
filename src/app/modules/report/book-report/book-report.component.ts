@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
-import Book from 'src/app/main/models/Book';
+import CatalogItem from 'src/app/main/models/Book';
 import Category from 'src/app/main/models/Category';
 import Publisher from 'src/app/main/models/Publisher';
 import Writer from 'src/app/main/models/Writer';
@@ -15,7 +15,7 @@ import CONFIG from 'src/app/main/urls/urls';
   styleUrls: ['./book-report.component.css'],
 })
 export class BookReportComponent extends URLLoader implements OnInit {
-  books$: Book[];
+  books$: CatalogItem[];
   bookI18n: Object;
   loading: boolean = false;
   selectedYear;
@@ -42,8 +42,10 @@ export class BookReportComponent extends URLLoader implements OnInit {
     this.httpService.menuI18n$.subscribe((data) => {
       this.menu = data;
     });
+    this.populateYears();
   }
   getBookByLang(lang) {
+     lang='EN'
     this.httpService.getAll(CONFIG.URL_BASE + '/i18n/book/' + lang).subscribe(
       (data) => {
         this.bookI18n = data;
@@ -59,7 +61,7 @@ export class BookReportComponent extends URLLoader implements OnInit {
       .getAll(CONFIG.URL_BASE + '/book/all')
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        (data: Book[]) => {
+        (data: CatalogItem[]) => {
           this.books$ = data;
           this.loading = false;
         },
@@ -119,10 +121,30 @@ export class BookReportComponent extends URLLoader implements OnInit {
     this.selectedCategory = category;
   }
 
+  years: Array<{ year: number }> = [];
+
+
+
+  populateYears() {
+    const currentYear = new Date().getFullYear();
+    for (let year = 1910; year <= currentYear; year++) {
+      this.years.push({ year });
+    }
+  }
+
   search() {
     this.searchButtonClicked = true;
     //  this.loading = true;
     this.loadScripts();
+    console.log(  CONFIG.URL_BASE +
+      '/book/bookreport/' +
+      this.selectedYear +
+      '/' +
+      this.selectedWriter +
+      '/' +
+      this.selectedPublisher +
+      '/' +
+      this.selectedCategory)
     this.httpService
       .getAll(
         CONFIG.URL_BASE +
@@ -136,7 +158,7 @@ export class BookReportComponent extends URLLoader implements OnInit {
           this.selectedCategory
       )
       .subscribe(
-        (data: Book[]) => {
+        (data: CatalogItem[]) => {
           this.books$ = data;
           //this.loading = false;
         },

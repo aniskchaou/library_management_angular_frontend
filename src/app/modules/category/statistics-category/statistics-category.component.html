@@ -1,43 +1,45 @@
-<div class="card shadow mb-4">
+<div class="card mb-4">
   <div class="card-body">
     <!-- create button  -->
-    <button
-      href="#add"
-      role="button"
-      data-toggle="modal"
-      class="btn btn-success btn-icon-split"
-    >
-      <span class="icon text-white-50">
-        <i class="fas fa-plus"></i>
-      </span>
-      <span class="text">{{ categoryI18n?.addButtonI18n }}</span>
-    </button>
-    <!-- filter button  -->
+<!-- Add button -->
+<button
+  (click)="openAddDialog()"
+  role="button"
+  
+  class="btn btn-outline-success btn-icon-split"
+>
+  <span class="icon text-success">
+    <i class="fas fa-plus"></i>
+  </span>
+  <span class="text">{{ categoryI18n?.addButtonI18n }}</span>
+</button>
 
-    <!-- summary button-->
-    <button
-      href="#"
-      role="button"
-      class="btn btn-secondary btn-icon-split"
-      (click)="showChart()"
-    >
-      <span class="icon text-white-50">
-        <i class="fas fa-chart-line"></i>
-      </span>
-      <span class="text">{{ categoryI18n?.analyticsI18n }}</span>
-    </button>
-    <!-- refresh button -->
-    <button
-      href="#"
-      role="button"
-      class="btn btn-warning btn-icon-split"
-      (click)="reloadPage()"
-    >
-      <span class="icon text-white-50">
-        <i class="fas fa-redo"></i>
-      </span>
-      <span class="text">{{ categoryI18n?.reloadI18n }}</span>
-    </button>
+<!-- Summary button -->
+<button
+  href="#"
+  role="button"
+  class="btn btn-outline-secondary btn-icon-split"
+  (click)="showChart()"
+>
+  <span class="icon text-secondary">
+    <i class="fas fa-chart-line"></i>
+  </span>
+  <span class="text">{{ categoryI18n?.analyticsI18n }}</span>
+</button>
+
+<!-- Refresh button -->
+<button
+  href="#"
+  role="button"
+  class="btn btn-outline-warning btn-icon-split"
+  (click)="reloadPage()"
+>
+  <span class="icon text-warning">
+    <i class="fas fa-redo"></i>
+  </span>
+  <span class="text">{{ categoryI18n?.reloadI18n }}</span>
+</button>
+
 
     <br /><br />
 
@@ -59,3 +61,48 @@
     </div>
   </div>
 </div>
+
+
+<!-- category-statistics.component.html -->
+
+<div class="container mt-5">
+
+  <div class="row">
+      <div class="col-md-4 mb-4">
+          <div class="card text-center border">
+              <div class="card-body">
+                  <h5 class="card-title text-dark">Total Categories</h5>
+                  <p class="card-text h1">
+                      <span *ngIf="count">{{ count }}</span>
+                      <span *ngIf="!count">Loading...</span>
+                  </p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+          <div class="card text-center border">
+              <div class="card-body">
+                  <h5 class="card-title text-success">Published Categories</h5>
+                  <p class="card-text h1">
+                      <span *ngIf="status">{{ status.published }}</span>
+                      <span *ngIf="!status">Loading...</span>
+                  </p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+          <div class="card text-center border">
+              <div class="card-body">
+                  <h5 class="card-title text-danger">Unpublished Categories</h5>
+                  <p class="card-text h1">
+                      <span *ngIf="status">{{ status.unpublished }}</span>
+                      <span *ngIf="!status">Loading...</span>
+                  </p>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+

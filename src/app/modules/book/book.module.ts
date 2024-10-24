@@ -16,6 +16,11 @@ import { BookNumberComponent } from './book-number/book-number.component';
 import { StatisticsBookComponent } from './statistics-book/statistics-book.component';
 import { TagComponent } from './tag/tag.component';
 import { CirculationHistoryComponent } from './circulation-history/circulation-history.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { UploadBookCoverComponent } from './upload-book-cover/upload-book-cover.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +34,7 @@ import { CirculationHistoryComponent } from './circulation-history/circulation-h
     BookNumberComponent,
     TagComponent,
     CirculationHistoryComponent,
+    UploadBookCoverComponent
   ],
   imports: [
     SharedModule,
@@ -37,6 +43,10 @@ import { CirculationHistoryComponent } from './circulation-history/circulation-h
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
+    NgxChartsModule,
+    NgxDatatableModule,
+    NgbModalModule,
+    NgSelectModule
   ],
   providers: [BookValidation],
 })

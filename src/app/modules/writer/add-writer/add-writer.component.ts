@@ -2,9 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookMessage from 'src/app/main/messages/BookMessage';
 import WriterMessage from 'src/app/main/messages/WriterMessage';
+import { DataService } from 'src/app/main/services/data.service';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 import WriterValidation from 'src/app/main/validations/WriterValidation';
@@ -21,9 +23,9 @@ export class AddWriterComponent extends URLLoader implements OnInit {
   @Output() closeModalEvent = new EventEmitter<string>();
   writerI18n;
 
-  closeModal() {
+  /* closeModal() {
     this.closeModalEvent.emit();
-  }
+  } */
 
   goBack() {
     this.router
@@ -31,6 +33,10 @@ export class AddWriterComponent extends URLLoader implements OnInit {
       .then(() => {
         this.router.navigate(['/writer']);
       });
+  }
+
+  closeModal(): void {
+    this.activeModal.dismiss(); // Close the modal using NgbActiveModal
   }
 
   reloadPage() {
@@ -49,7 +55,9 @@ export class AddWriterComponent extends URLLoader implements OnInit {
     private validation: WriterValidation,
     private message: WriterMessage,
     private httpService: HTTPService,
-    private router: Router
+    private router: Router,
+    private dataService:DataService,
+    private activeModal: NgbActiveModal
   ) {
     super();
     this.writerForm = this.validation.formGroupInstance;
@@ -67,18 +75,23 @@ export class AddWriterComponent extends URLLoader implements OnInit {
   add() {
     this.submitted = true;
     if (this.validation.checkValidation()) {
+      console.log(this.writerForm.value)
       this.httpService.create(
         CONFIG.URL_BASE + '/writer/create',
         this.writerForm.value
-      );
-      this.closeModal();
-      this.goBack();
-      super.show('Confirmation', this.msg.confirmationMessages.add, 'success');
+      ).finally(()=>{
+        this.closeModal();
+          this.dataService.triggerRefresh()
+      });
+     // 
+      //this.goBack();
+      //super.show('Confirmation', this.msg.confirmationMessages.add, 'success');
     }
   }
 
   getWriterByLang(lang) {
-    this.httpService.getAll(CONFIG.URL_BASE + '/i18n/writer/' + lang).subscribe(
+    lang='EN'
+    this.httpService.getAll(CONFIG.URL_BASE + '/i18n/writer/EN').subscribe(
       (data) => {
         this.writerI18n = data;
       },

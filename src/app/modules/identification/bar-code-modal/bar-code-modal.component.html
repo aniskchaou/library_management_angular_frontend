@@ -1,0 +1,78 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ barCode.id ? 'Edit' : 'Add' }} Bar Code</h5>
+  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <label for="isbn">
+        ISBN
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the International Standard Book Number (ISBN)."></i>
+      </label>
+      <input type="text" class="form-control" id="isbn" [(ngModel)]="barCode.isbn" name="isbn" placeholder="e.g., 978-3-16-148410-0" value="978-3-16-148410-0">
+    </div>
+    <div class="form-group">
+      <label for="type">
+        Type
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Specify the type of bar code."></i>
+      </label>
+      <input type="text" class="form-control" id="type" [(ngModel)]="barCode.type" name="type" placeholder="e.g., QR Code" value="QR Code">
+    </div>
+    <div class="form-group">
+      <label for="width">
+        Width
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Set the width of the bar code."></i>
+      </label>
+      <input type="number" class="form-control" id="width" [(ngModel)]="barCode.width" name="width" placeholder="e.g., 2" value="2">
+    </div>
+    <div class="form-group">
+      <label for="height">
+        Height
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Set the height of the bar code."></i>
+      </label>
+      <input type="number" class="form-control" id="height" [(ngModel)]="barCode.height" name="height" placeholder="e.g., 1" value="1">
+    </div>
+    <div class="form-group">
+      <label for="displayValue">
+        Display Value
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Check to display the value below the bar code."></i>
+      </label>
+      <input type="checkbox" class="form-control" id="displayValue" [(ngModel)]="barCode.displayValue" name="displayValue">
+    </div>
+    <div class="form-group">
+      <label for="font">
+        Font
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Specify the font for the bar code text."></i>
+      </label>
+      <input type="text" class="form-control" id="font" [(ngModel)]="barCode.font" name="font" placeholder="e.g., Arial" value="Arial">
+    </div>
+    <div class="form-group">
+      <label for="color">
+        Color
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Specify the color of the bar code."></i>
+      </label>
+      <input type="text" class="form-control" id="color" [(ngModel)]="barCode.color" name="color" placeholder="e.g., Black" value="Black">
+    </div>
+    <div class="form-group">
+      <label for="margin">
+        Margin
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Set the margin around the bar code."></i>
+      </label>
+      <input type="number" class="form-control" id="margin" [(ngModel)]="barCode.margin" name="margin" placeholder="e.g., 5" value="5">
+    </div>
+    <div class="form-group">
+      <label for="rotation">
+        Rotation
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Set the rotation angle of the bar code."></i>
+      </label>
+      <input type="number" class="form-control" id="rotation" [(ngModel)]="barCode.rotation" name="rotation" placeholder="e.g., 0" value="0">
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
+  <button type="button" class="btn btn-outline-primary" (click)="onSaveClick()">Save</button>
+</div>
+

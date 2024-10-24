@@ -1,0 +1,76 @@
+<h1>Basket Module Documentation</h1>
+
+<h2>Module Description</h2>
+<p>The Basket module allows users to manage and track items within a basket, which may be used for ordering or organizing items. It includes fields for naming the basket, specifying billing and delivery places, and adding notes. The module also includes an option for creating items based on specific criteria.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">Basket Name:</p>
+    <ul>
+        <li><strong>Description:</strong> The name assigned to the basket for identification purposes.</li>
+        <li><strong>Usage:</strong> Enter a descriptive name for the basket.</li>
+        <li><strong>Example:</strong> "New Arrivals Basket"</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Billing Place:</p>
+    <ul>
+        <li><strong>Description:</strong> The location where billing for items in the basket will be processed.</li>
+        <li><strong>Usage:</strong> Enter the billing address or place.</li>
+        <li><strong>Example:</strong> "Central Library Billing Office"</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Delivery Place:</p>
+    <ul>
+        <li><strong>Description:</strong> The location where the items in the basket will be delivered.</li>
+        <li><strong>Usage:</strong> Enter the delivery address or place.</li>
+        <li><strong>Example:</strong> "Centerville Branch, Room 204"</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Vendor:</p>
+    <ul>
+        <li><strong>Description:</strong> The vendor responsible for supplying the items in the basket.</li>
+        <li><strong>Usage:</strong> Select or enter the name of the vendor.</li>
+        <li><strong>Example:</strong> "Books & More Ltd."</li>
+        <li><strong>Validation:</strong> Must be a valid vendor from the predefined list or database.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Internal Note:</p>
+    <ul>
+        <li><strong>Description:</strong> Any internal notes or comments related to the basket that are not visible to external parties.</li>
+        <li><strong>Usage:</strong> Enter any relevant internal notes.</li>
+        <li><strong>Example:</strong> "For review before final order confirmation."</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Vendor Note:</p>
+    <ul>
+        <li><strong>Description:</strong> Notes or instructions to be communicated to the vendor.</li>
+        <li><strong>Usage:</strong> Enter any specific instructions or comments for the vendor.</li>
+        <li><strong>Example:</strong> "Please include tracking information with shipment."</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Create Items When:</p>
+    <ul>
+        <li><strong>Description:</strong> Specifies when items should be created based on the basket's contents.</li>
+        <li><strong>Usage:</strong> Select or enter the condition under which items will be created.</li>
+        <li><strong>Example:</strong> "When Basket is Confirmed" or "Immediately"</li>
+        <li><strong>Validation:</strong> Must be a valid condition or event trigger.</li>
+    </ul>
+</div>

@@ -1,31 +1,109 @@
-<form class="form-group odd" id="name_field_box">
-  <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ publisherI18n?.editTitleI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-  <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
-    <!-- publisher name -->
-    <input
-      [(ngModel)]="model.name"
-      id="field-name"
-      value="{{ model.name }}"
-      name="name"
-      class="form-control"
-      type="text"
-      maxlength="99"
-    />
-    <br />
-  </div>
-  <!-- edit publisher -->
-  <button (click)="edit()" type="button" class="btn btn-info">
-    <i class="fas fa-save"></i>
-    {{ publisherI18n?.editButtonI18n }}
+<div class="modal-header">
+  <h5 class="modal-title">Edit  Publisher</h5>
+  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+    <span aria-hidden="true">&times;</span>
   </button>
-</form>
+</div>
+<div class="modal-body">
+  <form>
+    <!-- Publisher Name Field with Tooltip -->
+    <div class="form-group">
+      <label for="publisherName" id="publisherName_display_as_box">
+        Publisher Name
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the name of the publisher."></i>
+      </label>
+      <input
+        id="publisherName"
+        name="name"
+        class="form-control"
+        type="text"
+        placeholder="e.g., Penguin Random House"
+        [(ngModel)]="publisher.name"
+      />
+    </div>
+
+    <!-- Address Field with Tooltip -->
+    <div class="form-group">
+      <label for="address" id="address_display_as_box">
+        Address
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the publisher's address."></i>
+      </label>
+      <input
+        id="address"
+        name="address"
+        class="form-control"
+        type="text"
+        placeholder="e.g., 123 Main St, City, Country"
+        [(ngModel)]="publisher.address"
+      />
+    </div>
+
+    <!-- Email Field with Tooltip -->
+    <div class="form-group">
+      <label for="email" id="email_display_as_box">
+        Email
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the publisher's email address."></i>
+      </label>
+      <input
+        id="email"
+        name="email"
+        class="form-control"
+        type="email"
+        placeholder="e.g., contact@publisher.com"
+        [(ngModel)]="publisher.email"
+      />
+    </div>
+
+    <!-- Phone Field with Tooltip -->
+    <div class="form-group">
+      <label for="phone" id="phone_display_as_box">
+        Phone
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the publisher's phone number."></i>
+      </label>
+      <input
+        id="phone"
+        name="phone"
+        class="form-control"
+        type="tel"
+        placeholder="e.g., +1-234-567-8900"
+        [(ngModel)]="publisher.phone"
+      />
+    </div>
+
+    <!-- Country Field with Tooltip -->
+    <div class="form-group">
+      <label for="country" id="country_display_as_box">
+        Country
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the publisher's country."></i>
+      </label>
+      <select
+        id="country"
+        name="country"
+        class="form-control"
+        [(ngModel)]="publisher.country"
+      >
+        <option *ngFor="let country of countries" [ngValue]="country">{{ country }}</option>
+      </select>
+    </div>
+
+    <!-- Website Field with Tooltip -->
+    <div class="form-group">
+      <label for="website" id="website_display_as_box">
+        Website
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the publisher's website URL."></i>
+      </label>
+      <input
+        id="website"
+        name="website"
+        class="form-control"
+        type="url"
+        placeholder="e.g., https://www.publisher.com"
+        [(ngModel)]="publisher.website"
+      />
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
+  <button type="button" class="btn btn-outline-primary" (click)="savePublisher()">Save</button>
+</div>

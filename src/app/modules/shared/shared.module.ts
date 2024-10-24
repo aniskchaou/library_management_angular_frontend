@@ -19,8 +19,6 @@ import { WriterResultListComponent } from './writer-result-list/writer-result-li
   declarations: [
     SeachResultComponent,
     AddButtonComponent,
-    LoadingComponent,
-    LoadingComponent,
     BookResultListComponent,
     CategoryResultListComponent,
     WriterResultListComponent,
@@ -35,7 +33,6 @@ import { WriterResultListComponent } from './writer-result-list/writer-result-li
   ],
   exports: [
     AddButtonComponent,
-    LoadingComponent,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,

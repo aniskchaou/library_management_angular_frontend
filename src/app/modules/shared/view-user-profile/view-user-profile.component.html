@@ -1,0 +1,57 @@
+
+    <div class="container mt-6">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <!-- Profile Card -->
+                <div class="card">
+                    <div class="card-body text-center">
+                        <!-- Profile Image -->
+                        <div class="mb-4">
+                            <img [src]="retrievedImage" class="rounded-circle img-thumbnail" alt="Profile Image">
+                        </div>
+                        
+                        <!-- Name and Basic Info -->
+                        <h3 class="card-title">{{ user?.firstName }} {{ user?.lastName }}</h3>
+                        <p class="card-text text-muted">{{ user?.roles.join(', ') }}</p>
+
+
+                        <!-- Social Links -->
+                        <div class="mb-4">
+                            <button class="btn btn-outline-primary btn-sm mx-1" (click)="onChangePassword()">
+                                <i class="fas fa-key me-2"></i> Change Password
+                            </button>
+                            <button class="btn btn-outline-secondary btn-sm mx-1" (click)="onChangeProfilePhoto()">
+                                <i class="fas fa-image me-2"></i> Change Profile Photo
+                            </button>
+                        </div>
+
+                        <!-- Bio Section -->
+                        <div class="mb-4">
+                            <h5 class="card-subtitle mb-2 text-muted">About Me</h5>
+                            <p class="card-text">{{user?.about}}
+                            </p>
+                        </div>
+
+                        <div class="row text-start">
+                            <div class="col-md-6">
+                                <h6>Location:</h6>
+                                <p class="text-muted">{{user?.address}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Email:</h6>
+                                <p class="text-muted">{{ user?.email }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Phone:</h6>
+                                <p class="text-muted">{{ user?.phoneNumber || 'N/A' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Profile Card -->
+            </div>
+        </div>
+    </div>
+
+
+

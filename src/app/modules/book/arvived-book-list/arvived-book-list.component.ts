@@ -1,13 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
+import CatalogItem from 'src/app/main/models/Book';
 import { HTTPService } from 'src/app/main/services/HTTPService';
+import { ViewBookComponent } from '../view-book/view-book.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-arvived-book-list',
   templateUrl: './arvived-book-list.component.html',
   styleUrls: ['./arvived-book-list.component.css'],
 })
-export class ArvivedBookListComponent extends URLLoader implements OnInit {
+export class ArvivedBookListComponent extends URLLoader implements OnInit,AfterViewInit {
   @Input() books;
   @Output() idEvent = new EventEmitter<string>();
   @Output() deleteEvent = new EventEmitter<string>();
@@ -19,11 +22,29 @@ export class ArvivedBookListComponent extends URLLoader implements OnInit {
   retrieveResonse: any;
   imageName: any;
 
-  constructor(private httpService: HTTPService) {
+  loadingIndicator = true;
+  reorderable = true;
+
+  columns = [
+    { name: 'Title', prop: 'title', visible: true },
+    { name: 'ISBN', prop: 'isbn', visible: true },
+    { name: 'Writer', prop: 'writer', visible: true },
+    { name: 'Publisher', prop: 'publisher', visible: true },
+    { name: 'Edition', prop: 'edition', visible: true },
+    { name: 'Price', prop: 'price', visible: true },
+    { name: 'Category', prop: 'category', visible: true },
+    { name: 'Actions', prop: 'actions', visible: true }
+  ];
+
+  constructor(private httpService: HTTPService, private modalService: NgbModal) {
     super();
+  }
+  ngAfterViewInit(): void {
+    super.enableDataTable()
   }
   ngOnInit(): void {
     this.loadScripts();
+    
   }
 
   edit(id) {
@@ -55,5 +76,17 @@ export class ArvivedBookListComponent extends URLLoader implements OnInit {
         this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
       });
     return this.retrievedImage;
+  }
+
+  openViewDialog(catalog: CatalogItem): void {
+    const modalRef = this.modalService.open(ViewBookComponent,{size: 'xl', // Set the modal size to extra-large
+      centered: true,}); // Open the CategoryViewComponent in modal
+    modalRef.componentInstance.book = { ...catalog }; // Pass category data
+
+    console.log(catalog); // Ensure category is passed properly and logged
+
+    modalRef.result.then(result => {
+      console.log(result); // Handle any result (if needed)
+    }).catch(error => console.log(error)); // Handle any errors
   }
 }

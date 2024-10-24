@@ -1,6 +1,15 @@
 <div class="container-fluid">
-  <h1 class="h3 mb-2 text-gray-800">{{ menu.memberReportI18n }}</h1>
+  <!-- Title with Icon -->
+  <h1 class="h3 mb-2 text-gray-800">
+    <i class="fas fa-users mr-2"></i>{{ menu.memberReportI18n }}
+  </h1>
 
+  <!-- Description -->
+  <p class="lead mb-4">
+    This report provides detailed information on members, including their types, contact details, and addresses. Use the filters below to customize your report based on user type and status. Click "Search" to generate the report.
+  </p>
+
+  <!-- Filters and Search Button -->
   <div class="card shadow mb-4">
     <div class="card-body">
       <select
@@ -8,7 +17,7 @@
         id="inputGroupSelect04"
         (change)="selectUserType($event.target.value)"
       >
-        <option selected></option>
+        <option selected>Select User Type</option>
         <option value="{{ c }}" *ngFor="let c of userType$">
           {{ c }}
         </option>
@@ -19,7 +28,7 @@
         id="inputGroupSelect04"
         (change)="selectStatus($event.target.value)"
       >
-        <option selected></option>
+        <option selected>Select Status</option>
         <option value="{{ c }}" *ngFor="let c of status$">
           {{ c }}
         </option>
@@ -34,13 +43,12 @@
         <span class="icon text-white-50">
           <i class="fas fa-filter"></i>
         </span>
-        <span class="text"></span>
+        <span class="text">Filter</span>
       </button>
     </div>
   </div>
-  <!-- Page Heading -->
 
-  <!-- DataTales Example -->
+  <!-- Data Table -->
   <div class="card shadow mb-4" *ngIf="searchButtonClicked">
     <div class="card-body">
       <div class="table-responsive">
@@ -70,10 +78,10 @@
           </tfoot>
           <tbody>
             <tr *ngFor="let m of members">
-              <td>{{ m.name }}</td>
-              <td>{{ m.type_id }}</td>
-              <td>{{ m.email }}</td>
-              <td>{{ m.mobile }}</td>
+              <td>{{ m.firstname+" "+m.Becker }}</td>
+              <td>{{ m.typeId }}</td>
+              <td>{{ m.primary_email }}</td>
+              <td>{{ m.city }}</td>
               <td>{{ m.address }}</td>
             </tr>
           </tbody>

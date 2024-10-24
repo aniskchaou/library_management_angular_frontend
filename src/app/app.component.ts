@@ -68,6 +68,7 @@ export class AppComponent {
 
   hasRoute(route: string) {
     return this._router.url.includes(route);
+    //return this._router.url && this._router.url.includes(route);
   }
 
   ngOnInit() {
@@ -108,7 +109,7 @@ export class AppComponent {
 
   getMenuItems() {
     this.httpService
-      .getAll(CONFIG.URL_BASE + '/i18n/menu/' + CONFIG.getInstance().getLang())
+      .getAll(CONFIG.URL_BASE + '/i18n/menu/EN')
       .subscribe(
         (data: Settings) => {
           this.menuI18n = data;

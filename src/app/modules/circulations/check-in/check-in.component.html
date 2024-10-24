@@ -1,0 +1,67 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="checkInModalLabel">
+    <i class="fas fa-check-circle"></i> Check-In
+  </h5>
+  <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<!-- Modal Body -->
+<div class="modal-body">
+  <form [formGroup]="circulationForm" style="width: 100%; background-color: white; padding: 20px; border-radius: 5px;">
+    
+    <!-- Member Selection -->
+    <div class="form-group">
+      <label for="memberName">Member:</label>
+      <i class="fas fa-info-circle" data-toggle="tooltip" 
+         title="Description: Select the member checking in the item."></i>
+      <ng-select class="form-control" id="memberName" name="memberName"
+                 [items]="members$"
+                 bindLabel="firstname" bindValue="id"
+                 formControlName="memberName"
+                 placeholder="Select a member"
+                 [loading]="loading"
+                 style="width: 100%;">
+      </ng-select>
+    </div>
+
+    <!-- Item Barcode / Book Selection -->
+    <div class="form-group">
+      <label for="catalogItemName">Item Barcode:</label>
+      <i class="fas fa-info-circle" data-toggle="tooltip" 
+         title="Description: Select the barcode of the item being checked in."></i>
+      <ng-select class="form-control" id="catalogItemName" name="catalogItemName"
+                 [items]="books$"
+                 bindLabel="title" bindValue="id"
+                 formControlName="catalogItemName"
+                 placeholder="Select a barcode"
+                 [loading]="loading"
+                 style="width: 100%;">
+      </ng-select>
+    </div>
+
+    <!-- Return Due Date -->
+    <div class="form-group mt-3">
+      <label for="returnDueDate">Return Due Date:</label>
+      <i class="fas fa-info-circle" data-toggle="tooltip" 
+         title="Description: Select the due date for returning the item."></i>
+      <input type="date" class="form-control" id="returnDueDate" name="returnDueDate" formControlName="returnDueDate">
+    </div>
+
+    <!-- Remember Return Date for Next Check-In -->
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" id="rememberReturnDate" name="rememberReturnDate" formControlName="rememberReturnDate">
+      <label class="form-check-label" for="rememberReturnDate">Remember return date for next check-in</label>
+    </div>
+    
+  </form>
+</div>
+
+<!-- Modal Footer -->
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+  <button type="button" class="btn btn-outline-primary" (click)="add()">Check In</button>
+</div>
+     
+    

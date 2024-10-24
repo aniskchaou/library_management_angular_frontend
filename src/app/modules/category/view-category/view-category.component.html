@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h5 class="modal-title">Category Details</h5>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+  <div class="modal-body">
+    <h2>{{ category?.category_name }}</h2>
+    <p><strong>Slug:</strong> {{ category?.slug }}</p>
+    <p><strong>Published:</strong> {{ category?.published ? 'Yes' : 'No' }}</p>
+    <p><strong>Items:</strong> {{ category?.items }}</p>
+    <p><strong>Description:</strong> {{ category?.description || 'No description available' }}</p>
+  </div>
+  
+  <div class="modal-footer">
+    <div class="button-group">
+      <button type="button" class="btn btn-outline-primary" (click)="editRow(category)">
+        <i class="fas fa-edit"></i> Edit
+    </button>
+    
+    <button type="button" class="btn btn-outline-danger" (click)="deleteRow(category)">
+        <i class="fas fa-trash-alt"></i> Delete
+    </button>
+    
+    <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">
+        <i class="fas fa-times"></i> Close
+    </button>
+    
+    <button *ngIf="!category?.published" type="button" class="btn btn-outline-success" (click)="publish(category.id)">
+        <i class="fas fa-paper-plane"></i> Publish
+    </button>
+    
+    </div>
+      
+  </div>
+  
+  
