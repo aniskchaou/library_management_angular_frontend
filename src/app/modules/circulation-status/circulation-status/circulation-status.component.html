@@ -5,15 +5,29 @@
 
   <ng-template #loaded>
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800" appStatus defaultColor="red">
+    <h1 class="h3 mb-2 text-gray-800" appStatus defaultColor="red">  <i class="fas fa-exchange-alt"></i> 
       {{ circulationStatusI18n$.allTitleI18n }}
     </h1>
+  
+  <!-- Description -->
+  <p class="lead">Manage and track the circulation of items efficiently. Use the tools provided to add, edit, view, contact, and delete circulation records seamlessly.</p>
+
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
       <div class="card-body">
         <div class="table-responsive">
-          <app-add-button [itemI18n]="circulationStatusI18n$"></app-add-button>
+          <button
+         href="#add"
+         role="button"
+         data-toggle="modal"
+         class="btn btn-outline-success btn-icon-split"
+       >
+         <span class="icon text-success">
+           <i class="fas fa-plus"></i>
+         </span>
+         <span class="text">Create</span>
+       </button>
 
           <app-circulation-status-list
             (idEvent)="edit($event)"

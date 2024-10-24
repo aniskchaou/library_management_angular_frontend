@@ -1,0 +1,96 @@
+<h1>Barcode Generation Module Documentation</h1>
+
+<h2>Module Description</h2>
+<p>The Barcode Generation module is used to create barcodes for library items. It allows you to specify various parameters such as the ISBN, barcode type, dimensions, and display options to generate and customize barcodes according to your needs.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">ISBN:</p>
+    <ul>
+        <li><strong>Description:</strong> The International Standard Book Number (ISBN) that will be encoded in the barcode.</li>
+        <li><strong>Usage:</strong> Enter the ISBN number of the book or item for which the barcode is being generated.</li>
+        <li><strong>Example:</strong> "9783161484100"</li>
+        <li><strong>Validation:</strong> Must be a valid ISBN number.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Type:</p>
+    <ul>
+        <li><strong>Description:</strong> The type of barcode symbology to be used.</li>
+        <li><strong>Usage:</strong> Select the barcode type based on your requirements (e.g., Code 128).</li>
+        <li><strong>Example:</strong> "Code 128"</li>
+        <li><strong>Validation:</strong> Must be a valid barcode type from available options.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Width:</p>
+    <ul>
+        <li><strong>Description:</strong> The width of the barcode in pixels.</li>
+        <li><strong>Usage:</strong> Enter the desired width for the barcode.</li>
+        <li><strong>Example:</strong> "200"</li>
+        <li><strong>Validation:</strong> Must be a positive integer.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Height:</p>
+    <ul>
+        <li><strong>Description:</strong> The height of the barcode in pixels.</li>
+        <li><strong>Usage:</strong> Enter the desired height for the barcode.</li>
+        <li><strong>Example:</strong> "100"</li>
+        <li><strong>Validation:</strong> Must be a positive integer.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Display Value:</p>
+    <ul>
+        <li><strong>Description:</strong> Whether or not to display the encoded value below the barcode.</li>
+        <li><strong>Usage:</strong> Select "Yes" to display the value or "No" to hide it.</li>
+        <li><strong>Example:</strong> "Yes"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes or No).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Font:</p>
+    <ul>
+        <li><strong>Description:</strong> The font to be used for displaying the barcode value (if Display Value is set to Yes).</li>
+        <li><strong>Usage:</strong> Enter the name of the font to be used.</li>
+        <li><strong>Example:</strong> "Arial"</li>
+        <li><strong>Validation:</strong> Must be a valid font name available in the system.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Color:</p>
+    <ul>
+        <li><strong>Description:</strong> The color of the barcode and the text (if Display Value is set to Yes).</li>
+        <li><strong>Usage:</strong> Enter the color code or name for the barcode.</li>
+        <li><strong>Example:</strong> "Black"</li>
+        <li><strong>Validation:</strong> Must be a valid color name or hexadecimal color code.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Margin:</p>
+    <ul>
+        <li><strong>Description:</strong> The margin size around the barcode in pixels.</li>
+        <li><strong>Usage:</strong> Enter the margin size to ensure adequate spacing around the barcode.</li>
+        <li><strong>Example:</strong> "10"</li>
+        <li><strong>Validation:</strong> Must be a positive integer.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Rotation:</p>
+    <ul>
+        <li><strong>Description:</strong> The rotation angle of the barcode.</li>
+        <li><strong>Usage:</strong> Enter the rotation angle in degrees (e.g., 0, 90, 180, 270).</li>
+        <li><strong>Example:</strong> "0"</li>
+        <li><strong>Validation:</strong> Must be a valid degree value (0, 90, 180, 270).</li>
+    </ul>
+</div>

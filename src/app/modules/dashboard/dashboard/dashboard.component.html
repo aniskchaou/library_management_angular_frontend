@@ -4,13 +4,21 @@
   </div>
   <ng-template #loaded>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">{{ dashboardI18n?.titleI18n }}</h1>
+      <h1 class="h3 mb-0 text-gray-800">
+        <i class="fas fa-chart-line mr-2"></i>{{ dashboardI18n?.titleI18n }}
+      </h1>
+
+      <!-- Description -->
+   
+
       <!--<a
       href="#"
       class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
       ><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a
     >-->
     </div>
+    <p class="lead">Monitor and analyze key library metrics in real-time. Use the dashboard to track books, members, categories, issued books, and other important statistics with ease.</p>
+
 
     <div class="row">
       <!-- Earnings (Monthly) Card Example -->
@@ -22,12 +30,15 @@
                 <div
                   class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                 >
-                  {{ dashboardI18n?.booksNumberI18n }}
+                <i class="fas fa-book mr-2"></i> {{ dashboardI18n?.booksNumberI18n }}
                 </div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                   {{ dashboardAnalytics?.bookNumber }}
                 </div>
               </div>
+              <div class="col-auto">
+                <i class="fas fa-book fa-2x text-gray-300"></i>
+            </div>
             </div>
           </div>
         </div>
@@ -42,12 +53,15 @@
                 <div
                   class="text-xs font-weight-bold text-success text-uppercase mb-1"
                 >
-                  {{ dashboardI18n?.membersNumberI18n }}
+                <i class="fas fa-users mr-2"></i> {{ dashboardI18n?.membersNumberI18n }}
                 </div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                   {{ dashboardAnalytics?.memberNumber }}
                 </div>
               </div>
+              <div class="col-auto">
+                <i class="fas fa-users fa-2x text-gray-300"></i>
+            </div>
             </div>
           </div>
         </div>
@@ -62,7 +76,7 @@
                 <div
                   class="text-xs font-weight-bold text-info text-uppercase mb-1"
                 >
-                  {{ dashboardI18n?.categoriesNumberI18n }}
+                <i class="fas fa-th-list mr-2"></i> {{ dashboardI18n?.categoriesNumberI18n }}
                 </div>
                 <div class="row no-gutters align-items-center">
                   <div class="col-auto">
@@ -72,6 +86,9 @@
                   </div>
                 </div>
               </div>
+              <div class="col-auto">
+                <i class="fas fa-list-alt fa-2x text-gray-300"></i>
+            </div>
             </div>
           </div>
         </div>
@@ -86,107 +103,371 @@
                 <div
                   class="text-xs font-weight-bold text-warning text-uppercase mb-1"
                 >
-                  {{ dashboardI18n?.issueBookNumberI18n }}
+                <i class="fas fa-book-open mr-2"></i> {{ dashboardI18n?.issueBookNumberI18n }}
                 </div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                   {{ dashboardAnalytics?.issueBookNumber }}
                 </div>
               </div>
+              <div class="col-auto">
+                <i class="fas fa-book-open fa-2x text-gray-300"></i>
+            </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="mb-3">{{ dashboardI18n?.booksI18n }}</h4>
-            <ngx-charts-bar-vertical
-              [view]="view1"
-              [scheme]="colorScheme"
-              [results]="bookByAuthors"
-              [gradient]="gradient"
-              [xAxis]="showXAxis"
-              [yAxis]="showYAxis"
-              [legend]="showLegend"
-              [showXAxisLabel]="showXAxisLabel"
-              [showYAxisLabel]="showYAxisLabel"
-              [xAxisLabel]="xAxisLabel"
-              [yAxisLabel]="yAxisLabel"
-              (select)="onSelect($event)"
-            >
-            </ngx-charts-bar-vertical>
+
+
+      <div class="row">
+        <!-- Number of Items by Category -->
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="mb-3">{{ dashboardI18n?.itemsByCategoryI18n || 'Number of Items by Category' }}</h4>
+              <ngx-charts-bar-vertical
+                [view]="viewCategory"
+                [scheme]="'cool'"
+                [results]="itemsByCategoryData"
+                [gradient]="gradient"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [legend]="showLegend"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLabelCategory"
+                [yAxisLabel]="yAxisLabelCategory"
+                (select)="onSelect($event)"
+                style="width: 100%; height: 300px;"
+              >
+              </ngx-charts-bar-vertical>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="mb-3">{{ dashboardI18n?.categoriesI18n }}</h4>
-            <ngx-charts-pie-chart
-              [view]="view3"
-              [scheme]="colorScheme"
-              [results]="bookByCategories"
-              [gradient]="gradient"
-              [legend]="showLegend"
-              [legendPosition]="legendPosition"
-              [labels]="showLabels"
-              [doughnut]="isDoughnut"
-              (select)="onSelect($event)"
-              (activate)="onActivate($event)"
-              (deactivate)="onDeactivate($event)"
-            >
-            </ngx-charts-pie-chart>
+      
+        <!-- Items Distribution by Media Type -->
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="mb-3">{{ dashboardI18n?.itemsByMediaTypeI18n || 'Items Distribution by Media Type' }}</h4>
+              <ngx-charts-pie-chart
+                [view]="viewMediaType"
+                [scheme]="'cool'"
+                [results]="itemsByMediaTypeData"
+                [legend]="showLegend"
+                [labels]="showLabels"
+                [doughnut]="isDoughnut"
+                [gradient]="gradient"
+                (select)="onSelect($event)"
+                style="width: 100%; height: 400px;"
+              >
+              </ngx-charts-pie-chart>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="mb-3">{{ dashboardI18n?.incomesI18n }}</h4>
-            <ngx-charts-bar-vertical
-              [view]="view3"
-              [scheme]="colorSchemeExpenses"
-              [results]="incomes"
-              [gradient]="gradient"
-              [xAxis]="showXAxis"
-              [yAxis]="showYAxis"
-              [legend]="false"
-              [showXAxisLabel]="showXAxisLabel"
-              [showYAxisLabel]="showYAxisLabel"
-              [xAxisLabel]="xAxisLabelIncomes"
-              [yAxisLabel]="yAxisLabelExpensesIncomes"
-              (select)="onSelect($event)"
-            ></ngx-charts-bar-vertical>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="mb-3">{{ dashboardI18n?.expensesI18n }}</h4>
-            <ngx-charts-bar-vertical
-              [view]="view3"
-              [scheme]="colorSchemeIncomes"
-              [results]="expenses"
-              [gradient]="gradient"
-              [xAxis]="showXAxis"
-              [yAxis]="showYAxis"
-              [legend]="false"
-              [showXAxisLabel]="showXAxisLabel"
-              [showYAxisLabel]="showYAxisLabel"
-              [xAxisLabel]="xAxisLabelExpenses"
-              [yAxisLabel]="yAxisLabelExpensesIncomes"
-              (select)="onSelect($event)"
-            ></ngx-charts-bar-vertical>
-          </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4><i class="fas fa-bar-chart"></i> Number of Members by City</h4>
+              <ngx-charts-bar-vertical
+                [view]="viewCategory"
+                [scheme]="'cool'"
+                [results]="membersByCityData"
+                [gradient]="gradient"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="showLegend"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Number of Members'"
+                [yAxisLabel]="'City'"  style="width: 100%; height: 300px;">
+              </ngx-charts-bar-vertical>
         </div>
       </div>
     </div>
+
+
+
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4><i class="fas fa-pie-chart"></i> Gender Distribution of Members</h4>
+              <ngx-charts-pie-chart
+                [view]="viewSize"
+                [scheme]="'cool'"
+                [results]="genderDistributionData"
+                [legend]="showLegend"
+                [labels]="showLabels"
+                [doughnut]="isDoughnut"
+                [gradient]="gradient"
+                style="width: 100%; height: 400px;">
+              </ngx-charts-pie-chart>
+        </div>
+      </div>
+      </div>
+
+
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h4>Number of Media Items by Type</h4>
+            <ngx-charts-bar-vertical
+              [view]="viewCategory"
+              [scheme]="'cool'"
+              [results]="mediaItemsByTypeData"
+              [gradient]="gradient"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="showLegend"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'Media Type'"
+              [yAxisLabel]="'Items'" style="width: 100%; height: 300px;">
+            </ngx-charts-bar-vertical>
+      </div>
+    </div>
+    </div>
+
+
+      <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4>Media Distribution by Genre</h4>
+              <ngx-charts-pie-chart
+                [view]="view"
+                [scheme]="'cool'"
+                [results]="mediaByGenreData"
+                [legend]="showLegend"
+                [labels]="showLabels"
+                [doughnut]="isDoughnut"
+                [gradient]="gradient"
+                style="width: 100%; height: 400px;"
+                >
+              </ngx-charts-pie-chart>
+      </div>
+    </div>
+    </div>
+
+
+      
+
+
+      
+        <!-- Acquisition Trends Over Time -->
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4>Number of Publications by Authors</h4>
+              <ngx-charts-bar-vertical
+                [view]="viewCategory"
+                [scheme]="'cool'"
+                [results]="publicationsByAuthorsData"
+                [gradient]="gradient"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="showLegend"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Author'"
+                [yAxisLabel]="'Publications'"  style="width: 100%; height: 300px;">
+              </ngx-charts-bar-vertical>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Example New Chart: Gauge Chart -->
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4>Number of Circulations by Member Type</h4>
+              <ngx-charts-bar-vertical
+                [results]="memberTypeData"
+                [view]="viewCategory"
+                [scheme]="'cool'"
+                [gradient]="true"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="false"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                xAxisLabel="Member Type"
+                yAxisLabel="Number of Circulations" >
+              </ngx-charts-bar-vertical>
+            </div>
+          </div>
+        </div>
+       </div>
+
+
+       <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800 ml-3"> 
+          <i class="fas fa-chart-pie mr-2"></i> Library Insight
+        </h1>
+      </div>
+
+        <!-- Description -->
+<!-- Description -->
+<p class="lead ml-3">
+  The <strong>Library Insights</strong> section highlights key data, including top authors, publications, most borrowed books, popular genres, and more. Gain quick insights to understand trends and optimize library services.
+</p>
+
+        
+      
+       <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+              <div class="card-body">
+                  <ul class="nav nav-tabs">
+                      <li class="nav-item">
+                          <a class="nav-link active" data-toggle="tab" href="#TopAuthors">
+                              <i class="fas fa-user mr-2"></i> Top Authors
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" data-toggle="tab" href="#TopPublications">
+                              <i class="fas fa-newspaper mr-2"></i> Top Publications
+                          </a>
+                      </li>
+                    <!--   <li class="nav-item">
+                          <a class="nav-link" data-toggle="tab" href="#MostBorrowedBooks">
+                              <i class="fas fa-book mr-2"></i> Most Borrowed Books
+                          </a>
+                      </li> -->
+                      <li class="nav-item">
+                          <a class="nav-link" data-toggle="tab" href="#MostPopularGenres">
+                              <i class="fas fa-tags mr-2"></i> Most Popular Genres
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" data-toggle="tab" href="#TopCirculatingBooks">
+                              <i class="fas fa-sync-alt mr-2"></i> Top Circulating Books
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" data-toggle="tab" href="#TopBookSeries">
+                              <i class="fas fa-bookmark mr-2"></i> Top Book Series
+                          </a>
+                      </li>
+                      <!-- <li class="nav-item">
+                          <a class="nav-link" data-toggle="tab" href="#MostRequestedBooks">
+                              <i class="fas fa-request mr-2"></i> Most Requested Books
+                          </a>
+                      </li> -->
+                  </ul>
+      
+                  <div class="tab-content mt-3">
+
+                      <!-- Top Authors -->
+                      <div id="TopAuthors" class="container tab-pane active">
+                        <h2>Top Authors</h2>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Author Name</th>
+                                    <th>Books Written</th>
+                                    <th>Total Circulations</th> <!-- New column for total circulations -->
+                                    <th>Average Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let author of topAuthors">
+                                    <td>{{author[0]}}</td>  <!-- Author name -->
+                                    <td>{{author[1]}}</td>  <!-- Number of books written -->
+                                    <td>{{author[3]}}</td>  <!-- Total circulations (new) -->
+                                    <td>{{author[2] || 'N/A'}}</td>  <!-- Average rating -->
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                      </div>
+                      
+                      <!-- Top Publications -->
+                      <div id="TopPublications" class="container tab-pane fade">
+                          <h4>Top Publications</h4>
+                          
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Publisher Name</th>
+                                        <th>Total Books Published</th>
+                                        <th>Total Circulations</th> <!-- New column for total circulations -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let publication of topPublications">
+                                        <td>{{publication[0]}}</td>  <!-- Publisher name -->
+                                        <td>{{publication[1]}}</td>  <!-- Total books published -->
+                                        <td>{{publication[2]}}</td>  
+                                    </tr>
+                                </tbody>
+                              </table>
+                      </div>
+                      
+                      <!-- Most Borrowed Books -->
+                      
+                      <!-- Most Popular Genres -->
+                      <div id="MostPopularGenres" class="container tab-pane fade">
+                          <h4>Most Popular Genres</h4>
+                          
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Genre</th>
+                                        <th>Total Books in Genre</th>
+                                        <th>Total Circulations</th> <!-- New column for total circulations -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let genre of mostPopularGenres">
+                                        <td>{{genre[0]}}</td>  <!-- Genre name -->
+                                        <td>{{genre[1]}}</td>  <!-- Total books in genre -->
+                                        <td>{{genre[2]}}</td>  <!-- Total circulations (new) -->
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                      
+                      <!-- Top Circulating Books -->
+                      <div id="TopCirculatingBooks" class="container tab-pane fade">
+                          <h4>Top Circulating Books</h4>
+                          
+                                  <table class="table table-striped">
+                                      <thead>
+                                          <tr>
+                                              <th>Book Title</th>
+                                              <th>Author Name</th> <!-- New column for author -->
+                                              <th>Times Circulated</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr *ngFor="let book of topCirculatingBooks">
+                                              <td>{{book[0]}}</td>  <!-- Book title -->
+                                              <td>{{book[2]}}</td>  <!-- Author name (new) -->
+                                              <td>{{book[1]}}</td>  <!-- Times circulated -->
+                                          </tr>
+                                      </tbody>
+                                  </table>
+
+                      </div>
+                      
+                      <!-- Top Book Series -->
+                     
+                      
+                     
+                  </div>
+              </div>
+          </div>
+      </div>
+
+    
+        
+      
+      </div>
+      
+      
+    </div>
   </ng-template>
 </div>
-<br />
-<br />
+

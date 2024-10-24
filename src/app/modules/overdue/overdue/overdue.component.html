@@ -1,0 +1,447 @@
+<div class="container-fluid">
+  <!-- Overdues Title with Icon -->
+  <h1 class="h3 mb-2 text-gray-800"><i class="fas fa-exclamation-triangle"></i> Overdues</h1>
+
+  <!-- Description -->
+  <p class="lead">This module allows you to manage overdue items. You can view details of overdue items, including catalog item names, due dates, return dates, and fine amounts. Use the 'Add Overdue Item' button to record new overdue items.</p>
+
+  <!-- Add Overdue Item Button -->
+ 
+
+  <!-- Overdue Items Table -->
+  <div class="card mb-4">
+    <div class="card-body">
+      
+     <!--  <button class="btn btn-outline-primary mb-3" (click)="openAddDialog()">Add Overdue Item</button> -->
+      <!-- <button class="btn btn-outline-warning mb-3" (click)="openAddDialog()">Settle All</button> -->
+      <div class="table-responsive">
+       <!--  <table class="table table-striped" id="dataTabled">
+          <thead>
+            <tr>
+              <th>Catalog Item</th>
+              <th>Due Date</th>
+              <th>Return Date</th>
+              <th>Fine Amount</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Catalog Item</th>
+              <th>Due Date</th>
+              <th>Return Date</th>
+              <th>Fine Amount</th>
+              <th>Actions</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr *ngFor="let overdue of overdues">
+              <td>{{ overdue.catalogItem?.name }}</td>
+              <td>{{ overdue.dueDate | date }}</td>
+              <td>{{ overdue.returnDate ? (overdue.returnDate | date) : 'Not Returned' }}</td>
+              <td>{{ overdue.fineAmount | currency }}</td>
+              <td>
+                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Actions
+              </button>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#" (click)="openEditDialog(overdue)">
+                      <i class="fas fa-edit"></i> Edit
+                  </a>
+                  <a class="dropdown-item" href="#" (click)="deleteOverdue(overdue.id!)">
+                      <i class="fas fa-trash"></i> Delete
+                  </a>
+                  <a class="dropdown-item" href="#">
+                      <i class="fas fa-dollar-sign"></i> Pay Fine
+                  </a>
+                  <a class="dropdown-item" href="#">
+                      <i class="fas fa-ban"></i> Waive Fine
+                  </a>
+                  <a class="dropdown-item" href="#">
+                      <i class="fas fa-bell"></i> Send Reminder
+                  </a>
+                  <a class="dropdown-item" href="#">
+                      <i class="fas fa-check-circle"></i> Mark as Returned
+                  </a>
+                  <a class="dropdown-item" href="#">
+                      <i class="fas fa-calculator"></i> Calculate Fine
+                  </a>
+                  <a class="dropdown-item" href="#">
+                      <i class="fas fa-clock"></i> Extend Due Date
+                  </a>
+                  <a class="dropdown-item" href="#">
+                      <i class="fas fa-inbox"></i> Notify for Pickup
+                  </a>
+              </div>
+              </td>
+            </tr>
+          </tbody>
+        </table> -->
+       <!--  <ngx-datatable
+  class="bootstrap"
+  [rows]="overdues"
+  [columnMode]="'force'"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [rowHeight]="'auto'">
+  
+  <ngx-datatable-column name="Catalog Item">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{ row.catalogItem?.name }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Due Date">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{ row.dueDate | date }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Return Date">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{ row.returnDate ? (row.returnDate | date) : 'Not Returned' }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Fine Amount">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{ row.fineAmount | currency }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Actions">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Actions
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#" (click)="openEditDialog(row)">
+          <i class="fas fa-edit"></i> Edit
+        </a>
+        <a class="dropdown-item" href="#" (click)="deleteOverdue(row.id!)">
+          <i class="fas fa-trash"></i> Delete
+        </a>
+        <a class="dropdown-item" href="#">
+          <i class="fas fa-dollar-sign"></i> Pay Fine
+        </a>
+        <a class="dropdown-item" href="#">
+          <i class="fas fa-ban"></i> Waive Fine
+        </a>
+        <a class="dropdown-item" href="#">
+          <i class="fas fa-bell"></i> Send Reminder
+        </a>
+        <a class="dropdown-item" href="#">
+          <i class="fas fa-check-circle"></i> Mark as Returned
+        </a>
+        <a class="dropdown-item" href="#">
+          <i class="fas fa-calculator"></i> Calculate Fine
+        </a>
+        <a class="dropdown-item" href="#">
+          <i class="fas fa-clock"></i> Extend Due Date
+        </a>
+        <a class="dropdown-item" href="#">
+          <i class="fas fa-inbox"></i> Notify for Pickup
+        </a>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable> -->
+
+<div class="container mt-5">
+
+  <div class="row">
+      <div class="col-md-4 mb-4">
+          <div class="card text-center border">
+              <div class="card-body">
+                  <h5 class="card-title text-dark">Total</h5>
+                  <p class="card-text h3">
+                      <span *ngIf="total">{{ total }}</span>
+                      <span *ngIf="!total">Loading...</span>
+                  </p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+          <div class="card text-center border">
+              <div class="card-body">
+                  <h5 class="card-title text-primary">Soon</h5>
+                  <p class="card-text h3">
+                      <span *ngIf="soon">{{ soon }}</span>
+                      <span *ngIf="!soon">Loading...</span>
+                  </p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+          <div class="card text-center border">
+              <div class="card-body">
+                  <h5 class="card-title text-secondary">Yesterday</h5>
+                  <p class="card-text h3">
+                      <span *ngIf="yesterday">{{ yesterday }}</span>
+                      <span *ngIf="!yesterday">Loading...</span>
+                  </p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+          <div class="card text-center border">
+              <div class="card-body">
+                  <h5 class="card-title text-success">Today</h5>
+                  <p class="card-text h3">
+                      <span *ngIf="today">{{ today }}</span>
+                      <span *ngIf="!today">Loading...</span>
+                  </p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+          <div class="card text-center border">
+              <div class="card-body">
+                  <h5 class="card-title text-info">Tomorrow</h5>
+                  <p class="card-text h3">
+                      <span *ngIf="tomorrow">{{ tomorrow }}</span>
+                      <span *ngIf="!tomorrow">Loading...</span>
+                  </p>
+              </div>
+          </div>
+      </div>
+
+  </div>
+</div>
+
+<div class="container mt-3">
+  <!-- Bootstrap Tabs -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#all">
+        <i class="fas fa-list"></i> List
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#soon">
+        <i class="fas fa-clock"></i> Soon
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#yesterday">
+        <i class="fas fa-calendar-day"></i> Yesterday
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#today">
+        <i class="fas fa-calendar-check"></i> Today
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#tomorrow">
+        <i class="fas fa-calendar-plus"></i> Tomorrow
+      </a>
+    </li>
+  </ul>
+
+
+
+ 
+  
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <div id="all" class="tab-pane fade show active">
+
+
+
+    <!--   <h3>All Circulations</h3> -->
+      <ngx-datatable
+        class="bootstrap"
+        [rows]="circulations"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [loadingIndicator]="loadingIndicator"
+        [reorderable]="reorderable"
+      >
+      <ngx-datatable-column name="Member Name" prop="memberName.firstname"></ngx-datatable-column>
+      <ngx-datatable-column name="Book Name" prop="catalogItemName.title"></ngx-datatable-column>
+      <ngx-datatable-column name="Writer" prop="catalogItemName.writer.name"></ngx-datatable-column>
+        <ngx-datatable-column name="Issue Date" prop="issueDate"></ngx-datatable-column>
+        <ngx-datatable-column name="Last Date" prop="lastDate"></ngx-datatable-column>
+        <ngx-datatable-column name="To Return" prop="toReturn"></ngx-datatable-column>
+        <ngx-datatable-column name="Return Date" prop="returnDate"></ngx-datatable-column>
+        <!-- <ngx-datatable-column name="Penalty" prop="penalty"></ngx-datatable-column> -->
+        <!-- <ngx-datatable-column name="Return Status" prop="returnStatus.name"></ngx-datatable-column> -->
+        <ngx-datatable-column name="Actions">
+          <ng-template ngx-datatable-cell-template let-row="row">
+            <!-- <button class="btn btn-sm btn-outline-primary" (click)="openViewDialog(row)">View</button> -->
+
+            <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Actions
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" (click)="openViewDialog(row)">
+              <i class="fas fa-eye"></i> View
+             </a>
+              <a class="dropdown-item" (click)="openCheckOut()">
+                  <i class="fas fa-shopping-cart"></i> Checkout
+              </a>
+              <a class="dropdown-item" (click)="openCheckIn()">
+                  <i class="fas fa-undo"></i> Checkin
+              </a>
+              <a class="dropdown-item" (click)="openRenew()">
+                  <i class="fas fa-redo"></i> Renew
+              </a>
+              <a class="dropdown-item" (click)="openPutOnHold()">
+                  <i class="fas fa-pause-circle"></i> On Hold
+              </a>
+          </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+
+    <div id="soon" class="tab-pane fade">
+     <!--  <h3>Items Due Soon</h3> -->
+       <ngx-datatable
+        class="bootstrap"
+        [rows]="soonCirculations"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [loadingIndicator]="loadingIndicator"
+        [reorderable]="reorderable"
+      >
+      <ngx-datatable-column name="Member Name" prop="memberName.firstname"></ngx-datatable-column>
+      <ngx-datatable-column name="Book Name" prop="catalogItemName.title"></ngx-datatable-column>
+      <ngx-datatable-column name="Writer" prop="catalogItemName.writer.name"></ngx-datatable-column>
+        <ngx-datatable-column name="Issue Date" prop="issueDate"></ngx-datatable-column>
+        <ngx-datatable-column name="Last Date" prop="lastDate"></ngx-datatable-column>
+        <ngx-datatable-column name="To Return" prop="toReturn"></ngx-datatable-column>
+        <ngx-datatable-column name="Return Date" prop="returnDate"></ngx-datatable-column>
+       <!--  <ngx-datatable-column name="Penalty" prop="penalty"></ngx-datatable-column>
+        <ngx-datatable-column name="Return Status" prop="returnStatus.name"></ngx-datatable-column> -->
+        <ngx-datatable-column name="Actions">
+          <ng-template ngx-datatable-cell-template let-row="row">
+            <button class="btn btn-sm btn-outline-primary" (click)="openViewDialog(row)">View</button>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable> 
+    </div>
+
+    <div id="yesterday" class="tab-pane fade">
+     <!--  <h3>Items Due Yesterday</h3> -->
+       <ngx-datatable
+        class="bootstrap"
+        [rows]="yesterdayCirculations"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [loadingIndicator]="loadingIndicator"
+        [reorderable]="reorderable"
+      >
+      <ngx-datatable-column name="Member Name" prop="memberName.firstname"></ngx-datatable-column>
+      <ngx-datatable-column name="Book Name" prop="catalogItemName.title"></ngx-datatable-column>
+      <ngx-datatable-column name="Writer" prop="catalogItemName.writer.name"></ngx-datatable-column>
+        <ngx-datatable-column name="Issue Date" prop="issueDate"></ngx-datatable-column>
+        <ngx-datatable-column name="Last Date" prop="lastDate"></ngx-datatable-column>
+        <ngx-datatable-column name="To Return" prop="toReturn"></ngx-datatable-column>
+        <ngx-datatable-column name="Return Date" prop="returnDate"></ngx-datatable-column>
+       <!--  <ngx-datatable-column name="Penalty" prop="penalty"></ngx-datatable-column>
+        <ngx-datatable-column name="Return Status" prop="returnStatus.name"></ngx-datatable-column> -->
+        <ngx-datatable-column name="Actions">
+          <ng-template ngx-datatable-cell-template let-row="row">
+            <button class="btn btn-sm btn-outline-primary" (click)="openViewDialog(row)">View</button>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable> 
+    </div>
+
+    <div id="today" class="tab-pane fade">
+      <!-- <h3>Items Due Today</h3> -->
+       <ngx-datatable
+        class="bootstrap"
+        [rows]="todayCirculations"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [loadingIndicator]="loadingIndicator"
+        [reorderable]="reorderable"
+      >
+      <ngx-datatable-column name="Member Name" prop="memberName.firstname"></ngx-datatable-column>
+      <ngx-datatable-column name="Book Name" prop="catalogItemName.title"></ngx-datatable-column>
+      <ngx-datatable-column name="Writer" prop="catalogItemName.writer.name"></ngx-datatable-column>
+        <ngx-datatable-column name="Issue Date" prop="issueDate"></ngx-datatable-column>
+        <ngx-datatable-column name="Last Date" prop="lastDate"></ngx-datatable-column>
+        <ngx-datatable-column name="To Return" prop="toReturn"></ngx-datatable-column>
+        <ngx-datatable-column name="Return Date" prop="returnDate"></ngx-datatable-column>
+       <!--  <ngx-datatable-column name="Penalty" prop="penalty"></ngx-datatable-column>
+        <ngx-datatable-column name="Return Status" prop="returnStatus.name"></ngx-datatable-column> -->
+        <ngx-datatable-column name="Actions">
+          <ng-template ngx-datatable-cell-template let-row="row">
+            <button class="btn btn-sm btn-outline-primary" (click)="openViewDialog(row)">View</button>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable> 
+    </div>
+
+    <div id="tomorrow" class="tab-pane fade">
+      <!-- <h3>Items Due Tomorrow</h3> -->
+       <ngx-datatable
+        class="bootstrap"
+        [rows]="tomorrowCirculations" 
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [loadingIndicator]="loadingIndicator"
+        [reorderable]="reorderable"
+      >
+      <ngx-datatable-column name="Member Name" prop="memberName.firstname"></ngx-datatable-column>
+      <ngx-datatable-column name="Book Name" prop="catalogItemName.title"></ngx-datatable-column>
+      <ngx-datatable-column name="Writer" prop="catalogItemName.writer.name"></ngx-datatable-column>
+        <ngx-datatable-column name="Issue Date" prop="issueDate"></ngx-datatable-column>
+        <ngx-datatable-column name="Last Date" prop="lastDate"></ngx-datatable-column>
+        <ngx-datatable-column name="To Return" prop="toReturn"></ngx-datatable-column>
+        <ngx-datatable-column name="Return Date" prop="returnDate"></ngx-datatable-column>
+       <!--  <ngx-datatable-column name="Penalty" prop="penalty"></ngx-datatable-column>
+        <ngx-datatable-column name="Return Status" prop="returnStatus.name"></ngx-datatable-column> -->
+        <ngx-datatable-column name="Actions">
+          <ng-template ngx-datatable-cell-template let-row="row">
+            <button class="btn btn-sm btn-outline-primary" (click)="openViewDialog(row)">View</button>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable> 
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  

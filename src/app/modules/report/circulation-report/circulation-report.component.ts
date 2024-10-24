@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
-import Book from 'src/app/main/models/Book';
+import CatalogItem from 'src/app/main/models/Book';
 import CirculationStatus from 'src/app/main/models/CirculationStatus';
 import Member from 'src/app/main/models/Member';
 import { HTTPService } from 'src/app/main/services/HTTPService';
@@ -14,8 +14,8 @@ import CONFIG from 'src/app/main/urls/urls';
 })
 export class CirculationReportComponent extends URLLoader implements OnInit {
   memberNames$: Member[];
-  bookNames$: Book[];
-  writers$: Book[];
+  bookNames$: CatalogItem[];
+  writers$: CatalogItem[];
   returnStatus$: CirculationStatus[];
   loading: boolean;
   searchButtonClicked: boolean;
@@ -50,7 +50,7 @@ export class CirculationReportComponent extends URLLoader implements OnInit {
 
   getBooks() {
     this.httpService.getAll(CONFIG.URL_BASE + '/book/all').subscribe(
-      (data: Book[]) => {
+      (data: CatalogItem[]) => {
         this.bookNames$ = data;
         console.log(this.bookNames$);
       },
@@ -62,7 +62,7 @@ export class CirculationReportComponent extends URLLoader implements OnInit {
 
   getWriters() {
     this.httpService.getAll(CONFIG.URL_BASE + '/writer/all').subscribe(
-      (data: Book[]) => {
+      (data: CatalogItem[]) => {
         this.writers$ = data;
       },
       (err: HttpErrorResponse) => {
@@ -90,7 +90,7 @@ export class CirculationReportComponent extends URLLoader implements OnInit {
     this.httpService
       .getAll(CONFIG.URL_BASE + '/circulation/circulationreport/')
       .subscribe(
-        (data: Book[]) => {},
+        (data: CatalogItem[]) => {},
         (err: HttpErrorResponse) => {
           super.show('Error', err.message, 'warning');
         }

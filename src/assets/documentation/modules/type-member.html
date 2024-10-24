@@ -1,0 +1,116 @@
+<h1>Type Member Module Documentation</h1>
+
+<h2>Module Description</h2>
+<p>The Type Member module is designed to manage different membership types within the library system. It allows librarians to define various membership categories, including their descriptions, enrollment periods, fees, and other relevant information.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">Type Member*:</p>
+    <ul>
+        <li><strong>Description:</strong> The name or title of the membership type.</li>
+        <li><strong>Usage:</strong> Enter the name of the membership type.</li>
+        <li><strong>Example:</strong> "Regular", "Student", "Senior Citizen"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string and unique.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Category code:</p>
+    <ul>
+        <li><strong>Description:</strong> A unique code to identify the membership category.</li>
+        <li><strong>Usage:</strong> Enter a unique code for the membership category.</li>
+        <li><strong>Example:</strong> "REG", "STU", "SEN"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string and unique.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Description:</p>
+    <ul>
+        <li><strong>Description:</strong> A detailed description of the membership type.</li>
+        <li><strong>Usage:</strong> Enter a comprehensive description of the membership type.</li>
+        <li><strong>Example:</strong> "Membership for regular adult patrons", "Membership for students with valid ID"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Enrollment period:</p>
+    <ul>
+        <li><strong>Description:</strong> The duration of the membership in months.</li>
+        <li><strong>Usage:</strong> Enter the enrollment period in months.</li>
+        <li><strong>Example:</strong> "12", "24"</li>
+        <li><strong>Validation:</strong> Must be a positive integer.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Upper age limit:</p>
+    <ul>
+        <li><strong>Description:</strong> The maximum age limit for this membership type, if applicable.</li>
+        <li><strong>Usage:</strong> Enter the upper age limit.</li>
+        <li><strong>Example:</strong> "65", "30"</li>
+        <li><strong>Validation:</strong> Must be a positive integer or leave blank if not applicable.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Enrollment fee:</p>
+    <ul>
+        <li><strong>Description:</strong> The fee charged for enrolling in this membership type.</li>
+        <li><strong>Usage:</strong> Enter the enrollment fee amount.</li>
+        <li><strong>Example:</strong> "50.00", "0.00"</li>
+        <li><strong>Validation:</strong> Must be a valid monetary value.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Hold fee:</p>
+    <ul>
+        <li><strong>Description:</strong> The fee charged for placing holds on items for this membership type.</li>
+        <li><strong>Usage:</strong> Enter the hold fee amount.</li>
+        <li><strong>Example:</strong> "0.00", "1.00"</li>
+        <li><strong>Validation:</strong> Must be a valid monetary value.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Category type:</p>
+    <ul>
+        <li><strong>Description:</strong> The general category of the membership type (e.g., Adult, Student).</li>
+        <li><strong>Usage:</strong> Enter the category type.</li>
+        <li><strong>Example:</strong> "Adult", "Student"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Minimum password length:</p>
+    <ul>
+        <li><strong>Description:</strong> The minimum length required for passwords for this membership type.</li>
+        <li><strong>Usage:</strong> Enter the minimum password length.</li>
+        <li><strong>Example:</strong> "8", "12"</li>
+        <li><strong>Validation:</strong> Must be a positive integer.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Require strong password:</p>
+    <ul>
+        <li><strong>Description:</strong> Indicates whether a strong password is required (e.g., a combination of letters, numbers, and special characters).</li>
+        <li><strong>Usage:</strong> Select "Yes" if a strong password is required, otherwise select "No".</li>
+        <li><strong>Example:</strong> "Yes", "No"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes or No).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Block expired patrons:</p>
+    <ul>
+        <li><strong>Description:</strong> Indicates whether patrons with expired memberships are blocked from borrowing or accessing services.</li>
+        <li><strong>Usage:</strong> Select "Yes" if expired patrons should be blocked, otherwise select "No".</li>
+        <li><strong>Example:</strong> "Yes", "No"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes or No).</li>
+    </ul>
+</div>

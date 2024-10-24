@@ -16,7 +16,7 @@ export class CirculationCalendarComponent extends URLLoader implements OnInit {
   circulations$: Circulation[];
   menu;
   ngOnInit(): void {
-    this.getAll();
+    
     this.httpService.menuI18n$.subscribe((data) => {
       this.menu = data;
     });
@@ -24,13 +24,9 @@ export class CirculationCalendarComponent extends URLLoader implements OnInit {
   name = 'Angular';
   constructor(private httpService: HTTPService, public datepipe: DatePipe) {
     super();
+    this.getAll();
   }
-  dataArray: EventData[] = [];
-
-  selectDay(event) {
-    console.log(event);
-  }
-  addEvent(event) {}
+  
 
   getAll() {
     // this.loading = true;
@@ -60,16 +56,17 @@ export class CirculationCalendarComponent extends URLLoader implements OnInit {
     ];
 
     data.forEach((e) => {
+      console.log(e)
       let index = Math.floor(Math.random() * (data.length - 1 + 1));
       this.dataArray.push({
         id: e.id,
-        title: e.bookName.title,
-        desc: e.bookName.subtitle,
+        title: e.catalogItemName.title,
+        desc: e.catalogItemName.subtitle,
         startDate: new Date(
-          this.datepipe.transform(new Date(e.issueDate), 'MM/dd/yyyy')
+          e.issueDate
         ),
         endDate: new Date(
-          this.datepipe.transform(new Date(e.lastDate), 'MM/dd/yyyy')
+          e.lastDate
         ),
         createdBy: 'Tom',
         createdAt: new Date(e.issueDate),
@@ -77,5 +74,49 @@ export class CirculationCalendarComponent extends URLLoader implements OnInit {
         color: colors[index],
       });
     });
+  }
+
+
+  dataArray: any[] = [
+    /* {
+      id: 1,
+      title: 'Meeting with Bob',
+      startDate: new Date('2024-08-10T10:00:00'),
+      endDate: new Date('2024-08-10T12:00:00'),
+      color: '#FF5733' // red color
+    },
+    {
+      id: 2,
+      title: 'Dentist Appointment',
+      startDate: new Date('2024-08-12T14:00:00'),
+      endDate: new Date('2024-08-12T15:00:00'),
+      color: '#33C3FF' // blue color
+    },
+    {
+      id: 3,
+      title: 'Conference',
+      startDate: new Date('2024-08-15T09:00:00'),
+      endDate: new Date('2024-08-15T17:00:00'),
+      color: '#75FF33' // green color
+    },
+    {
+      id: 4,
+      title: 'Dinner with Family',
+      startDate: new Date('2024-08-20T19:00:00'),
+      endDate: new Date('2024-08-20T21:00:00'),
+      color: '#FF33A8' // pink color
+    } */
+  ];
+
+
+  selectDay(event: any): void {
+    console.log('Selected day:', event);
+    // Handle day selection logic here
+  }
+
+  addEvent(event: any): void {
+    console.log('New event:', event);
+    // Handle adding a new event logic here
+    this.dataArray.push(event);
   }
 }

@@ -1,11 +1,18 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import CirculationMessage from 'src/app/main/messages/CirculationMessage';
 import Circulation from 'src/app/main/models/Circulation';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
+import { ViewCirculationComponent } from '../view-circulation/view-circulation.component';
+import { RenewComponent } from '../renew/renew.component';
+import { HoldComponent } from '../hold/hold.component';
+import { CheckInComponent } from '../check-in/check-in.component';
+import { CheckOutComponent } from '../check-out/check-out.component';
+import { DataService } from 'src/app/main/services/data.service';
 
 @Component({
   selector: 'app-circulation',
@@ -25,6 +32,7 @@ export class CirculationComponent extends URLLoader implements OnInit {
   }
 
   getCirculationByLang(lang) {
+     lang='EN'
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/circulation/' + lang)
       .subscribe(
@@ -62,7 +70,10 @@ export class CirculationComponent extends URLLoader implements OnInit {
   constructor(
     private httpService: HTTPService,
     private messageService: CirculationMessage,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal,
+    private dataService:DataService
+    
   ) {
     super();
   }
@@ -75,6 +86,10 @@ export class CirculationComponent extends URLLoader implements OnInit {
       sessionStorage.getItem('username'),
       sessionStorage.getItem('password')
     );
+
+    this.dataService.refreshData$.subscribe(() => {
+      this.getAll();  // Trigger the getAll() method when notified
+    });
   }
 
   getAll() {
@@ -91,8 +106,9 @@ export class CirculationComponent extends URLLoader implements OnInit {
   }
 
   getMenuByLang(lang, username, password) {
+     lang='EN'
     this.httpService
-      .getAllLang(CONFIG.URL_BASE + '/i18n/menu/' + lang, username, password)
+      .getAllLang(CONFIG.URL_BASE + '/i18n/menu/EN', username, password)
       .subscribe(
         (data) => {
           console.log(data);
@@ -108,4 +124,5 @@ export class CirculationComponent extends URLLoader implements OnInit {
     this.email = email;
     console.log(email);
   }
+
 }

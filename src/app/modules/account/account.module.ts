@@ -18,6 +18,8 @@ import { EditExpenseComponent } from './edit-expense/edit-expense.component';
 import { ModalIncomeComponent } from './modal-income/modal-income.component';
 import { AddIncomeComponent } from './add-income/add-income.component';
 import { EditIncomeComponent } from './edit-income/edit-income.component';
+import { FundModalComponent } from './fund-modal/fund-modal.component';
+import { BudgetModalComponent } from './budget-modal/budget-modal.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { EditIncomeComponent } from './edit-income/edit-income.component';
     ModalIncomeComponent,
     AddIncomeComponent,
     EditIncomeComponent,
+    FundModalComponent,
+    BudgetModalComponent
   ],
   imports: [
     SharedModule,

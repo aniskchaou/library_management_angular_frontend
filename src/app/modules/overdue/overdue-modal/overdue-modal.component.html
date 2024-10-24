@@ -1,0 +1,34 @@
+<!-- <div class="modal-header">
+    <h5 class="modal-title">{{ overdue.id ? 'Edit' : 'Add' }} Overdue Item</h5>
+    <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="catalogItem">Catalog Item</label>
+        <select class="form-control" id="catalogItem" [(ngModel)]="overdue.catalogItem" name="catalogItem">
+          <option *ngFor="let item of catalogItems" [ngValue]="item">{{ item.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="dueDate">Due Date</label>
+        <input type="date" class="form-control" id="dueDate" [(ngModel)]="overdue.dueDate" name="dueDate">
+      </div>
+      <div class="form-group">
+        <label for="returnDate">Return Date</label>
+        <input type="date" class="form-control" id="returnDate" [(ngModel)]="overdue.returnDate" name="returnDate">
+      </div>
+      <div class="form-group">
+        <label for="fineAmount">Fine Amount</label>
+        <input type="number" class="form-control" id="fineAmount" [(ngModel)]="overdue.fineAmount" name="fineAmount" step="0.01">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="saveOverdue()">Save</button>
+  </div>
+  
+ -->

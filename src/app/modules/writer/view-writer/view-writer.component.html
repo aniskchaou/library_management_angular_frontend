@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h5 class="modal-title">Writer Details</h5>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <h2>{{ writer?.name }}</h2>
+    <p><strong>Note:</strong> {{ writer?.note || 'No notes available' }}</p>
+    <p><strong>Date of Birth:</strong> {{ writer?.dateOfBirth || 'Unknown' }}</p>
+    <p><strong>Died:</strong> {{ writer?.died === 'yes' ? 'Yes' : 'No' }}</p>
+    <p *ngIf="writer?.died === 'yes'"><strong>Date of Death:</strong> {{ writer?.dateOfDeath || 'Unknown' }}</p>
+    <p><strong>Publications:</strong> {{ writer?.publications || 'No publications listed' }}</p>
+    <p><strong>Bio:</strong> {{ writer?.bio || 'No biography available' }}</p>
+    <p><strong>Awards:</strong> {{ writer?.award || 'No awards listed' }}</p>
+    <p><strong>References:</strong> {{ writer?.refrences || 'No references available' }}</p>
+</div>
+
+<div class="modal-footer">
+    <div class="button-group">
+        <button type="button" class="btn btn-outline-primary" (click)="openEditDialog(writer)">
+          <i class="fas fa-edit"></i> Edit
+        </button>
+        
+        <button type="button" class="btn btn-outline-danger" (click)="deleteRow(writer)">
+          <i class="fas fa-trash-alt"></i> Delete
+        </button>
+        
+        <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">
+          <i class="fas fa-times"></i> Close
+        </button>
+    </div>
+</div>
+

@@ -1,0 +1,222 @@
+<div class="modal-header">
+    <h5 class="modal-title">Edit Media Type</h5>
+    <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <!-- Image URL Field -->
+      <div class="form-group">
+        <label for="imageUrl" id="imageUrl_display_as_box">
+          Image URL
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the URL for the media type image."></i>
+        </label>
+        <input
+          id="imageUrl"
+          name="imageUrl"
+          class="form-control"
+          type="text"
+          placeholder="e.g., https://example.com/image.jpg"
+          [(ngModel)]="mediaType.imageUrl"
+        />
+      </div>
+  
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="name" id="name_display_as_box">
+          Name
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the name of the media type."></i>
+        </label>
+        <input
+          id="name"
+          name="name"
+          class="form-control"
+          type="text"
+          placeholder="e.g., DVD"
+          [(ngModel)]="mediaType.name"
+        />
+      </div>
+  
+      <!-- Code Field -->
+      <div class="form-group">
+        <label for="code" id="code_display_as_box">
+          Code
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter a unique code for the media type."></i>
+        </label>
+        <input
+          id="code"
+          name="code"
+          class="form-control"
+          type="text"
+          placeholder="e.g., MEDIA123"
+          [(ngModel)]="mediaType.code"
+        />
+      </div>
+  
+      <!-- Parent Code Field -->
+      <div class="form-group">
+        <label for="parentCode" id="parentCode_display_as_box">
+          Parent Code
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the parent code if applicable."></i>
+        </label>
+        <input
+          id="parentCode"
+          name="parentCode"
+          class="form-control"
+          type="text"
+          placeholder="e.g., MEDIA"
+          [(ngModel)]="mediaType.parentCode"
+        />
+      </div>
+  
+      <!-- Search Category Field -->
+      <div class="form-group">
+        <label for="searchCategory" id="searchCategory_display_as_box">
+          Search Category
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the category for searching."></i>
+        </label>
+        <input
+          id="searchCategory"
+          name="searchCategory"
+          class="form-control"
+          type="text"
+          placeholder="e.g., Movies"
+          [(ngModel)]="mediaType.searchCategory"
+        />
+      </div>
+  
+      <!-- Not for Loan Field -->
+      <div class="form-group">
+        <label for="notForLoan" id="notForLoan_display_as_box">
+          Not for Loan
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Check if the media type is not for loan."></i>
+        </label>
+        <input
+          id="notForLoan"
+          name="notForLoan"
+          class="form-check-input"
+          type="checkbox"
+          [(ngModel)]="mediaType.notForLoan"
+        />
+      </div>
+  
+      <!-- Rental Charge Field -->
+      <div class="form-group">
+        <label for="rentalCharge" id="rentalCharge_display_as_box">
+          Rental Charge
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the rental charge amount."></i>
+        </label>
+        <input
+          id="rentalCharge"
+          name="rentalCharge"
+          class="form-control"
+          type="number"
+          placeholder="e.g., 5.00"
+          [(ngModel)]="mediaType.rentalCharge"
+        />
+      </div>
+  
+      <!-- Daily Rental Charge Field -->
+      <div class="form-group">
+        <label for="dailyRentalCharge" id="dailyRentalCharge_display_as_box">
+          Daily Rental Charge
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the daily rental charge amount."></i>
+        </label>
+        <input
+          id="dailyRentalCharge"
+          name="dailyRentalCharge"
+          class="form-control"
+          type="number"
+          placeholder="e.g., 2.50"
+          [(ngModel)]="mediaType.dailyRentalCharge"
+        />
+      </div>
+  
+      <!-- Hourly Rental Charge Field -->
+      <div class="form-group">
+        <label for="hourlyRentalCharge" id="hourlyRentalCharge_display_as_box">
+          Hourly Rental Charge
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the hourly rental charge amount."></i>
+        </label>
+        <input
+          id="hourlyRentalCharge"
+          name="hourlyRentalCharge"
+          class="form-control"
+          type="number"
+          placeholder="e.g., 1.00"
+          [(ngModel)]="mediaType.hourlyRentalCharge"
+        />
+      </div>
+  
+      <!-- Default Replacement Cost Field -->
+      <div class="form-group">
+        <label for="defaultReplacementCost" id="defaultReplacementCost_display_as_box">
+          Default Replacement Cost
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the default cost for replacement."></i>
+        </label>
+        <input
+          id="defaultReplacementCost"
+          name="defaultReplacementCost"
+          class="form-control"
+          type="number"
+          placeholder="e.g., 20.00"
+          [(ngModel)]="mediaType.defaultReplacementCost"
+        />
+      </div>
+  
+      <!-- Processing Fee Field -->
+      <div class="form-group">
+        <label for="processingFee" id="processingFee_display_as_box">
+          Processing Fee (when lost)
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the processing fee for lost items."></i>
+        </label>
+        <input
+          id="processingFee"
+          name="processingFee"
+          class="form-control"
+          type="number"
+          placeholder="e.g., 10.00"
+          [(ngModel)]="mediaType.processingFee"
+        />
+      </div>
+  
+      <!-- Check-in Message Field -->
+      <div class="form-group">
+        <label for="checkinMessage" id="checkinMessage_display_as_box">
+          Check-in Message
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Message shown upon check-in."></i>
+        </label>
+        <input
+          id="checkinMessage"
+          name="checkinMessage"
+          class="form-control"
+          type="text"
+          placeholder="e.g., Thank you for returning the item."
+          [(ngModel)]="mediaType.checkinMessage"
+        />
+      </div>
+  
+      <!-- Library Limitations Field -->
+      <div class="form-group">
+        <label for="libraryLimitations" id="libraryLimitations_display_as_box">
+          Library Limitations
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Any limitations specific to the library."></i>
+        </label>
+        <textarea
+          id="libraryLimitations"
+          name="libraryLimitations"
+          class="form-control"
+          rows="3"
+          placeholder="e.g., Limited to in-library use only."
+          [(ngModel)]="mediaType.libraryLimitations"
+        ></textarea>
+      </div>
+  
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
+    <button type="button" class="btn btn-outline-primary" (click)="saveMediaType()">Save</button>
+  </div>
+  

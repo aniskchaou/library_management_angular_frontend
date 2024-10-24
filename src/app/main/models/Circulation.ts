@@ -1,4 +1,4 @@
-import Book from './Book';
+import CatalogItem from './Book';
 import CirculationStatus from './CirculationStatus';
 import Member from './Member';
 import Writer from './Writer';
@@ -6,7 +6,7 @@ import Writer from './Writer';
 export default class Circulation {
   id: number;
   memberName: Member;
-  bookName: Book;
+  catalogItemName: CatalogItem;
   writer: Writer;
   issueDate: string;
   lastDate: string;
@@ -18,7 +18,7 @@ export default class Circulation {
   constructor(
     id: number,
     memberName: Member,
-    bookName: Book,
+    bookName: CatalogItem,
     writer: Writer,
     issueDate: string,
     lastDate: string,
@@ -29,7 +29,7 @@ export default class Circulation {
   ) {
     this.id = id;
     this.memberName = memberName;
-    this.bookName = bookName;
+    this.catalogItemName = bookName;
     this.writer = writer;
     this.issueDate = issueDate;
     this.lastDate = lastDate;

@@ -1,0 +1,43 @@
+.custom-modal {
+    max-width: 800px; /* Adjust this value as needed */
+}
+
+body {
+    background-color: #f0f4f7;
+    font-family: Arial, sans-serif;
+}
+
+.membership-card {
+    max-width: 400px;
+    margin: 50px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.membership-card-header {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.membership-card-header h5 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.membership-details p {
+    margin: 0 0 10px;
+    font-size: 1rem;
+}
+
+.membership-details strong {
+    color: #007bff;
+}
+
+.membership-footer {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 10px;
+    margin-top: 15px;
+    font-size: 0.9rem;
+}

@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="holdModalLabel"><i class="fas fa-hand-holding"></i> Holds</h5>
+  <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<!-- Modal Body -->
+<div class="modal-body">
+  <form [formGroup]="holdForm" style="background-color: white; padding: 20px; border-radius: 5px;">
+    
+    <!-- Item Barcode -->
+    <div class="form-group">
+      <label for="itemBarcode">Item Barcode:</label>
+      <i class="fas fa-info-circle" data-toggle="tooltip" 
+         title="Description: Select the barcode of the item you wish to hold."></i>
+      <ng-select class="form-control" id="itemBarcode" name="itemBarcode"
+                 [items]="books$"
+                 bindLabel="title" bindValue="id"
+                 formControlName="itemBarcode"
+                 placeholder="Select a barcode"
+                 [loading]="loading">
+      </ng-select>
+    </div>
+
+    <!-- Member Name -->
+    <div class="form-group">
+      <label for="memberName">Member Name:</label>
+      <i class="fas fa-info-circle" data-toggle="tooltip" 
+         title="Description: Select the name of the member who is holding the item."></i>
+      <ng-select class="form-control" id="memberName" name="memberName" 
+                 [items]="members$"
+                 bindLabel="firstname" bindValue="id"
+                 formControlName="memberName"
+                 placeholder="Select a member">
+      </ng-select>
+    </div>
+
+  </form>
+</div>
+
+<!-- Modal Footer -->
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+  <button type="button" class="btn btn-outline-primary" (click)="hold()">Hold</button>
+</div>
+  

@@ -4,6 +4,7 @@ import { URLLoader } from 'src/app/main/configs/URLLoader';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 import { finalize } from 'rxjs/operators';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-view-book',
   templateUrl: './view-book.component.html',
@@ -19,16 +20,22 @@ export class ViewBookComponent extends URLLoader implements OnInit {
   retrieveResonse: any;
   imageName: any;
   loadingImage = false;
-  constructor(private httpService: HTTPService) {
+  constructor(private httpService: HTTPService,private activeModal: NgbActiveModal) {
     super();
   }
 
+  closeModal(): void {
+    this.activeModal.dismiss(); // Close the modal using NgbActiveModal
+  }
+
+
   getImage(image) {
     this.loadingImage = true;
+    console.log('${CONFIG.URL_BASE}/book/get/' + image);
     if (image) {
-      console.log(image);
+      
       this.httpService
-        .getAll('http://localhost:8080/book/get/' + image)
+        .getAll('${CONFIG.URL_BASE}/book/get/' + image)
         .pipe(
           finalize(() => {
             this.loadingImage = false;
@@ -46,6 +53,8 @@ export class ViewBookComponent extends URLLoader implements OnInit {
   ngOnInit(): void {
     this.viewBook(this.id);
     this.getBookByLang(CONFIG.getInstance().getLang());
+    this.getImage(this.book?.photo)
+    this.retrievedImage=CONFIG.URL_BASE+'/book/get/'+this.book?.id+'/'+this.book?.photo
   }
 
   ngOnChanges(changes: any) {
@@ -70,6 +79,7 @@ export class ViewBookComponent extends URLLoader implements OnInit {
   }
 
   getBookByLang(lang) {
+     lang='EN'
     this.httpService.getAll(CONFIG.URL_BASE + '/i18n/book/' + lang).subscribe(
       (data) => {
         this.bookI18n = data;

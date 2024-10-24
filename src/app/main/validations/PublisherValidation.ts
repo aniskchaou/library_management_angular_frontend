@@ -23,6 +23,14 @@ export default class PublisherValidation {
   createFormGroup() {
     return new FormGroup({
       name: new FormControl('', Validators.required),
+      address: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      phone: new FormControl('', Validators.required),
+      country: new FormControl('', Validators.required),
+      website: new FormControl('', [
+        Validators.required,
+        //Validators.pattern('https?://.+')
+      ])
     });
   }
 }

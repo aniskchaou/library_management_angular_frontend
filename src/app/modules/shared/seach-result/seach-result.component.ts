@@ -36,6 +36,7 @@ export class SeachResultComponent extends URLLoader implements OnInit {
   }
 
   getResultI18n(lang) {
+     lang='EN'
     this.httpService.getAll(CONFIG.URL_BASE + '/search/i18n/' + lang).subscribe(
       (data) => {
         this.resultI18n = data;

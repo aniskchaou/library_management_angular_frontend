@@ -1,37 +1,124 @@
-<table class="table table-bordered" id="table" width="100%" cellspacing="0">
+<!-- <table class="table table-bordered" id="dt_cat" width="100%" cellspacing="0">
   <thead>
     <tr>
       <th>{{ categoryI18n?.category_nameI18n }}</th>
-      <th></th>
+      <th>Slug</th>
+      <th>Published</th>
+      <th>Items</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tfoot>
     <tr>
       <th>{{ categoryI18n?.category_name }}</th>
-      <th></th>
+      <th>Slug</th>
+      <th>Published</th>
+      <th>Items</th>
+      <th>Actions</th>
     </tr>
   </tfoot>
   <tbody *ngIf="categories.length > 0">
     <tr *ngFor="let c of categories">
       <td>{{ c.category_name | titlecapital }}</td>
+      <td>{{ c.slug}}</td>
+      <td>  
+        <div class="slide-button" [ngClass]="{'active': c.published}" (click)="toggle(c.id,c.published)">
+          <div class="slider"></div>
+        </div>
+          
+      </td>
+      <td>12</td>
       <td>
-        <button
-          type="button"
-          data-toggle="modal"
-          (click)="edit(c.id)"
-          data-target="#edit"
-          class="btn btn-warning btn-sm"
-        >
-          <i class="fas fa-edit"></i>
+      <div class="btn-group">
+        <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Actions
         </button>
-        <button
-          type="button"
-          class="btn btn-danger btn-sm"
-          (click)="delete(c.id)"
-        >
-          <i class="fas fa-trash-alt"></i>
-        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item"  data-toggle="modal" data-target="#edit" (click)="edit(c.id)"><i class="fas fa-edit"></i> Edit</a>
+          <a class="dropdown-item"  (click)="delete(c.id)"><i class="fas fa-trash-alt"></i> Delete</a>
+          <a class="dropdown-item" ><i class="fas fa-eye"></i> View Items</a>
+        </div>
+      </div>
+      
       </td>
     </tr>
   </tbody>
-</table>
+</table> -->
+<div>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Search by name..."
+    (input)="updateFilter($event)"
+  />
+</div>
+
+<ngx-datatable
+  class="bootstrap"
+  [rows]="categories"
+  [columnMode]="'force'"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [rowHeight]="'auto'"
+  [limit]="10"
+  [loadingIndicator]="loadingIndicator"
+  [reorderable]="reorderable"
+  (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+>
+
+  <!-- Category Name -->
+  <ngx-datatable-column name="{{ categoryI18n?.category_nameI18n }}" [prop]="'category_name'">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <b>{{ row.category_name | titlecapital }}</b>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Slug -->
+  <ngx-datatable-column name="Slug" [prop]="'slug'">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.slug }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Published -->
+  <ngx-datatable-column name="Published" [prop]="'published'">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <div class="slide-button" [ngClass]="{'active': row.published}" (click)="toggle(row.id, row.published)">
+        <div class="slider"></div>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Items -->
+  <ngx-datatable-column name="Items">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      N/A
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Actions -->
+  <ngx-datatable-column name="Actions">
+    <ng-template ngx-datatable-cell-template let-row="row">
+     <!--  <div class="dropdown action-buttons high-zindex-dropdown">
+        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Actions
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item"  (click)="editRow(row)">
+            <i class="fas fa-edit"></i> Edit
+          </a>
+          <a class="dropdown-item"  (click)="deleteRow(row.id)">
+            <i class="fas fa-trash-alt"></i> Delete
+          </a>
+        </div>
+      </div> -->
+      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="openViewDialog(row)">
+        <i class="fas fa-eye"></i>  View
+      </button>
+ 
+    </ng-template>
+  </ngx-datatable-column>
+  
+
+</ngx-datatable>

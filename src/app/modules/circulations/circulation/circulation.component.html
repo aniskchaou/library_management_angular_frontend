@@ -4,14 +4,19 @@
   </div>
 
   <ng-template #loaded>
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">{{ circulationI18n?.allTitleI18n }}</h1>
+    <!-- Page Heading with Icon -->
+    <h1 class="h3 mb-2 text-gray-800">
+      <i class="fas fa-exchange-alt"></i> {{ circulationI18n?.allTitleI18n }}
+    </h1>
+    
+    <!-- Description -->
+    <p class="lead">Manage and track the circulation of items efficiently. Use the tools provided to add, edit, view, contact, and delete circulation records seamlessly.</p>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
       <div class="card-body">
         <div class="table-responsive">
-          <app-add-button [itemI18n]="circulationI18n"></app-add-button>
+          
           <app-circulation-list
             (editEvent)="edit($event)"
             (viewEvent)="view($event)"
@@ -31,3 +36,4 @@
     </div>
   </ng-template>
 </div>
+

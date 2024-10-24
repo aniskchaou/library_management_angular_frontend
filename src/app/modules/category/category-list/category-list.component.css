@@ -1,0 +1,42 @@
+.slide-button {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .slide-button.active {
+    background-color: #4caf50;
+  }
+  
+  .slider {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+  }
+  
+  .slide-button.active .slider {
+    transform: translateX(30px);
+  }
+
+  .ngx-datatable .datatable-body-cell {
+    overflow: visible !important; /* Ensure the cell allows overflow */
+  }
+  
+  .high-zindex-dropdown .dropdown-menu {
+    position: absolute;
+    z-index: 999999051; /* High z-index to bring it on top */
+    top: -10px; /* Adjust based on your needs */
+    left: -150px; /* Move the menu to the left of the button */
+  }
+  
+  
+  

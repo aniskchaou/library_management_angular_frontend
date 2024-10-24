@@ -1,0 +1,136 @@
+<div class="modal-header">
+    <h5 class="modal-title">{{ purchaseSuggestion.id ? 'Edit' : 'Add' }} Purchase Suggestion</h5>
+    <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="title">
+          Title
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the title of the work."></i>
+        </label>
+        <input type="text" class="form-control" id="title" [(ngModel)]="purchaseSuggestion.title" name="title" placeholder="e.g., The Great Gatsby">
+      </div>
+      <div class="form-group">
+        <label for="author">
+          Author
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the author of the work."></i>
+        </label>
+        <select class="form-control" id="author" [(ngModel)]="purchaseSuggestion.author" name="author">
+          <option *ngFor="let writer of writers" [ngValue]="writer">{{ writer.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="copyrightDate">
+          Copyright Date
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the copyright date of the work."></i>
+        </label>
+        <input type="date" class="form-control" id="copyrightDate" [(ngModel)]="purchaseSuggestion.copyrightDate" name="copyrightDate" placeholder="e.g., 2023-10-03">
+      </div>
+      <div class="form-group">
+        <label for="isbnIssnOtherStandardNumber">
+          ISBN/ISSN/Other Standard Number
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the ISBN, ISSN, or other standard number."></i>
+        </label>
+        <input type="text" class="form-control" id="isbnIssnOtherStandardNumber" [(ngModel)]="purchaseSuggestion.isbnIssnOtherStandardNumber" name="isbnIssnOtherStandardNumber" placeholder="e.g., 978-3-16-148410-0">
+      </div>
+      <div class="form-group">
+        <label for="publisher">
+          Publisher
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the publisher of the work."></i>
+        </label>
+        <select class="form-control" id="publisher" [(ngModel)]="purchaseSuggestion.publisher" name="publisher">
+          <option *ngFor="let publisher of publishers" [ngValue]="publisher">{{ publisher.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="publicationPlace">
+          Publication Place
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the place where the work was published."></i>
+        </label>
+        <input type="text" class="form-control" id="publicationPlace" [(ngModel)]="purchaseSuggestion.publicationPlace" name="publicationPlace" placeholder="e.g., New York">
+      </div>
+      <div class="form-group">
+        <label for="collectionTitle">
+          Collection Title
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the title of the collection if applicable."></i>
+        </label>
+        <input type="text" class="form-control" id="collectionTitle" [(ngModel)]="purchaseSuggestion.collectionTitle" name="collectionTitle" placeholder="e.g., Classic Literature">
+      </div>
+      <div class="form-group">
+        <label for="mediaType">
+          Media Type
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the media type of the work."></i>
+        </label>
+        <select class="form-control" id="mediaType" [(ngModel)]="purchaseSuggestion.mediaType" name="mediaType">
+          <option *ngFor="let mediaType of mediaTypes" [ngValue]="mediaType">{{ mediaType.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="reasonForSuggestion">
+          Reason for Suggestion
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Explain why this work is being suggested."></i>
+        </label>
+        <textarea class="form-control" id="reasonForSuggestion" [(ngModel)]="purchaseSuggestion.reasonForSuggestion" name="reasonForSuggestion" placeholder="e.g., Highly recommended by experts."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="notes">
+          Notes
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Add any additional notes here."></i>
+        </label>
+        <textarea class="form-control" id="notes" [(ngModel)]="purchaseSuggestion.notes" name="notes" placeholder="e.g., Consider for future purchases."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="fund">
+          Fund
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the funding source."></i>
+        </label>
+        <select class="form-control" id="fund" [(ngModel)]="purchaseSuggestion.fund" name="fund">
+          <option *ngFor="let fund of funds" [ngValue]="fund">{{ fund.fundName }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="showInactive">
+          Show Inactive
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Check to include inactive items."></i>
+        </label>
+        <input type="checkbox" id="showInactive" [(ngModel)]="purchaseSuggestion.showInactive" name="showInactive">
+      </div>
+      <div class="form-group">
+        <label for="copies">
+          Copies
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the number of copies requested."></i>
+        </label>
+        <input type="number" class="form-control" id="copies" [(ngModel)]="purchaseSuggestion.copies" name="copies" placeholder="e.g., 1">
+      </div>
+      <div class="form-group">
+        <label for="currency">
+          Currency
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the currency type (e.g., USD, EUR)."></i>
+        </label>
+        <input type="text" class="form-control" id="currency" [(ngModel)]="purchaseSuggestion.currency" name="currency" placeholder="e.g., USD">
+      </div>
+      <div class="form-group">
+        <label for="price">
+          Price
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the price of the item."></i>
+        </label>
+        <input type="number" class="form-control" id="price" [(ngModel)]="purchaseSuggestion.price" name="price" step="0.01" placeholder="e.g., 19.99">
+      </div>
+      <div class="form-group">
+        <label for="total">
+          Total
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the total cost for the copies requested."></i>
+        </label>
+        <input type="number" class="form-control" id="total" [(ngModel)]="purchaseSuggestion.total" name="total" step="0.01" placeholder="e.g., 39.98">
+      </div>
+    </form>
+    
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
+    <button type="button" class="btn btn-outline-primary" (click)="onSaveClick()">Save</button>
+  </div>
+  

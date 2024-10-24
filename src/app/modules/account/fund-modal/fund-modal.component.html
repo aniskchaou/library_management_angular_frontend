@@ -1,0 +1,72 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ fund?.id ? 'Edit' : 'Add' }} Fund</h5>
+  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <label for="fundCode">
+        Fund Code
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the unique code for the fund."></i>
+      </label>
+      <input type="text" class="form-control" id="fundCode" [(ngModel)]="fund.fundCode" name="fundCode" placeholder="e.g., FD123" value="FD123">
+    </div>
+    <div class="form-group">
+      <label for="fundName">
+        Fund Name
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the name of the fund."></i>
+      </label>
+      <input type="text" class="form-control" id="fundName" [(ngModel)]="fund.fundName" name="fundName" placeholder="e.g., Retirement Fund" value="Retirement Fund">
+    </div>
+    <div class="form-group">
+      <label for="amount">
+        Amount
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the amount allocated for the fund."></i>
+      </label>
+      <input type="number" class="form-control" id="amount" [(ngModel)]="fund.amount" name="amount" placeholder="e.g., 10000" value="10000">
+    </div>
+    <div class="form-group">
+      <label for="warningAtPercentage">
+        Warning at Percentage
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Set the warning percentage for fund alerts."></i>
+      </label>
+      <input type="number" class="form-control" id="warningAtPercentage" [(ngModel)]="fund.warningAtPercentage" name="warningAtPercentage" placeholder="e.g., 80" value="80">
+    </div>
+    <div class="form-group">
+      <label for="warningAtAmount">
+        Warning at Amount
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Set the warning amount for fund alerts."></i>
+      </label>
+      <input type="number" class="form-control" id="warningAtAmount" [(ngModel)]="fund.warningAtAmount" name="warningAtAmount" placeholder="e.g., 8000" value="8000">
+    </div>
+    <div class="form-group">
+      <label for="owner">
+        Owner
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the name of the fund owner."></i>
+      </label>
+      <input type="text" class="form-control" id="owner" [(ngModel)]="fund.owner" name="owner" placeholder="e.g., John Doe" value="John Doe">
+    </div>
+    <div class="form-group">
+      <label for="notes">
+        Notes
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Any additional information regarding the fund."></i>
+      </label>
+      <textarea class="form-control" id="notes" [(ngModel)]="fund.notes" name="notes" placeholder="e.g., Important notes here..."></textarea>
+    </div>
+    <div class="form-group">
+      <label for="budget">
+        Budget
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the budget for this fund."></i>
+      </label>
+      <select class="form-control" id="budget" [(ngModel)]="fund.budget" name="budget">
+        <option *ngFor="let budget of budgets" [ngValue]="budget.id">{{ budget.description }}</option>
+      </select>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Cancel</button>
+  <button type="button" class="btn btn-primary" (click)="onSaveClick()">Save</button>
+</div>

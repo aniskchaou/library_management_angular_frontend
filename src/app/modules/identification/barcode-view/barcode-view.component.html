@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h5 class="modal-title">Bar Details</h5>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <img [src]="retrievedImage">
+    <p><strong>ISBN:</strong> {{ barCode?.isbn }}</p>
+    <p><strong>Width:</strong> {{ barCode?.width }} cm</p>
+    <p><strong>Height:</strong> {{ barCode?.height }} cm</p>
+    <p><strong>Type:</strong> {{ barCode?.type }} cm</p>
+</div>
+
+<div class="modal-footer">
+<button type="button" class="btn btn-outline-success" (click)="closeModal()">
+            <i class="fas fa-paper-plane"></i> Close
+        </button>
+</div>
+

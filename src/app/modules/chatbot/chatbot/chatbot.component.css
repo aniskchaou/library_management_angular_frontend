@@ -1,0 +1,122 @@
+/* Chatbot Icon (Toggle Button) */
+.chatbot-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4b71dd;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .chatbot-icon i {
+    font-size: 24px;
+  }
+  
+  /* Chatbot Container */
+  .chatbot-container {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chatbot-header {
+    background-color: #4b71dd;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  
+  .chatbot-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .messages-container {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-y: auto;
+  }
+  
+  .message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .message.user {
+    background-color: #4b71dd;
+    color: white;
+    align-self: flex-end;
+  }
+  
+  .message:not(.user) {
+    background-color: #f1f1f1;
+    color: black;
+  }
+  
+  .chatbot-input {
+    display: flex;
+    padding: 10px;
+    background-color: #f1f1f1;
+  }
+  
+  .chatbot-input input {
+    flex-grow: 1;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .chatbot-input button {
+    padding: 10px;
+    background-color: #4b71dd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+  
+
+/*   
+.chatbot-icon {
+  position: relative;
+  display: inline-block;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 12px;
+  font-weight: bold;
+} */

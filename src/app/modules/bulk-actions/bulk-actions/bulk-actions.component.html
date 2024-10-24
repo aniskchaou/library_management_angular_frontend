@@ -1,0 +1,87 @@
+<div class="container mt-4">
+    <h2>Bulk Actions (Beta)</h2>
+    <p class="text-muted">
+        Note: Bulk actions module is currently in beta state. Initially, we will process each of your actions manually, so please expect some delay in executing your action. Some operations may change / delete other associated (or dependent) records. Please proceed with caution.
+    </p>
+    <button class="btn btn-primary mb-3">Add Bulk Action</button>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Id</th>
+                <th>Object</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>6241</td>
+                <td>Change member's status</td>
+                <td>Member</td>
+                <td>Update</td>
+                <td>Completed</td>
+                <td>2024-06-06 09:18:01</td>
+                <td>
+                    <!-- Add any action buttons here -->
+                    <button class="btn btn-sm btn-info">View</button>
+                    <button class="btn btn-sm btn-warning">Edit</button>
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                </td>
+            </tr>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+
+
+    <div class="modal fade" id="additionalFormModal" tabindex="-1" role="dialog" aria-labelledby="additionalFormModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="additionalFormModalLabel">Form</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="object">Object</label>
+                  <select class="form-control" id="object">
+                    <option>Export all catalog to PDF</option>
+                    <option>Change member's status</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" id="name">
+                </div>
+                <div class="form-group">
+                  <label for="type">Type</label>
+                  <input type="text" class="form-control" id="type">
+                </div>
+                <div class="form-group">
+                  <label for="status">Status</label>
+                  <input type="text" class="form-control" id="status" value="Created" readonly>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save Form</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+</div>

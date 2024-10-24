@@ -73,6 +73,7 @@ export class AddCirculationStatusComponent extends URLLoader implements OnInit {
   }
 
   getCirculationStatusByLang(lang) {
+     lang='EN'
     // this.appointements$ = this.appointmentTestService.getAll()
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/circulationstatus/' + lang)

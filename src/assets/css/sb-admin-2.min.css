@@ -9880,7 +9880,7 @@ a:focus {
   }
 }
 .bg-login-image {
-  background: url(/assets/images/login.png);
+  background: url(/assets/images/bg.png);
   background-position: center;
   background-size: cover;
 }

@@ -1,4 +1,4 @@
-<table class="table table-bordered" id="table" width="100%" cellspacing="0">
+<!-- <table class="table table-bordered" id="dataTabled" width="100%" cellspacing="0">
   <thead>
     <tr>
       <th>{{ typeMemberI18n?.member_type_nameI18n }}</th>
@@ -15,23 +15,202 @@
     <tr *ngFor="let t of typeMembers">
       <td>{{ t.name }}</td>
       <td>
-        <button
-          type="button"
-          data-toggle="modal"
-          (click)="edit(t.id)"
-          data-target="#edit"
-          class="btn btn-warning btn-sm"
-        >
-          <i class="fas fa-edit"></i>
-        </button>
-        <button
-          type="button"
-          class="btn btn-danger btn-sm"
-          (click)="delete(t.id)"
-        >
-          <i class="fas fa-trash-alt"></i>
-        </button>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Actions
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#" data-toggle="modal" (click)="edit(t.id)" data-target="#edit">
+              <i class="fas fa-edit"></i> Edit
+            </a>
+            <a class="dropdown-item" href="#" (click)="delete(t.id)">
+              <i class="fas fa-trash-alt"></i> Delete
+            </a>
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModal">
+              <i class="fas fa-eye"></i> View
+            </a>
+          </div>
+        </div>
       </td>
     </tr>
   </tbody>
-</table>
+</table> -->
+
+<!-- Button to open modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Table -->
+        <table class="table">
+          <tr>
+            <th>Category code:</th>
+            <td></td> <!-- Add category code here -->
+          </tr>
+          <tr>
+            <th>Description:</th>
+            <td></td> <!-- Add description here -->
+          </tr>
+          <tr>
+            <th>Enrollment period:</th>
+            <td>Choose one</td> <!-- Add enrollment period here -->
+          </tr>
+          <tr>
+            <th>In months:</th>
+            <td></td> <!-- Add enrollment period in months here -->
+          </tr>
+          <tr>
+            <th>Until date:</th>
+            <td></td> <!-- Add until date here -->
+          </tr>
+          <tr>
+            <th>Upperage limit:</th>
+            <td></td> <!-- Add upper age limit here -->
+          </tr>
+          <tr>
+            <th>Enrollment fee:</th>
+            <td></td> <!-- Add enrollment fee here -->
+          </tr>
+          <tr>
+            <th>Overdue hold fee:</th>
+            <td>0.00</td> <!-- Add overdue hold fee here -->
+          </tr>
+          <tr>
+            <th>Category type:</th>
+            <td>adult child professional organisation Staff</td> <!-- Add category type here -->
+          </tr>
+          <tr>
+            <th>Minimum password length:</th>
+            <td></td> <!-- Add minimum password length here -->
+          </tr>
+          <tr>
+            <th>Require strong password:</th>
+            <td></td> <!-- Add requirement for strong password here -->
+          </tr>
+          <tr>
+            <th>Block expired patrons:</th>
+            <td></td> <!-- Add block expired patrons status here -->
+          </tr>
+        </table>
+        
+        <!-- End of Table -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div>
+  <input
+    type="text"
+    class="form-control mb-3"
+    placeholder="Search by member type name..."
+    (input)="updateFilter($event)"
+  />
+</div> -->
+
+<!-- Ngx Datatable for TypeMember -->
+<ngx-datatable
+  class="bootstrap"
+  [rows]="typeMembers"
+  [columnMode]="'force'"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [rowHeight]="'auto'"
+  [limit]="10"
+  [loadingIndicator]="loadingIndicator"
+  [reorderable]="reorderable"
+>
+
+  <!-- Member Type Name Column -->
+  <ngx-datatable-column name="Member Type Name" [prop]="'name'">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <span style="color: blue;">{{ row.name }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Category Code Column -->
+  <ngx-datatable-column name="Category Code" [prop]="'categoryCode'">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.categoryCode }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Upper Age Limit Column -->
+  <ngx-datatable-column name="Upper Age Limit" [prop]="'upperAgeLimit'">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.upperAgeLimit }} years
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Enrollment Fee Column -->
+  <ngx-datatable-column name="Enrollment Fee" [prop]="'enrollmentFee'">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <span style="color: red;">{{ row.enrollmentFee | currency:'USD':'symbol' }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Enrollment Period Column -->
+  <ngx-datatable-column name="Enrollment Period" [prop]="'enrollmentPeriod'">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.enrollmentPeriod }} months
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Hold Fee Column -->
+  <ngx-datatable-column name="Hold Fee" [prop]="'holdFee'">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <span style="color: green;">{{ row.holdFee | currency:'USD':'symbol' }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Category Type Column -->
+  <ngx-datatable-column name="Category Type" [prop]="'categoryType'">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.categoryType }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Min Password Length Column -->
+  <ngx-datatable-column name="Min Password Length" [prop]="'minPasswordLength'">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.minPasswordLength }} characters
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Require Strong Password Column -->
+  <ngx-datatable-column name="Require Strong Password" [prop]="'requireStrongPassword'">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.requireStrongPassword ? 'Yes' : 'No' }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Block Expired Patrons Column -->
+  <ngx-datatable-column name="Block Expired Patrons" [prop]="'blockExpiredPatrons'">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.blockExpiredPatrons ? 'Yes' : 'No' }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Actions Column -->
+  <ngx-datatable-column name="Actions">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <button class="btn btn-sm btn-outline-primary mr-2" (click)="openViewDialog(row)">
+        View
+      </button>
+    </ng-template>
+  </ngx-datatable-column>
+
+</ngx-datatable>

@@ -1,4 +1,4 @@
-<table class="center-table table">
+<!-- <table class="center-table table">
   <tr>
     <td>
       <b>{{ circulationI18n?.bookNameI18n }} :</b>
@@ -41,4 +41,95 @@
     </td>
     <td>{{ circulation?.writer?.name }}</td>
   </tr>
-</table>
+</table>  -->
+   
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewCatalogLabel">View Circulation Details</h5>
+        <button (click)="closeModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <!-- Modal Body: Two Columns Layout -->
+      <div class="modal-body">
+         <div class="container">
+          <div class="row">
+            
+            
+            <div class="col-md-6">
+              <div class="form-group">
+                <b>{{ circulationI18n?.bookNameI18n }} :</b>
+                <p>{{ circulation?.catalogItemName.title }}</p>
+              </div>
+              <div class="form-group">
+                <b>{{ circulationI18n?.issueDateI18n }} :</b>
+                <p>{{ circulation?.issueDate }}</p>
+              </div>
+              <div class="form-group">
+                <b>{{ circulationI18n?.lastDateI18n }} :</b>
+                <p>{{ circulation?.lastDate }}</p>
+              </div>
+            </div>
+            
+           
+            <div class="col-md-6">
+              <div class="form-group">
+                <b>{{ circulationI18n?.memberNameI18n }} :</b>
+                <p>{{ circulation?.memberName?.firstname }}</p>
+              </div>
+              <div class="form-group">
+                <b>{{ circulationI18n?.returnDateI18n }} :</b>
+                <p>{{ circulation?.returnDate }}</p>
+              </div>
+              <div class="form-group">
+                <b>{{ circulationI18n?.writerI18n }} :</b>
+                <p>{{ circulation?.catalogItemName.writer.name }}</p>
+              </div>
+            </div>
+
+          </div>
+        </div> 
+      </div>
+
+      <!-- Modal Footer with Dropdown Buttons -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
+
+        <!-- Actions Dropdown Button -->
+         <!-- <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Actions
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#view" data-toggle="modal" >
+              <i class="fas fa-eye"></i> View
+            </a>
+            <a class="dropdown-item" href="#edit" data-toggle="modal"  data-target="#edit">
+              <i class="fas fa-edit"></i> Edit
+            </a>
+            <a class="dropdown-item" href="#" >
+              <i class="fas fa-trash-alt"></i> Delete
+            </a>
+            <a class="dropdown-item" href="#" >
+              <i class="fas fa-undo"></i> Return
+            </a>
+            <a class="dropdown-item" href="#contact"  data-toggle="modal" data-target="#contact">
+              <i class="fas fa-envelope"></i> Contact
+            </a>
+            <a class="dropdown-item" href="#">
+              <i class="fas fa-sign-in-alt"></i> Check-in
+            </a>
+            <a class="dropdown-item" href="#">
+              <i class="fas fa-sign-out-alt"></i> Check-out
+            </a>
+            <a class="dropdown-item" href="#">
+              <i class="fas fa-redo"></i> Renew
+            </a>
+            <a class="dropdown-item" href="#">
+              <i class="fas fa-receipt"></i> Receipt
+            </a>
+          </div>
+        </div>  -->
+      </div>
+

@@ -17,8 +17,8 @@ export class AccountAnalyticsComponent implements OnInit {
   view: any[] = [900, 350];
   showXAxis = true;
   showYAxis = true;
-  gradient = false;
-  showLegend = true;
+  gradient = true;
+  showLegend = false;
   showXAxisLabel = true;
   xAxisLabel = 'Expense';
   xAxisLabel1 = 'Income';

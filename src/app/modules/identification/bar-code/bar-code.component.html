@@ -1,0 +1,121 @@
+<!-- Main Content -->
+<div class="container mt-4">
+  <!-- Title with Icon -->
+  <h1 class="h3 mb-2 text-gray-800">
+    <i class="fas fa-barcode mr-2"></i>Bar Codes
+  </h1>
+
+  <!-- Description Below Title -->
+  <p class="lead mb-4">
+    Manage and generate bar codes for various purposes. Use the tabs to navigate between a detailed list of bar codes and the user manual. Click "Generate Bar Code" to create new entries or edit existing ones.
+  </p>
+
+  <!-- Navigation Tabs -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#List">
+        <i class="fas fa-list mr-2"></i> List
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#UserManual">
+        <i class="fas fa-book mr-2"></i> User Manual
+      </a>
+    </li>
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <!-- List tab content -->
+    <div id="List" class="tab-pane fade show active">
+      <div class="container-fluid">
+        <!-- Button trigger modal -->
+        <button class="btn btn-outline-primary mb-3" (click)="openAddDialog()">Generate Bar Code</button>
+        
+        <button
+        href="#"
+        role="button"
+        class="btn btn-outline-warning btn-icon-split"
+        (click)="loadBarcodes()"
+        >
+        <span class="icon text-warning">
+          <i class="fas fa-redo"></i>
+        </span>
+        <span class="text">Reload</span>
+        </button>
+
+        <div *ngIf="loadingIndicator; else loaded">
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+        <ng-template #loaded>
+          <!-- Bar Code Table -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <ngx-datatable
+  class="bootstrap"
+  [rows]="barcodes"
+  [columnMode]="'force'"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [rowHeight]="'auto'">
+
+  <ngx-datatable-column name="ISBN" [prop]="'isbn'">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <span style="color: red;">{{ row.isbn }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [prop]="column.prop"> 
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Actions">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Actions">
+        <i class="fas fa-cog"></i> Actions
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item"  (click)="openViewDialog(row)" title="Edit">
+        <i class="fas fa-eye"></i> View
+      </a>
+
+        <a class="dropdown-item"  (click)="openEditDialog(row)" title="Edit">
+            <i class="fas fa-edit"></i> Edit
+        </a>
+        <a class="dropdown-item"  (click)="deleteBarCode(row.id)" title="Delete">
+            <i class="fas fa-trash"></i> Delete
+        </a>
+        <a class="dropdown-item" (click)="regenerateBarCode(row)">
+            <i class="fas fa-qrcode"></i> Regenerate Bar Code
+        </a>
+        <a class="dropdown-item" (click)="printBarCode(row)">
+            <i class="fas fa-print"></i> Print
+        </a>
+        <a class="dropdown-item" (click)="downloadBarCode(row)">
+          <i class="fas fa-download"></i> Download
+      </a>
+    </div>
+    </ng-template>
+  </ngx-datatable-column>
+  
+</ngx-datatable>
+
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- User Manual tab content -->
+    <div id="UserManual" class="tab-pane custom-tab-pane">
+      <!-- User Manual content here -->
+      <div>
+         <!-- <markdown [src]="markdownContent" [data]="markdownContent"></markdown>  -->
+          <div  [innerHTML]="markdownContent"></div>
+      </div>
+    </div>
+
+  </div>
+</div>

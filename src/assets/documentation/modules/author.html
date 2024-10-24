@@ -1,0 +1,96 @@
+<h1>Author Module Documentation</h1>
+
+<h2>Module Description</h2>
+<p>The Author module is designed to manage information about authors whose works are part of the library's collection. It allows librarians to store and organize detailed information about each author, including their biography, publications, awards, and references.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">Writer Name*:</p>
+    <ul>
+        <li><strong>Description:</strong> The full name of the author.</li>
+        <li><strong>Usage:</strong> Enter the author's full name.</li>
+        <li><strong>Example:</strong> "J.K. Rowling", "George Orwell"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string and unique.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Note*:</p>
+    <ul>
+        <li><strong>Description:</strong> Additional notes or information about the author.</li>
+        <li><strong>Usage:</strong> Enter any relevant notes about the author.</li>
+        <li><strong>Example:</strong> "Known for the Harry Potter series", "Used the pen name Eric Arthur Blair"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Date of Birth:</p>
+    <ul>
+        <li><strong>Description:</strong> The birthdate of the author.</li>
+        <li><strong>Usage:</strong> Enter the author's date of birth in the format jj/mm/aaaa.</li>
+        <li><strong>Example:</strong> "31/07/1965"</li>
+        <li><strong>Validation:</strong> Must be a valid date format (jj/mm/aaaa).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Died:</p>
+    <ul>
+        <li><strong>Description:</strong> Indicates whether the author is deceased.</li>
+        <li><strong>Usage:</strong> Select "Yes" if the author is deceased, otherwise select "No".</li>
+        <li><strong>Example:</strong> "Yes", "No"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes or No).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Date of Death:</p>
+    <ul>
+        <li><strong>Description:</strong> The date of death of the author (if applicable).</li>
+        <li><strong>Usage:</strong> Enter the author's date of death in the format jj/mm/aaaa.</li>
+        <li><strong>Example:</strong> "21/01/1950"</li>
+        <li><strong>Validation:</strong> Must be a valid date format (jj/mm/aaaa) and only applicable if the "Died" field is set to "Yes".</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Bio:</p>
+    <ul>
+        <li><strong>Description:</strong> A brief biography of the author.</li>
+        <li><strong>Usage:</strong> Enter a concise biography of the author.</li>
+        <li><strong>Example:</strong> "J.K. Rowling is a British author, best known for writing the Harry Potter series."</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Publications:</p>
+    <ul>
+        <li><strong>Description:</strong> A list of notable works published by the author.</li>
+        <li><strong>Usage:</strong> Enter a comma-separated list of the author's publications.</li>
+        <li><strong>Example:</strong> "Harry Potter and the Philosopher's Stone, 1984, Animal Farm"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Awards:</p>
+    <ul>
+        <li><strong>Description:</strong> A list of awards and honors received by the author.</li>
+        <li><strong>Usage:</strong> Enter a comma-separated list of awards and honors.</li>
+        <li><strong>Example:</strong> "Hugo Award, Nebula Award, Pulitzer Prize"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">References:</p>
+    <ul>
+        <li><strong>Description:</strong> References or citations relevant to the author's work or biography.</li>
+        <li><strong>Usage:</strong> Enter any relevant references or citations.</li>
+        <li><strong>Example:</strong> "Biography source: Encyclopedia Britannica, Literary analysis: The New York Times"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>

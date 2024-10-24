@@ -2,10 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import Book from 'src/app/main/models/Book';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import CatalogItem from 'src/app/main/models/Book';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 import BookFilterValidation from 'src/app/main/validations/BookFilterValidation';
+import { AddCategoryComponent } from '../add-category/add-category.component';
 
 @Component({
   selector: 'app-statistics-category',
@@ -38,6 +40,8 @@ export class StatisticsCategoryComponent implements OnInit {
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
   };
+  status: Object;
+  count: Object;
 
   onSelect(event) {
     console.log(event);
@@ -45,7 +49,8 @@ export class StatisticsCategoryComponent implements OnInit {
   constructor(
     private router: Router,
     private validation: BookFilterValidation,
-    private httpService: HTTPService
+    private httpService: HTTPService,
+    private modalService: NgbModal
   ) {}
 
   showChart() {
@@ -72,11 +77,34 @@ export class StatisticsCategoryComponent implements OnInit {
 
     this.httpService
       .getAll(
-        CONFIG.URL_BASE + '/i18n/category/' + CONFIG.getInstance().getLang()
+        CONFIG.URL_BASE + '/i18n/category/EN'
       )
       .subscribe(
         (data) => {
           this.categoryI18n = data;
+        },
+        (err: HttpErrorResponse) => {}
+      );
+
+
+
+
+
+      this.httpService
+      .getAll(CONFIG.URL_BASE + '/category/count')
+      .subscribe(
+        (data) => {
+          this.count = data;
+        },
+        (err: HttpErrorResponse) => {}
+      );
+
+
+      this.httpService
+      .getAll(CONFIG.URL_BASE + '/category/status-count')
+      .subscribe(
+        (data) => {
+          this.status = data;
         },
         (err: HttpErrorResponse) => {}
       );
@@ -88,5 +116,18 @@ export class StatisticsCategoryComponent implements OnInit {
       .then(() => {
         this.router.navigate(['/category']);
       });
+  }
+
+  openAddDialog(): void {
+    const modalRef = this.modalService.open(AddCategoryComponent);
+    //modalRef.componentInstance.category = { ...category }; // Ensure category is passed properly
+  
+    //console.log(category); // Ensure category is not undefined here
+
+    modalRef.result.then(result => {
+      console.log(result)
+       //this.getAll()
+      
+    }).catch(error => console.log(error));
   }
 }

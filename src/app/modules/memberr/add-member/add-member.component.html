@@ -1,319 +1,708 @@
-<form
-  method="post"
-  class="form-horizontal"
-  id="crudForm"
-  autocomplete="off"
-  enctype="multipart/form-data"
-  accept-charset="utf-8"
-  [formGroup]="memberForm"
->
+<!-- - <form method="post" class="form-horizontal" id="crudForm" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" [formGroup]="memberForm">
+  
   <div class="form-div">
-    <div class="form-group odd" id="name_field_box">
-      <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.nameI18n }}
-          </font> </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
-        <input
-          class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
-          formControlName="name"
-          id="field-name"
-          name="name"
-          type="text"
-          value=""
-          maxlength="99"
-        />
-
-        <div *ngIf="submitted && f.name.errors" class="alert alert-danger">
-          <div *ngIf="submitted && f.name.errors.required">
-            {{ msg.validationMessage.name }}
+      
+      <div class="form-group odd" id="image_field_box">
+          <label class="col-sm-3 control-label" for="image" id="image_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Image</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="image_input_box">
+              <input class="form-control" formControlName="image" id="field-image" name="image" type="file" />
           </div>
-        </div>
       </div>
-    </div>
 
-    <div class="form-group even" id="user_type_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="user_type_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.user_typeI18n }}
-          </font> </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="user_type_input_box">
-        <select
-          class="form-control"
-          name="user_type"
-          [ngClass]="{ 'is-invalid': submitted && f.user_type.errors }"
-          formControlName="user_type"
-          id="field-user_type"
-        >
-          <option value=""></option>
-          <option value="Member" selected="yes">
-            <font style="vertical-align: inherit">
-              <font style="vertical-align: inherit">Membre</font>
-            </font>
-          </option>
-          <option value="Admin">
-            <font style="vertical-align: inherit">
-              <font style="vertical-align: inherit">Administrateur</font>
-            </font>
-          </option>
-        </select>
-
-        <div *ngIf="submitted && f.user_type.errors" class="alert alert-danger">
-          <div *ngIf="submitted && f.user_type.errors.required">
-            {{ msg.validationMessage.user_type }}
+      
+      <div class="form-group even" id="allow_login_field_box">
+          <label class="col-sm-3 control-label" for="allow_login" id="allow_login_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Allow Member Login?</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="allow_login_input_box">
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" formControlName="allow_login" id="field-allow_login_yes" name="allow_login" type="radio" value="yes" />
+                  <label class="form-check-label" for="allow_login_yes">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" formControlName="allow_login" id="field-allow_login_no" name="allow_login" type="radio" value="no" checked />
+                  <label class="form-check-label" for="allow_login_no">No</label>
+              </div>
           </div>
-        </div>
       </div>
-    </div>
 
-    <div class="form-group odd" id="type_id_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="type_id_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.type_idI18n }}
-          </font>
-        </font>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="type_id_input_box">
-        <select
-          class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.type_id.errors }"
-          formControlName="type_id"
-          id="field-type_id"
-          name="type_id"
-        >
-          <option value=""></option>
-          <option value="150">
-            <font style="vertical-align: inherit">
-              <font style="vertical-align: inherit">Professeur</font>
-            </font>
-          </option>
-          <option value="151">
-            <font style="vertical-align: inherit">
-              <font style="vertical-align: inherit">Etudiant</font>
-            </font>
-          </option>
-        </select>
-
-        <div *ngIf="submitted && f.type_id.errors" class="alert alert-danger">
-          <div *ngIf="submitted && f.type_id.errors.required">
-            {{ msg.validationMessage.type_id }}
+      <div class="form-group odd" id="booking_quota_field_box">
+          <label class="col-sm-3 control-label" for="booking_quota" id="booking_quota_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Booking Quota</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="booking_quota_input_box">
+              <input class="form-control" formControlName="booking_quota" id="field-booking_quota" name="booking_quota" type="text" value="" maxlength="99" />
           </div>
-        </div>
       </div>
-    </div>
 
-    <div class="form-group even" id="email_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="email_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.emailI18n }}
-          </font> </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="email_input_box">
-        <input
-          class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
-          formControlName="email"
-          id="field-email"
-          name="email"
-          type="text"
-          value=""
-          maxlength="250"
-        />
-        <!-- <span class="red"></span> -->
-
-        <div *ngIf="submitted && f.email.errors" class="alert alert-danger">
-          <div *ngIf="submitted && f.email.errors.required">
-            {{ msg.validationMessage.email }}
+      <div class="form-group even" id="type_field_box">
+          <label class="col-sm-3 control-label" for="type" id="type_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Type</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="type_input_box">
+              <select class="form-control" formControlName="type" id="field-type" name="type">
+                  <option value="Regular">
+                      <font style="vertical-align: inherit">
+                          <font style="vertical-align: inherit">Regular</font>
+                      </font>
+                  </option>
+                  <option value="Member Group">
+                      <font style="vertical-align: inherit">
+                          <font style="vertical-align: inherit">Member Group</font>
+                      </font>
+                  </option>
+              </select>
           </div>
-        </div>
       </div>
-    </div>
 
-    <div class="form-group odd" id="mobile_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="mobile_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.mobileI18n }}
-          </font> </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="mobile_input_box">
-        <input
-          class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }"
-          formControlName="mobile"
-          id="field-mobile"
-          name="mobile"
-          type="text"
-          value=""
-          maxlength="100"
-        />
-        <!-- <span class="red"></span> -->
-
-        <div *ngIf="submitted && f.mobile.errors" class="alert alert-danger">
-          <div *ngIf="submitted && f.mobile.errors.required">
-            {{ msg.validationMessage.mobile }}
+      <div class="form-group odd" id="card_number_field_box">
+          <label class="col-sm-3 control-label" for="card_number" id="card_number_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Card number</font>
+              </font>
+              <span class="required">
+                  <font style="vertical-align: inherit">
+                      <font style="vertical-align: inherit">*</font>
+                  </font>
+              </span>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="card_number_input_box">
+              <input class="form-control" formControlName="card_number" id="field-card_number" name="card_number" type="text" value="2604" maxlength="32" required />
+              <div class="alert alert-info">
+                  Card number must be between 1 and 32 characters. AutoMemberNum is set to enabled, but card number is marked as mandatory in BorrowerMandatoryField: auto calc has been disabled.
+              </div>
           </div>
-        </div>
       </div>
-    </div>
 
-    <div class="form-group even" id="password_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="password_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.passwordI18n }}</font
-          > </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="password_input_box">
-        <input
-          class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
-          formControlName="password"
-          id="field-password"
-          name="password"
-          type="password"
-          value=""
-          maxlength="99"
-        />
-
-        <div *ngIf="submitted && f.password.errors" class="alert alert-danger">
-          <div *ngIf="submitted && f.password.errors.required">
-            {{ msg.validationMessage.password }}
+      <div class="form-group even" id="library_field_box">
+          <label class="col-sm-3 control-label" for="library" id="library_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Library</font>
+              </font>
+              <span class="required">
+                  <font style="vertical-align: inherit">
+                      <font style="vertical-align: inherit">*</font>
+                  </font>
+              </span>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="library_input_box">
+              <input class="form-control" formControlName="library" id="field-library" name="library" type="text" value="Centerville" required />
           </div>
-        </div>
       </div>
-    </div>
 
-    <div class="form-group odd" id="address_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="address_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.addressI18n }}
-          </font> </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="address_input_box">
-        <textarea
-          class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.address.errors }"
-          formControlName="address"
-          id="field-address"
-          name="address"
-        ></textarea>
-
-        <div *ngIf="submitted && f.address.errors" class="alert alert-danger">
-          <div *ngIf="submitted && f.address.errors.required">
-            {{ msg.validationMessage.address }}
+      <div class="form-group odd" id="required_category_field_box">
+          <label class="col-sm-3 control-label" for="required_category" id="required_category_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Required Category</font>
+              </font>
+              <span class="required">
+                  <font style="vertical-align: inherit">
+                      <font style="vertical-align: inherit">*</font>
+                  </font>
+              </span>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="required_category_input_box">
+              <input class="form-control" formControlName="required_category" id="field-required_category" name="required_category" type="text" value="STUDENT" required />
           </div>
-        </div>
       </div>
-    </div>
 
-    <div class="form-group even" id="status_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="status_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.statusI18n }}
-          </font> </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="status_input_box">
-        <select
-          [ngClass]="{ 'is-invalid': submitted && f.status.errors }"
-          formControlName="status"
-          name="status"
-          class="form-control"
-          id="field-status"
-        >
-          <option value="0">
-            <font style="vertical-align: inherit">
-              <font style="vertical-align: inherit">Inactif</font>
-            </font>
-          </option>
-          <option value="1" selected="selected">
-            <font style="vertical-align: inherit">
-              <font style="vertical-align: inherit">actif</font>
-            </font>
-          </option>
-        </select>
-        <!-- <span class="red"></span> -->
+      <div class="form-group even" id="sort_1_field_box">
+          <label class="col-sm-3 control-label" for="sort_1" id="sort_1_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Sort 1</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="sort_1_input_box">
+              <input class="form-control" formControlName="sort_1" id="field-sort_1" name="sort_1" type="text" />
+          </div>
       </div>
-    </div>
+
+      
+      <div class="form-group odd" id="sort_2_field_box">
+          <label class="col-sm-3 control-label" for="sort_2" id="sort_2_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Sort 2</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="sort_2_input_box">
+              <input class="form-control" formControlName="sort_2" id="field-sort_2" name="sort_2" type="text" />
+          </div>
+      </div>
+
+      <div class="form-group even" id="allow_auto_renewal_field_box">
+          <label class="col-sm-3 control-label" for="allow_auto_renewal" id="allow_auto_renewal_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Allow auto-renewal of items</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="allow_auto_renewal_input_box">
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" formControlName="allow_auto_renewal" id="field-allow_auto_renewal_yes" name="allow_auto_renewal" type="radio" value="yes" />
+                  <label class="form-check-label" for="allow_auto_renewal_yes">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" formControlName="allow_auto_renewal" id="field-allow_auto_renewal_no" name="allow_auto_renewal" type="radio" value="no" checked />
+                  <label class="form-check-label" for="allow_auto_renewal_no">No</label>
+              </div>
+          </div>
+      </div>
+
+     
+      <div class="form-group odd" id="registration_date_field_box">
+          <label class="col-sm-3 control-label" for="registration_date" id="registration_date_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Registration date</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="registration_date_input_box">
+              <input class="form-control" formControlName="registration_date" id="field-registration_date" name="registration_date" type="text" value="06/04/2024" />
+          </div>
+      </div>
+
+      
+      <div class="form-group even" id="expiry_date_field_box">
+          <label class="col-sm-3 control-label" for="expiry_date" id="expiry_date_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Expiry date (leave blank for auto calc)</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="expiry_date_input_box">
+              <input class="form-control" formControlName="expiry_date" id="field-expiry_date" name="expiry_date" type="text" value="06/04/2026" />
+          </div>
+      </div>
+
+      
+      <div class="form-group odd" id="opac_note_field_box">
+          <label class="col-sm-3 control-label" for="opac_note" id="opac_note_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">OPAC note</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="opac_note_input_box">
+              <input class="form-control" formControlName="opac_note" id="field-opac_note" name="opac_note" type="text" value="This message appears on this patron's user page in the OPAC" />
+          </div>
+      </div>
+
+      
+      <div class="form-group even" id="circulation_note_field_box">
+          <label class="col-sm-3 control-label" for="circulation_note" id="circulation_note_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Circulation note</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="circulation_note_input_box">
+              <input class="form-control" formControlName="circulation_note" id="field-circulation_note" name="circulation_note" type="text" value="This message displays when checking out to this patron" />
+          </div>
+      </div>
+
+      <div class="form-group odd" id="username_field_box">
+          <label class="col-sm-3 control-label" for="username" id="username_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Username</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="username_input_box">
+              <input class="form-control" formControlName="username" id="field-username" name="username" type="text" value="aniket.pandit1" />
+          </div>
+      </div>
+
+ 
+      <div class="form-group even" id="password_field_box">
+          <label class="col-sm-3 control-label" for="password" id="password_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Password</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="password_input_box">
+              <input class="form-control" formControlName="password" id="field-password" name="password" type="password" value="••••" />
+              <div class="alert alert-info">Minimum password length: 3</div>
+          </div>
+      </div>
+
+      
+      <div class="form-group odd" id="confirm_password_field_box">
+          <label class="col-sm-3 control-label" for="confirm_password" id="confirm_password_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Confirm password</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="confirm_password_input_box">
+              <input class="form-control" formControlName="confirm_password" id="field-confirm_password" name="confirm_password" type="password" value="••••" />
+          </div>
+      </div>
+
+      <div class="form-group even" id="lost_card_field_box">
+          <label class="col-sm-3 control-label" for="lost_card" id="lost_card_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Lost card</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="lost_card_input_box">
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" formControlName="lost_card" id="field-lost_card_yes" name="lost_card" type="radio" value="yes" />
+                  <label class="form-check-label" for="lost_card_yes">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" formControlName="lost_card" id="field-lost_card_no" name="lost_card" type="radio" value="no" checked />
+                  <label class="form-check-label" for="lost_card_no">No</label>
+              </div>
+          </div>
+      </div>
+
+      
+      <div class="form-group odd" id="gone_no_address_field_box">
+          <label class="col-sm-3 control-label" for="gone_no_address" id="gone_no_address_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Gone no address</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="gone_no_address_input_box">
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" formControlName="gone_no_address" id="field-gone_no_address_yes" name="gone_no_address" type="radio" value="yes" />
+                  <label class="form-check-label" for="gone_no_address_yes">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" formControlName="gone_no_address" id="field-gone_no_address_no" name="gone_no_address" type="radio" value="no" checked />
+                  <label class="form-check-label" for="gone_no_address_no">No</label>
+              </div>
+          </div>
+      </div>
+
+      
+      <div class="form-group even" id="patron_restrictions_field_box">
+          <label class="col-sm-3 control-label" for="patron_restrictions" id="patron_restrictions_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Patron restrictions</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="patron_restrictions_input_box">
+              <input class="form-control" formControlName="patron_restrictions" id="field-patron_restrictions" name="patron_restrictions" type="text" value="Patron is currently unrestricted." />
+          </div>
+      </div>
+
+      
+      <div class="form-group odd" id="add_manual_restriction_field_box">
+          <label class="col-sm-3 control-label" for="add_manual_restriction" id="add_manual_restriction_display_as_box">
+              <font style="vertical-align: inherit">
+                  <font style="vertical-align: inherit">Add manual restriction</font>
+              </font>
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="add_manual_restriction_input_box">
+              <input class="form-control" formControlName="add_manual_restriction" id="field-add_manual_restriction" name="add_manual_restriction" type="text" />
+          </div>
+      </div>
   </div>
-  <div class="pDiv">
-    <button (click)="add()" type="button" class="btn btn-info">
-      <i class="fas fa-save"></i>
-      {{ memberI18n.addButtonI18n }}
-    </button>
 
-    <div class="clear"></div>
+    
+    <div class="form-div">
+      <div class="form-group odd" id="salutation_field_box">
+          <label class="col-sm-3 control-label" for="salutation" id="salutation_display_as_box">
+              Salutation
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="salutation_input_box">
+              <select class="form-control" formControlName="salutation" id="field-salutation" name="salutation">
+                  <option value="Mr">Mr</option>
+                  <option value="Mrs">Mrs</option>
+                  <option value="Ms">Ms</option>
+                  <option value="Dr">Dr</option>
+              </select>
+          </div>
+      </div>
+
+     
+      <div class="form-group even" id="surname_field_box">
+          <label class="col-sm-3 control-label" for="surname" id="surname_display_as_box">
+              Surname
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="surname_input_box">
+              <input class="form-control" formControlName="surname" id="field-surname" name="surname" type="text" maxlength="99" />
+          </div>
+      </div>
+
+      <div class="form-group odd" id="firstname_field_box">
+          <label class="col-sm-3 control-label" for="firstname" id="firstname_display_as_box">
+              First name
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="firstname_input_box">
+              <input class="form-control" formControlName="firstname" id="field-firstname" name="firstname" type="text" maxlength="99" />
+          </div>
+      </div>
+
+      
+      <div class="form-group even" id="dob_field_box">
+          <label class="col-sm-3 control-label" for="dob" id="dob_display_as_box">
+              Date of birth
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="dob_input_box">
+              <input class="form-control" formControlName="dob" id="field-dob" name="dob" type="date" />
+          </div>
+      </div>
+
+      <div class="form-group odd" id="age_field_box">
+          <label class="col-sm-3 control-label" for="age" id="age_display_as_box">
+              Age
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="age_input_box">
+              <input class="form-control" formControlName="age" id="field-age" name="age" type="text" value="21 years 4 months" readonly />
+          </div>
+      </div>
+
+      <div class="form-group even" id="gender_field_box">
+          <label class="col-sm-3 control-label" for="gender" id="gender_display_as_box">
+              Gender
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="gender_input_box">
+              <select class="form-control" formControlName="gender" id="field-gender" name="gender">
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Other">Other</option>
+                  <option value="None specified">None specified</option>
+              </select>
+          </div>
+      </div>
+
+      <div class="form-group odd" id="street_number_field_box">
+          <label class="col-sm-3 control-label" for="street_number" id="street_number_display_as_box">
+              Street number
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="street_number_input_box">
+              <input class="form-control" formControlName="street_number" id="field-street_number" name="street_number" type="text" />
+          </div>
+      </div>
+
+      <div class="form-group even" id="address_field_box">
+          <label class="col-sm-3 control-label" for="address" id="address_display_as_box">
+              Address
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="address_input_box">
+              <input class="form-control" formControlName="address" id="field-address" name="address" type="text" />
+          </div>
+      </div>
+
+      <div class="form-group odd" id="city_field_box">
+          <label class="col-sm-3 control-label" for="city" id="city_display_as_box">
+              City
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="city_input_box">
+              <input class="form-control" formControlName="city" id="field-city" name="city" type="text" />
+          </div>
+      </div>
+
+      <div class="form-group even" id="state_field_box">
+          <label class="col-sm-3 control-label" for="state" id="state_display_as_box">
+              State
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="state_input_box">
+              <input class="form-control" formControlName="state" id="field-state" name="state" type="text" />
+          </div>
+      </div>
+
+      <div class="form-group odd" id="zip_field_box">
+          <label class="col-sm-3 control-label" for="zip" id="zip_display_as_box">
+              ZIP/Postal code
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="zip_input_box">
+              <input class="form-control" formControlName="zip" id="field-zip" name="zip" type="text" />
+          </div>
+      </div>
+
+      <div class="form-group even" id="country_field_box">
+          <label class="col-sm-3 control-label" for="country" id="country_display_as_box">
+              Country
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="country_input_box">
+              <input class="form-control" formControlName="country" id="field-country" name="country" type="text" />
+          </div>
+      </div>
+
+      <div class="form-group odd" id="primary_phone_field_box">
+          <label class="col-sm-3 control-label" for="primary_phone" id="primary_phone_display_as_box">
+              Primary phone
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="primary_phone_input_box">
+              <input class="form-control" formControlName="primary_phone" id="field-primary_phone" name="primary_phone" type="text" />
+          </div>
+      </div>
+
+      <div class="form-group even" id="secondary_phone_field_box">
+          <label class="col-sm-3 control-label" for="secondary_phone" id="secondary_phone_display_as_box">
+              Secondary phone
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="secondary_phone_input_box">
+              <input class="form-control" formControlName="secondary_phone" id="field-secondary_phone" name="secondary_phone" type="text" />
+          </div>
+      </div>
+
+      <div class="form-group odd" id="primary_email_field_box">
+          <label class="col-sm-3 control-label" for="primary_email" id="primary_email_display_as_box">
+              Primary email
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="primary_email_input_box">
+              <input class="form-control" formControlName="primary_email" id="field-primary_email" name="primary_email" type="text" />
+          </div>
+      </div>
+
+      <div class="form-group even" id="secondary_email_field_box">
+          <label class="col-sm-3 control-label" for="secondary_email" id="secondary_email_display_as_box">
+              Secondary email
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="secondary_email_input_box">
+              <input class="form-control" formControlName="secondary_email" id="field-secondary_email" name="secondary_email" type="text" />
+          </div>
+      </div>
+
+     
+      <div class="form-group odd" id="fax_field_box">
+          <label class="col-sm-3 control-label" for="fax" id="fax_display_as_box">
+              Fax
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="fax_input_box">
+              <input class="form-control" formControlName="fax" id="field-fax" name="fax" type="text" />
+          </div>
+      </div>
+
+    
+      <div class="form-group even" id="contact_method_field_box">
+          <label class="col-sm-3 control-label" for="contact_method" id="contact_method_display_as_box">
+              Main contact method
+          </label>
+          <div class="col-sm-9 col-md-6 col-lg-6" id="contact_method_input_box">
+              <select class="form-control" formControlName="contact_method" id="field-contact_method" name="contact_method">
+                  <option value="Phone">Phone</option>
+                  <option value="Email">Email</option>
+                  <option value="Mail">Mail</option>
+              </select>
+          </div>
+      </div>
+  </div>
+
+
+  <div class="pDiv">
+      <button (click)="add()" type="button" class="btn btn-info">
+          <i class="fas fa-save"></i>
+          {{ memberI18n.addButtonI18n }}
+      </button>
+
+      <div class="clear"></div>
   </div>
 </form>
+ -->
+
+
+ <form [formGroup]="memberForm" (ngSubmit)="onSubmit()">
+
+    <div class="row">
+      <!-- Surname -->
+      <div class="form-group col-md-6">
+        <label for="surname">
+          Surname
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the member's surname. Example: Smith"></i>
+        </label>
+        <input formControlName="surname" class="form-control" id="field-surname" name="surname" type="text" maxlength="99" placeholder="Enter surname" />
+      </div>
+  
+      <!-- First Name -->
+      <div class="form-group col-md-6">
+        <label for="firstname">
+          First Name
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the member's first name. Example: John"></i>
+        </label>
+        <input formControlName="firstname" class="form-control" id="field-firstname" name="firstname" type="text" maxlength="99" placeholder="Enter first name" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Date of Birth -->
+      <div class="form-group col-md-6">
+        <label for="dob">
+          Date of Birth
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the member's date of birth. Example: 1990-01-01"></i>
+        </label>
+        <input formControlName="dob" class="form-control" id="field-dob" name="dob" type="date" />
+      </div>
+  
+      <!-- Age -->
+      <div class="form-group col-md-6">
+        <label for="age">
+          Age
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="This field is auto-calculated based on the date of birth. Example: 21 years 4 months"></i>
+        </label>
+        <input formControlName="age" class="form-control" id="field-age" name="age" type="text" value="21 years 4 months" readonly />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Gender -->
+      <div class="form-group col-md-6">
+        <label for="gender">
+          Gender
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Select the member's gender."></i>
+        </label>
+        <!-- <ng-select formControlName="gender" [items]="genderOptions" id="field-gender" name="gender" placeholder="Select gender"></ng-select> -->
+        <select class="form-control" formControlName="gender" id="field-gender" name="gender">
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Other">Other</option>
+            <option value="None specified">None specified</option>
+        </select>
+    </div>
+  
+      <!-- Street Number -->
+      <div class="form-group col-md-6">
+        <label for="street_number">
+          Street Number
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the street number. Example: 123"></i>
+        </label>
+        <input formControlName="street_number" class="form-control" id="field-street_number" name="street_number" type="text" placeholder="Enter street number" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Address -->
+      <div class="form-group col-md-6">
+        <label for="address">
+          Address
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the address. Example: 456 Elm St"></i>
+        </label>
+        <input formControlName="address" class="form-control" id="field-address" name="address" type="text" placeholder="Enter address" />
+      </div>
+  
+      <!-- City -->
+      <div class="form-group col-md-6">
+        <label for="city">
+          City
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the city. Example: Springfield"></i>
+        </label>
+        <input formControlName="city" class="form-control" id="field-city" name="city" type="text" placeholder="Enter city" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- State -->
+      <div class="form-group col-md-6">
+        <label for="state">
+          State
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the state. Example: IL"></i>
+        </label>
+        <input formControlName="state" class="form-control" id="field-state" name="state" type="text" placeholder="Enter state" />
+      </div>
+  
+      <!-- ZIP/Postal Code -->
+      <div class="form-group col-md-6">
+        <label for="zip">
+          ZIP/Postal Code
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the ZIP/Postal code. Example: 62704"></i>
+        </label>
+        <input formControlName="zip" class="form-control" id="field-zip" name="zip" type="text" placeholder="Enter ZIP/Postal code" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Country -->
+      <div class="form-group col-md-6">
+        <label for="country">
+          Country
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the country. Example: USA"></i>
+        </label>
+        <input formControlName="country" class="form-control" id="field-country" name="country" type="text" placeholder="Enter country" />
+      </div>
+  
+      <!-- Primary Phone -->
+      <div class="form-group col-md-6">
+        <label for="primary_phone">
+          Primary Phone
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the primary phone number. Example: (555) 555-5555"></i>
+        </label>
+        <input formControlName="primary_phone" class="form-control" id="field-primary_phone" name="primary_phone" type="text" placeholder="Enter primary phone" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Secondary Phone -->
+      <div class="form-group col-md-6">
+        <label for="secondary_phone">
+          Secondary Phone
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the secondary phone number (optional). Example: (555) 555-5556"></i>
+        </label>
+        <input formControlName="secondary_phone" class="form-control" id="field-secondary_phone" name="secondary_phone" type="text" placeholder="Enter secondary phone" />
+      </div>
+  
+      <!-- Primary Email -->
+      <div class="form-group col-md-6">
+        <label for="primary_email">
+          Primary Email
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the primary email address. Example: john.doe@example.com"></i>
+        </label>
+        <input formControlName="primary_email" class="form-control" id="field-primary_email" name="primary_email" type="email" placeholder="Enter primary email" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Secondary Email -->
+      <div class="form-group col-md-6">
+        <label for="secondary_email">
+          Secondary Email
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the secondary email address (optional). Example: jane.smith@example.com"></i>
+        </label>
+        <input formControlName="secondary_email" class="form-control" id="field-secondary_email" name="secondary_email" type="email" placeholder="Enter secondary email" />
+      </div>
+  
+      <!-- Head of Department -->
+      <div class="form-group col-md-6">
+        <label for="headOfDepartment">
+          Head of Department
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the name of the head of the department. Example: John Doe"></i>
+        </label>
+        <input formControlName="headOfDepartment" type="text" class="form-control" id="field-headOfDepartment" name="headOfDepartment" placeholder="e.g., John Doe, Jane Smith" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Salutation -->
+      <div class="form-group col-md-6">
+        <label for="salutation">
+          Salutation
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Select a salutation"></i>
+        </label>
+        <select formControlName="salutation" class="form-control" id="field-salutation" name="salutation">
+          <option value="Mr">Mr</option>
+          <option value="Mrs">Mrs</option>
+          <option value="Ms">Ms</option>
+          <option value="Dr">Dr</option>
+        </select>
+      </div>
+  
+      <!-- Booking Quota -->
+      <div class="form-group col-md-6">
+        <label for="bookingQuota">
+          Booking Quota
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the booking quota for the member"></i>
+        </label>
+        <input formControlName="bookingQuota" class="form-control" id="field-bookingQuota" name="bookingQuota" type="number" placeholder="Enter booking quota" />
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Actions -->
+      <div class="form-group col-md-12 text-center">
+        <button type="submit" class="btn btn-outline-primary">
+          <i class="fas fa-save"></i> Save
+        </button>
+        <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">
+          <i class="fas fa-times"></i> Cancel
+        </button>
+      </div>
+    </div>
+  
+  </form>
+  

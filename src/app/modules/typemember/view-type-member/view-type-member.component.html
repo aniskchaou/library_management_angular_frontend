@@ -1,0 +1,67 @@
+<!-- View Member Modal -->
+<div class="modal-header">
+  <h4 class="modal-title pull-left">View Member Type Details</h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <!-- Left Column -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="memberName"><strong>Member Type Name:</strong></label>
+        <p>{{ selectedMember?.name }}</p>
+      </div>
+      <div class="form-group">
+        <label for="categoryCode"><strong>Category Code:</strong></label>
+        <p>{{ selectedMember?.categoryCode }}</p>
+      </div>
+      <div class="form-group">
+        <label for="description"><strong>Description:</strong></label>
+        <p>{{ selectedMember?.description }}</p>
+      </div>
+      <div class="form-group">
+        <label for="upperAgeLimit"><strong>Upper Age Limit:</strong></label>
+        <p>{{ selectedMember?.upperAgeLimit }} Years</p>
+      </div>
+      <div class="form-group">
+        <label for="enrollmentFee"><strong>Enrollment Fee:</strong></label>
+        <p>${{ selectedMember?.enrollmentFee }}</p>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="enrollmentPeriod"><strong>Enrollment Period:</strong></label>
+        <p>{{ selectedMember?.enrollmentPeriod }}</p>
+      </div>
+      <div class="form-group">
+        <label for="holdFee"><strong>Hold Fee:</strong></label>
+        <p>${{ selectedMember?.holdFee }}</p>
+      </div>
+      <div class="form-group">
+        <label for="categoryType"><strong>Category Type:</strong></label>
+        <p>{{ selectedMember?.categoryType }}</p>
+      </div>
+      <div class="form-group">
+        <label for="minPasswordLength"><strong>Minimum Password Length:</strong></label>
+        <p>{{ selectedMember?.minPasswordLength }}</p>
+      </div>
+      <div class="form-group">
+        <label for="requireStrongPassword"><strong>Require Strong Password:</strong></label>
+        <p>{{ selectedMember?.requireStrongPassword ? 'Yes' : 'No' }}</p>
+      </div>
+      <div class="form-group">
+        <label for="blockExpiredPatrons"><strong>Block Expired Patrons:</strong></label>
+        <p>{{ selectedMember?.blockExpiredPatrons ? 'Yes' : 'No' }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+</div>
+
+  

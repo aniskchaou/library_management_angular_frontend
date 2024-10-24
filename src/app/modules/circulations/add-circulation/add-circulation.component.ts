@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookMessage from 'src/app/main/messages/BookMessage';
 import CirculationMessage from 'src/app/main/messages/CirculationMessage';
-import Book from 'src/app/main/models/Book';
+import CatalogItem from 'src/app/main/models/Book';
 import CirculationStatus from 'src/app/main/models/CirculationStatus';
 import Member from 'src/app/main/models/Member';
 import { HTTPService } from 'src/app/main/services/HTTPService';
@@ -66,6 +66,7 @@ export class AddCirculationComponent extends URLLoader implements OnInit {
   }
 
   getCirculationByLang(lang) {
+     lang='EN'
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/circulation/' + lang)
       .subscribe(
@@ -126,7 +127,7 @@ export class AddCirculationComponent extends URLLoader implements OnInit {
 
   getBooks() {
     this.httpService.getAll(CONFIG.URL_BASE + '/book/all').subscribe(
-      (data: Book[]) => {
+      (data: CatalogItem[]) => {
         this.bookNames$ = data;
         console.log(this.bookNames$);
       },
@@ -138,7 +139,7 @@ export class AddCirculationComponent extends URLLoader implements OnInit {
 
   getWriters() {
     this.httpService.getAll(CONFIG.URL_BASE + '/writer/all').subscribe(
-      (data: Book[]) => {
+      (data: CatalogItem[]) => {
         this.writers$ = data;
       },
       (err: HttpErrorResponse) => {

@@ -1,29 +1,303 @@
 <div class="container-fluid">
-  <div *ngIf="loading; else loaded">
-    <app-loading></app-loading>
-  </div>
-
-  <ng-template #loaded>
+  
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">{{ publisherI18n?.allTitleI18n }}</h1>
+    <h1 class="h3 mb-2 text-gray-800"><i class="fas fa-building"></i>  {{ publisherI18n?.allTitleI18n }}</h1>
+    <p>Manage the details of publishers including their contact information and website.</p>
 
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-      <div class="card-body">
-        <div class="table-responsive">
-          <app-add-button [itemI18n]="publisherI18n"></app-add-button>
-          <app-publisher-list
-            (deleteEvent)="delete($event)"
-            (editEvent)="edit($event)"
-            [publishers]="publishers$"
-            [publisherI18n]="publisherI18n"
-          ></app-publisher-list>
-          <app-publisher-modal
-            [publisherI18n]="publisherI18n"
-            [id]="id"
-          ></app-publisher-modal>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="true">
+          <i class="fas fa-tachometer-alt"></i> Overview
+        </a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">
+          <i class="fas fa-list"></i> Publishers
+        </a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="user-guide-tab" data-toggle="tab" href="#user-guide" role="tab" aria-controls="user-guide" aria-selected="false">
+          <i class="fas fa-book"></i> User Guide
+        </a>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+        <!-- Dashboard content goes here -->
+        <div class="container bg-white p-4 mt-3 rounded">
+          <div class="row">
+            <div class="col-md-6">
+              <h4><i class="fas fa-chart-bar"></i> Number of Publications by Publisher</h4>
+              <ngx-charts-bar-vertical
+                [view]="view"
+                [scheme]="'cool'"
+                [results]="publicationsByPublisherData"
+                [gradient]="gradient"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="showLegend"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Publisher'"
+                [yAxisLabel]="'Publications'">
+              </ngx-charts-bar-vertical>
+            </div>
+            <div class="col-md-6">
+              <h4><i class="fas fa-pie-chart"></i> Publisher Distribution by Genre</h4>
+              <ngx-charts-pie-chart
+                [view]="view"
+                [scheme]="'cool'"
+                [results]="publisherByGenreData"
+                [legend]="showLegend"
+                [labels]="showLabels"
+                [doughnut]="isDoughnut"
+                [gradient]="gradient">
+              </ngx-charts-pie-chart>
+            </div>
+            <div class="col-md-6">
+              <h4><i class="fas fa-line-chart"></i> Publication Trends by Publisher Over Time</h4>
+              <ngx-charts-line-chart
+                [view]="view"
+                [scheme]="'cool'"
+                [results]="publicationTrendsByPublisherData"
+                [gradient]="gradient"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="showLegend"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Year'"
+                [yAxisLabel]="'Publications'">
+              </ngx-charts-line-chart>
+            </div>
+            <div class="col-md-6">
+              <h4><i class="fas fa-bar-chart"></i> Top Publishers by Borrow Count</h4>
+              <ngx-charts-bar-horizontal
+                [view]="view"
+                [scheme]="'cool'"
+                [results]="topPublishersByBorrowCountData"
+                [gradient]="gradient"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="showLegend"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Borrow Count'"
+                [yAxisLabel]="'Publisher'">
+              </ngx-charts-bar-horizontal>
+            </div>
+          </div>
         </div>
       </div>
+      <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="list-tab">
+        <!-- Publishers List content -->
+
+        
+
+        <div class="container bg-white p-4 mt-3 rounded">
+
+          <div class="card mb-4">
+            <div class="card-body">
+              <button
+                  style="margin: 3px"
+                  type="button"
+                  href="#add"
+                  role="button"
+                  data-toggle="modal"
+                  class="btn btn-outline-success btn-icon-split"
+                >
+                  <span class="icon text-white-50">
+                    <i class="fas fa-plus"></i>
+                  </span>
+                  <span class="text">Create</span>
+                </button>
+
+                <button
+  href="#"
+  role="button"
+  class="btn btn-outline-warning btn-icon-split"
+  (click)="reloadPage()"
+>
+  <span class="icon text-warning">
+    <i class="fas fa-redo"></i>
+  </span>
+  <span class="text">Reload</span>
+</button>
+
+              </div>
+          </div>
+
+          <div *ngIf="loading; else loaded">
+            <div class="d-flex justify-content-center">
+              <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+          </div>
+        
+          <ng-template #loaded>
+          
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="table-responsive">
+                
+            <!--     <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Publisher Name</th>
+                      <th>Address</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Country</th>
+                      <th>Website</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let publisher of publishers$">
+                      <td>{{ publisher.name }}</td>
+                      <td>{{ publisher.address }}</td>
+                      <td>{{ publisher.email }}</td>
+                      <td>{{ publisher.phone }}</td>
+                      <td>{{ publisher.country }}</td>
+                      <td><a [href]="publisher.website" target="_blank">{{ publisher.website }}</a></td>
+                      <td>
+                        <button (click)="edit(publisher.id)" class="btn btn-warning btn-sm">
+                          <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button (click)="delete(publisher.id)" class="btn btn-danger btn-sm">
+                          <i class="fas fa-trash"></i> Delete
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>Publisher Name</th>
+                      <th>Address</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Country</th>
+                      <th>Website</th>
+                      <th>Actions</th>
+                    </tr>
+                  </tfoot>
+                </table> -->
+
+                <ngx-datatable
+                class="bootstrap"
+                [rows]="publishers$"
+                [columnMode]="'force'"
+                [headerHeight]="50"
+                [footerHeight]="50"
+                [rowHeight]="'auto'"
+                [limit]="10"
+                [loadingIndicator]="loading"
+                [reorderable]="reorderable"
+                (select)="onSelect($event)"
+                (activate)="onActivate($event)"
+              >
+              
+                <!-- Publisher Name Column -->
+                <ngx-datatable-column name="Publisher Name" [prop]="'name'">
+                  <ng-template ngx-datatable-cell-template let-row="row">
+                    <span style="color: blue;">{{ row.name }}</span>
+                  </ng-template>
+                </ngx-datatable-column>
+              
+                <!-- Address Column -->
+                <ngx-datatable-column name="Address" [prop]="'address'">
+                  <ng-template ngx-datatable-cell-template let-row="row">
+                    {{ row.address }}
+                  </ng-template>
+                </ngx-datatable-column>
+              
+                <!-- Email Column -->
+                <ngx-datatable-column name="Email" [prop]="'email'">
+                  <ng-template ngx-datatable-cell-template let-row="row">
+                    <a [href]="'mailto:' + row.email">{{ row.email }}</a>
+                  </ng-template>
+                </ngx-datatable-column>
+              
+                <!-- Phone Column -->
+                <ngx-datatable-column name="Phone" [prop]="'phone'">
+                  <ng-template ngx-datatable-cell-template let-row="row">
+                    <a [href]="'tel:' + row.phone">{{ row.phone }}</a>
+                  </ng-template>
+                </ngx-datatable-column>
+              
+                <!-- Country Column -->
+                <ngx-datatable-column name="Country" [prop]="'country'">
+                  <ng-template ngx-datatable-cell-template let-row="row">
+                    {{ row.country }}
+                  </ng-template>
+                </ngx-datatable-column>
+              
+                <!-- Website Column -->
+                <ngx-datatable-column name="Website" [prop]="'website'">
+                  <ng-template ngx-datatable-cell-template let-row="row">
+                    <a [href]="row.website" target="_blank">{{ row.website }}</a>
+                  </ng-template>
+                </ngx-datatable-column>
+              
+                <!-- Actions Column -->
+                <ngx-datatable-column name="Actions">
+                  <ng-template ngx-datatable-cell-template let-row="row">
+
+                  <!--   <button class="btn btn-sm btn-outline-primary mr-2" (click)="openViewDialog(row)">
+                      View
+                    </button> -->
+
+                    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Actions
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item"  (click)="openViewDialog(row)">
+                        <i class="fas fa-eye mr-2"></i> View
+                      </a>
+                      <a class="dropdown-item"  (click)="openEditDialog(row)">
+                        <i class="fas fa-edit mr-2"></i> Edit
+                      </a>
+                      <a class="dropdown-item text-danger"  (click)="deleteRow(row)">
+                        <i class="fas fa-trash-alt mr-2"></i> Delete
+                      </a>
+                    </div>
+
+
+                  </ng-template>
+                </ngx-datatable-column>
+              
+              </ngx-datatable>
+                           
+              
+
+                <app-publisher-modal
+                  [publisherI18n]="publisherI18n"
+                  [id]="id"
+                ></app-publisher-modal>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="user-guide" role="tabpanel" aria-labelledby="user-guide-tab">
+        <!-- User Guide content -->
+        <div class="container bg-white p-4 mt-3 rounded">
+          <div id="UserManual" class="tab-pane custom-tab-pane">
+            <!-- User Manual content here -->
+            <div>
+               <!-- <markdown [src]="markdownContent" [data]="markdownContent"></markdown>  -->
+                <div  [innerHTML]="markdownContent"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
     </div>
-  </ng-template>
+  
 </div>

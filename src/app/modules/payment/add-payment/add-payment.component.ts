@@ -106,6 +106,7 @@ export class AddPaymentComponent extends URLLoader implements OnInit {
   }
 
   getPaymentByLang(lang) {
+     lang='EN'
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/payment/' + lang)
       .subscribe(

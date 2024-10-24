@@ -23,6 +23,8 @@ export default class CategoryValidation {
   createFormGroup() {
     return new FormGroup({
       category_name: new FormControl('', Validators.required),
+      slug: new FormControl('',Validators.required),
+      published: new FormControl(''),
     });
   }
 }

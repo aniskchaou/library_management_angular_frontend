@@ -1,0 +1,122 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ department.id ? 'Edit' : 'Add' }} Department</h5>
+  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+
+    <!-- <label for="departmentName">
+      Department Name
+      <button type="button" class="btn btn-link btn-sm ml-2" (click)="toggleSuggestions()">
+        <i class="fas fa-magic"></i>
+      </button>
+    </label>
+    <input type="text" class="form-control" id="departmentName" [(ngModel)]="department.departmentName" name="departmentName" placeholder="e.g., HR, IT, Sales">
+  </div> -->
+
+  <!-- Suggestions list -->
+  <div *ngIf="showSuggestions" class="suggestions-container">
+    <div *ngFor="let suggestion of filteredDepartments" class="suggestion-button">
+      <button type="button" class="btn btn-secondary" (click)="onSuggestionClick(suggestion)">
+        {{ suggestion.departmentName }}
+      </button>
+    </div>
+  </div>
+  
+
+    <div class="form-group">
+      <label for="departmentName">
+        Department Name
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the name of the department.<br><b>Example:</b> HR, IT, Sales"></i>
+      </label><button type="button" class="btn btn-link btn-sm ml-2" (click)="toggleSuggestions()">
+        <i class="fas fa-magic"></i>
+      </button>
+      <input type="text" class="form-control" id="departmentName" [(ngModel)]="department.departmentName" name="departmentName" placeholder="e.g., HR, IT, Sales">
+    </div>
+    <div class="form-group">
+      <label for="departmentCode">
+        Department Code
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the unique code for the department.<br><b>Example:</b> HR001, IT002"></i>
+      </label>
+      <input type="text" class="form-control" id="departmentCode" [(ngModel)]="department.departmentCode" name="departmentCode" placeholder="e.g., HR001, IT002">
+    </div>
+    <div class="form-group">
+      <label for="headOfDepartment">
+        Head of Department
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the name of the head of the department.<br><b>Example:</b> John Doe, Jane Smith"></i>
+      </label>
+      <input type="text" class="form-control" id="headOfDepartment" [(ngModel)]="department.headOfDepartment" name="headOfDepartment" placeholder="e.g., John Doe, Jane Smith">
+    </div>
+    <div class="form-group">
+      <label for="location">
+        Location
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the location of the department.<br><b>Example:</b> New York, London"></i>
+      </label>
+      <ng-select
+        name="location"
+        [items]="buildings"
+        bindLabel="name"
+        bindValue="code"
+        [(ngModel)]="department.location"
+        [searchable]="true"
+        placeholder="Select the location">
+        <ng-template ng-label-tmp let-item="item">
+          <span>{{ item.name }} {{item.code}}</span>
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item">
+          <span>{{item.name}} {{item.code}}</span>
+        </ng-template>
+      </ng-select>
+    </div>
+    <div class="form-group">
+      <label for="phone">
+        Phone
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the contact phone number for the department.<br><b>Example:</b> (123) 456-7890"></i>
+      </label>
+      <input type="tel" class="form-control" id="phone" [(ngModel)]="department.phone" name="phone" placeholder="e.g., (123) 456-7890">
+    </div>
+
+    <div class="form-group">
+      <label for="countryCode">
+        Country Code
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the country code.<br><b>Example:</b> US, GB, FR"></i>
+      </label>
+      <ng-select
+        name="countryCode"
+        [items]="countries"
+        bindLabel="name"
+        bindValue="code"
+        [(ngModel)]="department.countryCode"
+        [searchable]="true"
+        placeholder="Select a country">
+        <ng-template ng-label-tmp let-item="item">
+          <span>{{item.flag}} {{ item.name }} {{item.code}}</span>
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item">
+          <span>{{item.flag}} {{item.name}} {{item.code}}</span>
+        </ng-template>
+      </ng-select>
+    </div>
+
+    <div class="form-group">
+      <label for="email">
+        Email
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the contact email address for the department.<br><b>Example:</b> hr@example.com"></i>
+      </label>
+      <input type="email" class="form-control" id="email" [(ngModel)]="department.email" name="email" placeholder="e.g., hr@example.com">
+    </div>
+    <div class="form-group">
+      <label for="numberOfEmployees">
+        Number of Employees
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the total number of employees in the department.<br><b>Example:</b> 50, 100"></i>
+      </label>
+      <input type="number" class="form-control" id="numberOfEmployees" [(ngModel)]="department.numberOfEmployees" name="numberOfEmployees" placeholder="e.g., 50, 100">
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="saveDepartment()">Save</button>
+    </div>
+  </form>
+</div>

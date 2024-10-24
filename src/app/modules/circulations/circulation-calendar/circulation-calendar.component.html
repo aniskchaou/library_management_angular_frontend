@@ -1,7 +1,14 @@
 <!-- Page Heading -->
 
-<div style="margin-left: 5px; height: 80%; width: 96%">
-  <h1 class="h3 mb-2 text-gray-800">{{ menu?.calendarI18n }}</h1>
+<div style="margin-left: 5px; height: 80%; width: 96%" class="disabled-scroll">
+  <h1 class="h3 mb-2 text-gray-800">
+    <i class="fas fa-calendar-alt mr-2"></i>{{ menu?.calendarI18n }}
+  </h1>
+  
+  <!-- Description Below Title -->
+  <p class="lead mb-4">
+    View and manage events on your calendar. Use the calendar interface to select dates, add new events, and view scheduled activities. Customize your calendar view as needed.
+  </p>
   <ngx-event-calendar
     [showAddButton]="false"
     [language]="'en'"

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import { HTTPService } from 'src/app/main/services/HTTPService';
@@ -9,7 +9,7 @@ import CONFIG from 'src/app/main/urls/urls';
   templateUrl: './requested-book-list.component.html',
   styleUrls: ['./requested-book-list.component.css'],
 })
-export class RequestedBookListComponent extends URLLoader implements OnInit {
+export class RequestedBookListComponent extends URLLoader implements OnInit,AfterViewInit {
   @Input() requiredBook;
   @Output() idEvent = new EventEmitter<string>();
   @Output() viewEvent = new EventEmitter<string>();
@@ -18,6 +18,9 @@ export class RequestedBookListComponent extends URLLoader implements OnInit {
   defautstatus = 'Pending';
   constructor(private httpService: HTTPService, private router: Router) {
     super();
+  }
+  ngAfterViewInit(): void {
+    super.enableDataTable()
   }
 
   ngOnInit(): void {

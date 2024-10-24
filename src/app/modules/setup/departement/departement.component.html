@@ -1,0 +1,164 @@
+<!-- Main Content -->
+<div class="container mt-4">
+  <!-- Title with Icon -->
+  <h1 class="h3 mb-2 text-gray-800">
+    <i class="fas fa-building mr-2"></i>Departments
+  </h1>
+
+  <!-- Description Below Title -->
+  <p class="lead mb-4">
+    Manage and view information about departments within the organization. Navigate through the tabs to see various overviews, detailed lists, and user manuals. Use the "Add Department" button to add new departments to the list.
+  </p>
+
+  <!-- Navigation Tabs -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#List">
+        <i class="fas fa-list mr-2"></i> List
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#UserManual">
+        <i class="fas fa-book mr-2"></i> User Manual
+      </a>
+    </li>
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <!-- List tab content -->
+    <div id="List" class="tab-pane fade show active">
+      <div class="container-fluid">
+        <br/>
+
+        <!-- Department Table -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+
+              <div *ngIf="loadingIndicator; else loaded">
+                <app-loading></app-loading>
+              </div>
+
+              <ng-template #loaded>
+
+                <button class="btn btn-outline-primary btn-icon-split mb-3" (click)="openAddDialog()">
+                  <span class="icon text-white-50">
+                    <i class="fas fa-plus"></i>
+                  </span>
+                  <span class="text">Add Department</span>
+                </button>
+
+                <button class="btn btn-outline-info btn-icon-split mb-3" (click)="refreshData()">
+                  <span class="icon text-white-50">
+                    <i class="fas fa-sync-alt"></i>
+                  </span>
+                  <span class="text">Refresh</span>
+                </button>
+
+                <!-- Button trigger modal -->
+               
+
+                <div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search by name..."
+                    (input)="updateFilter($event)"
+                  />
+                </div>
+
+                <ngx-datatable
+                  class="bootstrap"
+                  [rows]="departments"
+                  [columnMode]="'force'"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  [rowHeight]="'auto'"
+                  [limit]="10"
+                  [loadingIndicator]="loadingIndicator"
+                  [reorderable]="reorderable"
+                  (select)="onSelect($event)"
+                  (activate)="onActivate($event)"
+                >
+                  <!-- Department Name -->
+                  <ngx-datatable-column name="Department Name" [prop]="'departmentName'">
+                    <ng-template ngx-datatable-cell-template let-row="row">
+                     <span style="color: red;">{{ row.departmentName }}</span> 
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <!-- Department Code -->
+                  <ngx-datatable-column name="Department Code" [prop]="'departmentCode'">
+                    <ng-template ngx-datatable-cell-template let-row="row">
+                      <span style="color: green;">{{ row.departmentCode }}</span>
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <!-- Head of Department -->
+                  <ngx-datatable-column name="Head of Department" [prop]="'headOfDepartment'">
+                    <ng-template ngx-datatable-cell-template let-row="row">
+                      {{ row.headOfDepartment }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <!-- Location -->
+                  <ngx-datatable-column name="Location" [prop]="'location'">
+                    <ng-template ngx-datatable-cell-template let-row="row">
+                      {{ row.location }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <!-- Phone -->
+                  <ngx-datatable-column name="Phone" [prop]="'phone'">
+                    <ng-template ngx-datatable-cell-template let-row="row">
+                      {{ row.phone }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <!-- Email -->
+                  <ngx-datatable-column name="Email" [prop]="'email'">
+                    <ng-template ngx-datatable-cell-template let-row="row">
+                      {{ row.email }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <!-- Number of Employees -->
+                  <ngx-datatable-column name="Number of Employees" [prop]="'numberOfEmployees'">
+                    <ng-template ngx-datatable-cell-template let-row="row">
+                      {{ row.numberOfEmployees }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <!-- Actions -->
+                  <ngx-datatable-column name="Actions">
+                    <ng-template ngx-datatable-cell-template let-row="row">
+                      <button class="btn btn-outline-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" (click)="openEditDialog(row)" title="Edit">
+                          <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a class="dropdown-item" (click)="deleteRow(row)" title="Delete">
+                          <i class="fas fa-trash"></i> Delete
+                        </a>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+
+              </ng-template>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="UserManual" class="tab-pane custom-tab-pane">
+      <!-- User Manual content here -->
+      <div [innerHTML]="markdownContent"></div>
+  </div>
+  </div>
+</div>
+

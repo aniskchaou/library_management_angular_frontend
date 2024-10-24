@@ -25,6 +25,7 @@ export class ReturnedBooksComponent extends URLLoader implements OnInit {
   }
 
   getCirculationByLang(lang) {
+     lang='EN'
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/circulation/' + lang)
       .subscribe(

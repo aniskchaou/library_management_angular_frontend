@@ -20,8 +20,8 @@ export class BooksAnalyticsComponent implements OnInit {
   view: any[] = [900, 350];
   showXAxis = true;
   showYAxis = true;
-  gradient = false;
-  showLegend = true;
+  gradient = true;
+  showLegend = false;
   showXAxisLabel = true;
   xAxisLabel1 = 'Categories';
   xAxisLabel2 = 'Authors';

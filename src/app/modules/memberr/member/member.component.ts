@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import MemberMessage from 'src/app/main/messages/MemberMessage';
@@ -20,6 +20,10 @@ export class MemberComponent extends URLLoader implements OnInit {
   id = 0;
   memberI18n;
   loading = false;
+  newArrivals: number;
+  unverified: number;
+  blacklist: number;
+  expired: number;
 
   constructor(
     private memberTestService: MemberTestService,
@@ -30,7 +34,9 @@ export class MemberComponent extends URLLoader implements OnInit {
     super();
   }
 
+
   getMemberByLang(lang) {
+     lang='EN'
     this.httpService.getAll(CONFIG.URL_BASE + '/i18n/member/' + lang).subscribe(
       (data) => {
         this.memberI18n = data;
@@ -56,6 +62,10 @@ export class MemberComponent extends URLLoader implements OnInit {
   ngOnInit() {
     this.getAll();
     this.getMemberByLang(CONFIG.getInstance().getLang());
+    this.loadBlockedMembers()
+    this.loadExpiredAccounts()
+    this.loadNewArrivals()
+    this.loadUnverifiedAccounts()
   }
 
   reloadPage() {
@@ -79,11 +89,40 @@ export class MemberComponent extends URLLoader implements OnInit {
     }
   }
 
+  loadNewArrivals(): void {
+    this.httpService.getNewArrivals().subscribe(
+      data => this.newArrivals = data.length,
+      error => console.error('Error fetching new arrivals:', error)
+    );
+  }
+
+  loadUnverifiedAccounts(): void {
+    this.httpService.getUnverifiedAccounts().subscribe(
+      data => this.unverified = data.length,
+      error => console.error('Error fetching unverified accounts:', error)
+    );
+  }
+
+  loadBlockedMembers(): void {
+    this.httpService.getBlockedMembers().subscribe(
+      data => this.blacklist = data.length,
+      error => console.error('Error fetching blocked members:', error)
+    );
+  }
+
+  loadExpiredAccounts(): void {
+    this.httpService.getExpiredAccounts().subscribe(
+      data => this.expired = data.length,
+      error => console.error('Error fetching expired accounts:', error)
+    );
+  }
+
   getAll() {
     this.loading = true;
     this.httpService.getAll(CONFIG.URL_BASE + '/member/all').subscribe(
       (data: Member[]) => {
         this.members$ = data;
+        console.log(data)
         this.loading = false;
       },
       (err: HttpErrorResponse) => {

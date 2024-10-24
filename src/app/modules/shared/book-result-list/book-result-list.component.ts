@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
-import Book from 'src/app/main/models/Book';
+import CatalogItem from 'src/app/main/models/Book';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
@@ -14,7 +14,7 @@ export class BookResultListComponent extends URLLoader implements OnInit {
   @Input() word;
   bookI18n;
   loading = false;
-  books: Book[];
+  books: CatalogItem[];
 
   constructor(private httpService: HTTPService) {
     super();
@@ -33,6 +33,7 @@ export class BookResultListComponent extends URLLoader implements OnInit {
     console.log(this.word);
   }
   getBookByLang(lang) {
+     lang='EN'
     this.httpService.getAll(CONFIG.URL_BASE + '/i18n/book/' + lang).subscribe(
       (data) => {
         this.bookI18n = data;
@@ -46,7 +47,7 @@ export class BookResultListComponent extends URLLoader implements OnInit {
   getBooks(word) {
     this.loading = true;
     this.httpService.getAll(CONFIG.URL_BASE + '/search/book/' + word).subscribe(
-      (data: Book[]) => {
+      (data: CatalogItem[]) => {
         this.books = data;
         this.loading = false;
       },

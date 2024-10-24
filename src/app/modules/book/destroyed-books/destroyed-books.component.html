@@ -1,4 +1,12 @@
 <div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="page-heading mb-4">
+    <h1 class="h3 mb-2 text-gray-800">
+      <i class="fas fa-trash-alt"></i> {{ bookI18n?.allTitleI18n }}
+    </h1>
+    <p class="mb-4">This module displays all the destroyed books and allows you to manage them efficiently.</p>
+  </div>
+
   <div *ngIf="loading; else loaded">
     <app-loading></app-loading>
   </div>
@@ -8,11 +16,9 @@
       [bookI18n]="bookI18n"
       (result)="filter($event)"
     ></app-statistics-book>
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">{{ bookI18n?.allTitleI18n }}</h1>
 
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
+    <!-- DataTables Example -->
+    <div class="card mb-4">
       <div class="card-body">
         <div class="table-responsive">
           <app-destroyed-books-list
@@ -28,3 +34,4 @@
     </div>
   </ng-template>
 </div>
+

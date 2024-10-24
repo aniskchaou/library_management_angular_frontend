@@ -1,0 +1,166 @@
+<h1>Purchase Suggestion Module Documentation</h1>
+
+<h2>Module Description</h2>
+<p>The Purchase Suggestion module allows users to propose new items for the library’s collection. It includes fields for entering detailed information about the suggested item, including its title, author, publication details, and justification for the suggestion.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">Title:</p>
+    <ul>
+        <li><strong>Description:</strong> The title of the suggested item.</li>
+        <li><strong>Usage:</strong> Enter the full title of the item.</li>
+        <li><strong>Example:</strong> "The Great Gatsby"</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Author:</p>
+    <ul>
+        <li><strong>Description:</strong> The author or creator of the suggested item.</li>
+        <li><strong>Usage:</strong> Enter the name of the author.</li>
+        <li><strong>Example:</strong> "F. Scott Fitzgerald"</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Copyright Date:</p>
+    <ul>
+        <li><strong>Description:</strong> The copyright date of the suggested item.</li>
+        <li><strong>Usage:</strong> Enter the copyright date in the format dd/mm/yyyy.</li>
+        <li><strong>Example:</strong> "10/04/1925"</li>
+        <li><strong>Validation:</strong> Must be a valid date format (dd/mm/yyyy).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">ISBN/ISSN/Other Standard Number:</p>
+    <ul>
+        <li><strong>Description:</strong> The standard number associated with the suggested item, such as ISBN, ISSN, or another identifier.</li>
+        <li><strong>Usage:</strong> Enter the standard number for the item.</li>
+        <li><strong>Example:</strong> "978-0743273565"</li>
+        <li><strong>Validation:</strong> Must be a valid identifier number.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Publisher:</p>
+    <ul>
+        <li><strong>Description:</strong> The name of the publisher of the suggested item.</li>
+        <li><strong>Usage:</strong> Enter the name of the publisher.</li>
+        <li><strong>Example:</strong> "Scribner"</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Publication Place:</p>
+    <ul>
+        <li><strong>Description:</strong> The location where the suggested item was published.</li>
+        <li><strong>Usage:</strong> Enter the city or place of publication.</li>
+        <li><strong>Example:</strong> "New York"</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Collection Title:</p>
+    <ul>
+        <li><strong>Description:</strong> The title of the collection to which the suggested item belongs, if applicable.</li>
+        <li><strong>Usage:</strong> Enter the collection title.</li>
+        <li><strong>Example:</strong> "Classic Novels"</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Document Type:</p>
+    <ul>
+        <li><strong>Description:</strong> The type of document or format for the suggested item.</li>
+        <li><strong>Usage:</strong> Specify the document type (e.g., Book, DVD, eBook).</li>
+        <li><strong>Example:</strong> "Book"</li>
+        <li><strong>Validation:</strong> Must be a valid document type from predefined options.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Reason for Suggestion:</p>
+    <ul>
+        <li><strong>Description:</strong> The reason or justification for suggesting the item for purchase.</li>
+        <li><strong>Usage:</strong> Enter a detailed explanation of why the item should be added to the collection.</li>
+        <li><strong>Example:</strong> "This book is a classic and frequently requested by library patrons."</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Notes:</p>
+    <ul>
+        <li><strong>Description:</strong> Any additional notes related to the suggestion.</li>
+        <li><strong>Usage:</strong> Enter any supplementary information or comments.</li>
+        <li><strong>Example:</strong> "Consider purchasing multiple copies if demand is high."</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Fund:</p>
+    <ul>
+        <li><strong>Description:</strong> The fund or budget category from which the purchase will be financed.</li>
+        <li><strong>Usage:</strong> Enter the fund or budget category.</li>
+        <li><strong>Example:</strong> "General Collection Fund"</li>
+        <li><strong>Validation:</strong> Must be a valid fund or budget category.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Show Inactive:</p>
+    <ul>
+        <li><strong>Description:</strong> Indicates whether inactive suggestions should be displayed.</li>
+        <li><strong>Usage:</strong> Select "Yes" to show inactive suggestions, or "No" to hide them.</li>
+        <li><strong>Example:</strong> "No"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes or No).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Copies:</p>
+    <ul>
+        <li><strong>Description:</strong> The number of copies of the suggested item to be purchased.</li>
+        <li><strong>Usage:</strong> Enter the quantity of copies.</li>
+        <li><strong>Example:</strong> "3"</li>
+        <li><strong>Validation:</strong> Must be a positive integer.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Currency:</p>
+    <ul>
+        <li><strong>Description:</strong> The currency in which the price of the suggested item is denominated.</li>
+        <li><strong>Usage:</strong> Enter the currency code.</li>
+        <li><strong>Example:</strong> "USD"</li>
+        <li><strong>Validation:</strong> Must be a valid currency code (e.g., USD, EUR).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Price:</p>
+    <ul>
+        <li><strong>Description:</strong> The price of a single copy of the suggested item.</li>
+        <li><strong>Usage:</strong> Enter the price amount.</li>
+        <li><strong>Example:</strong> "20.00"</li>
+        <li><strong>Validation:</strong> Must be a positive monetary value.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Total:</p>
+    <ul>
+        <li><strong>Description:</strong> The total cost for purchasing the suggested item, calculated as Price multiplied by Copies.</li>
+        <li><strong>Usage:</strong> Enter the total cost.</li>
+        <li><strong>Example:</strong> "60.00" (for 3 copies at $20.00 each)</li>
+        <li><strong>Validation:</strong> Must be a positive monetary value.</li>
+    </ul>
+</div>

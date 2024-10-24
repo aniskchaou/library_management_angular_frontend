@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { URLLoader } from 'src/app/main/configs/URLLoader';
-import CategoryMessage from 'src/app/main/messages/CategoryMessage';
+
 import Settings from 'src/app/main/models/Settings';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
@@ -25,7 +25,7 @@ export class EditSettingsComponent extends URLLoader implements OnInit {
 
   constructor(
     private httpService: HTTPService,
-    private message: CategoryMessage,
+    //private message: CategoryMessage,
     private router: Router
   ) {
     super();
@@ -63,11 +63,11 @@ export class EditSettingsComponent extends URLLoader implements OnInit {
     console.log(this.model.lang);
     this.closeModal();
     this.goBack();
-    super.show(
+    /* super.show(
       'Confirmation',
-      this.message.confirmationMessages.edit,
+      '',
       'success'
-    );
+    ); */
     this.router
       .navigateByUrl('/dashboard', { skipLocationChange: true })
       .then(() => {

@@ -1,0 +1,6 @@
+.dropdown-menu {
+    z-index: 1050; /* Ensure the dropdown menu is on top */
+  position: absolute; /* Position it to stay on top */
+  max-height: 200px; /* Set a maximum height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  }

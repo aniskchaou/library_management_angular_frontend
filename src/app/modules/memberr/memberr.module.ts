@@ -12,6 +12,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { SharedModule } from '../shared/shared.module';
 import { ViewMemberComponent } from './view-member/view-member.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,13 @@ import { ViewMemberComponent } from './view-member/view-member.component';
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
+    NgxDatatableModule,
+    NgbModalModule,
+    NgbModule,
+    NgSelectModule,
+    NgxChartsModule
   ],
+  
   providers: [MemberValidation],
 })
 export class MemberrModule {}

@@ -1,11 +1,13 @@
 <div class="container-fluid">
+  <h1 class="h3 mb-2 text-gray-800">{{ requestedBookI18n?.allTitleI18n }}</h1>
+  
   <div *ngIf="loading; else loaded">
     <app-loading></app-loading>
   </div>
 
   <ng-template #loaded>
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">{{ requestedBookI18n?.allTitleI18n }}</h1>
+    
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">

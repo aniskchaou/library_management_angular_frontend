@@ -9,10 +9,15 @@
       (result)="filter($event)"
     ></app-statistics-book>
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">{{ bookI18n?.allTitleI18n }}</h1>
+    <div class="page-heading mb-4">
+      <h1 class="h3 mb-2 text-gray-800">
+        <i class="fas fa-archive"></i> {{ bookI18n?.allTitleI18n }}
+      </h1>
+      <p class="mb-4">This module displays all the archived books and allows you to manage them efficiently.</p>
+    </div>
 
     <!-- DataTales Example -->
-    <div class="card shadow mb-4">
+    <div class="card mb-4">
       <div class="card-body">
         <div class="table-responsive">
           <app-arvived-book-list

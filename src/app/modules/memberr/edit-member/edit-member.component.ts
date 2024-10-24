@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import MemberMessage from 'src/app/main/messages/MemberMessage';
 import MemberTestService from 'src/app/main/mocks/MemberTestService';
@@ -14,8 +16,8 @@ import CONFIG from 'src/app/main/urls/urls';
   templateUrl: './edit-member.component.html',
   styleUrls: ['./edit-member.component.css'],
 })
-export class EditMemberComponent extends URLLoader implements OnInit {
-  model: Member = new Member(0, '', '', '', '', '', '', '', '');
+export class EditMemberComponent  implements OnInit {
+ /*  model: Member = new Member(0, '', '', '', '', '', '', '', '',new Date(),'','');
   @Input() id: string;
   @Output() closeModalEvent = new EventEmitter<string>();
   memberI18n;
@@ -31,16 +33,16 @@ export class EditMemberComponent extends URLLoader implements OnInit {
     private router: Router
   ) {
     super();
-    this.model = new Member(0, '', '', '', '', '', '', '', '');
-  }
+    this.model = new Member(0, '', '', '', '', '', '', '', '',new Date(),'','');
+  } */
 
-  ngOnInit(): void {
-    /*  this.memberTestService.ID.subscribe((idd) => {
+ /*  ngOnInit(): void {
+     this.memberTestService.ID.subscribe((idd) => {
       this.model = this.memberTestService.get(idd);
       if (this.model == undefined) {
         this.model = new Member(0, '', '', '', '', '', '', '', '');
       }
-    });*/
+    });
     this.getMemberByLang(CONFIG.getInstance().getLang());
   }
 
@@ -69,12 +71,7 @@ export class EditMemberComponent extends URLLoader implements OnInit {
   }
 
   edit() {
-    /* this.memberTestService.update(this.model);
-    super.show(
-      'Confirmation',
-      this.message.confirmationMessages.edit,
-      'success'
-    );*/
+  
 
     this.httpService.create(CONFIG.URL_BASE + '/member/create', this.model);
     super.show(
@@ -91,5 +88,113 @@ export class EditMemberComponent extends URLLoader implements OnInit {
       .then(() => {
         this.router.navigate(['/member']);
       });
+  } */
+
+      memberForm: FormGroup;
+      member: Member;
+    
+      constructor(
+        private fb: FormBuilder,
+        private route: ActivatedRoute,
+        private memberService: HTTPService,
+        private router: Router,
+        private activeModal: NgbActiveModal
+      ) {}
+    
+      ngOnInit(): void {
+        //this.memberId = +this.route.snapshot.paramMap.get('id');
+    
+        this.memberForm = this.fb.group({
+          surname: ['', Validators.required],
+          firstname: ['', Validators.required],
+          dob: ['', Validators.required],
+          age: [{ value: '', disabled: true }],  // Auto-calculated, disabled in form
+          gender: ['', Validators.required],
+          street_number: [''],
+          address: [''],
+          city: [''],
+          state: [''],
+          zip: [''],
+          country: [''],
+          primary_phone: ['', Validators.required],
+          secondary_phone: [''],
+          primary_email: ['', [Validators.required, Validators.email]],
+          secondary_email: ['', Validators.email],
+          headOfDepartment: [''],
+          salutation: ['Mr', Validators.required],
+          bookingQuota: [0, Validators.required]
+        });
+    
+        this.memberService.getAll(CONFIG.URL_BASE+'/member/'+this.member.id).subscribe((memberData:Member) => {
+          //this.router.navigate(['/members']);
+          this.memberForm.patchValue(memberData);
+          this.calculateAge(memberData.dob.toDateString());
+        });
+      }
+    
+      // Method to calculate age and update the form control
+      calculateAge(dob: string) {
+        const today = new Date();
+        const birthDate = new Date(dob);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        this.memberForm.get('age').setValue(`${age} years`);
+      }
+    
+      // Form submit handler that constructs the member object and sends it
+      onSubmit() {
+        //if (this.memberForm.valid) {
+          const member = this.buildMemberObject();
+          console.log(member)
+          // Submit the member object via service
+          this.memberService.create(CONFIG.URL_BASE+'/member/create',member).then(() => {
+
+            //this.router.navigate(['/members']);
+            this.closeModal()
+          });
+        //}
+      }
+    
+
+      
+closeModal(): void {
+    this.activeModal.dismiss(); // Close the modal using NgbActiveModal
   }
+
+      // Construct the member object from the form values
+      buildMemberObject() {
+        const formValues = this.memberForm.getRawValue();  // Use getRawValue() to include disabled fields (like age)
+        
+        // Construct the member object from form values
+        const member = {
+          id:this.member.id,
+          surname: formValues.surname,
+          firstname: formValues.firstname,
+          dob: formValues.dob,
+          age: formValues.age,  // Optional field, since age is calculated
+          gender: formValues.gender,
+          street_number: formValues.street_number,
+          address: formValues.address,
+          city: formValues.city,
+          state: formValues.state,
+          zip: formValues.zip,
+          country: formValues.country,
+          primary_phone: formValues.primary_phone,
+          secondary_phone: formValues.secondary_phone || null,  // Handle optional field
+          primary_email: formValues.primary_email,
+          secondary_email: formValues.secondary_email || null,  // Handle optional field
+          headOfDepartment: formValues.headOfDepartment,
+          salutation: formValues.salutation,
+          bookingQuota: formValues.bookingQuota
+        };
+    
+        return member;
+      }
+    
+      onCancel() {
+        this.closeModal()
+      }
 }

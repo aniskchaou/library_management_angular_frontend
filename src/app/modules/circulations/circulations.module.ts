@@ -23,6 +23,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ContactMemberComponent } from './contact-member/contact-member.component';
 import { PaymentMemberComponent } from './payment-member/payment-member.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -56,6 +60,10 @@ import { PaymentMemberComponent } from './payment-member/payment-member.componen
     MatNativeDateModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
+    NgxDatatableModule,
+    NgbModalModule,
+    NgSelectModule,
+    NgxChartsModule
   ],
   exports: [
     MatButtonModule,
@@ -63,6 +71,7 @@ import { PaymentMemberComponent } from './payment-member/payment-member.componen
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    
 
     MatNativeDateModule,
   ],

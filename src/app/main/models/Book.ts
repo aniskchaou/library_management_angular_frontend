@@ -1,15 +1,24 @@
-export default class Book {
+import { Department } from "./Department";
+import { Shelf } from "./Shelf";
+import { Row } from "./Row";
+import Category from "./Category";
+import { MediaType } from "./MediaType";
+import Publisher from "./Publisher";
+import Writer from "./Writer";
+
+export default class CatalogItem {
   id: number;
   isbn: string;
   title: string;
   subtitle: string;
-  writer: string;
+  writer: Writer;
   edition: string;
   edition_year: string;
   number_of_books: string;
   photo: string;
   physical_form: string;
-  publisher: string;
+  physical_description: string;  // New field added for physical description
+  publisher: Publisher;
   series: string;
   size: string;
   price: string;
@@ -24,61 +33,11 @@ export default class Book {
   notes: string;
   pdf: string;
   link: string;
-  category: string;
+  category: Category;
+  mediaType: MediaType;            // New field added for media type
+  departement: Department;           // New field added for department
+  shelf: Shelf;                // New field added for shelf location
+  row: Row;                  // New field added for row location
+  bookStatus: string;           // New field added for book status
 
-  constructor(
-    id: number,
-    isbn: string,
-    title: string,
-    subtitle: string,
-    writer: string,
-    edition: string,
-    edition_year: string,
-    number_of_books: string,
-    photo: string,
-    physical_form: string,
-    publisher: string,
-    series: string,
-    size: string,
-    price: string,
-    call_no: string,
-    location: string,
-    clue_page: string,
-    editor: string,
-    publishing_year: string,
-    publication_place: string,
-    number_of_pages: string,
-    source_details: string,
-    notes: string,
-    pdf: string,
-    link: string,
-    category: string
-  ) {
-    this.id = id;
-    this.isbn = isbn;
-    this.title = title;
-    this.subtitle = subtitle;
-    this.writer = writer;
-    this.edition = edition;
-    this.edition_year = edition_year;
-    this.number_of_books = number_of_books;
-    this.photo = photo;
-    this.physical_form = physical_form;
-    this.publisher = publisher;
-    this.series = series;
-    this.size = size;
-    this.price = price;
-    this.call_no = call_no;
-    this.location = location;
-    this.clue_page = clue_page;
-    this.editor = editor;
-    this.publishing_year = publishing_year;
-    this.publication_place = publication_place;
-    this.number_of_pages = number_of_pages;
-    this.source_details = source_details;
-    this.notes = notes;
-    this.pdf = pdf;
-    this.link = link;
-    this.category = category;
-  }
 }

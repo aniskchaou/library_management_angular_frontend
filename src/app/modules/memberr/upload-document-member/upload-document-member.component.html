@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="emptyModalLabel">Empty Modal</h5>
+  <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close">x</button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+      <input type="file" formControlName="file" (change)="onFileChange($event)" />
+      <button class="btn btn-outline-primary"  type="submit">Upload File</button>
+    </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+ <!--  <button type="button" class="btn btn-outline-primary">Save changes</button> -->
+</div>

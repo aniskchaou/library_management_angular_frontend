@@ -1,0 +1,4 @@
+.disabled-scroll {
+    overflow: hidden; /* Disable scrolling */
+    height: 100%; /* or any specific height */
+  }

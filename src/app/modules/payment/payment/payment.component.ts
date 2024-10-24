@@ -50,7 +50,7 @@ export class PaymentComponent extends URLLoader implements OnInit {
     this.getAll();
     this.httpService
       .getAll(
-        CONFIG.URL_BASE + '/i18n/payment/' + CONFIG.getInstance().getLang()
+        CONFIG.URL_BASE + '/i18n/payment/EN' 
       )
       .subscribe(
         (data) => {

@@ -1,4 +1,4 @@
-<table class="table table-bordered" id="table" width="100%" cellspacing="0">
+<!-- <table class="table table-bordered" id="table" width="100%" cellspacing="0">
   <thead>
     <tr>
       <th>{{ circulationStatusI18n?.nameI18n }}</th>
@@ -34,4 +34,35 @@
       </td>
     </tr>
   </tbody>
-</table>
+</table> -->
+
+<ngx-datatable
+class="bootstrap"
+[rows]="circulationStatus"
+[columnMode]="'force'"
+[headerHeight]="50"
+[footerHeight]="50"
+[rowHeight]="'auto'"
+[loadingIndicator]="loadingIndicator"
+[reorderable]="reorderable"
+>
+<ngx-datatable-column name="ID" prop="id"></ngx-datatable-column>
+<ngx-datatable-column name="Name" prop="name"></ngx-datatable-column>
+<ngx-datatable-column name="Actions">
+  <ng-template ngx-datatable-cell-template let-row="row">
+    <!-- <button class="btn btn-sm btn-outline-primary" (click)="openEditDialog(row)">Edit</button>
+    <button class="btn btn-sm btn-outline-danger" (click)="delete(row)">Delete</button> -->
+    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Actions
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" (click)="openEditDialog(row)">
+        <i class="fas fa-edit text-primary"></i> Edit
+      </a>
+      <a class="dropdown-item" (click)="delete(row)">
+        <i class="fas fa-trash-alt text-danger"></i> Delete
+      </a>
+    </div>
+  </ng-template>
+</ngx-datatable-column>
+</ngx-datatable>

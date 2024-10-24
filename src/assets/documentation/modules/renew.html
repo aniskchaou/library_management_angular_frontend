@@ -1,0 +1,36 @@
+<h1>Renew Module Documentation</h1>
+
+<h2>Module Description</h2>
+<p>The Renew module allows library staff to extend the borrowing period of checked-out items. It includes fields for scanning the item barcode, setting a new due date, and an option to forgive fines on return.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">Item Barcode:</p>
+    <ul>
+        <li><strong>Description:</strong> The barcode of the item being renewed.</li>
+        <li><strong>Usage:</strong> Scan or enter the barcode of the item.</li>
+        <li><strong>Example:</strong> "Barcode 1"</li>
+        <li><strong>Validation:</strong> Must be a valid barcode string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Renewal Due Date:</p>
+    <ul>
+        <li><strong>Description:</strong> The new due date for the item after renewal.</li>
+        <li><strong>Usage:</strong> Enter the new due date in the format dd/mm/yyyy.</li>
+        <li><strong>Example:</strong> "30/07/2024"</li>
+        <li><strong>Validation:</strong> Must be a valid date format (dd/mm/yyyy).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Forgive fines on return:</p>
+    <ul>
+        <li><strong>Description:</strong> An option to forgive any fines that may have accrued if the item is returned late.</li>
+        <li><strong>Usage:</strong> Select "Yes" to forgive fines upon return, otherwise select "No".</li>
+        <li><strong>Example:</strong> "Yes", "No"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes or No).</li>
+    </ul>
+</div>

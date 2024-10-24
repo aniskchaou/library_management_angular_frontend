@@ -1,0 +1,72 @@
+
+  <div class="container-fluid mt-5">
+    <div class="content-container">
+      <h2>Circulation Settings</h2>
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        Edit
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- Modal content goes here -->
+              <form>
+                <div class="form-group mb-3">
+                  <label for="finePerDay">Fine per Day</label>
+                  <input type="number" id="finePerDay" class="form-control" />
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="maxFine">Max Fine</label>
+                  <input type="number" id="maxFine" class="form-control" />
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="itemType">Item Type</label>
+                  <input type="text" id="itemType" class="form-control" />
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="loanPeriod">Loan Period</label>
+                  <input type="number" id="loanPeriod" class="form-control" />
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="renewalsAllowed">Renewals Allowed</label>
+                  <input type="number" id="renewalsAllowed" class="form-control" />
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="holdsAllowed">Holds Allowed</label>
+                  <input type="number" id="holdsAllowed" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-settings mt-4">
+        <p><strong>Fine per Day:</strong> $0.25</p>
+        <p><strong>Max Fine:</strong> $10.00</p>
+        <p><strong>Item Type:</strong> Book</p>
+        <p><strong>Loan Period:</strong> 21 days</p>
+        <p><strong>Renewals Allowed:</strong> 2</p>
+        <p><strong>Holds Allowed:</strong> Yes</p>
+      </div>
+    </div>
+  </div>
+

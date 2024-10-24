@@ -4,10 +4,12 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
-import Book from 'src/app/main/models/Book';
+import CatalogItem from 'src/app/main/models/Book';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 import BookFilterValidation from 'src/app/main/validations/BookFilterValidation';
+import { AddBookComponent } from '../add-book/add-book.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-statistics-book',
@@ -32,11 +34,15 @@ export class StatisticsBookComponent extends URLLoader implements OnInit {
   @Input() bookI18n;
   categories;
   writers;
+  totalCount: number=0;
+  destroyed: number=0;
+  archived: number=0;
 
   constructor(
     private router: Router,
     private validation: BookFilterValidation,
-    private httpService: HTTPService
+    private httpService: HTTPService,
+    private modalService: NgbModal
   ) {
     super();
     this.filterForm = this.validation.formGroupInstance;
@@ -50,6 +56,35 @@ export class StatisticsBookComponent extends URLLoader implements OnInit {
   ngOnInit(): void {
     this.getCategories();
     this.getWriters();
+
+    this.httpService.getAll(CONFIG.URL_BASE + '/book/destroyed').subscribe(
+      (data:any[]) => {
+        this.destroyed = data.length;
+      },
+      (err: HttpErrorResponse) => {
+        //super.show('Error', err.message, 'warning');
+      }
+    );
+
+
+    this.httpService.getAll(CONFIG.URL_BASE + '/book/archived').subscribe(
+      (data:any[]) => {
+        this.archived = data.length;
+      },
+      (err: HttpErrorResponse) => {
+        //super.show('Error', err.message, 'warning');
+      }
+    );
+
+
+    this.httpService.getAll(CONFIG.URL_BASE + '/book/all').subscribe(
+      (data:any[]) => {
+        this.totalCount = data.length;
+      },
+      (err: HttpErrorResponse) => {
+        //super.show('Error', err.message, 'warning');
+      }
+    );
   }
 
   get f() {
@@ -78,7 +113,7 @@ export class StatisticsBookComponent extends URLLoader implements OnInit {
           '/' +
           this.filterForm.value.number_of_pages
       )
-      .subscribe((data: Book) => {
+      .subscribe((data: CatalogItem) => {
         console.log(data);
         this.result.emit(data);
         this.showfilter = false;
@@ -95,9 +130,11 @@ export class StatisticsBookComponent extends URLLoader implements OnInit {
   groupByEditionYear() {
     this.groupByEditionYears.emit();
   }
+
   groupByCategory() {
-    this.groupByEditionYears.emit();
+    this.groupByCategories.emit();
   }
+  
 
   getBooks() {
     this.getAll.emit();
@@ -135,5 +172,19 @@ export class StatisticsBookComponent extends URLLoader implements OnInit {
 
   filterByYear(year) {
     this.filterByYears.emit(year);
+  }
+
+  openAddDialog(): void {
+    const modalRef = this.modalService.open(AddBookComponent,{size: 'xl', 
+      centered: true,});
+    modalRef.componentInstance.catalogItem = {} ;
+
+    modalRef.result.then(result => {
+      if (result) {
+      /*   this.departmentService.createDepartment(result).subscribe(() => {
+          this.loadDepartments();
+        }); */
+      }
+    }).catch(error => console.log(error));
   }
 }

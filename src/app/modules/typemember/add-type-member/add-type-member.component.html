@@ -1,56 +1,204 @@
-<form
-  method="post"
-  class="form-horizontal"
-  id="crudForm"
-  autocomplete="off"
-  accept-charset="utf-8"
-  [formGroup]="typeMemberForm"
->
-  <!-- type member -->
-  <div class="form-div">
-    <div class="form-group odd" id="member_type_name_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="member_type_name_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
+<div class="modal-header">
+  <h5 class="modal-title">Member Type</h5>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form
+    method="post"
+    class="form-horizontal"
+    id="crudForm"
+    autocomplete="off"
+    accept-charset="utf-8"
+    [formGroup]="typeMemberForm"
+  >
+    <div class="row">
+      <!-- Left Column -->
+      <div class="col-md-6">
+        <!-- Type Member -->
+        <div class="form-group" id="member_type_name_field_box">
+          <label class="control-label" for="name" id="member_type_name_display_as_box">
             {{ typeMemberI18n?.member_type_nameI18n }}
-          </font> </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="member_type_name_input_box">
-        <!-- type member input text -->
-        <input
-          [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
-          formControlName="name"
-          id="field-member_name"
-          name="name"
-          type="text"
-          class="form-control"
-          maxlength="99"
-        />
-        <!-- type meber validation -->
-        <div *ngIf="submitted && f.name.errors" class="alert alert-danger">
-          <div *ngIf="submitted && f.name.errors.required">
-            {{ msg.validationMessage.name }}
+            <span class="required">*</span>
+            <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the member type name"></i>
+          </label>
+          <input
+            [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+            formControlName="name"
+            id="field-member_name"
+            name="name"
+            type="text"
+            class="form-control"
+            maxlength="99"
+            placeholder="e.g., Regular Member"
+          />
+          <div *ngIf="submitted && f.name.errors" class="alert alert-danger">
+            <div *ngIf="f.name.errors?.required">
+              {{ msg.validationMessage.name }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Code -->
+        <div class="form-group">
+          <label for="categoryCode">Category code:</label>
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the unique category code for this member type"></i>
+          <input
+            type="text"
+            class="form-control"
+            id="categoryCode"
+            name="categoryCode"
+            placeholder="e.g., C001"
+          />
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Provide a brief description of this member type"></i>
+          <input
+            type="text"
+            class="form-control"
+            id="description"
+            name="description"
+            placeholder="e.g., Membership for regular patrons"
+          />
+        </div>
+
+        <!-- Upper Age Limit -->
+        <div class="form-group">
+          <label for="upperAgeLimit">Upper age limit:</label>
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Specify the maximum age limit for this member type"></i>
+          <input
+            type="number"
+            class="form-control"
+            id="upperAgeLimit"
+            name="upperAgeLimit"
+            placeholder="e.g., 65"
+            min="0"
+          />
+          <small class="form-text text-muted">Years</small>
+        </div>
+
+        <!-- Enrollment Fee -->
+        <div class="form-group">
+          <label for="enrollmentFee">Enrollment fee:</label>
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Set the enrollment fee for this member type"></i>
+          <input
+            type="number"
+            class="form-control"
+            id="enrollmentFee"
+            name="enrollmentFee"
+            placeholder="e.g., 25.00"
+            step="0.01"
+          />
+          <small class="form-text text-muted">Currency (e.g., USD)</small>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="col-md-6">
+        <!-- Enrollment Period -->
+        <div class="form-group">
+          <label for="enrollmentPeriod">Enrollment period:</label>
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Select the enrollment period: in months or until a specific date"></i>
+          <ng-select class="form-control" id="enrollmentPeriod" formControlName="enrollmentPeriod">
+            <ng-option value="months">In months</ng-option>
+            <ng-option value="date">Until date</ng-option>
+          </ng-select>
+        </div>
+
+        <!-- Hold Fee -->
+        <div class="form-group">
+          <label for="holdFee">Hold fee:</label>
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Specify any fees for holding items as a member"></i>
+          <input
+            type="number"
+            class="form-control"
+            id="holdFee"
+            name="holdFee"
+            value="0.00"
+            placeholder="e.g., 1.50"
+            step="0.01"
+          />
+          <small class="form-text text-muted">Currency (e.g., USD)</small>
+        </div>
+
+        <!-- Category Type -->
+        <div class="form-group">
+          <label for="categoryType">Category type:</label>
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Choose the category type (e.g., Adult, Child)"></i>
+          <ng-select class="form-control" id="categoryType" formControlName="categoryType">
+            <ng-option value="adult">Adult</ng-option>
+            <ng-option value="child">Child</ng-option>
+            <ng-option value="professional">Professional</ng-option>
+            <ng-option value="organization">Organization</ng-option>
+            <ng-option value="staff">Staff</ng-option>
+          </ng-select>
+        </div>
+
+        <!-- Minimum Password Length -->
+        <div class="form-group">
+          <label for="minPasswordLength">Minimum password length:</label>
+          <i class="fas fa-info-circle" data-toggle="tooltip" title="Specify the minimum length required for passwords"></i>
+          <input
+            type="number"
+            class="form-control"
+            id="minPasswordLength"
+            name="minPasswordLength"
+            placeholder="e.g., 8"
+            min="1"
+          />
+          <small class="form-text text-muted">Characters</small>
+        </div>
+
+        <!-- Require Strong Password -->
+        <div class="form-group">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="requireStrongPassword"
+              name="requireStrongPassword"
+            />
+            <label class="form-check-label" for="requireStrongPassword">
+              Require strong password
+            </label>
+            <i class="fas fa-info-circle" data-toggle="tooltip" title="If checked, users must create strong passwords"></i>
+          </div>
+        </div>
+
+        <!-- Block Expired Patrons -->
+        <div class="form-group">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="blockExpiredPatrons"
+              name="blockExpiredPatrons"
+            />
+            <label class="form-check-label" for="blockExpiredPatrons">
+              Block expired patrons
+            </label>
+            <i class="fas fa-info-circle" data-toggle="tooltip" title="If checked, expired patrons will be blocked from accessing the system"></i>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="pDiv">
-    <!-- add button -->
-    <button (click)="add()" type="button" class="btn btn-info">
-      <i class="fas fa-save"></i>
-      {{ typeMemberI18n?.addButtonI18n }}
-    </button>
 
-    <div class="clear"></div>
-  </div>
-</form>
+    <div class="pDiv">
+      <!-- Add Button -->
+      <button (click)="add()" type="button" class="btn btn-outline-info">
+        <i class="fas fa-save"></i>
+        {{ typeMemberI18n?.addButtonI18n }}
+      </button>
+      <div class="clear"></div>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+</div>

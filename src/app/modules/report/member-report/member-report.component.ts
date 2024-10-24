@@ -36,7 +36,10 @@ export class MemberReportComponent extends URLLoader implements OnInit {
   getUserType() {
     this.httpService.getAll(CONFIG.URL_BASE + '/member/usertype').subscribe(
       (data: Member[]) => {
-        this.userType$ = data;
+        const distinctData = Array.from(new Set(data.map(item => JSON.stringify(item))))
+        .map(item => JSON.parse(item));
+
+      this.userType$ = distinctData;
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'warning');
@@ -48,7 +51,10 @@ export class MemberReportComponent extends URLLoader implements OnInit {
     // this.appointements$ = this.appointmentTestService.getAll()
     this.httpService.getAll(CONFIG.URL_BASE + '/member/status').subscribe(
       (data: Member[]) => {
-        this.status$ = data;
+        const distinctStatus = Array.from(new Set(data.map(item => JSON.stringify(item))))
+        .map(item => JSON.parse(item));
+
+      this.status$ = distinctStatus;
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'error');
@@ -66,7 +72,11 @@ export class MemberReportComponent extends URLLoader implements OnInit {
     this.searchButtonClicked = true;
     this.loadScripts();
     // this.loading = true;
-
+     console.log(CONFIG.URL_BASE +
+      '/member/memberreport/' +
+      this.selectedStatus +
+      '/' +
+      this.selectedUserType)
     this.httpService
       .getAll(
         CONFIG.URL_BASE +
@@ -87,6 +97,7 @@ export class MemberReportComponent extends URLLoader implements OnInit {
   }
 
   getMemberByLang(lang) {
+     lang='EN'
     this.httpService.getAll(CONFIG.URL_BASE + '/i18n/member/' + lang).subscribe(
       (data) => {
         this.memberI18n = data;

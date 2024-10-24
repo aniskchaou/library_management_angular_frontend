@@ -1,5 +1,11 @@
 <!-- Topbar Navbar -->
 <ul class="navbar-nav ml-auto">
+  <li class="nav-item no-arrow mx-1">
+    <a href="#" class="nav-link" (click)="toggleFullScreen()">
+      <i class="fas fa-expand"></i>
+    </a>
+  </li>
+  <li class="nav-item no-arrow mx-1"><a routerLink="/help" class="nav-link"><i class="fas fa-question-circle"></i></a></li>
   <li class="nav-item dropdown no-arrow mx-1">
     <a
       class="nav-link dropdown-toggle"
@@ -22,47 +28,187 @@
       class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
       aria-labelledby="alertsDropdown"
     >
-      <!-- <h6 class="dropdown-header">Alerts Center</h6>-->
+    <h6 class="dropdown-header">Languages</h6>
       <a
-        (click)="changeLang('EN')"
-        class="dropdown-item d-flex align-items-center"
-      >
-        <div class="mr-3"><span class="flag-icon flag-icon-us"></span></div>
-        <div>
-          <span class="font-weight-bold">English</span>
-        </div>
-      </a>
-      <a
-        (click)="changeLang('AR')"
-        class="dropdown-item d-flex align-items-center"
-      >
-        <div class="mr-3"><span class="flag-icon flag-icon-ae"></span></div>
-        <div>
-          <span class="font-weight-bold">عربى</span>
-        </div>
-      </a>
+  (click)="changeLang('EN')"
+  class="dropdown-item d-flex align-items-center"
+   style="cursor: pointer;"
+>
+  <div class="mr-3"><span class="flag-icon flag-icon-us"></span></div>
+  <div>
+    <span class="font-weight-bold">English</span>
+  </div>
+</a>
 
-      <a
-        (click)="changeLang('HN')"
-        class="dropdown-item d-flex align-items-center"
-      >
-        <div class="mr-3"><span class="flag-icon flag-icon-in"></span></div>
-        <div>
-          <span class="font-weight-bold">हिन्दी</span>
-        </div>
-      </a>
+<a
+  (click)="changeLang('AR')"
+  class="dropdown-item d-flex align-items-center"
+  [class.disabled]="currentLang === 'EN'"
+  [attr.title]="currentLang === 'EN' ? 'This feature is inactive temporarily.' : null"
+>
+  <div class="mr-3"><span class="flag-icon flag-icon-ae"></span></div>
+  <div>
+    <span class="font-weight-bold">عربى</span>
+  </div>
+</a>
 
-      <a
-        (click)="changeLang('BN')"
-        class="dropdown-item d-flex align-items-center"
-      >
-        <div class="mr-3"><span class="flag-icon flag-icon-bd"></span></div>
-        <div>
-          <span class="font-weight-bold">বাংলা</span>
-        </div>
-      </a>
+<a
+  (click)="changeLang('HN')"
+  class="dropdown-item d-flex align-items-center"
+  [class.disabled]="currentLang === 'EN'"
+  [attr.title]="currentLang === 'EN' ? 'This feature is inactive temporarily.' : null"
+>
+  <div class="mr-3"><span class="flag-icon flag-icon-in"></span></div>
+  <div>
+    <span class="font-weight-bold">हिन्दी</span>
+  </div>
+</a>
+
+<a
+  (click)="changeLang('BN')"
+  class="dropdown-item d-flex align-items-center"
+  [class.disabled]="currentLang === 'EN'"
+  [attr.title]="currentLang === 'EN' ? 'This feature is inactive temporarily.' : null"
+>
+  <div class="mr-3"><span class="flag-icon flag-icon-bd"></span></div>
+  <div>
+    <span class="font-weight-bold">বাংলা</span>
+  </div>
+</a>
     </div>
   </li>
+
+  <li class="nav-item dropdown no-arrow mx-1">
+    <a (click)="onNotificationClick()" class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-bell fa-fw"></i>
+        <span class="badge badge-danger badge-counter">{{ notifications.length }}+</span>
+    </a>
+    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+        <h6 class="dropdown-header">
+            notifications
+        </h6>
+        <div class="notification-scroll">
+        <ng-container *ngFor="let notification of notifications">
+            <a class="dropdown-item d-flex align-items-center">
+                <div class="mr-3">
+                    <div class="icon-circle" [ngClass]="{
+                        'bg-primary': notification.type === 'info',
+                        'bg-success': notification.type === 'success',
+                        'bg-warning': notification.type === 'warning',
+                        'bg-danger': notification.type === 'error'
+                    }">
+                        <i [ngClass]="{
+                          'fa fa-info-circle text-white': notification.type === 'info',
+                          'fas fa-check-circle text-white': notification.type === 'success',
+                          'fa fa-exclamation-circle text-white': notification.type === 'warning',
+                          'fa fa-times text-white': notification.type === 'error'
+                        }"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="small text-gray-500">{{ notification.date | date: 'short' }}</div>
+                    <span class="font-weight-bold">{{ notification.content }}</span>
+                </div>
+            </a>
+        </ng-container>
+      </div>
+
+        <a class="dropdown-item text-center small text-gray-500" >Show All Alerts</a>
+    </div>
+</li>
+
+
+  <!-- <li class="nav-item dropdown no-arrow mx-1">
+    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-bell fa-fw"></i>
+        <span class="badge badge-danger badge-counter">3+</span>
+    </a>
+    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+        <h6 class="dropdown-header">
+            Alerts Center
+        </h6>
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="mr-3">
+                <div class="icon-circle bg-primary">
+                    <i class="fas fa-file-alt text-white"></i>
+                </div>
+            </div>
+            <div>
+                <div class="small text-gray-500">December 12, 2019</div>
+                <span class="font-weight-bold">A new monthly report is ready to download!</span>
+            </div>
+        </a>
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="mr-3">
+                <div class="icon-circle bg-success">
+                    <i class="fas fa-donate text-white"></i>
+                </div>
+            </div>
+            <div>
+                <div class="small text-gray-500">December 7, 2019</div>
+                $290.29 has been deposited into your account!
+            </div>
+        </a>
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="mr-3">
+                <div class="icon-circle bg-warning">
+                    <i class="fas fa-exclamation-triangle text-white"></i>
+                </div>
+            </div>
+            <div>
+                <div class="small text-gray-500">December 2, 2019</div>
+                Spending Alert: We've noticed unusually high spending for your account.
+            </div>
+        </a>
+        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+    </div>
+</li> -->
+
+<!-- <li class="nav-item dropdown no-arrow mx-1">
+  <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="fas fa-plus fa-fw"></i>
+      
+  </a>
+  <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+      <h6 class="dropdown-header">
+          Alerts Center
+      </h6>
+      <a class="dropdown-item d-flex align-items-center" href="#">
+          <div class="mr-3">
+              <div class="icon-circle bg-primary">
+                  <i class="fas fa-file-alt text-white"></i>
+              </div>
+          </div>
+          <div>
+              <div class="small text-gray-500">December 12, 2019</div>
+              <span class="font-weight-bold">A new monthly report is ready to download!</span>
+          </div>
+      </a>
+      <a class="dropdown-item d-flex align-items-center" href="#">
+          <div class="mr-3">
+              <div class="icon-circle bg-success">
+                  <i class="fas fa-donate text-white"></i>
+              </div>
+          </div>
+          <div>
+              <div class="small text-gray-500">December 7, 2019</div>
+              $290.29 has been deposited into your account!
+          </div>
+      </a>
+      <a class="dropdown-item d-flex align-items-center" href="#">
+          <div class="mr-3">
+              <div class="icon-circle bg-warning">
+                  <i class="fas fa-exclamation-triangle text-white"></i>
+              </div>
+          </div>
+          <div>
+              <div class="small text-gray-500">December 2, 2019</div>
+              Spending Alert: We've noticed unusually high spending for your account.
+          </div>
+      </a>
+      <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+  </div>
+</li> -->
 
   <!-- Nav Item - Search Dropdown (Visible Only XS) -->
   <li class="nav-item dropdown no-arrow d-sm-none">
@@ -115,11 +261,11 @@
       aria-expanded="false"
     >
       <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{
-        user
+        userObject?.firstName+' '+userObject?.lastName
       }}</span>
       <img
         class="img-profile rounded-circle"
-        src="assets/img/undraw_profile.svg"
+        [src]="retrievedImage"
       />
     </a>
     <!-- Dropdown - User Information -->
@@ -127,10 +273,28 @@
       class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
       aria-labelledby="userDropdown"
     >
-      <!--  <a class="dropdown-item" href="#">
-                              <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                              Profile
-                          </a>-->
+        <!-- My Profile -->
+      <a routerLink="/profile" class="dropdown-item" href="#">
+        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+        My Profile
+      </a>
+
+      <!-- Change Profile Photo -->
+      <a (click)="openProfilePhotoDialog()" class="dropdown-item" >
+        <i class="fas fa-camera fa-sm fa-fw mr-2 text-gray-400"></i>
+        Change Profile Photo
+      </a>
+
+      <a (click)="openLogoDialog()" class="dropdown-item" >
+        <i class="fas fa-profile fa-sm fa-fw mr-2 text-gray-400"></i>
+        Change Logo
+      </a>
+
+      <!-- Change Password -->
+      <a routerLink="/change-password" class="dropdown-item" href="#">
+        <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+        Change Password
+      </a>
       <a routerLink="/settings" class="dropdown-item" href="#">
         <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
         {{ menuI18n.settingsI18n }}

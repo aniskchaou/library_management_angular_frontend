@@ -47,6 +47,7 @@ export class WriterResultListComponent extends URLLoader implements OnInit {
   }
 
   getWriterByLang(lang) {
+     lang='EN'
     this.httpService.getAll(CONFIG.URL_BASE + '/i18n/writer/' + lang).subscribe(
       (data) => {
         this.writerI18n = data;

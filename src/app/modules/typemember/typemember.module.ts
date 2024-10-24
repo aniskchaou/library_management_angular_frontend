@@ -11,6 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { SharedModule } from '../shared/shared.module';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,9 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
+    NgxDatatableModule,
+    NgSelectModule,
+    NgbModalModule
   ],
   providers: [TypeMemberValidation],
 })

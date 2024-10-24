@@ -1,0 +1,19 @@
+.blue-text {
+    color: blue;
+  }
+
+
+
+.custom-tab-pane {
+  background-color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.markdown-container {
+  max-width: 800px;
+  margin: 0 auto;
+}

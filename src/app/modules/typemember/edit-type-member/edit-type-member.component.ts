@@ -67,6 +67,7 @@ export class EditTypeMemberComponent extends URLLoader implements OnInit {
   }
 
   getTypeMemberByLang(lang) {
+     lang='EN'
     this.httpService
       .getAll(CONFIG.URL_BASE + '/i18n/typemember/' + lang)
       .subscribe(
