@@ -1,7 +1,7 @@
 import { UrlSegment } from '@angular/router';
 
 export default class CONFIG {
-  static URL_BASE = 'http://localhost:8080';
+  static URL_BASE = 'https://librarylab-backend-c5ded9ea6a7c.herokuapp.com';
 
   public static instance: CONFIG = null;
   public LANG = 'EN';
