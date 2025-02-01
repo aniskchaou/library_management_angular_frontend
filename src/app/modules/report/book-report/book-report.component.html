@@ -74,6 +74,10 @@
   <div class="card shadow mb-4" *ngIf="searchButtonClicked">
     <div class="card-body">
       <div class="table-responsive">
+        <div class="export-buttons">
+          <button class="btn btn-outline-primary" (click)="exportToCSV()">Export to CSV</button>
+          <button class="btn btn-outline-secondary" (click)="exportToPDF()">Export to PDF</button>
+        </div>
         <table
           id="table"
           class="table table-bordered"

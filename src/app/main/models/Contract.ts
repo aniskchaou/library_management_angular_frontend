@@ -7,6 +7,6 @@ export interface Contract {
   startDate: Date; // Use `Date` type for LocalDate
   endDate: Date;   // Use `Date` type for LocalDate
   vendor: Vendor; // Foreign key representing the Vendor entity
-  orders?: Order[]; // Optional array of related orders
+  orders?: Order; // Optional array of related orders
   terms?: string; // Optional field for terms and conditions
 }

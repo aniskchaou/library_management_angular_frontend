@@ -29,7 +29,20 @@
     <!-- List tab content -->
     <div id="List" class="tab-pane fade show active">
       <div class="container-fluid">
-        <!-- Button trigger modal -->
+      
+
+        <div *ngIf="loadingIndicator; else loaded">
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+        <ng-template #loaded>
+          <!-- Bar Code Table -->
+          <div class="card mb-4">
+            <div class="card-body">
+                <!-- Button trigger modal -->
         <button class="btn btn-outline-primary mb-3" (click)="openAddDialog()">Generate Bar Code</button>
         
         <button
@@ -43,18 +56,6 @@
         </span>
         <span class="text">Reload</span>
         </button>
-
-        <div *ngIf="loadingIndicator; else loaded">
-          <div class="d-flex justify-content-center">
-            <div class="spinner-border text-primary" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
-          </div>
-        </div>
-        <ng-template #loaded>
-          <!-- Bar Code Table -->
-          <div class="card mb-4">
-            <div class="card-body">
               <ngx-datatable
   class="bootstrap"
   [rows]="barcodes"
@@ -81,9 +82,9 @@
         <i class="fas fa-eye"></i> View
       </a>
 
-        <a class="dropdown-item"  (click)="openEditDialog(row)" title="Edit">
+        <!-- <a class="dropdown-item"  (click)="openEditDialog(row)" title="Edit">
             <i class="fas fa-edit"></i> Edit
-        </a>
+        </a> -->
         <a class="dropdown-item"  (click)="deleteBarCode(row.id)" title="Delete">
             <i class="fas fa-trash"></i> Delete
         </a>

@@ -109,7 +109,7 @@
               </a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link" id="sms-tab" data-bs-toggle="tab" data-bs-target="#sms" type="button" role="tab" aria-controls="sms" aria-selected="true">
+              <a class="nav-link" id="sms-tab" data-bs-toggle="tab" data-bs-target="#sms" type="button" role="tab" aria-controls="sms" aria-selected="false">
                 <i class="fas fa-sms"></i> SMS (Twilio)
               </a>
             </li>
@@ -185,16 +185,16 @@
 
             </div>
             <!-- Display Settings Tab -->
-            <div class="tab-pane fade show active" id="sms" role="tabpanel" aria-labelledby="sms-tab">
-              <h4>SMS Settings</h4>
+            <div class="tab-pane fade show" id="sms" role="tabpanel" aria-labelledby="sms-tab">
+              <!-- <h4>SMS Settings</h4> -->
               <app-twilio-settings></app-twilio-settings>
             </div>
             <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
-              <h4>Payment Settings</h4>
+            <!--   <h4>Payment Settings</h4> -->
               <app-paypal-settings></app-paypal-settings>
             </div>
             <div class="tab-pane fade" id="ai" role="tabpanel" aria-labelledby="ai-tab">
-              <h4>AI Settings</h4>
+              <!-- <h4>AI Settings</h4> -->
               <app-openai-settings></app-openai-settings>
             </div>
 

@@ -205,10 +205,10 @@
                             <a class="dropdown-item"  (click)="deleteInvoice(row.id)">
                                 <i class="fas fa-trash"></i> Delete
                             </a>
-                            <a class="dropdown-item" (click)="download()">
+                            <a  [class.disabled]="true"  class="dropdown-item" (click)="download()">
                                 <i class="fas fa-file-download"></i> Download 
                             </a>
-                            <a class="dropdown-item" (click)="pay()">
+                            <a  [class.disabled]="true"  class="dropdown-item" (click)="pay()">
                                 <i class="fas fa-money-bill-wave"></i> Add Payment
                             </a>
                            <!--  <a class="dropdown-item" href="#">

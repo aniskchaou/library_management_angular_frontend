@@ -7,6 +7,7 @@ import { Shelf } from 'src/app/main/models/Shelf';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import { RowModalComponent } from '../row-modal/row-modal.component';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -77,6 +78,7 @@ export class RowComponent implements OnInit {
   markdownContent
 
   constructor(
+    private toastr: ToastrService,
     private rowService: HTTPService,
     private modalService: NgbModal,
     private departmentService: HTTPService,
@@ -162,6 +164,7 @@ export class RowComponent implements OnInit {
 
   deleteRow(row: Row): void {
     this.rows = this.rows.filter(r => r !== row);
+    this.toastr.success('Item removed successfully!', 'Success');
     this.rowService.deleteRow(row.id).subscribe(() => {
       this.loadRows();
     });

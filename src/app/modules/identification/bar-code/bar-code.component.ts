@@ -9,6 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import CONFIG from 'src/app/main/urls/urls';
 import { BarcodeViewComponent } from '../barcode-view/barcode-view.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-bar-code',
@@ -42,7 +43,7 @@ export class BarCodeComponent extends URLLoader implements OnInit, AfterViewInit
   loadingIndicator = true;
   reorderable = true;
 
-  constructor(private barcodeService: HTTPService, private modalService: NgbModal,private http:HttpClient,private httpService:HTTPService) {
+  constructor(private toastr: ToastrService,private barcodeService: HTTPService, private modalService: NgbModal,private http:HttpClient,private httpService:HTTPService) {
     super();
     this.temp = [...this.barcodes];
   }
@@ -109,6 +110,7 @@ export class BarCodeComponent extends URLLoader implements OnInit, AfterViewInit
     modalRef.result.then(result => {
       if (result) {
         this.barcodeService.createBarCode(result).subscribe(() => {
+          this.toastr.success('Item removed successfully!', 'Success');
           this.loadBarcodes();
         });
       }
@@ -187,6 +189,7 @@ export class BarCodeComponent extends URLLoader implements OnInit, AfterViewInit
             printWindow.close(); // Close the window after printing
         };
     };
+    this.toastr.success('Item is printed!', 'Success');
 }
 
  downloadBarCode(qrCode) {
@@ -211,11 +214,13 @@ export class BarCodeComponent extends URLLoader implements OnInit, AfterViewInit
   } else {
       console.log("Failed to open the new window.");
   }
+  this.toastr.success('Item is downloded !', 'Success');
 }
 
 regenerateBarCode(qrCode){
   this.httpService.getAll(CONFIG.URL_BASE + '/barcode/saveBarCode/' + qrCode?.isbn ).subscribe((data)=>{
     console.log(data)
+    this.toastr.success('Item is regenerated!', 'Success');
   })
 }
 

@@ -11,6 +11,7 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 import { EditCategoryComponent } from '../edit-category/edit-category.component';
 import { DataService } from 'src/app/main/services/data.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-category',
@@ -77,6 +78,7 @@ export class CategoryComponent extends URLLoader implements OnInit {
 
 
   constructor(
+    private toastr: ToastrService,
     private messageService: CategoryMessage,
     private httpService: HTTPService,
     private router: Router,
@@ -99,13 +101,12 @@ export class CategoryComponent extends URLLoader implements OnInit {
     console.log(id)
     var r = confirm('Do you want to delete this recording ?');
     if (r) {
-      this.httpService.remove(CONFIG.URL_BASE + '/category/delete/' + id);
-      super.show(
-        'Confirmation',
-        this.messageService.confirmationMessages.delete,
-        'success'
-      );
-      this.reloadPage();
+      this.httpService.remove(CONFIG.URL_BASE + '/category/delete/' + id).then(()=>{
+        this.toastr.success('Item removed successfully!', 'Success');
+        this.reloadPage();
+
+      });
+      
     }
   }
 
@@ -174,6 +175,8 @@ export class CategoryComponent extends URLLoader implements OnInit {
       
     }).catch(error => console.log(error));
   }
+
+ 
 
 
 

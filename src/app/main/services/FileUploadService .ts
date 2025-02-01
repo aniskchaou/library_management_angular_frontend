@@ -13,7 +13,7 @@ export class FileUploadService {
   constructor(private http: HttpClient) { }
 
   header = new HttpHeaders({
-    Authorization: 'Basic ' + btoa(sessionStorage.getItem('username') + ':' + sessionStorage.getItem('password')),
+    Authorization: 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('password')),
     'enctype': 'multipart/form-data'
   });
   upload(formData): Observable<HttpEvent<any>> {

@@ -645,9 +645,9 @@
     Authorization:
       &#x27;Basic &#x27; +
       btoa(
-        sessionStorage.getItem(&#x27;username&#x27;) +
+        localStorage.getItem(&#x27;username&#x27;) +
           &#x27;:&#x27; +
-          sessionStorage.getItem(&#x27;password&#x27;)
+          localStorage.getItem(&#x27;password&#x27;)
       ),
   })</code>
                     </td>
@@ -772,9 +772,9 @@ export class HTTPService implements Service {
     Authorization:
       &#x27;Basic &#x27; +
       btoa(
-        sessionStorage.getItem(&#x27;username&#x27;) +
+        localStorage.getItem(&#x27;username&#x27;) +
           &#x27;:&#x27; +
-          sessionStorage.getItem(&#x27;password&#x27;)
+          localStorage.getItem(&#x27;password&#x27;)
       ),
   });
   constructor(private http: HttpClient) {}
@@ -794,9 +794,9 @@ export class HTTPService implements Service {
       Authorization:
         &#x27;Basic &#x27; +
         btoa(
-          sessionStorage.getItem(&#x27;username&#x27;) +
+          localStorage.getItem(&#x27;username&#x27;) +
             &#x27;:&#x27; +
-            sessionStorage.getItem(&#x27;password&#x27;)
+            localStorage.getItem(&#x27;password&#x27;)
         ),
     });
     await this.http.post(url, body, { headers: headers }).toPromise();
@@ -809,9 +809,9 @@ export class HTTPService implements Service {
       Authorization:
         &#x27;Basic &#x27; +
         btoa(
-          sessionStorage.getItem(&#x27;username&#x27;) +
+          localStorage.getItem(&#x27;username&#x27;) +
             &#x27;:&#x27; +
-            sessionStorage.getItem(&#x27;password&#x27;)
+            localStorage.getItem(&#x27;password&#x27;)
         ),
     });
     await this.http.post(url, body, { headers: headers }).toPromise();
@@ -823,9 +823,9 @@ export class HTTPService implements Service {
       Authorization:
         &#x27;Basic &#x27; +
         btoa(
-          sessionStorage.getItem(&#x27;username&#x27;) +
+          localStorage.getItem(&#x27;username&#x27;) +
             &#x27;:&#x27; +
-            sessionStorage.getItem(&#x27;password&#x27;)
+            localStorage.getItem(&#x27;password&#x27;)
         ),
     });
     await this.http

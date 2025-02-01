@@ -9,6 +9,7 @@ import { EditMemberComponent } from '../edit-member/edit-member.component';
 import { FileUploadService } from 'src/app/main/services/FileUploadService ';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import html2canvas from 'html2canvas';
+import { ToastrService } from 'ngx-toastr';
 declare var paypal: any;
 @Component({
   selector: 'app-view-member',
@@ -29,6 +30,7 @@ export class ViewMemberComponent implements OnInit, OnChanges {
  
 
   constructor(
+    private toastr: ToastrService,
     private activeModal: NgbActiveModal,
     private modalService: NgbModal,
     private router: Router,
@@ -120,7 +122,7 @@ export class ViewMemberComponent implements OnInit, OnChanges {
   generatePaymentLink(amount,currency,description) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: 'Basic ' + btoa(sessionStorage.getItem('username') + ':' + sessionStorage.getItem('password')),
+      Authorization: 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('password')),
     });
 
     // Prepare the payload
@@ -160,13 +162,15 @@ export class ViewMemberComponent implements OnInit, OnChanges {
     if (this.paymentLink) {
       const paymentData = {
         paymentLink: this.paymentLink,
-        amountDue: 100.00, // Replace with actual amount
+        amountDue: 10 ,// Replace with actual amount
         description: 'Payment for Order', // Replace with actual description
-        customerName: 'John Doe' // Replace with actual customer name
+        customerName: this.member?.firstname,
+        email:this.member?.primary_email // Replace with actual customer name
       };
+      console.log(paymentData)
 
       const header = new HttpHeaders({
-        Authorization: 'Basic ' + btoa(sessionStorage.getItem('username') + ':' + sessionStorage.getItem('password')),
+        Authorization: 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('password')),
         'Content-Type': 'application/json'
       });
 
@@ -267,13 +271,16 @@ export class ViewMemberComponent implements OnInit, OnChanges {
 
     this.fileUploadService.upload(formData)
       .subscribe(response => {
+       
         console.log(response);
       });
+      this.toastr.success("Your file has been uploaded successfully.", 'Success');
   }
 
 
    // Method to download the card as an image
    downloadCard(): void {
+    this.toastr.success("Your PDF file will be downloaded shortly.", 'Success');
     const cardElement = document.querySelector('.membership-card') as HTMLElement;
 
     html2canvas(cardElement).then(canvas => {
@@ -302,6 +309,7 @@ export class ViewMemberComponent implements OnInit, OnChanges {
   }
 
   downloadFile(filename: string): void {
+    this.toastr.success("Your PDF file will be downloaded shortly.", 'Success');
     const link = document.createElement('a');
     link.href = CONFIG.URL_BASE+`/member/member-files/${this.member.id}/${filename}`
     link.target = '_blank';

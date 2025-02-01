@@ -58,6 +58,14 @@
    
   </tbody>
 </table> -->
+<div>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Search by book title..."
+    (input)="updateFilter($event)"
+  />
+</div>
 <ngx-datatable
 class="bootstrap"
 [rows]="books"
@@ -69,6 +77,15 @@ class="bootstrap"
 [loadingIndicator]="loadingIndicator"
 [reorderable]="reorderable"
 >
+<ngx-datatable-column>
+  <ng-template ngx-datatable-cell-template let-row="row">
+    <!-- Generate random background color -->
+    <div [style.background-color]="getRandomColor()" 
+         style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; font-weight: bold;">
+      {{ row.title ? row.title.charAt(0).toUpperCase() : '' }}
+    </div>
+  </ng-template>
+</ngx-datatable-column>
 <ngx-datatable-column name="Title" prop="title" ><ng-template ngx-datatable-cell-template let-row="row"><span style="color: blue;">{{row.title}}</span></ng-template></ngx-datatable-column>
 <ngx-datatable-column name="ISBN" prop="isbn" ><ng-template ngx-datatable-cell-template let-row="row"><span style="color: red;">{{row.isbn}}</span></ng-template></ngx-datatable-column>
 <ngx-datatable-column name="Writer" prop="writer.name"></ngx-datatable-column>

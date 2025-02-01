@@ -72,10 +72,10 @@ closeModal(): void {
   renew() {
     this.submitted = true;
 
-    if (this.renewalForm.invalid) {
+   /*  if (this.renewalForm.invalid) {
       return;  // If form is invalid, stop the process
     }
-
+ */
     const formValue = this.renewalForm.value;
 
     // Get the selected member and book
@@ -92,7 +92,11 @@ closeModal(): void {
     this.catalogItemId=formValue.itemBarcode
     this.memberId=formValue.member
     this.statusName="Renew"
-    this.updateStatus()
+    if(this.validateRenewalForm())
+    {
+      this.updateStatus()
+    }
+    
 
    /*  // Submit the renewal data to the backend
     this.httpService.create('/renewal/create', payload).then(
@@ -133,5 +137,48 @@ closeModal(): void {
     }
   }
 
-
+  validateRenewalForm(): boolean {
+    if (!this.renewalForm) {
+      this.toastr.error('Form is not initialized.');
+      return false;
+    }
+  
+    const formValue = this.renewalForm.value;
+  
+    // Validate Member Selection
+    if (!formValue.member) {
+      this.toastr.error('Please select a member.');
+      return false;
+    }
+  
+    // Validate Item Barcode
+    if (!formValue.itemBarcode) {
+      this.toastr.error('Please select an item barcode.');
+      return false;
+    }
+  
+    // Validate Renewal Due Date
+    if (!formValue.renewalDueDate) {
+      this.toastr.error('Please select a renewal due date.');
+      return false;
+    }
+  
+    const renewalDueDate = new Date(formValue.renewalDueDate);
+    const today = new Date();
+  
+    // Ensure the renewal due date is not in the past
+    if (renewalDueDate < today) {
+      this.toastr.error('Renewal due date cannot be in the past.');
+      return false;
+    }
+  
+    // Validate Forgive Fines
+    if (!['yes', 'no'].includes(formValue.forgiveFines)) {
+      this.toastr.error('Please select a valid option for forgiving fines.');
+      return false;
+    }
+  
+    return true;
+  }
+  
 }

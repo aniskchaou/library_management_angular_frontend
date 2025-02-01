@@ -124,6 +124,15 @@
               [footerHeight]="50"
               [rowHeight]="'auto'"
               [limit]="10">
+              <ngx-datatable-column name="Thumbnail">
+                <ng-template ngx-datatable-cell-template let-row="row">
+                  <!-- Generate random background color -->
+                  <div [style.background-color]="getRandomColor()" 
+                       style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; font-weight: bold;">
+                    {{ row.name ? row.name.charAt(0).toUpperCase() : '' }}
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
               <ngx-datatable-column name="Name" prop="name"></ngx-datatable-column>
               <ngx-datatable-column name="Address" prop="address"></ngx-datatable-column>
               <ngx-datatable-column name="Phone" prop="phone"></ngx-datatable-column>

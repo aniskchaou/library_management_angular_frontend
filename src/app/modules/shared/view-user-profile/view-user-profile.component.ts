@@ -18,10 +18,16 @@ export class ViewUserProfileComponent implements OnInit {
 
   constructor(private httpService:HTTPService,private modalService: NgbModal) { }
 
+  getFormattedRoles(): string {
+    return this.user?.roles
+      .map((role: string) => role.replace('ROLE_', ''))
+      .join(', ');
+  }
+
   ngOnInit(): void {
-    this.retrievedImage=CONFIG.URL_BASE+'/users/get/' +sessionStorage.getItem('username') +'/'+sessionStorage.getItem('username')+'_profile.png';
+    this.retrievedImage=CONFIG.URL_BASE+'/users/get/' +localStorage.getItem('username') +'/'+localStorage.getItem('username')+'_profile.png';
     this.httpService
-    .getAll(CONFIG.URL_BASE + '/users/username/'+sessionStorage.getItem('username'))
+    .getAll(CONFIG.URL_BASE + '/users/username/'+localStorage.getItem('username'))
     .subscribe(
       (data) => {
         this.user = data;

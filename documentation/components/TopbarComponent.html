@@ -366,7 +366,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>sessionStorage.getItem(&#x27;username&#x27;)</code>
+                        <i>Default value : </i><code>localStorage.getItem(&#x27;username&#x27;)</code>
                     </td>
                 </tr>
                     <tr>
@@ -395,7 +395,7 @@ import { AuthentificationService } from &#x27;src/app/main/security/authentifica
 })
 export class TopbarComponent implements OnInit {
   @Input() menuI18n;
-  user &#x3D; sessionStorage.getItem(&#x27;username&#x27;);
+  user &#x3D; localStorage.getItem(&#x27;username&#x27;);
   constructor(
     private authService: AuthentificationService,
     private router: Router

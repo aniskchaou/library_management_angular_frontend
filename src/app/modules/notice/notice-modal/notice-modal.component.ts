@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import Member from 'src/app/main/models/Member';
 import { Notice } from 'src/app/main/models/Notice';
 import { NoticeTemplate } from 'src/app/main/models/NoticeTemplate';
@@ -18,7 +19,7 @@ export class NoticeModalComponent implements OnInit {
   members: Member[];
   noticeTemplates: NoticeTemplate[];
 
-  constructor(private noticeTemplateService:HTTPService,public activeModal: NgbActiveModal, private noticeService: HTTPService,private httpService:HTTPService) {}
+  constructor(private toastr: ToastrService,private noticeTemplateService:HTTPService,public activeModal: NgbActiveModal, private noticeService: HTTPService,private httpService:HTTPService) {}
 
   ngOnInit(): void {
     console.log(this.notice);
@@ -28,15 +29,14 @@ export class NoticeModalComponent implements OnInit {
 
   saveNotice(): void {
     console.log(this.notice)
-    if (this.notice.id) {
-      this.noticeService.updateNotice(this.notice.id, this.notice).subscribe(() => {
+    if(this.validateNoticeForm(this.notice,true)){
+       this.noticeService.createNotice(this.notice).subscribe(() => {
         this.activeModal.close(this.notice);
-      });
-    } else {
-      this.noticeService.createNotice(this.notice).subscribe(() => {
-        this.activeModal.close(this.notice);
+        this.toastr.success('Item added successfully!', 'Success');
       });
     }
+     
+    
   }
 
   getAllMembers() {
@@ -65,5 +65,44 @@ export class NoticeModalComponent implements OnInit {
   onCancelClick(): void {
     this.activeModal.dismiss();
   }
+
+  errors: any;
+
+validateNoticeForm(form: any, submitted: boolean): boolean {
+  this.errors = {};
+
+  // Validate Notification Method
+  if (!form.notificationMethod) {
+    this.errors.notificationMethod = 'Notification method is required.';
+    this.toastr.error(this.errors.notificationMethod, 'Validation Error');
+  }
+
+  // Validate Receiver
+  if (!form.receiver) {
+    this.errors.receiver = 'Receiver is required.';
+    this.toastr.error(this.errors.receiver, 'Validation Error');
+  }
+
+  // Validate Subject
+  if (!form.subject) {
+    this.errors.subject = 'Subject is required.';
+    this.toastr.error(this.errors.subject, 'Validation Error');
+  }
+
+  // Validate Type
+  if (!form.type) {
+    this.errors.type = 'Type is required.';
+    this.toastr.error(this.errors.type, 'Validation Error');
+  }
+
+  // Validate Importance
+  if (!form.importance) {
+    this.errors.importance = 'Importance is required.';
+    this.toastr.error(this.errors.importance, 'Validation Error');
+  }
+
+  // All validations complete; return whether the form is valid
+  return Object.keys(this.errors).length === 0;
+}
 
 }

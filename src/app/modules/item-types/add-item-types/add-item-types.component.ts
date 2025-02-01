@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { DataService } from 'src/app/main/services/data.service';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
@@ -18,6 +19,7 @@ export class AddItemTypesComponent implements OnInit {
   submitted = false;
 
   constructor(
+    private toastr: ToastrService,
     private formBuilder: FormBuilder,
     private router: Router,
     private httpClient: HTTPService,
@@ -48,14 +50,11 @@ export class AddItemTypesComponent implements OnInit {
     return this.mediaTypeForm.controls;
   }
 
-/*   closeModal(data){
-    this.activeModal.dismiss(data);
-  } */
+   closeModal(){
+    this.activeModal.dismiss();
+  } 
 
 
-  closeModal(){
-
-  }
 
   onSubmit(): void {
     this.submitted = true;
@@ -63,14 +62,17 @@ export class AddItemTypesComponent implements OnInit {
     /* if (this.mediaTypeForm.invalid) {
       return;
     } */
-
-    // Perform the HTTP request to save the form data
-    this.httpClient.create(CONFIG.URL_BASE +'/mediatype/create', this.mediaTypeForm.value).finally(()=>{
+    if(this.validateMediaTypeForm(this.mediaTypeForm.value,true)){
+      this.httpClient.create(CONFIG.URL_BASE +'/mediatype/create', this.mediaTypeForm.value).finally(()=>{
 
       this.dataService.triggerRefresh()
+      this.toastr.success('Item added successfully!', 'Success');
       this.activeModal.dismiss(this.mediaTypeForm.value);
     //this.closeModal()
     })
+    }
+    // Perform the HTTP request to save the form data
+    
     
 
   }
@@ -80,5 +82,77 @@ export class AddItemTypesComponent implements OnInit {
   }
 
 
+
+  errors: any;
+
+validateMediaTypeForm(form: any, submitted: boolean): boolean {
+  this.errors = {};
+
+  // Validate Name
+  if (!form.name || form.name.trim().length < 2) {
+    this.errors.name = 'Name is required and must be at least 2 characters long.';
+    this.toastr.error(this.errors.name, 'Validation Error');
+  }
+
+  // Validate Code
+  if (!form.code || form.code.trim().length < 3) {
+    this.errors.code = 'Code is required and must be at least 3 characters long.';
+    this.toastr.error(this.errors.code, 'Validation Error');
+  }
+
+  // Validate Parent Code (optional but validate if provided)
+  if (form.parentCode && form.parentCode.trim().length < 3) {
+    this.errors.parentCode = 'Parent code must be at least 3 characters long if provided.';
+    this.toastr.error(this.errors.parentCode, 'Validation Error');
+  }
+
+  // Validate Rental Charges (all must be numbers and positive)
+  if (form.rentalCharge !== undefined && (form.rentalCharge <= 0 || isNaN(form.rentalCharge))) {
+    this.errors.rentalCharge = 'Rental charge must be a positive number.';
+    this.toastr.error(this.errors.rentalCharge, 'Validation Error');
+  }
+
+  // Validate Daily Rental Charge
+  if (form.dailyRentalCharge !== undefined && (form.dailyRentalCharge <= 0 || isNaN(form.dailyRentalCharge))) {
+    this.errors.dailyRentalCharge = 'Daily rental charge must be a positive number.';
+    this.toastr.error(this.errors.dailyRentalCharge, 'Validation Error');
+  }
+
+  // Validate Hourly Rental Charge
+  if (form.hourlyRentalCharge !== undefined && (form.hourlyRentalCharge <= 0 || isNaN(form.hourlyRentalCharge))) {
+    this.errors.hourlyRentalCharge = 'Hourly rental charge must be a positive number.';
+    this.toastr.error(this.errors.hourlyRentalCharge, 'Validation Error');
+  }
+
+  // Validate Default Replacement Cost
+  if (form.defaultReplacementCost !== undefined && (form.defaultReplacementCost <= 0 || isNaN(form.defaultReplacementCost))) {
+    this.errors.defaultReplacementCost = 'Replacement cost must be a positive number.';
+    this.toastr.error(this.errors.defaultReplacementCost, 'Validation Error');
+  }
+
+  // Validate Processing Fee
+  if (form.processingFee !== undefined && (form.processingFee <= 0 || isNaN(form.processingFee))) {
+    this.errors.processingFee = 'Processing fee must be a positive number.';
+    this.toastr.error(this.errors.processingFee, 'Validation Error');
+  }
+
+  // Validate Checkin Message
+  if (!form.checkinMessage || form.checkinMessage.trim().length < 2) {
+    this.errors.checkinMessage = 'Check-in message is required and must be at least 2 characters long.';
+    this.toastr.error(this.errors.checkinMessage, 'Validation Error');
+  }
+
+  // Validate Library Limitations
+  if (!form.libraryLimitations || form.libraryLimitations.trim().length < 2) {
+    this.errors.libraryLimitations = 'Library limitations are required and must be at least 2 characters long.';
+    this.toastr.error(this.errors.libraryLimitations, 'Validation Error');
+  }
+
+  // Validate Not for Loan (checkbox: must be checked if relevant)
+  // (Checkbox validation is optional, as it just needs to be checked/unchecked)
+  
+  // All validations complete; return whether the form is valid
+  return Object.keys(this.errors).length === 0;
+}
 
 }

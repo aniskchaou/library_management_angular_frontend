@@ -3,6 +3,7 @@ import { Department } from 'src/app/main/models/Department';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DepartmentService } from 'src/app/main/services/departement.service';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-department-modal-component',
   templateUrl: './department-modal-component.component.html',
@@ -21,8 +22,9 @@ export class DepartmentModalComponentComponent extends URLLoader implements OnIn
     { code: 'BLD_E', name: 'Building E' },
   ];
   
+  
 
-  constructor(public activeModal: NgbActiveModal,private departmentService:DepartmentService) {super()}
+  constructor(private toastr: ToastrService,public activeModal: NgbActiveModal,private departmentService:DepartmentService) {super()}
   ngOnInit(): void {
     this.countries=this.getCountries()
     
@@ -40,13 +42,69 @@ export class DepartmentModalComponentComponent extends URLLoader implements OnIn
     this.activeModal.dismiss();
   }
 
+  errors: any = {};
+
+  validateForm() {
+    this.errors = {};
+
+    // Validate Department Name
+    if (!this.department.departmentName || this.department.departmentName.length < 2) {
+      this.errors.departmentName = 'Department Name is required and must be at least 2 characters.';
+      this.toastr.error(this.errors.departmentName, 'Validation Error');
+    }
+
+    // Validate Department Code
+    const departmentCodePattern = /^[A-Za-z]{2,}[0-9]{1,}$/;
+    if (!this.department.departmentCode || !departmentCodePattern.test(this.department.departmentCode)) {
+      this.errors.departmentCode = 'Department Code is required and must follow the pattern (e.g., HR001, IT002).';
+      this.toastr.error(this.errors.departmentCode, 'Validation Error');
+    }
+
+    // Validate Head of Department
+    if (!this.department.headOfDepartment) {
+      this.errors.headOfDepartment = 'Head of Department is required.';
+      this.toastr.error(this.errors.headOfDepartment, 'Validation Error');
+    }
+
+    // Validate Phone
+   /*  const phonePattern = /^\(\d{3}\) \d{3}-\d{4}$/;
+    if (!this.department.phone || !phonePattern.test(this.department.phone)) {
+      this.errors.phone = 'Phone number is required and must follow the format (123) 456-7890.';
+      this.toastr.error(this.errors.phone, 'Validation Error');
+    } */
+
+    // Validate Email
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!this.department.email || !emailPattern.test(this.department.email)) {
+      this.errors.email = 'Email is required and must be a valid email address.';
+      this.toastr.error(this.errors.email, 'Validation Error');
+    }
+
+    // Validate Number of Employees
+    if (!this.department.numberOfEmployees || this.department.numberOfEmployees <= 0) {
+      this.errors.numberOfEmployees = 'Number of Employees is required and must be greater than 0.';
+      this.toastr.error(this.errors.numberOfEmployees, 'Validation Error');
+    }
+
+    return Object.keys(this.errors).length === 0;
+  }
+
+
   saveDepartment() {
     console.log(this.department)
+    if (this.validateForm()) {
+      console.log('Form is valid. Submitting data:', this.department);
       this.departmentService.createDepartment(this.department).subscribe(() => {
         this.activeModal.close(this.department);
+        this.toastr.success('Item added successfully!', 'Success');
       });
+    } else {
+      console.log('Form is invalid. Errors:', this.errors);
+    }
+      
     //this.onSaveClick()
   }
+
 
   getCountries() {
     return COUNTRY_DATA;

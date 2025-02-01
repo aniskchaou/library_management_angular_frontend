@@ -10,7 +10,7 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">Learn how to set up and use the application with this comprehensive guide.</p>
-                    <a href="#getting-started" class="btn btn-primary">Read More</a>
+                    <a  (click)="openDialog('getting-started')" class="btn btn-primary">Read More</a>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">Find answers to the most frequently asked questions.</p>
-                    <a href="#faq" class="btn btn-success">Read More</a>
+                    <a (click)="openDialog('faq')" class="btn btn-success">Read More</a>
                 </div>
             </div>
         </div>
@@ -34,29 +34,85 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">Need further assistance? Get in touch with our support team.</p>
-                    <a href="#contact" class="btn btn-warning">Contact Us</a>
+                    <a (click)="openDialog('contact')" class="btn btn-warning">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    Local Installation
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Instructions for installing the application locally.</p>
+                    <a (click)="openDialog('local-installation')" class="btn btn-dark">Read More</a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-light text-dark">
+                    Remote Installation
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Guide for setting up the application on a remote server.</p>
+                    <a (click)="openDialog('remote-installation')" class="btn btn-light">Read More</a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    Server Requirements
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Check the necessary server requirements before installation.</p>
+                    <a (click)="openDialog('server-requirements')" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+
+       
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    Changelog
+                </div>
+                <div class="card-body">
+                    <p class="card-text">View the latest updates and changes in the application.</p>
+                    <a (click)="openDialog('changelog')" class="btn btn-danger">Read More</a>
                 </div>
             </div>
         </div>
     </div>
+    
 
     <hr class="my-5">
 
     <h2 class="mt-4">Module Sections</h2>
     <ul class="list-group mt-3">
-        <li class="list-group-item"><a href="#catalogs">Catalogs</a></li>
-        <li class="list-group-item"><a href="#members">Members</a></li>
-        <li class="list-group-item"><a href="#circulations">Circulations</a></li>
-        <li class="list-group-item"><a href="#overdues">Overdues</a></li>
-        <li class="list-group-item"><a href="#acquisitions">Acquisitions</a></li>
-        <li class="list-group-item"><a href="#accounting">Accounting</a></li>
-        <li class="list-group-item"><a href="#notices">Notices</a></li>
-        <li class="list-group-item"><a href="#identifications">Identifications</a></li>
-        <li class="list-group-item"><a href="#setup">Setup</a></li>
-        <li class="list-group-item"><a href="#reports">Reports</a></li>
-        <li class="list-group-item"><a href="#analytics">Analytics</a></li>
-        <li class="list-group-item"><a href="#help">Help</a></li>
-        <li class="list-group-item"><a href="#settings">Settings</a></li>
+        <li class="list-group-item"><a (click)="openDialog('catalog')">Catalogs</a></li>
+        <li class="list-group-item"><a (click)="openDialog('member')">Members</a></li>
+        <li class="list-group-item"><a (click)="openDialog('circulation')">Circulations</a></li>
+        <li class="list-group-item"><a (click)="openDialog('overdue')">Overdues</a></li>
+        <li class="list-group-item"><a (click)="openDialog('budget')">Budget</a></li>
+        <!-- <li class="list-group-item"><a (click)="openDialog('accounting')">Accounting</a></li> -->
+        <li class="list-group-item"><a (click)="openDialog('notice')">Notices</a></li>
+        <li class="list-group-item"><a (click)="openDialog('author')">Authors</a></li>
+        <li class="list-group-item"><a (click)="openDialog('media-type')">Media Type</a></li>
+        <li class="list-group-item"><a (click)="openDialog('member')">Members</a></li>
+        <li class="list-group-item"><a (click)="openDialog('purshase-suggestion')">Pursharse suggestion</a></li>
+      <!--   <li class="list-group-item"><a (click)="openDialog('changelog')">Changelog</a></li>
+        <li class="list-group-item"><a (click)="openDialog('user-setting')">Settings</a></li> -->
     </ul>
 
     <footer class="mt-5 text-center">

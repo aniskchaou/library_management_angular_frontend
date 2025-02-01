@@ -18,20 +18,20 @@
         <label for="endDate">End Date</label>
         <input type="date" class="form-control" id="endDate" [(ngModel)]="contract.endDate" name="endDate" required>
       </div>
-      <!-- <div class="form-group">
+       <div class="form-group">
         <label for="vendor">Vendor</label>
-        <select class="form-control" id="vendor" [(ngModel)]="contract.vendor.id" name="vendor" required>
-          <option *ngFor="let vendor of vendors" [ngValue]="vendor.id">{{ vendor.name }}</option>
+        <select class="form-control" id="vendor" [(ngModel)]="contract.vendor" name="vendor" required>
+          <option *ngFor="let vendor of vendors" [ngValue]="vendor">{{ vendor.name }}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="terms">Terms</label>
         <textarea class="form-control" id="terms" [(ngModel)]="contract.terms" name="terms"></textarea>
-      </div> -->
+      </div> 
     </form> 
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Cancel</button>
-    <button type="button" class="btn btn-primary" (click)="onSaveClick()">Save</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
+    <button type="button" class="btn btn-outline-primary" (click)="onSaveClick()">Save</button>
   </div>
   

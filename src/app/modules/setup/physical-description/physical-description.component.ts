@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import * as L from 'leaflet';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-physical-description',
@@ -23,6 +24,7 @@ export class PhysicalDescriptionComponent extends URLLoader implements OnInit, A
   markdownContent: string;
 
   constructor(
+    private toastr: ToastrService,
     private descriptionService: HTTPService,
     private modalService: NgbModal
   ) {
@@ -82,11 +84,13 @@ export class PhysicalDescriptionComponent extends URLLoader implements OnInit, A
   deleteRow(row: PhysicalDescription): void {
     this.descriptions = this.descriptions.filter(r => r !== row);
     this.descriptions$.next(this.descriptions);
+    this.toastr.success('Item removed successfully!', 'Success');
     this.deleteDescription(row.id);
   }
 
   deleteDescription(id: number): void {
     this.descriptionService.deletePhysicalDescription(id).subscribe(() => {
+      
       this.loadDescriptions();
     });
   }

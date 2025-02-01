@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import MemberMessage from 'src/app/main/messages/MemberMessage';
 import MemberTestService from 'src/app/main/mocks/MemberTestService';
@@ -94,6 +95,7 @@ export class EditMemberComponent  implements OnInit {
       member: Member;
     
       constructor(
+        private toastr: ToastrService,
         private fb: FormBuilder,
         private route: ActivatedRoute,
         private memberService: HTTPService,
@@ -151,7 +153,7 @@ export class EditMemberComponent  implements OnInit {
           console.log(member)
           // Submit the member object via service
           this.memberService.create(CONFIG.URL_BASE+'/member/create',member).then(() => {
-
+            this.toastr.success('Item edited successfully!', 'Success');
             //this.router.navigate(['/members']);
             this.closeModal()
           });

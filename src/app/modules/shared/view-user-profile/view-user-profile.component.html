@@ -12,7 +12,9 @@
                         
                         <!-- Name and Basic Info -->
                         <h3 class="card-title">{{ user?.firstName }} {{ user?.lastName }}</h3>
-                        <p class="card-text text-muted">{{ user?.roles.join(', ') }}</p>
+                        <p class="card-text text-muted">{{ getFormattedRoles() }}</p>
+
+
 
 
                         <!-- Social Links -->

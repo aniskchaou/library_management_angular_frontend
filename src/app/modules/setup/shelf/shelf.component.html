@@ -120,7 +120,7 @@
                       <!-- Department -->
                       <ngx-datatable-column name="Department" [prop]="'department.departmentName'">
                           <ng-template ngx-datatable-cell-template let-row="row">
-                            <span style="color: green;">{{ row.department.departmentName }}</span>
+                            <span style="color: green;">{{ row.department?.departmentName }}</span>
                           </ng-template>
                       </ngx-datatable-column>
 

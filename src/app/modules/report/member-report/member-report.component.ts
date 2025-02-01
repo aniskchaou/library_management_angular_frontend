@@ -1,9 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import jsPDF from 'jspdf';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import Member from 'src/app/main/models/Member';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
+import { saveAs } from 'file-saver';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-member-report',
@@ -106,5 +109,63 @@ export class MemberReportComponent extends URLLoader implements OnInit {
         super.show('Error', err.message, 'error');
       }
     );
+  }
+
+  exportToCSV() {
+    const rows = this.members.map(member => ({
+      Name: `${member.firstname} ${member.Becker}`,
+      'Type ID': member.typeId,
+      Email: member.primary_email,
+      Mobile: member.city,
+      Address: member.address,
+    }));
+
+    const csvContent = [
+      ['Name', 'Type ID', 'Email', 'Mobile', 'Address'], // Header row
+      ...rows.map(row => Object.values(row)) // Data rows
+    ]
+      .map(e => e.join(','))
+      .join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'members.csv');
+  }
+
+  exportToPDF() {
+    const doc = new jsPDF();
+    const headers = [['Name', 'Type ID', 'Email', 'Mobile', 'Address']];
+    const rows = this.members.map(member => [
+      `${member.firstname} ${member.Becker}`,
+      member.typeId,
+      member.primary_email,
+      member.city,
+      member.address,
+    ]);
+
+    doc.text('Members List', 14, 16);
+        // Set column widths
+  const colWidths = [40, 30, 50, 30, 60];
+
+  // Draw the table headers
+  let x = 14;
+  let y = 20;
+
+  headers.forEach((header, index) => {
+    doc.text(header, x + colWidths[index] / 2, y);
+    x += colWidths[index];
+  });
+
+  y += 10; // Move down to start drawing the rows
+
+  // Draw the rows
+  rows.forEach(row => {
+    x = 14;
+    row.forEach((cell, index) => {
+      doc.text(cell, x + colWidths[index] / 2, y);
+      x += colWidths[index];
+    });
+    y += 10;
+  });
+    doc.save('members.pdf');
   }
 }

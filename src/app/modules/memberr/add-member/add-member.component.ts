@@ -3,6 +3,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import MemberMessage from 'src/app/main/messages/MemberMessage';
 import MemberTestService from 'src/app/main/mocks/MemberTestService';
@@ -75,7 +76,7 @@ export class AddMemberComponent extends URLLoader implements OnInit {
   add() {
     this.submitted = true;
 
-    //if (this.validation.checkValidation()) {
+    if (this.validateMemberForm(this.memberForm.value)) {
       // this.memberTestService.create(this.memberForm.value);
       this.httpService
         .create(CONFIG.URL_BASE + '/member/create', this.memberForm.value)
@@ -83,6 +84,7 @@ export class AddMemberComponent extends URLLoader implements OnInit {
           this.reset();
           this.closeModal();
           this.goBack();
+          this.toastr.success('Item added successfully!', 'Success');
           /* super.show(
             'Confirmation',
             this.msg.confirmationMessages.add,
@@ -90,7 +92,7 @@ export class AddMemberComponent extends URLLoader implements OnInit {
           ); */
         });
       //super.show('Confirmation', this.msg.confirmationMessages.add, 'success');
-    //}
+    }
   }
 
 
@@ -98,7 +100,7 @@ export class AddMemberComponent extends URLLoader implements OnInit {
   genderOptions= [];  // Dropdown options for gender
   contactMethodOptions= [];  // Dropdown options for contact methods
 
-  constructor(private fb: FormBuilder, private tooltipConfig: NgbTooltipConfig,private validation: MemberValidation,
+  constructor(private toastr: ToastrService,private fb: FormBuilder, private tooltipConfig: NgbTooltipConfig,private validation: MemberValidation,
     private message: MemberMessage,
     private router: Router,
     private httpService: HTTPService) {
@@ -185,5 +187,102 @@ export class AddMemberComponent extends URLLoader implements OnInit {
       contact_method: '',
       headOfDepartment: ''  // Reset head of department
     });
+  }
+
+  errors:any
+  validateMemberForm(form: any): boolean {
+    this.errors = {};
+    this.submitted = true;
+
+    // Validate Surname
+    if (!form.surname || form.surname.trim().length < 2) {
+      this.errors.surname = 'Surname is required and must be at least 2 characters long.';
+      this.toastr.error(this.errors.surname, 'Validation Error');
+    }
+
+    // Validate First Name
+    if (!form.firstname || form.firstname.trim().length < 2) {
+      this.errors.firstname = 'First Name is required and must be at least 2 characters long.';
+      this.toastr.error(this.errors.firstname, 'Validation Error');
+    }
+
+    // Validate Date of Birth
+    if (!form.dob) {
+      this.errors.dob = 'Date of Birth is required.';
+      this.toastr.error(this.errors.dob, 'Validation Error');
+    }
+
+    // Validate Gender
+    if (!form.gender) {
+      this.errors.gender = 'Gender is required.';
+      this.toastr.error(this.errors.gender, 'Validation Error');
+    }
+
+    // Validate Street Number
+    if (!form.street_number || form.street_number.trim().length < 1) {
+      this.errors.street_number = 'Street Number is required.';
+      this.toastr.error(this.errors.street_number, 'Validation Error');
+    }
+
+    // Validate Address
+    if (!form.address || form.address.trim().length < 5) {
+      this.errors.address = 'Address is required and must be at least 5 characters long.';
+      this.toastr.error(this.errors.address, 'Validation Error');
+    }
+
+    // Validate City
+    if (!form.city || form.city.trim().length < 2) {
+      this.errors.city = 'City is required and must be at least 2 characters long.';
+      this.toastr.error(this.errors.city, 'Validation Error');
+    }
+
+    // Validate State
+    if (!form.state || form.state.trim().length < 2) {
+      this.errors.state = 'State is required and must be at least 2 characters long.';
+      this.toastr.error(this.errors.state, 'Validation Error');
+    }
+
+    // Validate ZIP/Postal Code
+    if (!form.zip || form.zip.trim().length < 5) {
+      this.errors.zip = 'ZIP/Postal Code is required and must be at least 5 characters long.';
+      this.toastr.error(this.errors.zip, 'Validation Error');
+    }
+
+    // Validate Country
+    if (!form.country || form.country.trim().length < 2) {
+      this.errors.country = 'Country is required and must be at least 2 characters long.';
+      this.toastr.error(this.errors.country, 'Validation Error');
+    }
+
+    // Validate Primary Phone
+    if (!form.primary_phone || form.primary_phone.trim().length < 10) {
+      this.errors.primary_phone = 'Primary Phone is required and must be at least 10 characters long.';
+      this.toastr.error(this.errors.primary_phone, 'Validation Error');
+    }
+
+    // Validate Primary Email
+    if (!form.primary_email || !this.validateEmail(form.primary_email)) {
+      this.errors.primary_email = 'A valid Primary Email is required.';
+      this.toastr.error(this.errors.primary_email, 'Validation Error');
+    }
+
+    // Validate Salutation
+   /*  if (!form.salutation) {
+      this.errors.salutation = 'Salutation is required.';
+      this.toastr.error(this.errors.salutation, 'Validation Error');
+    } */
+
+    // Validate Booking Quota
+    if (form.bookingQuota === null || form.bookingQuota < 1) {
+      this.errors.bookingQuota = 'Booking Quota is required and must be at least 1.';
+      this.toastr.error(this.errors.bookingQuota, 'Validation Error');
+    }
+
+    return Object.keys(this.errors).length === 0;
+  }
+
+  validateEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   }
 }

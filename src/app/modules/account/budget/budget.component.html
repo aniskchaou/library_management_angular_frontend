@@ -8,8 +8,13 @@
 
     <!-- Button and Dropdown -->
     
-      <button class="btn btn-outline-primary" (click)="openAddDialog()">Add Budget</button>
-      <button class="btn btn-outline-warning" (click)="loadBudgets()">Reload</button>
+    <button class="btn btn-outline-primary" (click)="openAddDialog()">
+      <i class="fas fa-plus"></i> Add Budget
+    </button>
+    <button class="btn btn-outline-warning" (click)="loadBudgets()">
+      <i class="fas fa-sync-alt"></i> Reload
+    </button>
+    
       
       <div *ngIf="loadingIndicator; else loaded">
         <div class="d-flex justify-content-center">

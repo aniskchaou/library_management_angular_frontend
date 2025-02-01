@@ -5,6 +5,7 @@ import { Vendor } from 'src/app/main/models/Vendor';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import { VendorModalComponent } from '../vendor-modal/vendor-modal.component';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-vendor',
@@ -62,6 +63,7 @@ export class VendorComponent implements OnInit {
 
 
   constructor(
+    private toastr: ToastrService,
     private vendorService: HTTPService,
     private modalService: NgbModal,
     private http:HttpClient
@@ -112,7 +114,17 @@ export class VendorComponent implements OnInit {
   deleteVendor(id: number): void {
     this.vendorService.deleteVendor(id).subscribe(() => {
       this.loadVendors();
+      this.toastr.success('Item removed successfully!', 'Success')
     });
+  }
+
+  getRandomColor(): string {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   }
 
   fetchMarkdownFile(): void {

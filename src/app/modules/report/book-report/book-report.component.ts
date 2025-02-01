@@ -8,7 +8,9 @@ import Publisher from 'src/app/main/models/Publisher';
 import Writer from 'src/app/main/models/Writer';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
-
+import { saveAs } from 'file-saver';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 @Component({
   selector: 'app-book-report',
   templateUrl: './book-report.component.html',
@@ -166,5 +168,62 @@ export class BookReportComponent extends URLLoader implements OnInit {
           super.show('Error', err.message, 'warning');
         }
       );
+  }
+  exportToCSV() {
+    const rows = this.books$.map(book => ({
+      ISBN: book.isbn,
+      Title: book.title,
+      Author: book.writer?.name,
+      Category: book.category?.categoryName,
+      Publisher: book.publisher?.name,
+    }));
+
+    const csvContent = [
+      ['ISBN', 'Title', 'Author', 'Category', 'Publisher'], // Header row
+      ...rows.map(row => Object.values(row)) // Data rows
+    ]
+      .map(e => e.join(','))
+      .join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'books.csv');
+  }
+
+  exportToPDF() {
+    const doc = new jsPDF();
+    const headers = [['ISBN', 'Title', 'Author', 'Category', 'Publisher']];
+    const rows  = this.books$.map(book => [
+      book.isbn,
+      book.title,
+      book.writer?.name,
+      book.category?.categoryName,
+      book.publisher?.name
+    ]);
+
+    doc.text('Books List', 14, 16);
+      // Set column widths
+  const colWidths = [40, 30, 50, 30, 60];
+
+  // Draw the table headers
+  let x = 14;
+  let y = 20;
+
+  headers.forEach((header, index) => {
+    doc.text(header, x + colWidths[index] / 2, y);
+    x += colWidths[index];
+  });
+
+  y += 10; // Move down to start drawing the rows
+
+  // Draw the rows
+  rows.forEach(row => {
+    x = 14;
+    row.forEach((cell, index) => {
+      doc.text(cell, x + colWidths[index] / 2, y);
+      x += colWidths[index];
+    });
+    y += 10;
+  });
+    doc.save('books.pdf');
   }
 }

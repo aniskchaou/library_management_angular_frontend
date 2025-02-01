@@ -16,6 +16,7 @@ import { QrCodeModalComponent } from '../../identification/qr-code-modal/qr-code
 import { EditBookComponent } from '../edit-book/edit-book.component';
 import { AddBookComponent } from '../add-book/add-book.component';
 import { UploadBookCoverComponent } from '../upload-book-cover/upload-book-cover.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-book-list',
@@ -52,7 +53,7 @@ export class BookListComponent extends URLLoader implements OnInit, AfterViewIni
     { name: 'Actions', prop: 'actions', visible: true }
   ];
 
-  constructor(private httpService: HTTPService, private router: Router,private modalService: NgbModal) {
+  constructor(private toastr:ToastrService , private catalogItemService: HTTPService,private httpService: HTTPService, private router: Router,private modalService: NgbModal) {
     super();
   }
   ngAfterViewInit(): void {
@@ -90,7 +91,7 @@ export class BookListComponent extends URLLoader implements OnInit, AfterViewIni
 
   getImage(image) {
     this.httpService
-      .getAll('http://localhost:8080/book/get/' + image)
+      .getAll(CONFIG.URL_BASE+'/book/get/' + image)
       .subscribe((res) => {
         this.retrieveResonse = res;
         this.base64Data = this.retrieveResonse.picByte;
@@ -109,6 +110,22 @@ export class BookListComponent extends URLLoader implements OnInit, AfterViewIni
     modalRef.result.then(result => {
       console.log(result); // Handle any result (if needed)
     }).catch(error => console.log(error)); // Handle any errors
+  }
+
+  getRandomColor(): string {
+    // const letters = '0123456789ABCDEF';
+    // let color = '#';
+    // for (let i = 0; i < 6; i++) {
+    //   color += letters[Math.floor(Math.random() * 16)];
+    // }
+    return 'grey';
+  }
+
+  updateFilter(event): void {
+    const val = event.target.value.toLowerCase();
+    if(val=='') return
+    const temp = this.books.filter(d => d.title.toLowerCase().includes(val));
+    this.books = temp;
   }
 
 
@@ -160,7 +177,14 @@ export class BookListComponent extends URLLoader implements OnInit, AfterViewIni
     }).catch(error => console.log(error));
   }
 
-  duplicate(book){}
+  duplicate(book){
+    console.log(book)
+    delete book.id;
+            this.catalogItemService.create(CONFIG.URL_BASE+'/book/create',book).then(() => {
+              this.toastr.success('Item duplicated successfully!', 'Success');
+            
+            });
+  }
 
 
   openQRCodeViewDialog(row): void {
@@ -191,7 +215,12 @@ export class BookListComponent extends URLLoader implements OnInit, AfterViewIni
   }
 
   openEditDialog(row): void {
-    const modalRef = this.modalService.open(AddBookComponent);
+    //const modalRef = this.modalService.open();
+    const modalRef = this.modalService.open(AddBookComponent, {
+      size: 'xl', // Set the modal size to extra-large
+      backdrop: 'static', // Optional: prevent closing the modal by clicking outside
+      keyboard: false     // Optional: prevent closing the modal with the Escape key
+    });
     modalRef.componentInstance.catalogItem = row ;
 
     modalRef.result.then(result => {

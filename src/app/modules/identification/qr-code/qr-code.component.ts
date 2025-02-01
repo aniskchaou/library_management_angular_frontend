@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { finalize } from 'rxjs/operators';
 import { ViewQrcodeComponent } from '../view-qrcode/view-qrcode.component';
 import CONFIG from 'src/app/main/urls/urls';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-qr-code',
@@ -30,6 +31,7 @@ export class QrCodeComponent implements OnInit {
   retrievedImage: any;
 
   constructor(
+    private toastr: ToastrService,
     private qrCodeService: HTTPService,
     private modalService: NgbModal,
     private http:HttpClient,
@@ -112,6 +114,7 @@ export class QrCodeComponent implements OnInit {
   deleteQRCode(id: number): void {
     this.qrCodeService.deleteQrCode(id).subscribe({
       next: () => {
+        this.toastr.success('Item removed successfully!', 'Success');
         this.loadQRCodes();
       },
       error: error => {
@@ -195,6 +198,7 @@ export class QrCodeComponent implements OnInit {
             printWindow.close(); // Close the window after printing
         };
     };
+    this.toastr.success('Item is printed!', 'Success');
 }
 
  downloadQrCode(qrCode) {
@@ -219,11 +223,13 @@ export class QrCodeComponent implements OnInit {
   } else {
       console.log("Failed to open the new window.");
   }
+  this.toastr.success('Item is downloded!', 'Success');
 }
 
 regenerateQRCode(qrCode){
   this.httpService.getAll(CONFIG.URL_BASE + '/qrcode/saveQRCode/' + qrCode?.isbn ).subscribe((data)=>{
     console.log(data)
+    this.toastr.success('Item is regenerated', 'Success');
   })
 }
 

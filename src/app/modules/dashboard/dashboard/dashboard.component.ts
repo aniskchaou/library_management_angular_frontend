@@ -31,7 +31,7 @@ export class DashboardComponent extends URLLoader implements OnInit {
   view3: any[] = [500, 320];
   gradient: boolean = true;
   showLegend: boolean = false;
-  showLabels: boolean = false;
+  showLabels: boolean = true;
   isDoughnut: boolean = false;
   legendPosition: string = 'below';
   view2: any[] = [1000, 400];
@@ -170,28 +170,29 @@ export class DashboardComponent extends URLLoader implements OnInit {
 
      // Fetch top authors
      this.httpService.getTopAuthors().subscribe((data: any[]) => {
-      this.topAuthors = data;
+      this.topAuthors = data.slice(0, 5);
     });
-
+    
     // Fetch top publications
     this.httpService.getTopPublications().subscribe((data: any[]) => {
-      this.topPublications = data;
+      this.topPublications = data.slice(0, 5);
     });
-
+    
     // Fetch most popular genres
     this.httpService.getMostPopularGenres().subscribe((data: any[]) => {
-      this.mostPopularGenres = data;
+      this.mostPopularGenres = data.slice(0, 5);
     });
-
+    
     // Fetch top circulating books
     this.httpService.getTopCirculatingBooks().subscribe((data: any[]) => {
-      this.topCirculatingBooks = data;
+      this.topCirculatingBooks = data.slice(0, 5);
     });
-
+    
     // Fetch top book series
     this.httpService.getTopBookSeries().subscribe((data: any[]) => {
-      this.topBookSeries = data;
+      this.topBookSeries = data.slice(0, 5);
     });
+    
 
 
 
@@ -250,13 +251,13 @@ export class DashboardComponent extends URLLoader implements OnInit {
     );
     this.getDashboardByLang(
       CONFIG.getInstance().getLang(),
-      sessionStorage.getItem('username'),
-      sessionStorage.getItem('password')
+      localStorage.getItem('username'),
+      localStorage.getItem('password')
     );
     this.getMenuByLang(
       CONFIG.getInstance().getLang(),
-      sessionStorage.getItem('username'),
-      sessionStorage.getItem('password')
+      localStorage.getItem('username'),
+      localStorage.getItem('password')
     );
 
     this.publicationsByPublisherData = this.publishers.map(publisher => ({

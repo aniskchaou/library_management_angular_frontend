@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Shelf } from 'src/app/main/models/Shelf';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
@@ -51,7 +52,7 @@ private raycaster = new THREE.Raycaster();
 private mouse = new THREE.Vector2();
 
 
-  constructor(private libraryService: HTTPService) {
+  constructor(private router:Router,private libraryService: HTTPService) {
     this.loader = new THREE.TextureLoader();
     this.fontLoader = new THREE.FontLoader();
      this.libraryService.getAll(CONFIG.URL_BASE+'/department/all').subscribe(
@@ -121,6 +122,7 @@ private mouse = new THREE.Vector2();
     const selectElement = event.target as HTMLSelectElement;
     this.selectedDepartment = selectElement.value;
     console.log('Selected department:', this.selectedDepartment);
+    this.router.navigateByUrl('/shelf-viewer')
     this.showShelves(this.selectedDepartment)
     
   }
@@ -141,7 +143,7 @@ private mouse = new THREE.Vector2();
     );
   }
 
-  private initializeScene(): void {
+  /* private initializeScene(): void {
     this.scene = new THREE.Scene();
     const backgroundTexture = new THREE.TextureLoader().load('assets/images/wall.jpg');
         this.scene.background = backgroundTexture; // Set the background image
@@ -173,8 +175,52 @@ private mouse = new THREE.Vector2();
     this.controls.enablePan = true; // Disable pan to keep everything in view
     this.controls.enableRotate = false;
     this.controls.update();
-  }
+  } */
+
+    private initializeScene(): void {
+      // Dynamically create a new renderer container if it doesn't exist
+      let container = this.rendererContainer.nativeElement;
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'rendererContainer';
+        document.body.appendChild(container); // Append it to the body or a specific parent
+      }
+    
+      this.scene = new THREE.Scene();
+      const backgroundTexture = new THREE.TextureLoader().load('assets/images/wall.jpg');
+      this.scene.background = backgroundTexture; // Set the background image
+    
+      const aspect = window.innerWidth / window.innerHeight;
+      const viewSize = 150;
+    
+      this.camera = new THREE.OrthographicCamera(
+        -viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 0.1, 1000
+      );
+      this.camera.position.set(0, 80, 200);
+      this.camera.lookAt(0, 0, 0);
+    
+      this.renderer = new THREE.WebGLRenderer();
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+    
+      // Attach the renderer to the new container
+      container.appendChild(this.renderer.domElement);
+    
+      const light = new THREE.AmbientLight(0x404040);
+      this.scene.add(light);
+    
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+      directionalLight.position.set(0, 80, 80).normalize();
+      this.scene.add(directionalLight);
+    
+      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+      this.controls.enableZoom = true;
+      this.controls.enablePan = true;
+      this.controls.enableRotate = false;
+      this.controls.update();
+    }
+    
   
+    
 
   private addShelvesToScene(): void {
     this.shelves.forEach((shelf, index) => {
@@ -250,10 +296,23 @@ private mouse = new THREE.Vector2();
     });
   }
 
-  private animate = () => {
+  /* private animate = () => {
     requestAnimationFrame(this.animate);
     this.renderer.render(this.scene, this.camera);
-  }
+  } */
+
+  private animate = () => {
+    requestAnimationFrame(this.animate);
+  
+    // Update controls if needed
+    if (this.controls) {
+      this.controls.update();
+    }
+  
+    // Render the scene
+    this.renderer.render(this.scene, this.camera);
+  };
+  
 
 
 /*   private showBookInfo(bookMesh: THREE.Mesh): void {
@@ -291,23 +350,74 @@ private mouse = new THREE.Vector2();
   
   
 
-    private clearScene(): void {
-      // Check if the scene is initialized
-      if (!this.scene) {
+
+
+      /* private clearScene(): void {
+        if (!this.scene) {
           console.error('Scene is not initialized.');
           return;
-      }
-  
-      // Remove all children from the scene
-      while (this.scene.children.length > 0) {
+        }
+      
+        // Remove all children from the scene
+        while (this.scene.children.length > 0) {
           const object = this.scene.children[0];
           this.scene.remove(object);
-      }
-  
-      // Clear the added shelves and books arrays
-      this.addedShelves = [];
-      this.addedBooks = [];
-  }
+      
+          // Dispose geometry and material to prevent memory leaks
+          if (object instanceof THREE.Mesh) {
+            if (object.geometry) object.geometry.dispose();
+            if (object.material) {
+              if (Array.isArray(object.material)) {
+                object.material.forEach((mat) => mat.dispose());
+              } else {
+                object.material.dispose();
+              }
+            }
+          }
+        }
+      
+        // Clear stored object references
+        this.addedShelves = [];
+        this.addedBooks = [];
+      } */
+
+        private clearScene(): void {
+          if (!this.scene) {
+            console.error('Scene is not initialized.');
+            return;
+          }
+        
+          // Dispose all objects in the scene
+          while (this.scene.children.length > 0) {
+            const object = this.scene.children[0];
+            this.scene.remove(object);
+        
+            if (object instanceof THREE.Mesh) {
+              if (object.geometry) object.geometry.dispose();
+              if (object.material) {
+                if (Array.isArray(object.material)) {
+                  object.material.forEach((mat) => mat.dispose());
+                } else {
+                  object.material.dispose();
+                }
+              }
+            }
+          }
+        
+          // Clear object references
+          this.addedShelves = [];
+          this.addedBooks = [];
+        
+          // Dispose of the renderer and remove its DOM element
+          if (this.renderer) {
+            this.renderer.dispose();
+            if (this.renderer.domElement.parentNode) {
+              this.renderer.domElement.parentNode.removeChild(this.renderer.domElement);
+            }
+          }
+        }
+        
+      
 
   private addDepartmentLabel(departmentName: string): void {
 

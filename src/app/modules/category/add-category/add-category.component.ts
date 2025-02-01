@@ -27,6 +27,7 @@ export class AddCategoryComponent extends URLLoader implements OnInit {
   retrievedImage: any;
   base64Data: any;
   suggestions: Object;
+  errors:any
 
   constructor(
     private validation: CategoryValidation,
@@ -69,16 +70,16 @@ export class AddCategoryComponent extends URLLoader implements OnInit {
   }
 
   add() {
-    this.submitted = true;
-    if (this.validation.checkValidation()) {
+   // this.submitted = true;
+    if (this.validateForm()) {
       this.httpService.create(
         CONFIG.URL_BASE + '/category/create',
         this.categoryForm.value
       ).then(()=>{
-        this.categoryForm.reset();
+        //this.categoryForm.reset();
         //this.closeModal();
        //this.goBack();
-        this.toastr.success(this.msg.addConfirmation[CONFIG.getInstance().getLang()])
+       this.toastr.success('Item added successfully!', 'Success');
         this.activeModal.dismiss();
       });
      
@@ -89,6 +90,33 @@ export class AddCategoryComponent extends URLLoader implements OnInit {
       ); */
     }
   }
+   
+
+  validateForm() {
+    this.errors = {};
+
+    // Validate Category Name
+    if (!this.categoryForm.value.category_name || this.categoryForm.value.category_name.length < 2) {
+      this.errors.category_name = 'Category Name is required and must be at least 2 characters.';
+      this.toastr.error(this.errors.category_name, 'Validation Error');
+    }
+
+    // Validate Slug
+    const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+    if (!this.categoryForm.value.slug || !slugPattern.test(this.categoryForm.value.slug)) {
+      this.errors.slug = 'Slug is required and must follow the format (e.g., fiction-category).';
+      this.toastr.error(this.errors.slug, 'Validation Error');
+    }
+
+    // Validate Published
+    if (this.categoryForm.value.published === null || this.categoryForm.value.published === undefined) {
+      this.errors.published = 'Published status is required.';
+      this.toastr.error(this.errors.published, 'Validation Error');
+    }
+
+    return Object.keys(this.errors).length === 0;
+  }
+
 
   addMore() {
     this.submitted = true;
@@ -100,7 +128,7 @@ export class AddCategoryComponent extends URLLoader implements OnInit {
         this.categoryForm.reset();
         ///this.closeModal();
         //this.goBack();
-        this.toastr.success(this.msg.addConfirmation[CONFIG.getInstance().getLang()])
+        this.toastr.success('Item added successfully!', 'Success');
         this.activeModal.dismiss();
         this.openAddDialog()
       });

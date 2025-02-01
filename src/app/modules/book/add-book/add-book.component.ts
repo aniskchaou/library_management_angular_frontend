@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookMessage from 'src/app/main/messages/BookMessage';
 import BookTestService from 'src/app/main/mocks/BookTestService';
@@ -162,7 +163,7 @@ export class AddBookComponent  implements OnInit {
   bookStatuses: any[];
   categories: any[];
 
-    constructor(public activeModal: NgbActiveModal, private catalogItemService: HTTPService) { }
+    constructor(public toastr:ToastrService ,public activeModal: NgbActiveModal, private catalogItemService: HTTPService) { }
   
     ngOnInit(): void {
       this.loadInitialData();
@@ -273,7 +274,9 @@ export class AddBookComponent  implements OnInit {
   
     saveCatalogItem(): void {
       console.log(this.catalogItem)
-      this.catalogItem.mediaType = this.mediaTypes.find(x => x.id == this.catalogItem.mediaType.id);
+      if(this.validateCatalogForm(this.catalogItem))
+        {
+      this.catalogItem.mediaType = this.mediaTypes.find(x => x.id == this.catalogItem.mediaType?.id);
       this.catalogItem.departement = this.departments.find(x => x.id ==this.catalogItem.departement.id);
   this.catalogItem.row = this.rows.find(x => x.id == this.catalogItem.row.id);
   this.catalogItem.writer = this.writers.find(x => x.id == this.catalogItem.writer.id);
@@ -285,9 +288,81 @@ export class AddBookComponent  implements OnInit {
 
       
         this.catalogItemService.create(CONFIG.URL_BASE+'/book/create',this.catalogItem).then(() => {
-         
+          this.toastr.success('Item added successfully!', 'Success');
           this.activeModal.close(this.catalogItem);
         });
+      }
+        
       
     }
+
+
+    validateCatalogForm(catalogItem: any): boolean {
+      const errors: Record<string, string> = {};
+    
+      // Validate ISBN
+      if (!catalogItem.isbn || catalogItem.isbn.trim().length < 10) {
+        errors.isbn = 'ISBN is required and must be at least 10 characters long.';
+      }
+    
+      // Validate Title
+      if (!catalogItem.title || catalogItem.title.trim().length < 3) {
+        errors.title = 'Title is required and must be at least 3 characters long.';
+      }
+    
+      // Validate Edition
+      if (!catalogItem.edition || catalogItem.edition.trim().length < 1) {
+        errors.edition = 'Edition is required.';
+      }
+    
+      // Validate Edition Year
+      if (!catalogItem.edition_year || isNaN(+catalogItem.edition_year) || +catalogItem.edition_year > new Date().getFullYear()) {
+        errors.edition_year = 'Edition Year is required and must be a valid year not in the future.';
+      }
+    
+      // Validate Publishing Year
+      if (!catalogItem.publishing_year || isNaN(+catalogItem.publishing_year) || +catalogItem.publishing_year > new Date().getFullYear()) {
+        errors.publishing_year = 'Publishing Year is required and must be a valid year not in the future.';
+      }
+    
+      // Validate Publication Place
+      if (!catalogItem.publication_place || catalogItem.publication_place.trim().length < 3) {
+        errors.publication_place = 'Publication Place is required and must be at least 3 characters long.';
+      }
+    
+      // Validate Number of Pages
+      if (!catalogItem.number_of_pages || catalogItem.number_of_pages <= 0) {
+        errors.number_of_pages = 'Number of Pages is required and must be greater than 0.';
+      }
+    
+      // Validate Media Type
+    /*   if (!catalogItem.mediaType) {
+        errors.mediaType = 'Media Type selection is required.';
+      }
+    
+      // Validate Category
+      if (!catalogItem.category) {
+        errors.category = 'Category selection is required.';
+      } */
+    
+      // Validate Notes (Optional but must be meaningful if provided)
+      /* if (catalogItem.notes) {
+        errors.notes = 'Notes must be at least 5 characters long if provided.';
+      } */
+    
+      // Validate Photo (Optional but must be valid if provided)
+   /*    if (catalogItem.photo && !/^(http|https):\/\/[^ "]+$/.test(catalogItem.photo)) {
+        errors.photo = 'Photo URL must be a valid URL.';
+      } */
+    
+      // Display errors using console or a notification service
+      Object.entries(errors).forEach(([field, message]) => {
+        console.error(`${field}: ${message}`);
+        this.toastr?.error(message, 'Validation Error'); // Replace `this.toastr` with your notification service
+      });
+    
+      // Return true if no errors, false otherwise
+      return Object.keys(errors).length === 0;
+    }
+    
 }

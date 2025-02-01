@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { FileUploadService } from 'src/app/main/services/FileUploadService ';
 
 @Component({
@@ -13,7 +14,7 @@ export class UploadBookCoverComponent implements OnInit {
   book
   uploadForm: FormGroup;
   fileToUpload: File = null;
-  constructor(private fileUploadService:FileUploadService,private fb: FormBuilder,private activeModal: NgbActiveModal) {
+  constructor(private toastr:ToastrService,private fileUploadService:FileUploadService,private fb: FormBuilder,private activeModal: NgbActiveModal) {
     this.uploadForm = this.fb.group({
       file: [null]
     });
@@ -42,6 +43,7 @@ closeModal(): void {
 
     this.fileUploadService.uploadImageCover(this.book.id,this.book.id+'.jpg',formData)
       .subscribe(response => {
+        this.toastr.success('Item uploaded successfully!', 'Success');
         console.log(response);
       });
   }

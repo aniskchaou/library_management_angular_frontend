@@ -16,15 +16,15 @@ export class AuthentificationService {
     return this.httpClient
       .get(CONFIG.URL_BASE + '/member/all', { headers })
       .pipe((userData) => {
-        // sessionStorage.setItem('username', username);
-        //sessionStorage.setItem('password', password);
+        // localStorage.setItem('username', username);
+        //localStorage.setItem('password', password);
         console.log(userData);
         return userData;
       });
   }
 
   isUserLoggedIn() {
-    let user = sessionStorage.getItem('username');
+    let user = localStorage.getItem('username');
     console.log(user);
     if (user == null) {
       return false;
@@ -34,7 +34,7 @@ export class AuthentificationService {
   }
 
   logOut() {
-    sessionStorage.removeItem(undefined);
-    sessionStorage.removeItem(undefined);
+    localStorage.removeItem(undefined);
+    localStorage.removeItem(undefined);
   }
 }

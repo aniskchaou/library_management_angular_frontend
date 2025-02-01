@@ -6,6 +6,7 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-basket',
@@ -79,6 +80,7 @@ export class BasketComponent implements OnInit {
   markdownContent: any;
 
   constructor(
+    private toastr: ToastrService,
     private basketService: HTTPService,
     private modalService: NgbModal,
     private http:HttpClient
@@ -155,6 +157,7 @@ export class BasketComponent implements OnInit {
   deleteBasket(id: number): void {
     this.basketService.deleteBasket(id).subscribe(() => {
       this.loadBaskets();
+      this.toastr.success('Item removed successfully!', 'Success');
     });
   }
 

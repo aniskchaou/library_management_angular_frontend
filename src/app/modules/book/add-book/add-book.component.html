@@ -244,13 +244,13 @@
           <input type="text" class="form-control" id="editionYear" [(ngModel)]="catalogItem.edition_year" name="editionYear" placeholder="e.g., 2020">
         </div>
 
-        <div class="form-group">
+       <!--  <div class="form-group">
           <label for="photo">
             Photo URL
             <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the URL for the book's photo.<br><b>Example:</b> https://example.com/photo.jpg"></i>
           </label>
           <input type="text" class="form-control" id="photo" [(ngModel)]="catalogItem.photo" name="photo" placeholder="e.g., https://example.com/photo.jpg">
-        </div>
+        </div> -->
 
         <div class="form-group">
           <label for="publishingYear">
@@ -291,7 +291,8 @@
             Media Type
             <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the media type of the book.<br><b>Example:</b> E-book, Paperback"></i>
           </label>
-          <ng-select
+         <!--  <ng-select
+          *ngIf="mediaTypes && mediaTypes.length > 0"
             name="mediaType"
             [items]="mediaTypes"
             bindLabel="name"
@@ -299,7 +300,17 @@
             [(ngModel)]="catalogItem.mediaType"
             [searchable]="true"
             placeholder="Select media type">
-          </ng-select>
+          </ng-select> -->
+          <select
+           
+            name="mediaType"
+            [(ngModel)]="catalogItem.mediaType"
+            class="form-control"
+            required>
+            <option *ngFor="let mediaType of mediaTypes" [ngValue]="mediaType">
+              {{ mediaType.name }}
+            </option>
+          </select>
         </div>
 
         <div class="form-group">
@@ -307,7 +318,7 @@
             Physical Description
             <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the physical description of the book (e.g., hardcover, paperback, etc.)."></i>
           </label>
-          <ng-select
+<!--           <ng-select
             name="writer"
             [items]="physicalDescriptions"
             bindLabel="bindingType"
@@ -315,7 +326,16 @@
             [(ngModel)]="catalogItem.writer"
             [searchable]="true"
             placeholder="Select writer">
-          </ng-select>
+          </ng-select> -->
+          <select
+            name="writer"
+            [(ngModel)]="catalogItem.physical_description"
+            class="form-control">
+            <option *ngFor="let description of physicalDescriptions" [ngValue]="description">
+              {{ description.bindingType }}
+            </option>
+          </select>
+
         </div>
 
         <div class="form-group">
@@ -323,7 +343,7 @@
             Writer
             <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the writer of the book.<br><b>Example:</b> F. Scott Fitzgerald"></i>
           </label>
-          <ng-select
+        <!--   <ng-select
             name="writer"
             [items]="writers"
             bindLabel="name"
@@ -331,7 +351,16 @@
             [(ngModel)]="catalogItem.writer"
             [searchable]="true"
             placeholder="Select writer">
-          </ng-select>
+          </ng-select> -->
+          <select
+          name="writer"
+          [(ngModel)]="catalogItem.writer"
+          class="form-control">
+          <option *ngFor="let writer of writers" [ngValue]="writer">
+            {{ writer.name }}
+          </option>
+        </select>
+
         </div>
 
         <div class="form-group">
@@ -339,7 +368,7 @@
             Publisher
             <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the publisher of the book.<br><b>Example:</b> Scribner"></i>
           </label>
-          <ng-select
+         <!--  <ng-select
             name="publisher"
             [items]="publishers"
             bindLabel="name"
@@ -347,7 +376,16 @@
             [(ngModel)]="catalogItem.publisher"
             [searchable]="true"
             placeholder="Select publisher">
-          </ng-select>
+          </ng-select> -->
+          <select
+          name="publisher"
+          [(ngModel)]="catalogItem.publisher"
+          class="form-control">
+          <option *ngFor="let publisher of publishers" [ngValue]="publisher">
+            {{ publisher.name }}
+          </option>
+        </select>
+
         </div>
 
         <div class="form-group">
@@ -355,7 +393,7 @@
             Department
             <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the department for the book.<br><b>Example:</b> Literature"></i>
           </label>
-          <ng-select
+          <!-- <ng-select
             name="department"
             [items]="departments"
             bindLabel="departmentName"
@@ -363,7 +401,16 @@
             [(ngModel)]="catalogItem.departement"
             [searchable]="true"
             placeholder="Select department">
-          </ng-select>
+          </ng-select> -->
+          <select
+            name="department"
+            [(ngModel)]="catalogItem.departement"
+            class="form-control">
+            <option *ngFor="let department of departments" [ngValue]="department">
+              {{ department.departmentName }}
+            </option>
+          </select>
+
         </div>
 
         <div class="form-group">
@@ -371,7 +418,7 @@
             Shelf
             <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the shelf location for the book.<br><b>Example:</b> Shelf 3A"></i>
           </label>
-          <ng-select
+         <!--  <ng-select
             name="shelf"
             [items]="shelves"
             bindLabel="location"
@@ -379,7 +426,17 @@
             [(ngModel)]="catalogItem.shelf"
             [searchable]="true"
             placeholder="Select shelf">
-          </ng-select>
+          </ng-select> -->
+
+          <select
+          name="shelf"
+          [(ngModel)]="catalogItem.shelf"
+          class="form-control">
+          <option *ngFor="let shelf of shelves" [ngValue]="shelf">
+            {{ shelf.location }}
+          </option>
+        </select>
+
         </div>
 
         <div class="form-group">
@@ -387,7 +444,7 @@
             Row
             <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the row location for the book.<br><b>Example:</b> Row 2"></i>
           </label>
-          <ng-select
+        <!--   <ng-select
             name="row"
             [items]="rows"
             bindLabel="rowName"
@@ -395,7 +452,16 @@
             [(ngModel)]="catalogItem.row"
             [searchable]="true"
             placeholder="Select row">
-          </ng-select>
+          </ng-select> -->
+          <select
+            name="row"
+            [(ngModel)]="catalogItem.row"
+            class="form-control">
+            <option *ngFor="let row of rows" [ngValue]="row">
+              {{ row.rowName }}
+            </option>
+          </select>
+
         </div>
 
         <div class="form-group">
@@ -404,7 +470,7 @@
             <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" 
                title="<b>Description:</b> Select the category of the book.<br><b>Example:</b> Fiction, Non-fiction"></i>
           </label>
-          <ng-select
+        <!--   <ng-select
             name="category"
             [items]="categories"         
             bindLabel="category_name"              
@@ -412,31 +478,24 @@
             [(ngModel)]="catalogItem.category"   
             [searchable]="true"
             placeholder="Select category">
-          </ng-select>
+          </ng-select> -->
+          <select
+          name="category"
+          [(ngModel)]="catalogItem.category"
+          class="form-control">
+          <option *ngFor="let category of categories" [ngValue]="category">
+            {{ category.category_name }}
+          </option>
+        </select>
+
         </div>
         
-     <!--    <div class="form-group">
-          <label for="bookStatus">
-            Book Status
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" 
-               title="<b>Description:</b> Select the current status of the book.<br><b>Example:</b> Available, Checked out"></i>
-          </label>
-          <ng-select
-            name="bookStatus"
-            [items]="bookStatuses"          
-            bindLabel="name"              
-            bindValue="id"                 
-            [(ngModel)]="catalogItem.bookStatus"   
-            [searchable]="true"
-            placeholder="Select book status">
-          </ng-select>
-        </div> -->
       </div>
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Cancel</button>
-      <button type="button" class="btn btn-primary" (click)="saveCatalogItem()">Save</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
+      <button type="button" class="btn btn-outline-primary" (click)="saveCatalogItem()">Save</button>
     </div>
   </form>
 </div>
