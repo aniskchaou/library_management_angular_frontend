@@ -8,8 +8,8 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "postinstall": "npm install -g @angular/cli && ng build --prod",
-    "build": "ng build --prod",
+    "postinstall": "npm install -g @angular/cli && ng build",
+    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
