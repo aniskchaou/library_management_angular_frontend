@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import Member from 'src/app/main/models/Member';
 import CONFIG from 'src/app/main/urls/urls';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-notice-template',
@@ -61,7 +62,7 @@ export class NoticeTemplateComponent implements OnInit {
   markdownContent
   loading=false
   members: Member[];
-  constructor(private noticeTemplateService: HTTPService, 
+  constructor(private toastr: ToastrService,private noticeTemplateService: HTTPService, 
     private modalService: NgbModal,
     private http:HttpClient,
   private httpService:HTTPService) {}
@@ -115,11 +116,26 @@ export class NoticeTemplateComponent implements OnInit {
     }).catch(error => console.log(error));
   }
 
-  deleteNoticeTemplate(id: number): void {
+ /*  deleteNoticeTemplate(id: number): void {
     this.noticeTemplateService.deleteNoticeTemplate(id).subscribe(() => {
       this.loadNoticeTemplates();
+      this.toastr.success('Item removed successfully!', 'Success');
     });
-  }
+  } */
+
+    deleteNoticeTemplate(id: number): void {
+      this.noticeTemplateService.deleteNoticeTemplate(id).subscribe({
+        next: (response) => {
+          // Handle response if needed, since it may be text
+          this.loadNoticeTemplates();
+          this.toastr.success('Item removed successfully!', 'Success');
+        },
+        error: (err) => {
+          this.toastr.error('Error removing item', 'Error');
+        }
+      });
+    }
+    
 
   clone(obj: any) {
     // Create a copy of the object and modify the title and remove the ID

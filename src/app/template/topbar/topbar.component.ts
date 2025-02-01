@@ -11,6 +11,8 @@ import { User } from 'src/app/modules/shared/view-user-profile/view-user-profile
 import { UploadAppLogoComponent } from 'src/app/modules/shared/upload-app-logo/upload-app-logo.component';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UploadProfilePhotoComponent } from 'src/app/modules/shared/upload-profile-photo/upload-profile-photo.component';
+import { ToastrService } from 'ngx-toastr';
+import { EditPasswordComponent } from 'src/app/modules/shared/edit-password/edit-password.component';
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
@@ -20,12 +22,13 @@ export class TopbarComponent extends URLLoader implements OnInit {
   currentLang='EN'
   @Input() menuI18n;
   searchInput: string;
-  user = sessionStorage.getItem('username');
+  user = localStorage.getItem('username');
   sysLang;
   userObject: User;
   retrievedImage: string;
   notifications: Notification[];
   //retrievedLogoImage: string;
+  
   constructor(
     private authService: AuthentificationService,
     private router: Router,
@@ -33,6 +36,7 @@ export class TopbarComponent extends URLLoader implements OnInit {
     private settingsMessage: SettingsMessage,
     //private activeModal: NgbActiveModal,
     private modalService: NgbModal,
+    private toastr: ToastrService
   ) {
     super();
     //this.getDashboardByLang(CONFIG.getInstance().getLang());
@@ -47,14 +51,14 @@ export class TopbarComponent extends URLLoader implements OnInit {
 
   ngOnInit(): void {
     
-    this.retrievedImage=CONFIG.URL_BASE+'/users/get/' +sessionStorage.getItem('username') +'/'+sessionStorage.getItem('username')+'_profile.png';
+    this.retrievedImage=CONFIG.URL_BASE+'/users/get/' +localStorage.getItem('username') +'/'+localStorage.getItem('username')+'_profile.png';
     this.sysLang = CONFIG.getInstance().getLang();
     this.httpService.menuI18n$.subscribe((data) => {
       this.menuI18n = data;
     });
 
     this.httpService
-    .getAll(CONFIG.URL_BASE + '/users/username/'+sessionStorage.getItem('username'))
+    .getAll(CONFIG.URL_BASE + '/users/username/'+localStorage.getItem('username'))
     .subscribe(
       (data:User) => {
         this.userObject = data;
@@ -67,11 +71,12 @@ export class TopbarComponent extends URLLoader implements OnInit {
   }
 
   changeLang(lang) {
-    this.httpService
+   this.toastr.info("The current version supports only the English language. Other languages will be added in the next versions.")
+   /*  this.httpService
       .getAllLang(
         CONFIG.URL_BASE + '/settings/updatelang/' + lang,
-        sessionStorage.getItem('username'),
-        sessionStorage.getItem('password')
+        localStorage.getItem('username'),
+        localStorage.getItem('password')
       )
       .subscribe(
         (data) => {
@@ -83,25 +88,25 @@ export class TopbarComponent extends URLLoader implements OnInit {
           );
           this.getDashboardByLang(
             CONFIG.getInstance().getLang(),
-            sessionStorage.getItem('username'),
-            sessionStorage.getItem('password')
+            localStorage.getItem('username'),
+            localStorage.getItem('password')
           );
           this.getMenuByLang(
             CONFIG.getInstance().getLang(),
-            sessionStorage.getItem('username'),
-            sessionStorage.getItem('password')
+            localStorage.getItem('username'),
+            localStorage.getItem('password')
           );
           this.getCategoryByLang(
             CONFIG.getInstance().getLang(),
-            sessionStorage.getItem('username'),
-            sessionStorage.getItem('password')
+            localStorage.getItem('username'),
+            localStorage.getItem('password')
           );
           this.logout();
         },
         (err: HttpErrorResponse) => {
           super.show('Error', err.message, 'warning');
         }
-      );
+      ); */
   }
 
   getDashboardByLang(lang, username, password) {
@@ -193,6 +198,17 @@ export class TopbarComponent extends URLLoader implements OnInit {
 
    openLogoDialog(): void {
     const modalRef = this.modalService.open(UploadAppLogoComponent);
+    modalRef.componentInstance.department = {};
+
+    modalRef.result.then(result => {
+      if (result) {
+     
+      }
+    }).catch(error => console.log(error));
+  } 
+
+  openPasswordDialog(): void {
+    const modalRef = this.modalService.open(EditPasswordComponent);
     modalRef.componentInstance.department = {};
 
     modalRef.result.then(result => {

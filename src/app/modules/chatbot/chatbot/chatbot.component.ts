@@ -45,9 +45,9 @@ export class ChatbotComponent {
   sendMessageToBackend(userMessage: string) {
     const requestPayload = { message: userMessage };
 
-    // Get username and password from sessionStorage
-    const username = sessionStorage.getItem('username');
-    const password = sessionStorage.getItem('password');
+    // Get username and password from localStorage
+    const username = localStorage.getItem('username');
+    const password = localStorage.getItem('password');
 
     // Set Authorization and Content-Type headers
     const headers = new HttpHeaders({

@@ -42,22 +42,35 @@ export class HTTPService implements Service {
   public ID = new BehaviorSubject<string>(null);
   headers = { 'content-type': 'application/json' };
   model = '';
-  header = new HttpHeaders({
-    Authorization: 'Basic ' + btoa(sessionStorage.getItem('username') + ':' + sessionStorage.getItem('password')),
-    'content-type': 'application/json'
+
+
+  username = localStorage.getItem('username');
+   password = localStorage.getItem('password');
+
+    header = new HttpHeaders({
+    Authorization: 'Basic ' + btoa(this.username + ':' + this.password),
+    'Content-Type': 'application/json',
   });
+
+/*   header = new HttpHeaders({
+    Authorization: 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('password')),
+    'content-type': 'application/json'
+  }); */
   paymentI18n$: any;
   constructor(private http: HttpClient) {}
   async update(url, data) {
     await this.http.put(url, data);
   }
   getAll(url: string) {
-    console.log(sessionStorage.getItem('password'));
+    if (!this.username || !this.password) {
+      console.error('Username or password not found in localStorage.');
+    }
+    console.log(this.header);
     return this.http.get(url, { headers: this.header });
   }
 
   put(url: string) {
-    console.log(sessionStorage.getItem('password'));
+    console.log(localStorage.getItem('password'));
     return this.http.put(url, {}, { headers: this.header });
   }
 
@@ -84,9 +97,9 @@ export class HTTPService implements Service {
       Authorization:
         'Basic ' +
         btoa(
-          sessionStorage.getItem('username') +
+          localStorage.getItem('username') +
             ':' +
-            sessionStorage.getItem('password')
+            localStorage.getItem('password')
         ),
     });
     await this.http.post(url, body, { headers: headers }).toPromise();
@@ -99,9 +112,9 @@ export class HTTPService implements Service {
       Authorization:
         'Basic ' +
         btoa(
-          sessionStorage.getItem('username') +
+          localStorage.getItem('username') +
             ':' +
-            sessionStorage.getItem('password')
+            localStorage.getItem('password')
         ),
     });
     await this.http.post(url, body, { headers: headers }).toPromise();
@@ -113,9 +126,9 @@ export class HTTPService implements Service {
       Authorization:
         'Basic ' +
         btoa(
-          sessionStorage.getItem('username') +
+          localStorage.getItem('username') +
             ':' +
-            sessionStorage.getItem('password')
+            localStorage.getItem('password')
         ),
     });
     await this.http
@@ -131,9 +144,9 @@ export class HTTPService implements Service {
       Authorization:
         'Basic ' +
         btoa(
-          sessionStorage.getItem('username') +
+          localStorage.getItem('username') +
             ':' +
-            sessionStorage.getItem('password')
+            localStorage.getItem('password')
         ),
     });
     return this.http.get<number>(`${CONFIG.URL_BASE}/categories/${categoryId}/count`,{
@@ -147,9 +160,9 @@ export class HTTPService implements Service {
       Authorization:
         'Basic ' +
         btoa(
-          sessionStorage.getItem('username') +
+          localStorage.getItem('username') +
             ':' +
-            sessionStorage.getItem('password')
+            localStorage.getItem('password')
         ),
     });
     return this.http.get<ChartData[]>(`${CONFIG.URL_BASE}/api/charts/bar`,{
@@ -163,9 +176,9 @@ export class HTTPService implements Service {
       Authorization:
         'Basic ' +
         btoa(
-          sessionStorage.getItem('username') +
+          localStorage.getItem('username') +
             ':' +
-            sessionStorage.getItem('password')
+            localStorage.getItem('password')
         ),
     });
     return this.http.get<ChartData[]>(`${CONFIG.URL_BASE}/api/charts/pie`,{
@@ -179,9 +192,9 @@ export class HTTPService implements Service {
       Authorization:
         'Basic ' +
         btoa(
-          sessionStorage.getItem('username') +
+          localStorage.getItem('username') +
             ':' +
-            sessionStorage.getItem('password')
+            localStorage.getItem('password')
         ),
     });
     return this.http.get<LineChartData[]>(`${CONFIG.URL_BASE}/api/charts/line`,{
@@ -195,9 +208,9 @@ export class HTTPService implements Service {
       Authorization:
         'Basic ' +
         btoa(
-          sessionStorage.getItem('username') +
+          localStorage.getItem('username') +
             ':' +
-            sessionStorage.getItem('password')
+            localStorage.getItem('password')
         ),
     });
     return this.http.get<ChartData[]>(`${CONFIG.URL_BASE}/api/charts/doughnut`,{
@@ -310,7 +323,11 @@ export class HTTPService implements Service {
 
   createFund(fund: Fund): Observable<Fund> {
     const body = JSON.stringify(fund);
-    return this.http.post<Fund>(`${CONFIG.URL_BASE}/fund/create`, body, { headers: this.header });
+    let headerr = new HttpHeaders({
+      Authorization: 'Basic ' + btoa(this.username + ':' + this.password),
+      'Content-Type': 'application/json',
+    });
+    return this.http.post<Fund>(`${CONFIG.URL_BASE}/fund/create`, body, { headers: headerr });
   }
 
   updateFund(id: number, fund: Fund): Observable<Fund> {

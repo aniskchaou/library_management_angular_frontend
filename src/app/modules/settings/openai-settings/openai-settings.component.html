@@ -1,6 +1,8 @@
 <!-- openai-settings.component.html -->
 <div class="container">
-    <h2>OpenAI API Settings</h2>
+  <br/>
+  <h5><i class="fas fa-robot"></i> OpenAI API Settings</h5>
+
   
     <form [formGroup]="openaiForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -8,7 +10,7 @@
         <input id="apiKey" formControlName="apiKey" class="form-control" />
       </div>
   
-      <button type="submit" class="btn btn-primary" [disabled]="!openaiForm.valid">
+      <button type="submit" class="btn btn-outline-primary" [disabled]="!openaiForm.valid">
         Update
       </button>
     </form>
@@ -19,8 +21,8 @@
     </div>
   
     <!-- Error Message -->
-    <div *ngIf="errorMessage" class="alert alert-danger mt-2">
+   <!--  <div *ngIf="errorMessage" class="alert alert-danger mt-2">
       {{ errorMessage }}
-    </div>
+    </div> -->
   </div>
   

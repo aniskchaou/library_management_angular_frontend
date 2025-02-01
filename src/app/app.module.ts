@@ -167,6 +167,7 @@ import { TwilioSettingsComponent } from './modules/settings/twilio-settings/twil
 import { OpenaiSettingsComponent } from './modules/settings/openai-settings/openai-settings.component';
 import { UploadBookCoverComponent } from './modules/book/upload-book-cover/upload-book-cover.component';
 import { PaypalSettingsComponent } from './modules/settings/paypal-settings/paypal-settings.component';
+import { ShowContentDocPageComponent } from './modules/help/show-content-doc-page/show-content-doc-page.component';
 
 
 
@@ -656,6 +657,7 @@ const routes: Routes = [
     ForgotPasswordComponent,
     ResetPasswordComponent,
     EditItemTypesComponent,
+    ShowContentDocPageComponent,
     //PaypalSettingsComponent
   ],
   imports: [

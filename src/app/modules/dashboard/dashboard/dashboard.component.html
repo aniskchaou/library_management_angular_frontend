@@ -344,8 +344,8 @@
                               <i class="fas fa-sync-alt mr-2"></i> Top Circulating Books
                           </a>
                       </li>
-                      <li class="nav-item">
-                          <a class="nav-link" data-toggle="tab" href="#TopBookSeries">
+                      <li class="nav-item disabled">
+                          <a class="nav-link disabled" data-toggle="tab" href="#TopBookSeries">
                               <i class="fas fa-bookmark mr-2"></i> Top Book Series
                           </a>
                       </li>
@@ -365,17 +365,17 @@
                             <thead>
                                 <tr>
                                     <th>Author Name</th>
-                                    <th>Books Written</th>
-                                    <th>Total Circulations</th> <!-- New column for total circulations -->
-                                    <th>Average Rating</th>
+                                <!--     <th>Books Written</th>
+                                    <th>Total Circulations</th> 
+                                    <th>Average Rating</th> -->
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let author of topAuthors">
                                     <td>{{author[0]}}</td>  <!-- Author name -->
-                                    <td>{{author[1]}}</td>  <!-- Number of books written -->
-                                    <td>{{author[3]}}</td>  <!-- Total circulations (new) -->
-                                    <td>{{author[2] || 'N/A'}}</td>  <!-- Average rating -->
+                                <!--     <td>{{author[1]}}</td>  
+                                    <td>{{author[3]}}</td>  
+                                    <td>{{author[2] || 'N/A'}}</td> -->  
                                 </tr>
                             </tbody>
                         </table>
@@ -390,15 +390,15 @@
                                 <thead>
                                     <tr>
                                         <th>Publisher Name</th>
-                                        <th>Total Books Published</th>
-                                        <th>Total Circulations</th> <!-- New column for total circulations -->
+                                      <!--   <th>Total Books Published</th>
+                                        <th>Total Circulations</th>  -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let publication of topPublications">
                                         <td>{{publication[0]}}</td>  <!-- Publisher name -->
-                                        <td>{{publication[1]}}</td>  <!-- Total books published -->
-                                        <td>{{publication[2]}}</td>  
+                                        <!-- <td>{{publication[1]}}</td> 
+                                        <td>{{publication[2]}}</td>   -->
                                     </tr>
                                 </tbody>
                               </table>
@@ -414,15 +414,15 @@
                                 <thead>
                                     <tr>
                                         <th>Genre</th>
-                                        <th>Total Books in Genre</th>
-                                        <th>Total Circulations</th> <!-- New column for total circulations -->
+                                        <!-- <th>Total Books in Genre</th>
+                                        <th>Total Circulations</th>  -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let genre of mostPopularGenres">
                                         <td>{{genre[0]}}</td>  <!-- Genre name -->
-                                        <td>{{genre[1]}}</td>  <!-- Total books in genre -->
-                                        <td>{{genre[2]}}</td>  <!-- Total circulations (new) -->
+                                       <!--  <td>{{genre[1]}}</td>  
+                                        <td>{{genre[2]}}</td>   -->
                                     </tr>
                                 </tbody>
                             </table>
@@ -437,15 +437,15 @@
                                       <thead>
                                           <tr>
                                               <th>Book Title</th>
-                                              <th>Author Name</th> <!-- New column for author -->
-                                              <th>Times Circulated</th>
+                                           <!--    <th>Author Name</th> 
+                                              <th>Times Circulated</th> -->
                                           </tr>
                                       </thead>
                                       <tbody>
                                           <tr *ngFor="let book of topCirculatingBooks">
                                               <td>{{book[0]}}</td>  <!-- Book title -->
-                                              <td>{{book[2]}}</td>  <!-- Author name (new) -->
-                                              <td>{{book[1]}}</td>  <!-- Times circulated -->
+                                              <!-- <td>{{book[2]}}</td>  
+                                              <td>{{book[1]}}</td>   -->
                                           </tr>
                                       </tbody>
                                   </table>

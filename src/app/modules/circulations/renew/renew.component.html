@@ -15,12 +15,11 @@
       <label for="member">Member:</label>
       <i class="fas fa-info-circle" data-toggle="tooltip" 
          title="Description: Select the member who is renewing the item."></i>
-      <ng-select class="form-control" id="member" name="member"
+      <ng-select  id="member" name="member"
                  [items]="members$"
                  bindLabel="firstname" bindValue="id"
                  formControlName="member"
-                 placeholder="Select a member"
-                 [loading]="loading">
+                 placeholder="Select a member">
       </ng-select>
     </div>
 
@@ -29,12 +28,12 @@
       <label for="itemBarcode">Item Barcode:</label>
       <i class="fas fa-info-circle" data-toggle="tooltip" 
          title="Description: Select the barcode of the item you wish to renew."></i>
-      <ng-select class="form-control" id="itemBarcode" name="itemBarcode"
+      <ng-select  id="itemBarcode" name="itemBarcode"
                  [items]="books$"
                  bindLabel="title" bindValue="id"
                  formControlName="itemBarcode"
                  placeholder="Select a barcode"
-                 [loading]="loading">
+                 >
       </ng-select>
     </div>
 
@@ -51,6 +50,7 @@
       <label>Forgive fines on return:</label>
       <i class="fas fa-info-circle" data-toggle="tooltip" 
          title="Description: Choose whether to forgive any fines incurred by the member on returning this item."></i>
+      
       <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="forgiveFines" id="forgiveFinesYes" value="yes" formControlName="forgiveFines">
         <label class="form-check-label" for="forgiveFinesYes">Yes</label>

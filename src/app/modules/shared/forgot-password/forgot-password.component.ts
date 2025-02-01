@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
@@ -15,7 +16,8 @@ export class ForgotPasswordComponent implements OnInit {
   submitted = false;
   retrievedImage: string;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router,
+    private toastr: ToastrService) {
     this.forgotPasswordForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]]
     });
@@ -35,11 +37,13 @@ export class ForgotPasswordComponent implements OnInit {
     // Send password reset request to backend
     this.http.post(CONFIG.URL_BASE+'/users/forgot-password', { email:email }).subscribe({
       next: () => {
-        alert('Password reset link has been sent to your email');
+        this.toastr.success('Password reset link has been sent to your email')
+        //alert('Password reset link has been sent to your email');
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        alert('An error occurred while sending the password reset link');
+        this.toastr.error('An error occurred while sending the password reset link')
+        //alert('An error occurred while sending the password reset link');
       }
     });
   }

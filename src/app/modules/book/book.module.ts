@@ -21,6 +21,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { UploadBookCoverComponent } from './upload-book-cover/upload-book-cover.component';
+import { ToastrComponentlessModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { UploadBookCoverComponent } from './upload-book-cover/upload-book-cover.
     NgxChartsModule,
     NgxDatatableModule,
     NgbModalModule,
-    NgSelectModule
+    NgSelectModule,ToastrComponentlessModule
   ],
   providers: [BookValidation],
 })

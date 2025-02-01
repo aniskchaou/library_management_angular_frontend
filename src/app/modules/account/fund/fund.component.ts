@@ -4,6 +4,7 @@ import { FundModalComponent } from '../fund-modal/fund-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import { BehaviorSubject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-fund',
@@ -32,6 +33,7 @@ export class FundComponent implements OnInit {
   selected = [];
 
   constructor(
+    private toastr: ToastrService,
     private fundService: HTTPService,
     private modalService: NgbModal
   ) {}
@@ -84,8 +86,10 @@ export class FundComponent implements OnInit {
 
   deleteFund(id: number): void {
     this.fundService.deleteFund(id).subscribe(() => {
+      this.toastr.success('Item removed successfully!', 'Success');
       this.loadFunds();
     });
+    this.toastr.success('Item removed successfully!', 'Success');
   }
 
   onSelect({ selected }): void {

@@ -208,13 +208,13 @@
       <div class="container-fluid mt-4 bg-white p-4">
         <h1 class="h3 mb-2 text-gray-800">Google Books</h1>
         <!-- Google Books tab content -->
-        https://www.googleapis.com/books/v1/volumes?q=isbn:2-7654-1005-4
-        <form (ngSubmit)="onSubmit()">
+       <!--  https://www.googleapis.com/books/v1/volumes?q=isbn:2-7654-1005-4 -->
+        <form (ngSubmit)="saveCatalogItem()">
           <div class="form-group">
             <label for="isbn">ISBN</label>
             <input type="text" class="form-control" id="isbn" [(ngModel)]="isbn" name="isbn" placeholder="Enter ISBN" required>
           </div>
-          <button type="submit" class="btn btn-primary">Import from Google Books</button>
+          <button type="submit" class="btn btn-outline-primary">Import</button>
         </form>
         
       </div>
@@ -223,13 +223,13 @@
       <div class="container-fluid mt-4 bg-white p-4">
         <h1 class="h3 mb-2 text-gray-800">Open Library</h1>
         <!-- Open Library tab content -->
-        https://openlibrary.org/search.json?isbn=2-7654-1005-4
+       <!--  https://openlibrary.org/search.json?isbn=2-7654-1005-4 -->
         <form (ngSubmit)="onSubmitOpenLibrary()">
           <div class="form-group">
             <label for="isbn">ISBN:</label>
             <input type="text" class="form-control" id="isbn" [(ngModel)]="isbn" name="isbn" placeholder="Enter ISBN" required>
           </div>
-          <button type="submit" class="btn btn-primary" >Import from Open Library</button>
+          <button type="submit" class="btn btn-outline-primary" >Import</button>
         </form>
         
       </div>
@@ -244,7 +244,7 @@
               <label for="isbn">ISBN:</label>
               <input type="text" class="form-control" id="isbn" [(ngModel)]="isbn" name="isbn" placeholder="Enter ISBN" required>
             </div>
-            <button type="submit" class="btn btn-primary" >Import from Library of Congress</button>
+            <button type="submit" class="btn btn-outline-primary" >Import</button>
           </form>
           <!-- <form  >
             <div class="form-group">

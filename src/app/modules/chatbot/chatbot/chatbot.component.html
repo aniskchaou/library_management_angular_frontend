@@ -35,7 +35,7 @@
   <div class="chatbot-container" *ngIf="isActive">
     <div class="chatbot-header" (click)="toggleChatbot()">
       <h5>Chatbot</h5>
-      <span (click)="closeChatbot()">Close</span>
+      <span (click)="closeChatbot()"> <i class="fas fa-times close-icon"></i></span>
     </div>
   
     <div class="chatbot-body">
@@ -46,7 +46,7 @@
       </div>
       <div class="chatbot-input">
         <input [(ngModel)]="userMessage" type="text" placeholder="Type a message..." (keyup.enter)="sendMessage()" />
-        <button (click)="sendMessage()">Send</button>
+        <button (click)="sendMessage()"><i class="fas fa-paper-plane icon send-icon" title="Send"></i></button>
       </div>
     </div>
   </div>

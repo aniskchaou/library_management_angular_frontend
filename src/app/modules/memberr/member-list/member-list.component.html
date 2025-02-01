@@ -300,6 +300,14 @@
 
     <!-- List Tab with ngx-datatable -->
     <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
+      <div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by book title..."
+          (input)="updateFilter($event)"
+        />
+      </div>
       <ngx-datatable
         class="bootstrap"
         [rows]="members"
@@ -311,6 +319,17 @@
         [loadingIndicator]="loadingIndicator"
         [reorderable]="reorderable"
       >
+
+      <ngx-datatable-column name="Thumbnail">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <!-- Generate random background color -->
+          <div [style.background-color]="getRandomColor()" 
+               style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; font-weight: bold;">
+            {{ row.surname ? row.surname.charAt(0).toUpperCase() : '' }}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+         
         <!-- Surname -->
         <ngx-datatable-column name="Surname" prop="surname">
           <ng-template ngx-datatable-cell-template let-row="row">
@@ -363,8 +382,11 @@
         <!-- Status -->
         <ngx-datatable-column name="Status" prop="status">
           <ng-template ngx-datatable-cell-template let-row="row">
-            <span [ngClass]="{ 'text-success': row.status === 'Active', 'text-danger': row.status === 'Inactive' }">
-              {{ row.status }}
+            <span [ngClass]="{ 
+              'text-success': row.status === 'Active' || row.status === 'active', 
+              'text-danger': row.status === 'Inactive' || !row.status 
+            }">
+              {{ row.status === 'Active' ? row.status : (row.status || 'Inactive') }}
             </span>
           </ng-template>
         </ngx-datatable-column>
@@ -471,8 +493,12 @@
         <!-- Status -->
         <ngx-datatable-column name="Status" prop="status">
           <ng-template ngx-datatable-cell-template let-row="row">
-            <span [ngClass]="{ 'text-success': row.status === 'Active', 'text-danger': row.status === 'Inactive' }">
-              {{ row.status }}
+            <span [ngClass]="{ 
+              'text-success': row.status === 'Active' || row.status === 'active', 
+              'text-danger': row.status === 'Inactive' || !row.status 
+            }">
+            {{ row.status === 'Active' ? row.status : (row.status || 'Inactive') }}
+
             </span>
           </ng-template>
         </ngx-datatable-column>

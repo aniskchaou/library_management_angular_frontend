@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import CategoryMessage from 'src/app/main/messages/CategoryMessage';
 import Writer from 'src/app/main/models/Writer';
@@ -24,6 +25,7 @@ export class EditWriterComponent extends URLLoader implements OnInit {
   
 
   constructor(
+    private toastr: ToastrService,
     private httpService: HTTPService,
     private message: CategoryMessage,
     private router: Router,
@@ -46,7 +48,7 @@ export class EditWriterComponent extends URLLoader implements OnInit {
     this.httpService.create(CONFIG.URL_BASE + '/writer/create', this.author).finally(()=>{
       this.closeModal()
       this.dataService.triggerRefresh()
-
+      this.toastr.success('Item edited successfully!', 'Success');
     });
  
   }

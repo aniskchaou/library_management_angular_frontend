@@ -7,6 +7,7 @@ import { ShelfModalComponent } from '../shelf-modal/shelf-modal.component';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -75,8 +76,9 @@ export class ShelfComponent implements OnInit {
   selected = [];
   markdownContent: string;
   departments: Department[] = [];
+  errors: {};
 
-  constructor(private shelfService: HTTPService, private modalService: NgbModal,private http: HttpClient) {
+  constructor(private toastr: ToastrService,private shelfService: HTTPService, private modalService: NgbModal,private http: HttpClient) {
     this.temp = [...this.shelves];
   }
 
@@ -109,6 +111,7 @@ export class ShelfComponent implements OnInit {
     this.shelves = this.shelves.filter(r => r !== row);
     this.shelves$.next(this.shelves);
     this.deleteShelf(row.id);
+    this.toastr.success('Item removed successfully!', 'Success');
   }
 
   refreshData(): void {
@@ -170,4 +173,6 @@ export class ShelfComponent implements OnInit {
         this.markdownContent = data;
       });
   }
+
+  
 }

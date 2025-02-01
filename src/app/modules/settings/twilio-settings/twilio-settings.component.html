@@ -1,6 +1,8 @@
 <!-- twilio-settings.component.html -->
 <div class="container">
-    <h2>Twilio Settings</h2>
+  <br/>
+  <h5><i class="fas fa-phone"></i> Twilio Settings</h5>
+
   
     <form [formGroup]="twilioForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -18,7 +20,7 @@
         <input id="phoneNumber" formControlName="phoneNumber" class="form-control" />
       </div>
   
-      <button type="submit" class="btn btn-primary" [disabled]="!twilioForm.valid">
+      <button type="submit" class="btn btn-outline-primary" [disabled]="!twilioForm.valid">
         Update
       </button>
     </form>
@@ -29,8 +31,8 @@
     </div>
   
     <!-- Error Message -->
-    <div *ngIf="errorMessage" class="alert alert-danger mt-2">
+   <!--  <div *ngIf="errorMessage" class="alert alert-danger mt-2">
       {{ errorMessage }}
-    </div>
+    </div> -->
   </div>
   

@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookMessage from 'src/app/main/messages/BookMessage';
 import { HTTPService } from 'src/app/main/services/HTTPService';
@@ -38,6 +39,7 @@ export class AddCirculationStatusComponent extends URLLoader implements OnInit {
   }
 
   constructor(
+    private toastr: ToastrService,
     private validation: CirculationStatusValidation,
     private message: BookMessage,
     //private bookTestService: BookTestService,
@@ -66,9 +68,10 @@ export class AddCirculationStatusComponent extends URLLoader implements OnInit {
         CONFIG.URL_BASE + '/circulationstatus/create',
         this.circulationStatusForm.value
       );
+      this.toastr.success('Item added successfully!', 'Success');
       this.closeModal();
       this.goBack();
-      super.show('Confirmation', this.msg.confirmationMessages.add, 'success');
+      //super.show('Confirmation', this.msg.confirmationMessages.add, 'success');
     }
   }
 
@@ -82,6 +85,7 @@ export class AddCirculationStatusComponent extends URLLoader implements OnInit {
           this.circulationStatusI18n = data;
           console.log(this.circulationStatusI18n);
           //document.getElementById('table').DataTable().ajax.reload();
+
         },
         (err: HttpErrorResponse) => {
           super.show('Error', err.message, 'error');

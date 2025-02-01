@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { QRCode } from 'src/app/main/models/QRcode';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
@@ -12,7 +13,7 @@ export class QrCodeModalComponent implements OnInit {
 
   @Input() qrCode: QRCode;
 
-  constructor(
+  constructor(private toastr: ToastrService,
     public activeModal: NgbActiveModal,
     private qrCodeService: HTTPService
   ) {}
@@ -20,6 +21,28 @@ export class QrCodeModalComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.qrCode);
   }
+
+  validateFormData(data: any): boolean {
+    if (!data.isbn || !/^\d{3}-\d{1,5}-\d{1,7}-\d{1,7}-\d{1}$/.test(data.isbn)) {
+      this.toastr.error('Invalid ISBN format. Example: 978-3-16-148410-0');
+      return false;
+    }
+    if (!data.width || data.width <= 0) {
+      this.toastr.error('Width must be a positive number.');
+      return false;
+    }
+    if (!data.height || data.height <= 0) {
+      this.toastr.error('Height must be a positive number.');
+      return false;
+    }
+    if (!data.margin || data.margin < 0) {
+      this.toastr.error('Margin must be a non-negative number.');
+      return false;
+    }
+    return true;
+  }
+
+  
 
   onSaveClick(): void {
     if (this.qrCode.id) {
@@ -33,16 +56,21 @@ export class QrCodeModalComponent implements OnInit {
         }
       });
     } else {
-      this.qrCodeService.createQrCode(this.qrCode).subscribe({
-        next: (newQRCode) => {
-          this.activeModal.close(newQRCode);
-        },
-        error: (err) => {
-          console.error('Error creating QR code:', err);
-          alert('Failed to create QR code. Please try again.');
-        }
-      });
+      if(this.validateFormData(this.qrCode)){
+        this.qrCodeService.createQrCode(this.qrCode).subscribe({
+          next: (newQRCode) => {
+            this.activeModal.close(newQRCode);
+          },
+          error: (err) => {
+            console.error('Error creating QR code:', err);
+            alert('Failed to create QR code. Please try again.');
+          }
+        });
+        this.toastr.success('Item added successfully!', 'Success');
+      }
+      
     }
+    
   }
 
   onCancelClick(): void {

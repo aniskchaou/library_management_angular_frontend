@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import MemberMessage from 'src/app/main/messages/MemberMessage';
 import MemberTestService from 'src/app/main/mocks/MemberTestService';
@@ -26,6 +27,7 @@ export class MemberComponent extends URLLoader implements OnInit {
   expired: number;
 
   constructor(
+    private toastr: ToastrService,
     private memberTestService: MemberTestService,
     private messageService: MemberMessage,
     private httpService: HTTPService,
@@ -76,18 +78,38 @@ export class MemberComponent extends URLLoader implements OnInit {
       });
   }
 
-  delete(id) {
+  /* delete(id) {
     var r = confirm('Do you want to delete this recording ?');
     if (r) {
-      this.httpService.remove(CONFIG.URL_BASE + '/member/delete/' + id);
-      super.show(
-        'Confirmation',
-        this.messageService.confirmationMessages.delete,
-        'success'
-      );
-      this.reloadPage();
+      this.httpService.remove(CONFIG.URL_BASE + '/member/delete/' + id).finally(()=>{
+        this.toastr.success('Item removed successfully!', 'Success');
+      });
+  
+ 
+    }
+  } */
+  delete(id: number): void {
+    const r = confirm('Do you want to delete this recording?');
+    if (r) {
+      this.httpService.remove(CONFIG.URL_BASE + '/member/delete/' + id)
+        .then(() => {
+          // This block will run if the request was successful
+          this.toastr.success('Item removed successfully!', 'Success');
+          this.getAll();  // Refresh the list after deletion
+        })
+        .catch((err) => {
+          // This block will run if there is an error in the request
+          this.toastr.error('Error removing item', 'Error');
+        })
+        .finally(() => {
+          // This block runs when the request finishes (either success or failure)
+          // You could do additional cleanup actions if needed
+        });
     }
   }
+  
+  
+  
 
   loadNewArrivals(): void {
     this.httpService.getNewArrivals().subscribe(

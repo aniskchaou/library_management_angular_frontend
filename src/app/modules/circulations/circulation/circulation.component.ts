@@ -83,8 +83,8 @@ export class CirculationComponent extends URLLoader implements OnInit {
     this.getCirculationByLang(CONFIG.getInstance().getLang());
     this.getMenuByLang(
       CONFIG.getInstance().getLang(),
-      sessionStorage.getItem('username'),
-      sessionStorage.getItem('password')
+      localStorage.getItem('username'),
+      localStorage.getItem('password')
     );
 
     this.dataService.refreshData$.subscribe(() => {

@@ -260,9 +260,12 @@
       aria-haspopup="true"
       aria-expanded="false"
     >
-      <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{
-        userObject?.firstName+' '+userObject?.lastName
-      }}</span>
+      <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ 
+        (userObject?.firstName ? userObject.firstName.charAt(0).toUpperCase() + userObject.firstName.slice(1).toLowerCase() : '') + 
+        ' ' + 
+        (userObject?.lastName ? userObject.lastName.charAt(0).toUpperCase() + userObject.lastName.slice(1).toLowerCase() : '') 
+      }}
+      </span>
       <img
         class="img-profile rounded-circle"
         [src]="retrievedImage"
@@ -286,12 +289,12 @@
       </a>
 
       <a (click)="openLogoDialog()" class="dropdown-item" >
-        <i class="fas fa-profile fa-sm fa-fw mr-2 text-gray-400"></i>
+        <i class="fas fa-id-card fa-sm fa-fw mr-2 text-gray-400"></i>
         Change Logo
       </a>
 
       <!-- Change Password -->
-      <a routerLink="/change-password" class="dropdown-item" href="#">
+      <a (click)="openPasswordDialog()" class="dropdown-item">
         <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
         Change Password
       </a>

@@ -1,6 +1,7 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs/operators';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookMessage from 'src/app/main/messages/BookMessage';
@@ -57,7 +58,7 @@ export class BookComponent extends URLLoader implements OnInit {
 
   // Define color scheme
 
-
+  catalogItem:CatalogItem=new CatalogItem()
   itemsByCategoryData: any[];
   itemsByMediaTypeData: any[];
   acquisitionTrendsData: any[];
@@ -93,7 +94,10 @@ export class BookComponent extends URLLoader implements OnInit {
     private bookTestService: BookTestService,
     private messageService: BookMessage,
     private httpService: HTTPService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient,
+    public toastr:ToastrService ,
+    private catalogItemService:HTTPService
   ) {
     super();
     Object.assign(this, { single });
@@ -383,7 +387,7 @@ export class BookComponent extends URLLoader implements OnInit {
   isbn: string = '';
   bookData = null;
 
-  // Method to handle form submission
+/*   // Method to handle form submission
   onSubmit() {
     if (this.isbn) {
       // Fetch book information from Google Books API
@@ -425,15 +429,7 @@ export class BookComponent extends URLLoader implements OnInit {
             };
             console.log(this.bookData)
 
-            // Send the book data to the backend
-            /* this.httpService.create(CONFIG.URL_BASE + '/book/ceate',this.bookData).then(
-              (result) => {
-                console.log('Book data sent successfully!', result);
-              },
-              (error) => {
-                console.error('Error sending book data to the backend', error);
-              }
-            ); */
+            
           }
         },
         (error) => {
@@ -441,7 +437,7 @@ export class BookComponent extends URLLoader implements OnInit {
         }
       );
     }
-  }
+  } */
 
 
 
@@ -455,36 +451,61 @@ export class BookComponent extends URLLoader implements OnInit {
             const bookInfo = response.docs[0];
 
             // Map the book data to CatalogItem
-            this.bookData = {
-              id: 0,  // Generate this on the backend
-              isbn: this.isbn,
-              title: bookInfo.title || '',
-              subtitle: bookInfo.subtitle || '',
-              writer: bookInfo.author_name ? bookInfo.author_name.join(', ') : '',
-              edition: bookInfo.edition_name || '',
-              edition_year: bookInfo.first_publish_year?.toString() || '',
-              number_of_books: '1',  // Default to 1
-              photo: bookInfo.cover_i ? `https://covers.openlibrary.org/b/id/${bookInfo.cover_i}-L.jpg` : '',
-              physical_form: '',  // Set as needed
-              publisher: bookInfo.publisher ? bookInfo.publisher.join(', ') : '',
-              series: bookInfo.series || '',
-              size: '',  // Set as needed
-              price: '',  // Set as needed
-              call_no: '',  // Set as needed
-              location: '',  // Set as needed
-              clue_page: '',  // Set as needed
-              editor: '',  // Not available in Open Library API
-              publishing_year: bookInfo.first_publish_year?.toString() || '',
-              publication_place: '',  // Set as needed
-              number_of_pages: bookInfo.number_of_pages_median?.toString() || '',
-              source_details: '',  // Set as needed
-              notes: bookInfo.notes || '',
-              pdf: '',  // Not available in Open Library API
-              link: `https://openlibrary.org${bookInfo.key}`,
-              category: bookInfo.subject ? bookInfo.subject.join(', ') : '',
-            };
+            
+             
+            this.catalogItem.isbn= this.isbn,
+            this.catalogItem.title= bookInfo.title || '',
+            this.catalogItem.subtitle= bookInfo.subtitle || '',
+            this.catalogItem.writer=null
+            this.catalogItem.edition= bookInfo.edition_name || '',
+            this.catalogItem.edition_year= bookInfo.first_publish_year?.toString() || '',
+            this.catalogItem.number_of_books= '1',  // Default to 1
+            this.catalogItem.photo= bookInfo.cover_i ? `https://covers.openlibrary.org/b/id/${bookInfo.cover_i}-L.jpg` : '',
+            this.catalogItem.physical_form= '',  // Set as needed
+            this.catalogItem.publisher= null,
+            this.catalogItem.series= bookInfo.series || '',
+            this.catalogItem.size= '',  // Set as needed
+            this.catalogItem.price= '',  // Set as needed
+            this.catalogItem.call_no= '',  // Set as needed
+            this.catalogItem.location= '',  // Set as needed
+            this.catalogItem.clue_page= '',  // Set as needed
+            this.catalogItem.editor= '',  // Not available in Open Library API
+            this.catalogItem.publishing_year= bookInfo.first_publish_year?.toString() || '',
+            this.catalogItem.publication_place= '',  // Set as needed
+            this.catalogItem.number_of_pages=bookInfo.number_of_pages_median?.toString() || '',
+            this.catalogItem.source_details= '',  // Set as needed
+            this.catalogItem.notes= bookInfo.notes || '',
+            this.catalogItem.pdf= '',  // Not available in Open Library API
+            this.catalogItem.link= `https://openlibrary.org${bookInfo.key}`,
+            this.catalogItem.category= null,
+            
 
             console.log(this.bookData)
+
+            const bookDetails = `
+            Title: ${bookInfo.title}
+            Subtitle: ${bookInfo.subtitle}
+            Author(s): ${bookInfo.writer}
+            Publisher: ${bookInfo.publisher}
+            Published Year: ${bookInfo.publishedDate}
+            ISBN: ${bookInfo.isbn}
+            Pages: ${bookInfo.pageCount}
+          `;
+          
+          // Show a confirmation dialog
+          const isConfirmed = window.confirm(`Are you sure to import data?\n\n${bookDetails}`);
+          
+          // Check if user clicked 'OK' (Confirm) or 'Cancel'
+          if (isConfirmed) {
+            // User clicked 'OK'
+            this.catalogItemService.create(CONFIG.URL_BASE + '/book/create', this.catalogItem).then(() => {
+             this.toastr.success('Book data imported successfully!', 'Success');
+           
+           });
+          } else {
+            // User clicked 'Cancel'
+            this.toastr.error('Book data imported successfully!', 'Error');
+          }
 
             // Send the book data to the backend
            /*  this.openLibraryService.sendBookDataToBackend(this.bookData).subscribe(
@@ -514,38 +535,59 @@ export class BookComponent extends URLLoader implements OnInit {
           console.log(response)
           if (response.results && response.results.length > 0) {
             const bookInfo = response.results[0];
-
-            // Map the book data to CatalogItem
-            this.bookData = {
-              id: 0,  // Generate this on the backend
-              isbn: this.isbn,
-              title: bookInfo.title || '',
-              subtitle: '',  // No subtitle provided in LOC data
-              writer: bookInfo.contributors ? bookInfo.contributors.map((contributor: any) => contributor.name).join(', ') : '',
-              edition: '',  // Not available in LOC data
-              edition_year: bookInfo.date || '',
-              number_of_books: '1',  // Default to 1
-              photo: bookInfo.image_url || '',
-              physical_form: '',  // Set as needed
-              publisher: bookInfo.publisher || '',
-              series: '',  // Not available in LOC data
-              size: '',  // Set as needed
-              price: '',  // Set as needed
-              call_no: bookInfo.call_number || '',
-              location: bookInfo.location || '',
-              clue_page: '',  // Not available in LOC data
-              editor: '',  // Not available in LOC data
-              publishing_year: bookInfo.date || '',
-              publication_place: '',  // Set as needed
-              number_of_pages: '',  // Not available in LOC data
-              source_details: bookInfo.source || '',
-              notes: bookInfo.description || '',
-              pdf: '',  // Not available in LOC data
-              link: bookInfo.url || '',
-              category: bookInfo.subjects ? bookInfo.subjects.join(', ') : '',
-            };
-
-            console.log(this.bookData)
+  
+            this.catalogItem.isbn = this.isbn
+            this.catalogItem.title= bookInfo.title || ''
+            this.catalogItem.subtitle= '',  // No subtitle provided in LOC data
+            this.catalogItem.writer=null
+            this.catalogItem.edition= '',  // Not available in LOC data
+            this.catalogItem.edition_year= bookInfo.date || '',
+              this.catalogItem.number_of_books= '1',  // Default to 1
+              this.catalogItem.photo= bookInfo.image_url || '',
+              this.catalogItem.physical_form= '',  // Set as needed
+              this.catalogItem.publisher= null
+              this.catalogItem.series= '',  // Not available in LOC data
+              this.catalogItem.size= '',  // Set as needed
+              this.catalogItem.price= '',  // Set as needed
+              this.catalogItem.call_no= bookInfo.call_number || '',
+              this.catalogItem.location= bookInfo.location || '',
+              this.catalogItem.clue_page= '',  // Not available in LOC data
+              this.catalogItem.editor= '',  // Not available in LOC data
+              this.catalogItem.publishing_year= bookInfo.date || '',
+              this.catalogItem.publication_place= '',  // Set as needed
+              this.catalogItem.number_of_pages= '',  // Not available in LOC data
+              this.catalogItem.source_details= bookInfo.source || '',
+              this.catalogItem.notes= bookInfo.description || '',
+              this.catalogItem.pdf= '',  // Not available in LOC data
+              this.catalogItem.link= bookInfo.url || '',
+              this.catalogItem.category=null
+            
+              
+              const bookDetails = `
+              Title: ${bookInfo.title}
+              Subtitle: ${bookInfo.subtitle}
+              Author(s): ${bookInfo.writer}
+              Publisher: ${bookInfo.publisher}
+              Published Year: ${bookInfo.publishedDate}
+              ISBN: ${bookInfo.isbn}
+              Pages: ${bookInfo.pageCount}
+            `;
+            
+            // Show a confirmation dialog
+            const isConfirmed = window.confirm(`Are you sure to import data?\n\n${bookDetails}`);
+            
+            // Check if user clicked 'OK' (Confirm) or 'Cancel'
+            if (isConfirmed) {
+              // User clicked 'OK'
+              this.catalogItemService.create(CONFIG.URL_BASE + '/book/create', this.catalogItem).then(() => {
+               this.toastr.success('Book data imported successfully!', 'Success');
+             
+             });
+            } else {
+              // User clicked 'Cancel'
+              this.toastr.error('Book data imported successfully!', 'Error');
+            }
+            
 
             // Send the book data to the backend
             /* this.locLibraryService.sendBookDataToBackend(this.bookData).subscribe(
@@ -564,6 +606,99 @@ export class BookComponent extends URLLoader implements OnInit {
       );
     }
   }
+
+  
+  saveCatalogItem(): void {
+    console.log(this.catalogItem);
+  
+    
+      // Fetch book data from Google Books API using the ISBN
+      //const isbn = this.catalogItem.isbn="2-7654-1005-4";
+      const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${this.isbn}`;
+  
+      this.http.get(apiUrl).subscribe(
+        (response: any) => {
+          // Assuming the API response contains valid items, and we are using the first one
+          const bookData = response.items ? response.items[0].volumeInfo : null;
+  
+          if (bookData) {
+            // Map the API response data to the CatalogItem fields
+            this.catalogItem.isbn=this.isbn
+            this.catalogItem.title = bookData.title || '';
+            this.catalogItem.subtitle = bookData.subtitle || '';
+            this.catalogItem.edition = bookData.printType || ''; // You can use `printType` for edition if needed
+            this.catalogItem.edition_year = bookData.publishedDate || '';
+            this.catalogItem.number_of_books = '1'; // Default, adjust as necessary
+            this.catalogItem.photo = ''; // No image provided in the example data; map if available
+            this.catalogItem.physical_form = bookData.printType || ''; // Physical form from `printType`
+            this.catalogItem.physical_description = bookData.description || ''; // Assuming description
+            this.catalogItem.publisher = null; // Find publisher by name
+            this.catalogItem.series = ''; // If available, you can map this
+            this.catalogItem.size = ''; // Adjust based on available data
+            this.catalogItem.price = '0'; // Default, adjust as necessary
+            this.catalogItem.call_no = bookData.industryIdentifiers[1]?.identifier || ''; // ISBN-13
+            this.catalogItem.location = ''; // Handle as necessary
+            this.catalogItem.clue_page = ''; // Handle if needed
+            this.catalogItem.editor = bookData.authors?.join(', ') || ''; // Join authors array
+            this.catalogItem.publishing_year = bookData.publishedDate || '';
+            this.catalogItem.publication_place = ''; // Handle if needed
+            this.catalogItem.number_of_pages = bookData.pageCount?.toString() || '';
+            this.catalogItem.source_details = bookData.infoLink || ''; // Link to book info
+            this.catalogItem.notes = ''; // If needed
+            this.catalogItem.pdf = ''; // If applicable, link to PDF
+            this.catalogItem.link = bookData.infoLink || ''; // Info link to book page
+  
+            // Map other fields like mediaType, departement, etc.
+           /*  this.catalogItem.mediaType = this.mediaTypes.find(x => x.id == this.catalogItem.mediaType?.id);
+            this.catalogItem.departement = this.departments.find(x => x.id == this.catalogItem.departement.id);
+            this.catalogItem.row = this.rows.find(x => x.id == this.catalogItem.row.id);
+            this.catalogItem.writer = this.writers.find(x => x.id == this.catalogItem.writer.id);
+            this.catalogItem.shelf = this.shelves.find(x => x.id == this.catalogItem.shelf.id);
+            this.catalogItem.publisher = this.publishers.find(x => x.id == this.catalogItem.publisher.id);
+            this.catalogItem.category = this.categories.find(x => x.id == this.catalogItem.category.id);
+   */       
+
+             // Show the imported book data in an alert
+             const bookDetails = `
+             Title: ${bookData.title}
+             Subtitle: ${bookData.subtitle}
+             Author(s): ${bookData.authors.join(', ')}
+             Publisher: ${bookData.publisher}
+             Published Year: ${bookData.publishedDate}
+             ISBN: ${bookData.isbn}
+             Pages: ${bookData.pageCount}
+           `;
+           
+           // Show a confirmation dialog
+           const isConfirmed = window.confirm(`Are you sure to import data?\n\n${bookDetails}`);
+           
+           // Check if user clicked 'OK' (Confirm) or 'Cancel'
+           if (isConfirmed) {
+             // User clicked 'OK'
+             this.catalogItemService.create(CONFIG.URL_BASE + '/book/create', this.catalogItem).then(() => {
+              this.toastr.success('Book data imported successfully!', 'Success');
+            
+            });
+           } else {
+             // User clicked 'Cancel'
+             this.toastr.error('Book data imported successfully!', 'Error');
+           }
+
+            // Save the catalog item after mapping the data
+            
+          } else {
+            console.error('No valid book data found in the API response.');
+          }
+        },
+        (error) => {
+          console.error('Error fetching book data:', error);
+          // Handle error appropriately (show error message, etc.)
+        }
+      );
+    
+  }
+  
+  
 }
 export var single = [
   {

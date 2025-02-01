@@ -65,6 +65,7 @@ export class BudgetComponent implements OnInit {
 
   deleteBudget(id: number): void {
     this.budgetService.deleteBudget(id).subscribe(() => {
+      this.toastr.success('Item removed successfully!', 'Success');
       this.loadBudgets();
     });
   }

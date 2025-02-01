@@ -13,12 +13,12 @@
       <label for="member">Member:</label>
       <i class="fas fa-info-circle" data-toggle="tooltip" 
          title="Description: Select the member checking out the item."></i>
-      <ng-select class="form-control" id="member" name="member"
+      <ng-select  id="member" name="member"
                  [items]="members$"
                  bindLabel="firstname" bindValue="id"
                  formControlName="member"
                  placeholder="Select a member"
-                 [loading]="loading">
+                 >
       </ng-select>
     </div>
 
@@ -27,12 +27,12 @@
       <label for="itemBarcode">Item Barcode:</label>
       <i class="fas fa-info-circle" data-toggle="tooltip" 
          title="Description: Select the barcode of the item you wish to check out."></i>
-      <ng-select class="form-control" id="itemBarcode" name="itemBarcode"
+      <ng-select  id="itemBarcode" name="itemBarcode"
                  [items]="books$"
                  bindLabel="title" bindValue="id"
                  formControlName="itemBarcode"
                  placeholder="Select a barcode"
-                 [loading]="loading">
+                 >
       </ng-select>
     </div>
 

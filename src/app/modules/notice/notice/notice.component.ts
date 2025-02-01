@@ -132,9 +132,17 @@ export class NoticeComponent implements OnInit {
   }
 
   deleteNotice(id: number): void {
-    this.noticeService.deleteNotice(id).subscribe(() => {
-      this.loadNotices();
-    });
+    this.noticeService.deleteNotice(id).subscribe( {
+        next: (response) => {
+          // Handle response if needed, since it may be text
+          this.loadNotices();
+          this.toastr.success('Item removed successfully!', 'Success');
+        },
+        error: (err) => {
+          this.toastr.error('Error removing item', 'Error');
+        }
+      }
+    );
   }
 
   refreshData(): void {

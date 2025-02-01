@@ -20,6 +20,8 @@ import { AddIncomeComponent } from './add-income/add-income.component';
 import { EditIncomeComponent } from './edit-income/edit-income.component';
 import { FundModalComponent } from './fund-modal/fund-modal.component';
 import { BudgetModalComponent } from './budget-modal/budget-modal.component';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [

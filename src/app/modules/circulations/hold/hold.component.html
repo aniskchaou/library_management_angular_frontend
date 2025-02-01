@@ -14,7 +14,7 @@
       <label for="itemBarcode">Item Barcode:</label>
       <i class="fas fa-info-circle" data-toggle="tooltip" 
          title="Description: Select the barcode of the item you wish to hold."></i>
-      <ng-select class="form-control" id="itemBarcode" name="itemBarcode"
+      <ng-select  id="itemBarcode" name="itemBarcode"
                  [items]="books$"
                  bindLabel="title" bindValue="id"
                  formControlName="itemBarcode"
@@ -28,7 +28,7 @@
       <label for="memberName">Member Name:</label>
       <i class="fas fa-info-circle" data-toggle="tooltip" 
          title="Description: Select the name of the member who is holding the item."></i>
-      <ng-select class="form-control" id="memberName" name="memberName" 
+      <ng-select  id="memberName" name="memberName" 
                  [items]="members$"
                  bindLabel="firstname" bindValue="id"
                  formControlName="memberName"

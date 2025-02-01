@@ -65,9 +65,9 @@ export class CheckInComponent  implements OnInit {
   add() {
     this.submitted = true;
     
-    if (this.circulationForm.invalid) {
+    /* if (this.circulationForm.invalid) {
       return; // form is not valid, stop the process
-    }
+    } */
 
     // Fetch and set the member, book, return status, and writer by ID
     const selectedMember = this.members$.find(x => x.id == parseInt(this.circulationForm.value.memberName));
@@ -86,9 +86,9 @@ export class CheckInComponent  implements OnInit {
       toReturn:this.circulationForm.value.returnDueDate
     };
 
-    //if (this.validation.checkValidation()) {
+    if (this.validateCirculationForm()) {
       console.log(this.circulationForm.value);
-
+ 
       this.httpService
         .create(CONFIG.URL_BASE + '/circulation/create', body)
         .then(() => {
@@ -100,7 +100,7 @@ export class CheckInComponent  implements OnInit {
         });
 
       //super.show('Confirmation', this.msg.confirmationMessages.add, 'success');
-    //}
+    }
   }
 
   addNotification(name,title): void {
@@ -129,5 +129,44 @@ export class CheckInComponent  implements OnInit {
 closeModal(): void {
     this.activeModal.dismiss(); // Close the modal using NgbActiveModal
   }
+
+  validateCirculationForm(): boolean {
+    if (!this.circulationForm) {
+      this.toastr.error('Form is not initialized.');
+      return false;
+    }
+  
+    const formValue = this.circulationForm.value;
+  
+    // Validate Member Selection
+    if (!formValue.memberName) {
+      this.toastr.error('Please select a member.');
+      return false;
+    }
+  
+    // Validate Item Barcode / Book Selection
+    if (!formValue.catalogItemName) {
+      this.toastr.error('Please select an item.');
+      return false;
+    }
+  
+    // Validate Return Due Date
+    if (!formValue.returnDueDate) {
+      this.toastr.error('Please select a return due date.');
+      return false;
+    }
+  
+    const dueDate = new Date(formValue.returnDueDate);
+    const today = new Date();
+  
+    // Ensure the due date is not in the past
+    if (dueDate < today) {
+      this.toastr.error('Return due date cannot be in the past.');
+      return false;
+    }
+  
+    return true;
+  }
+  
 
 }

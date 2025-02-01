@@ -11,6 +11,7 @@ import { ViewPublisherComponent } from '../view-publisher/view-publisher.compone
 import { DataService } from 'src/app/main/services/data.service';
 import { Observable } from 'rxjs';
 import { EditPublisherComponent } from '../edit-publisher/edit-publisher.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-publisher',
@@ -83,6 +84,7 @@ export class PublisherComponent extends URLLoader implements OnInit,AfterViewIni
   markdownContent: any;
 
   constructor(
+    private toastr: ToastrService,
     private httpService: HTTPService,
     private router: Router,
     private messageService: BookMessage,
@@ -291,14 +293,22 @@ export class PublisherComponent extends URLLoader implements OnInit,AfterViewIni
   delete(id) {
     var r = confirm('Do you want to delete this recording ?');
     if (r) {
-      this.httpService.remove(CONFIG.URL_BASE + '/publisher/delete/' + id);
-      super.show(
-        'Confirmation',
-        this.messageService.confirmationMessages.delete,
-        'success'
-      );
+      this.httpService.remove(CONFIG.URL_BASE + '/publisher/delete/' + id).then(()=>{
+        this.toastr.success('Item removed successfully!', 'Success');
+
       this.reloadPage();
+      });
+      
     }
+  }
+
+  getRandomColor(): string {
+    // const letters = '0123456789ABCDEF';
+    // let color = '#';
+    // for (let i = 0; i < 6; i++) {
+    //   color += letters[Math.floor(Math.random() * 16)];
+    // }
+    return 'grey';
   }
 
   

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import Member from 'src/app/main/models/Member';
 import { FileUploadService } from 'src/app/main/services/FileUploadService ';
 
@@ -15,7 +16,7 @@ export class UploadDocumentMemberComponent implements OnInit {
   member:Member
   uploadForm: FormGroup;
   fileToUpload: File = null;
-  constructor(private fileUploadService:FileUploadService,private fb: FormBuilder,private activeModal: NgbActiveModal) {
+  constructor(private toastr: ToastrService,private fileUploadService:FileUploadService,private fb: FormBuilder,private activeModal: NgbActiveModal) {
     this.uploadForm = this.fb.group({
       file: [null]
     });
@@ -45,6 +46,7 @@ closeModal(): void {
     this.fileUploadService.uploadMember(this.member.id,formData)
       .subscribe(response => {
         console.log(response);
+        this.toastr.success("Your file has been uploaded successfully.", 'Success');
       });
   }
 

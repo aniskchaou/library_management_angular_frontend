@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookMessage from 'src/app/main/messages/BookMessage';
 import PublisherMessage from 'src/app/main/messages/PublisherMessage';
@@ -25,6 +26,7 @@ export class AddPublisherComponent extends URLLoader implements OnInit {
   addressSuggestions = []; 
 
   constructor(
+    private toastr: ToastrService,
     private validation: PublisherValidation,
     private message: PublisherMessage,
     private httpService: HTTPService,
@@ -93,18 +95,19 @@ export class AddPublisherComponent extends URLLoader implements OnInit {
   add() {
     console.log(this.publisherForm.value)
     this.submitted = true;
-    //if (this.validation.checkValidation()) {
+    if (this.validatePublisherForm(this.publisherForm.value,true)) {
       this.httpService.create(
         CONFIG.URL_BASE + '/publisher/create',
         this.publisherForm.value
       ).finally(()=>{
         this.closeModal();
         this.goBack();
-        super.show('Confirmation', this.msg.confirmationMessages.add, 'success');
+ this.toastr.success('Item added successfully!', 'Success');
+        //super.show('Confirmation', this.msg.confirmationMessages.add, 'success');
         this.dataService.triggerRefresh()
       });
      
-   // }
+   }
   }
 
 
@@ -163,4 +166,60 @@ export class AddPublisherComponent extends URLLoader implements OnInit {
       });
     }); 
   }*/
+
+    errors: any;
+
+validatePublisherForm(form: any, submitted: boolean): boolean {
+  this.errors = {};
+
+  // Validate Publisher Name
+  if (!form.name || form.name.trim().length < 2) {
+    this.errors.name = 'Publisher Name is required and must be at least 2 characters long.';
+    this.toastr.error(this.errors.name, 'Validation Error');
+  }
+
+  // Validate Address
+  if (!form.address || form.address.trim().length < 5) {
+    this.errors.address = 'Address is required and must be at least 5 characters long.';
+    this.toastr.error(this.errors.address, 'Validation Error');
+  }
+
+  // Validate Email
+  if (!form.email || !this.isValidEmail(form.email)) {
+    this.errors.email = 'A valid email is required.';
+    this.toastr.error(this.errors.email, 'Validation Error');
+  }
+
+  // Validate Phone
+  if (!form.phone || form.phone.trim().length < 10) {
+    this.errors.phone = 'Phone number is required and must be at least 10 characters long.';
+    this.toastr.error(this.errors.phone, 'Validation Error');
+  }
+
+  // Validate Country
+  if (!form.country) {
+    this.errors.country = 'Country is required.';
+    this.toastr.error(this.errors.country, 'Validation Error');
+  }
+
+  // Validate Website (Optional but must be a valid URL if provided)
+  if (form.website && !this.isValidUrl(form.website)) {
+    this.errors.website = 'Please enter a valid URL for the website.';
+    this.toastr.error(this.errors.website, 'Validation Error');
+  }
+
+  // Return whether the form is valid
+  return Object.keys(this.errors).length === 0;
+}
+
+isValidEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+isValidUrl(url: string): boolean {
+  const urlRegex = /^(https?:\/\/)?([\w\d\-]+\.)+\w{2,}(\/.*)?$/;
+  return urlRegex.test(url);
+}
+
 }

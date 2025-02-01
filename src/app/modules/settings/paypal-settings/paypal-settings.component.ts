@@ -48,7 +48,7 @@ export class PaypalSettingsComponent implements OnInit {
         },
         (error) => {
           console.error('Error updating PayPal properties', error);
-          this.errorMessage = 'Failed to update PayPal properties';
+          //this.errorMessage = 'Failed to update PayPal properties';
           this.successMessage = '';
         }
       );

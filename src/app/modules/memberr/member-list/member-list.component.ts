@@ -163,7 +163,7 @@ export class MemberListComponent extends URLLoader implements OnInit,AfterViewIn
   }
 
   // Update Filter based on Search Input
-  updateFilter(event: any): void {
+/*   updateFilter(event: any): void {
     const val = event.target.value.toLowerCase();
 
     // Filter based on memberName, email, or department
@@ -173,7 +173,7 @@ export class MemberListComponent extends URLLoader implements OnInit,AfterViewIn
 
     // Update the rows
     this.members = temp;
-  }
+  } */
 
   // Handle Row Selection
   onSelect({ selected }: any): void {
@@ -344,6 +344,21 @@ export class MemberListComponent extends URLLoader implements OnInit,AfterViewIn
         console.error('Error fetching member:', err.message);
       }
     );
+  }
+
+  updateFilter(event): void {
+    const val = event.target.value.toLowerCase();
+    const temp = this.members.filter(d => d.firstname.toLowerCase().includes(val));
+    this.members = temp;
+  } 
+
+  getRandomColor(): string {
+    // const letters = '0123456789ABCDEF';
+    // let color = '#';
+    // for (let i = 0; i < 6; i++) {
+    //   color += letters[Math.floor(Math.random() * 16)];
+    // }
+    return 'grey';
   }
 
   openEditDialog(member: any): void {

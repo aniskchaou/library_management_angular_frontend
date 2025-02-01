@@ -306,7 +306,7 @@
             <div class="membership-container">
                 <div class="membership-card bg-white">
                     <div class="membership-card-header d-flex align-items-center justify-content-between">
-                        <img src="https://via.placeholder.com/60" alt="Member Image" class="img-fluid rounded-circle">
+                        <img height="50"  width="50" src="https://icons.veryicon.com/png/o/miscellaneous/user-avatar/user-avatar-male-5.png" alt="Member Image" class="img-fluid rounded-circle">
                         <h5 class="text-primary">Membership Card</h5>
                     </div>
                     <div class="membership-details">
@@ -329,8 +329,8 @@
             </div>
 
             <div class="text-center mt-3">
-                <button class="btn btn-primary" (click)="downloadCard()">Download Card</button>
-                <button class="btn btn-secondary" (click)="printCard()">Print Card</button>
+                <button class="btn btn-outline-primary" (click)="downloadCard()">Download Card</button>
+                <button class="btn btn-outline-secondary" (click)="printCard()">Print Card</button>
               </div>
 
           </div>
@@ -437,7 +437,7 @@
               <button (click)="generatePaymentLink('2.00','USD','paying fees')" class="btn btn-primary">
                 <i class="fas fa-link"></i> Generate Payment Link
               </button>
-              <button (click)="sendPaymentLink()" class="btn btn-success">
+              <button (click)="sendPaymentLink()" class="btn btn-outline-success">
                 <i class="fas fa-paper-plane"></i> Send Payment Link
               </button>
             </div>
@@ -445,7 +445,7 @@
             <div *ngIf="paymentLink">
               <p><strong>Generated Payment Link:</strong></p>
               <a [href]="paymentLink" target="_blank">{{ paymentLink }}</a>
-              <button (click)="copyPaymentLink(paymentLink)" class="btn btn-info">
+              <button (click)="copyPaymentLink(paymentLink)" class="btn btn-outline-info">
                 <i class="fas fa-copy"></i> Copy Link
               </button>
             </div>

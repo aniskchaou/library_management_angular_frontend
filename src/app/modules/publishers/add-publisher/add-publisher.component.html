@@ -8,11 +8,11 @@
     <input [ngClass]="{ 'is-invalid': submitted && f.name.errors }" formControlName="name" id="field-category_name" 
            name="name" class="form-control" type="text" maxlength="99" placeholder="e.g., Penguin Publishing" />
     <!-- Publisher Name Validation -->
-    <div *ngIf="submitted && f.name.errors" class="alert alert-danger">
+    <!-- <div *ngIf="submitted && f.name.errors" class="alert alert-danger">
       <div *ngIf="submitted && f.name.errors.required">
         {{ msg.validationMessage.name }}
       </div>
-    </div>
+    </div> -->
   </div>
 
   <!-- Address -->
@@ -27,9 +27,9 @@
        type="text"
        placeholder="e.g., 123 Publishing Street"
      />
-     <div *ngIf="publisherForm.get('address').invalid && (publisherForm.get('address').dirty || publisherForm.get('address').touched)">
+    <!--  <div *ngIf="publisherForm.get('address').invalid && (publisherForm.get('address').dirty || publisherForm.get('address').touched)">
        <small class="text-danger" *ngIf="publisherForm.get('address').errors.required">Address is required.</small>
-     </div>
+     </div> -->
   </div>
 
   <!-- Email -->
@@ -62,11 +62,11 @@
       [ngClass]="{ 'is-invalid': submitted && f.country.errors }"
     >
     </ng-select>
-    <div *ngIf="submitted && f.country.errors" class="alert alert-danger">
+   <!--  <div *ngIf="submitted && f.country.errors" class="alert alert-danger">
       <div *ngIf="submitted && f.country.errors.required">
         {{ msg.validationMessage.country }}
       </div>
-    </div>
+    </div> -->
   </div>
 
   <!-- Website -->
@@ -79,7 +79,7 @@
 
   <!-- Add Button -->
   <div class="form-group col-md-12">
-    <button (click)="add()" type="button" class="btn btn-outline-info">
+    <button (click)="add()" type="button" class="btn btn-outline-primary">
       <i class="fas fa-save"></i>
       {{ publisherI18n?.addButtonI18n }}
     </button>

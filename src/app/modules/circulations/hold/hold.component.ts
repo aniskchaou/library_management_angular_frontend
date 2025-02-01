@@ -72,9 +72,9 @@ closeModal(): void {
   hold() {
     this.submitted = true;
 
-    if (this.holdForm.invalid) {
+    /* if (this.holdForm.invalid) {
       return;  // If form is invalid, stop the process
-    }
+    } */
 
     const formValue = this.holdForm.value;
 
@@ -91,7 +91,10 @@ closeModal(): void {
     this.catalogItemId=formValue.itemBarcode
     this.memberId=formValue.memberName
     this.statusName="On Hold"
-    this.updateStatus()
+    if(this.validateHoldForm()){
+      this.updateStatus()
+    }
+    
 
    /*  // Submit the hold data to the backend
     this.httpService.create('/hold/create', payload).then(
@@ -126,4 +129,29 @@ closeModal(): void {
        this.responseMessage = 'Please fill out all fields.';
     }
   }
+
+  validateHoldForm(): boolean {
+    if (!this.holdForm) {
+      this.toastr.error('Form is not initialized.');
+      return false;
+    }
+  
+    const formValue = this.holdForm.value;
+  
+    // Validate Item Barcode
+    if (!formValue.itemBarcode) {
+      this.toastr.error('Please select an item barcode.');
+      return false;
+    }
+  
+    // Validate Member Name
+    if (!formValue.memberName) {
+      this.toastr.error('Please select a member name.');
+      return false;
+    }
+  
+    return true;
+  }
+  
+  
 }

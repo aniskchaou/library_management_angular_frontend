@@ -76,9 +76,9 @@ closeModal(): void {
   add() {
     this.submitted = true;
 
-    if (this.checkoutForm.invalid) {
+   /*  if (this.checkoutForm.invalid) {
       return;  // If form is invalid, stop the process
-    }
+    } */
 
     const formValue = this.checkoutForm.value;
 
@@ -97,7 +97,10 @@ closeModal(): void {
     this.catalogItemId=formValue.itemBarcode
     this.memberId=formValue.member
     this.statusName="CheckOut"
-    this.updateStatus()
+    if(this.validateCheckoutForm()){
+      this.updateStatus()
+    }
+    
 
     // Submit form data to backend
    /*  this.httpService.create('/checkout/create', payload).then(
@@ -140,5 +143,50 @@ closeModal(): void {
       this.responseMessage = 'Please fill out all fields.';
     }
   }
+
+  validateCheckoutForm(): boolean {
+    if (!this.checkoutForm) {
+      this.toastr.error('Form is not initialized.');
+      return false;
+    }
+  
+    const formValue = this.checkoutForm.value;
+  
+    // Validate Member Selection
+    if (!formValue.member) {
+      this.toastr.error('Please select a member.');
+      return false;
+    }
+  
+    // Validate Item Barcode
+    if (!formValue.itemBarcode) {
+      this.toastr.error('Please select an item barcode.');
+      return false;
+    }
+  
+    // Validate Due Date
+    if (!formValue.dueDate) {
+      this.toastr.error('Please select a due date.');
+      return false;
+    }
+  
+    const dueDate = new Date(formValue.dueDate);
+    const today = new Date();
+  
+    // Ensure the due date is not in the past
+    if (dueDate < today) {
+      this.toastr.error('Due date cannot be in the past.');
+      return false;
+    }
+  
+    // Validate Automatic Renewal
+    if (!['yes', 'no'].includes(formValue.automaticRenewal)) {
+      this.toastr.error('Please select a valid option for automatic renewal.');
+      return false;
+    }
+  
+    return true;
+  }
+  
 
 }

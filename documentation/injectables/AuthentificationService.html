@@ -324,15 +324,15 @@ export class AuthentificationService {
     return this.httpClient
       .get(CONFIG.URL_BASE + &#x27;/member/all&#x27;, { headers })
       .pipe((userData) &#x3D;&gt; {
-        sessionStorage.setItem(&#x27;username&#x27;, username);
-        sessionStorage.setItem(&#x27;password&#x27;, password);
+        localStorage.setItem(&#x27;username&#x27;, username);
+        localStorage.setItem(&#x27;password&#x27;, password);
         console.log(userData);
         return userData;
       });
   }
 
   isUserLoggedIn() {
-    let user &#x3D; sessionStorage.getItem(&#x27;username&#x27;);
+    let user &#x3D; localStorage.getItem(&#x27;username&#x27;);
     console.log(user);
     if (user &#x3D;&#x3D; null) {
       return false;
@@ -342,8 +342,8 @@ export class AuthentificationService {
   }
 
   logOut() {
-    sessionStorage.removeItem(&#x27;username&#x27;);
-    sessionStorage.removeItem(&#x27;password&#x27;);
+    localStorage.removeItem(&#x27;username&#x27;);
+    localStorage.removeItem(&#x27;password&#x27;);
   }
 }
 </code></pre>

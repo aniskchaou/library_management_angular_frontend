@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import Settings from 'src/app/main/models/Settings';
 import { AuthentificationService } from 'src/app/main/security/authentification.service';
@@ -27,13 +28,14 @@ export class LoginComponent extends URLLoader implements OnInit {
   constructor(
     private router: Router,
     private loginservice: AuthentificationService,
-    private httpService: HTTPService
+    private httpService: HTTPService,
+    private toastr: ToastrService
   ) {
     super();
   }
 
   ngOnInit() {
-    super.loadScripts();
+   // super.loadScripts();
     this.retrievedImage=CONFIG.URL_BASE+'/version/get/logo';
     this.httpService
   }
@@ -71,17 +73,19 @@ export class LoginComponent extends URLLoader implements OnInit {
       );
   }
 
-  doLogin(loginform: NgForm) {
+/*   doLogin(loginform: NgForm) {
     this.buttonLoginClicked = true;
     this.loginservice
       .authenticate(loginform.value.username, loginform.value.password)
       .subscribe(
         (data) => {
-          let username = sessionStorage.setItem(
+          localStorage.clear()
+          localStorage.clear()
+          let username = localStorage.setItem(
             'username',
             loginform.value.username
           );
-          let password = sessionStorage.setItem(
+          let password = localStorage.setItem(
             'password',
             loginform.value.password
           );
@@ -89,7 +93,8 @@ export class LoginComponent extends URLLoader implements OnInit {
             console.log(loginform.value)
             
             console.log(password)
-            super.show('StockBay', 'Welcome !', 'success');
+           // super.show('StockBay', 'Welcome !', 'success');
+           this.toastr.info("Welcome! We're glad to have you here. Let’s get started!")
             super.loadScripts();
             this.buttonLoginClicked = false;
             this.invalidLogin = false;
@@ -110,13 +115,38 @@ export class LoginComponent extends URLLoader implements OnInit {
         (error) => {
           this.invalidLogin = true;
           this.errorMessage = error.message;
-          super.show(
-            'Error Authentification',
-            'Error password or username',
-            'warning'
-          );
+         
+          this.toastr.error("Login Error: The username or password you entered is incorrect. Please try again.")
           this.buttonLoginClicked=false
         }
       );
-  }
+  } */
+
+      doLogin(loginForm: NgForm) {
+        this.buttonLoginClicked = true;
+      
+        this.loginservice.authenticate(loginForm.value.username, loginForm.value.password).subscribe(
+          (data) => {
+            // After successful login, store the credentials in localStorage
+            localStorage.setItem('username', loginForm.value.username);
+            localStorage.setItem('password', loginForm.value.password);
+      
+            console.log('Stored Username:', localStorage.getItem('username')); // Logs 'admin'
+            console.log('Stored Password:', localStorage.getItem('password')); // Logs 'admin'
+      
+            // Proceed with the rest of the logic
+            this.toastr.info("Welcome! We're glad to have you here.");
+            this.buttonLoginClicked =false
+            this.router.navigate(['/dashboard']);
+          },
+          (error) => {
+            this.buttonLoginClicked =false
+            this.invalidLogin = true;
+            this.errorMessage = error.message;
+            this.toastr.error("Login failed. Please check your credentials.");
+          }
+        );
+      }
+      
+      
 }

@@ -7,6 +7,7 @@ import { URLLoader } from 'src/app/main/configs/URLLoader';
 import { finalize } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-departement',
@@ -14,6 +15,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./departement.component.css']
 })
 export class DepartementComponent extends URLLoader implements OnInit {
+
 
 
   barChartData = [
@@ -83,7 +85,7 @@ export class DepartementComponent extends URLLoader implements OnInit {
   markdownContent: string
   departments: Department[]=[];
 
-  constructor(private departmentService: DepartmentService, private modalService: NgbModal,private http:HttpClient) {super()
+  constructor(private toastr: ToastrService,private departmentService: DepartmentService, private modalService: NgbModal,private http:HttpClient) {super()
     this.temp = [...this.departments];
   }
 
@@ -126,6 +128,8 @@ export class DepartementComponent extends URLLoader implements OnInit {
       // If using departments$ as an observable, you should update it as well
       this.departments$.next(this.departments);
       this.deleteDepartment(row.id)
+      this.toastr.success('Item removed successfully!', 'Success');
+
     }
     
 
