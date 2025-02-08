@@ -49,6 +49,11 @@ export class TopbarComponent extends URLLoader implements OnInit {
     this.logout();
   }
 
+  setDefaultImage(event: Event) {
+  (event.target as HTMLImageElement).src = 'https://cdn-icons-png.flaticon.com/512/2942/2942813.png'; // Replace with your default image URL
+}
+
+
   ngOnInit(): void {
     
     this.retrievedImage=CONFIG.URL_BASE+'/users/get/' +localStorage.getItem('username') +'/'+localStorage.getItem('username')+'_profile.png';
