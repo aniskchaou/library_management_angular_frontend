@@ -40,6 +40,11 @@ export class LoginComponent extends URLLoader implements OnInit {
     this.httpService
   }
 
+  setDefaultImage(event: Event) {
+  (event.target as HTMLImageElement).src = 'https://img.favpng.com/7/2/9/scalable-vector-graphics-book-library-icon-png-favpng-HCugTbdbGTdF9LWKN2X6sbZVY.jpg'; // Default image URL
+}
+
+
   getDashboardByLang(lang, username, password) {
     this.httpService
       .getAllLang(
