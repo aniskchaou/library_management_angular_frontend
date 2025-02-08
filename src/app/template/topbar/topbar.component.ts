@@ -50,7 +50,7 @@ export class TopbarComponent extends URLLoader implements OnInit {
   }
 
   setDefaultImage(event: Event) {
-  (event.target as HTMLImageElement).src = 'https://cdn-icons-png.flaticon.com/512/2942/2942813.png'; // Replace with your default image URL
+  (event.target as HTMLImageElement).src = 'https://i.pinimg.com/474x/d4/d3/c0/d4d3c02f855019b7357b6c46da2124da.jpg'; // Replace with your default image URL
 }
 
 
