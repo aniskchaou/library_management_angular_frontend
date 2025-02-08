@@ -266,11 +266,13 @@
         (userObject?.lastName ? userObject.lastName.charAt(0).toUpperCase() + userObject.lastName.slice(1).toLowerCase() : '') 
       }}
       </span>
-      <img
-  class="img-profile rounded-circle"
-  [src]="retrievedImage"
-  (error)="setDefaultImage($event)"
-    />
+       <img
+                        style="object-fit: cover"
+                        [src]="retrievedImage"
+                        (error)="setDefaultImage($event)"
+                        height="60"
+                        width="60"
+                      />
 
     </a>
     <!-- Dropdown - User Information -->
