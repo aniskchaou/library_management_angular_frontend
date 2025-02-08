@@ -8,7 +8,11 @@
   >
     <div class="sidebar-brand-icon rotate-n-15"></div>
     <div class="sidebar-brand-text mx-3">
-      <img style="object-fit: cover" [src]="retrievedImage" />
+      <img
+  style="object-fit: cover"
+  [src]="retrievedImage"
+  (error)="setDefaultImage($event)"
+/>
     </div>
   </a>
 
