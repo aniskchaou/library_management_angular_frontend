@@ -19,7 +19,7 @@ export class NavigationComponent implements OnInit {
   constructor(private httpService: HTTPService) {}
 
   setDefaultImage(event: Event) {
-  (event.target as HTMLImageElement).src = 'https://img.favpng.com/7/2/9/scalable-vector-graphics-book-library-icon-png-favpng-HCugTbdbGTdF9LWKN2X6sbZVY.jpg'; // Default image URL
+  (event.target as HTMLImageElement).src = 'https://i.pinimg.com/474x/d4/d3/c0/d4d3c02f855019b7357b6c46da2124da.jpg'; // Default image URL
 }
 
   ngOnInit(): void {
