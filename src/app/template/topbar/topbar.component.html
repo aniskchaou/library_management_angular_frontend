@@ -267,9 +267,11 @@
       }}
       </span>
       <img
-        class="img-profile rounded-circle"
-        [src]="retrievedImage"
-      />
+  class="img-profile rounded-circle"
+  [src]="retrievedImage"
+  (error)="setDefaultImage($event)"
+    />
+
     </a>
     <!-- Dropdown - User Information -->
     <div
