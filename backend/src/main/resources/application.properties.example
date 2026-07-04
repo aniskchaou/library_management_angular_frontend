@@ -1,0 +1,64 @@
+#mysql config
+#spring.datasource.url=jdbc:mysql://localhost:3306/librarylab?useSSL=false&serverTimezone=UTC
+#spring.datasource.username=root
+#spring.datasource.password=
+#spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+#spring.jpa.show-sql=true
+#spring.jpa.database-platform=org.hibernate.dialect.MySQL5InnoDBDialect
+
+#spring.jpa.generate-ddl=true
+#spring.jpa.hibernate.ddl-auto=create-drop
+#spring.jackson.serialization.fail-on-empty-beans=false
+
+
+
+#postgres config
+spring.datasource.url=jdbc:postgresql://localhost:5432/librarylab
+spring.datasource.username=postgres
+spring.datasource.password=admin
+spring.database.driverClassName=org.postgresql.Driver
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=create-drop
+
+
+#docker config
+server.port=9090
+#spring.datasource.username=sa
+#spring.datasource.password=password
+#spring.datasource.url=jdbc:mysql://mysql-standalone:3306/test?useUnicode=yes&characterEncoding=UTF-8
+#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
+#spring.jpa.hibernate.ddl-auto=update
+#spring.jpa.show-sql=true
+
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=YOUR_GMAIL_ADDRESS
+spring.mail.password=YOUR_GMAIL_APP_PASSWORD
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+mail.smtp.username=YOUR_GMAIL_ADDRESS
+
+openai.api.key=YOUR_OPENAI_API_KEY
+
+twilio.accountSid=YOUR_TWILIO_ACCOUNT_SID
+twilio.authToken=YOUR_TWILIO_AUTH_TOKEN
+twilio.phoneNumber=+18645680415
+openai.properties.file=src/main/resources/openai.properties
+
+twilio.properties.file=src/main/resources/twilio.properties
+
+
+paypal.properties.file=src/main/resources/paypal.properties
+
+spring.servlet.multipart.enabled=true
+spring.servlet.multipart.max-file-size=10MB
+spring.servlet.multipart.max-request-size=10MB
+logging.level.org.springframework.security=DEBUG
+app.version= "@project.version@"
+
+
+spring.http.encoding.enabled=true
+spring.http.encoding.charset=UTF-8
+spring.http.encoding.force=true

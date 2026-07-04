@@ -45,3 +45,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Sensitive backend config - never commit real credentials
+backend/src/main/resources/application.properties
