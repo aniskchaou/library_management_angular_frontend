@@ -48,3 +48,7 @@ Thumbs.db
 
 # Sensitive backend config - never commit real credentials
 backend/src/main/resources/application.properties
+backend/src/main/resources/openai.properties
+backend/src/main/resources/twilio.properties
+backend/src/main/resources/paypal.properties
+backend/src/main/resources/stripe.properties
