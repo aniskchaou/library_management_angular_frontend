@@ -127,7 +127,7 @@ export class LoginComponent extends URLLoader implements OnInit {
 
         // Always auth with admin:admin — members don't have separate backend accounts
         this.loginservice.authenticate('admin', 'admin').subscribe(
-          (data: any[]) => {
+          (data: any) => {
             this.toastr.info("Welcome! We're glad to have you here.");
             this.buttonLoginClicked = false;
 

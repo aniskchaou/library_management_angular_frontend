@@ -1,0 +1,67 @@
+<div class="ll-section">
+  <div class="ll-section__header" style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+    <mat-icon style="color:#6366f1;font-size:28px">nfc</mat-icon>
+    <h2 style="margin:0;font-size:1.4rem;font-weight:600">RFID & Barcode Integration</h2>
+  </div>
+
+  <!-- RFID Status -->
+  <div style="background:#f9fafb;border-radius:10px;padding:20px;margin-bottom:20px">
+    <h4 style="margin:0 0 12px">RFID Reader Status</h4>
+    <p style="color:#6b7280;font-size:13px">
+      RFID hardware communicates via a local middleware agent. Install the Library Lab RFID Bridge
+      on the desk computer to connect your Impinj / Zebra / Feig reader.
+    </p>
+    <button mat-stroked-button (click)="checkReader()" [disabled]="checkingStatus">
+      <mat-icon>sensors</mat-icon> {{ checkingStatus ? 'Checking…' : 'Check Reader Status' }}
+    </button>
+    @if (readerStatus) {
+      <div style="margin-top:12px;padding:10px;background:#fff;border:1px solid #e5e7eb;border-radius:6px;font-size:13px">
+        <strong>Reader:</strong> {{ readerStatus.reader }}<br>
+        <strong>Connected:</strong>
+        <span [style.color]="readerStatus.connected ? '#22c55e' : '#ef4444'">
+          {{ readerStatus.connected ? 'Yes' : 'No' }}
+        </span><br>
+        <em style="color:#9ca3af">{{ readerStatus.message }}</em>
+      </div>
+    }
+  </div>
+
+  <!-- Register Tag -->
+  <div style="background:#f9fafb;border-radius:10px;padding:20px;margin-bottom:20px">
+    <h4 style="margin:0 0 12px">Register RFID Tag</h4>
+    <p style="color:#6b7280;font-size:13px">
+      Link an RFID tag EPC to a book barcode (ISBN). Once registered, scanning the tag
+      will identify the book automatically.
+    </p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <mat-form-field appearance="outline">
+        <mat-label>EPC (Tag ID)</mat-label>
+        <input matInput [(ngModel)]="epcInput" placeholder="E2000017…">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Book Barcode / ISBN</mat-label>
+        <input matInput [(ngModel)]="barcodeInput" placeholder="9780141439518">
+      </mat-form-field>
+      <button mat-flat-button color="primary" (click)="registerTag()">
+        <mat-icon>qr_code_scanner</mat-icon> Register Tag
+      </button>
+    </div>
+    @if (registerResult) {
+      <div style="margin-top:10px;padding:10px;background:#fff;border:1px solid #e5e7eb;border-radius:6px;font-size:13px">
+        {{ registerResult | json }}
+      </div>
+    }
+  </div>
+
+  <!-- Info Card -->
+  <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:20px">
+    <h4 style="margin:0 0 10px;color:#1d4ed8"><mat-icon style="vertical-align:middle">info</mat-icon> Setup Instructions</h4>
+    <ol style="color:#1e40af;font-size:13px;line-height:1.8">
+      <li>Install the <strong>Library Lab RFID Bridge</strong> middleware on the circulation desk PC.</li>
+      <li>Connect your RFID reader hardware (USB or network).</li>
+      <li>Configure the bridge to point to <code>{{ 'POST /rfid/scan' }}</code>.</li>
+      <li>Register tags using the form above (or bulk-import via CSV).</li>
+      <li>The barcode scanner works out-of-the-box — just scan in any text input.</li>
+    </ol>
+  </div>
+</div>

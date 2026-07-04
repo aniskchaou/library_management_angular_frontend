@@ -76,6 +76,10 @@
         <a mat-list-item routerLink="/digital-docs" routerLinkActive="ll-nav__item--active">
           {{ 'nav.digitalDocuments' | translate }}
         </a>
+        <a mat-list-item routerLink="/audiobooks" routerLinkActive="ll-nav__item--active">
+          <mat-icon style="font-size:16px;vertical-align:middle;margin-right:4px">headset</mat-icon>
+          Audiobooks
+        </a>
 
         <h6 class="ll-nav__heading">{{ 'nav.setup' | translate }}:</h6>
         <a mat-list-item routerLink="/publisher" routerLinkActive="ll-nav__item--active">{{ 'nav.publishers' | translate }}</a>
@@ -168,6 +172,10 @@
       <mat-nav-list dense>
         <a mat-list-item routerLink="/budget" routerLinkActive="ll-nav__item--active">{{ 'nav.budgets' | translate }}</a>
         <a mat-list-item routerLink="/fund" routerLinkActive="ll-nav__item--active">{{ 'nav.funds' | translate }}</a>
+        <a mat-list-item routerLink="/bank-transfer" routerLinkActive="ll-nav__item--active">
+          <mat-icon style="font-size:16px;vertical-align:middle;margin-right:4px">account_balance</mat-icon>
+          Bank Transfer / Manual Pay
+        </a>
       </mat-nav-list>
     </mat-expansion-panel>
 
@@ -267,6 +275,10 @@
         <a mat-list-item routerLink="/account-analytics" routerLinkActive="ll-nav__item--active">
           {{ 'nav.accountAnalytics' | translate }}
         </a>
+        <a mat-list-item routerLink="/ai-recommendations" routerLinkActive="ll-nav__item--active">
+          <mat-icon style="font-size:16px;vertical-align:middle;margin-right:4px">auto_awesome</mat-icon>
+          AI Recommendations
+        </a>
       </mat-nav-list>
     </mat-expansion-panel>
 
@@ -296,6 +308,18 @@
         </a>
         <a mat-list-item routerLink="/smssettings" routerLinkActive="ll-nav__item--active">
           {{ 'nav.smsSettings' | translate }}
+        </a>
+        <a mat-list-item routerLink="/activity-timeline" routerLinkActive="ll-nav__item--active">
+          <mat-icon style="font-size:16px;vertical-align:middle;margin-right:4px">timeline</mat-icon>
+          Activity Timeline
+        </a>
+        <a mat-list-item routerLink="/webhooks" routerLinkActive="ll-nav__item--active">
+          <mat-icon style="font-size:16px;vertical-align:middle;margin-right:4px">webhook</mat-icon>
+          Webhooks
+        </a>
+        <a mat-list-item routerLink="/rfid-settings" routerLinkActive="ll-nav__item--active">
+          <mat-icon style="font-size:16px;vertical-align:middle;margin-right:4px">nfc</mat-icon>
+          RFID / Barcode
         </a>
         <a mat-list-item routerLink="/circulation-rules" routerLinkActive="ll-nav__item--active">
           {{ 'nav.circulationRules' | translate }}

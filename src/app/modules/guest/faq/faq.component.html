@@ -1,0 +1,53 @@
+<div class="pg-root">
+  <app-guest-navbar activePage="faq"></app-guest-navbar>
+
+  <section class="fq-hero">
+    <span class="fq-eyebrow">Help Centre</span>
+    <h1>Frequently Asked Questions</h1>
+    <p>Everything you need to know about using the library. Can't find the answer?
+      <a routerLink="/contact" class="fq-link">Contact us.</a>
+    </p>
+    <div class="fq-search-wrap">
+      <mat-icon>search</mat-icon>
+      <input [(ngModel)]="searchQuery" placeholder="Search questions…" class="fq-search-input">
+    </div>
+  </section>
+
+  <div class="fq-body">
+    <div *ngIf="filtered.length === 0" class="fq-empty">
+      <mat-icon>search_off</mat-icon>
+      <p>No questions match your search.</p>
+      <button mat-stroked-button (click)="searchQuery=''">Clear</button>
+    </div>
+
+    <div *ngFor="let section of filtered" class="fq-section">
+      <h3 class="fq-section__title">
+        <mat-icon>{{ section.icon }}</mat-icon>
+        {{ section.title }}
+      </h3>
+
+      <div *ngFor="let item of section.items" class="fq-item" [class.fq-item--open]="item.open">
+        <button class="fq-item__q" (click)="toggle(item)">
+          <span>{{ item.q }}</span>
+          <mat-icon class="fq-chevron">{{ item.open ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+        <div class="fq-item__a" *ngIf="item.open">{{ item.a }}</div>
+      </div>
+    </div>
+
+    <div class="fq-cta">
+      <h3>Still have a question?</h3>
+      <p>Our team is happy to help. Get in touch through our contact form or visit in person.</p>
+      <a mat-raised-button color="primary" routerLink="/contact">Contact Us</a>
+    </div>
+  </div>
+
+  <footer class="pg-footer">
+    <span>© Library Lab.</span>
+    <span style="display:flex;gap:16px">
+      <a routerLink="/about">About</a>
+      <a routerLink="/contact">Contact</a>
+      <a routerLink="/new-arrivals">New Arrivals</a>
+    </span>
+  </footer>
+</div>

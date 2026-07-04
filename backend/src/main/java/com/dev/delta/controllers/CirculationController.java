@@ -264,4 +264,112 @@ public class CirculationController {
 	public List<Circulation> getCirculationByMember(@PathVariable Long memberId) {
 		return circulationService.getCirculationByMember(memberId);
 	}
+
+	// â”€â”€ Top borrowers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	@GetMapping("/top-borrowers")
+	public ResponseEntity<List<Map<String, Object>>> topBorrowers(
+			@RequestParam(defaultValue = "10") int limit) {
+		Iterable<Circulation> all = circulationService.findAll();
+		Map<Long, Long> counts = new java.util.LinkedHashMap<>();
+		Map<Long, String> names = new java.util.HashMap<>();
+		for (Circulation c : all) {
+			if (c.getMemberName() != null) {
+				Long mid = c.getMemberName().getId();
+				counts.merge(mid, 1L, Long::sum);
+				names.put(mid, c.getMemberName().getFirstname() + " " + c.getMemberName().getSurname());
+			}
+		}
+		List<Map<String, Object>> result = counts.entrySet().stream()
+				.sorted(Map.Entry.<Long, Long>comparingByValue().reversed())
+				.limit(limit)
+				.map(e -> {
+					Map<String, Object> m = new java.util.HashMap<>();
+					m.put("memberId", e.getKey());
+					m.put("memberName", names.get(e.getKey()));
+					m.put("borrowCount", e.getValue());
+					return m;
+				})
+				.collect(java.util.stream.Collectors.toList());
+		return ResponseEntity.ok(result);
+	}
+
+	// â”€â”€ Monthly circulation stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	@GetMapping("/monthly-stats")
+	public ResponseEntity<List<Map<String, Object>>> monthlyStats() {
+		Iterable<Circulation> all = circulationService.findAll();
+		Map<String, Long> monthly = new java.util.TreeMap<>();
+		for (Circulation c : all) {
+			if (c.getIssueDate() != null && c.getIssueDate().length() >= 7) {
+				String month = c.getIssueDate().substring(0, 7); // yyyy-MM
+				monthly.merge(month, 1L, Long::sum);
+			}
+		}
+		List<Map<String, Object>> result = monthly.entrySet().stream()
+				.map(e -> Map.<String, Object>of("month", e.getKey(), "count", e.getValue()))
+				.collect(java.util.stream.Collectors.toList());
+		return ResponseEntity.ok(result);
+	}
+
+	// â”€â”€ Today's issues â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	@GetMapping("/today-issues")
+	public ResponseEntity<Map<String, Object>> todayIssues() {
+		String today = java.time.LocalDate.now().toString();
+		long count = 0;
+		for (Circulation c : circulationService.findAll()) {
+			if (c.getIssueDate() != null && c.getIssueDate().startsWith(today)) count++;
+		}
+		return ResponseEntity.ok(Map.of("date", today, "todayIssues", count));
+	}
+
+	// â”€â”€ Today's returns â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	@GetMapping("/today-returns")
+	public ResponseEntity<Map<String, Object>> todayReturns() {
+		String today = java.time.LocalDate.now().toString();
+		long count = 0;
+		for (Circulation c : circulationService.findAll()) {
+			if (c.getReturnDate() != null && c.getReturnDate().startsWith(today)) count++;
+		}
+		return ResponseEntity.ok(Map.of("date", today, "todayReturns", count));
+	}
+
+	// â”€â”€ Export circulation history as CSV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	@GetMapping("/export/csv")
+	public void exportCsv(javax.servlet.http.HttpServletResponse response) throws Exception {
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename=\"circulation.csv\"");
+		java.io.PrintWriter writer = response.getWriter();
+		writer.println("id,memberName,bookTitle,issueDate,dueDate,returnDate,penalty,status");
+		for (Circulation c : circulationService.findAll()) {
+			writer.printf("%s,%s,%s,%s,%s,%s,%s,%s%n",
+					c.getId(),
+					c.getMemberName() != null ? c.getMemberName().getFirstname() + " " + c.getMemberName().getSurname() : "",
+					c.getCatalogItemName() != null ? c.getCatalogItemName().getTitle() : "",
+					c.getIssueDate() != null ? c.getIssueDate() : "",
+					c.getToReturn() != null ? c.getToReturn().toString() : "",
+					c.getReturnDate() != null ? c.getReturnDate() : "",
+					c.getPenalty(),
+					c.getReturnStatus() != null ? c.getReturnStatus().getName() : "");
+		}
+		writer.flush();
+	}
+	// ── Top borrowed books ───────────────────────────────────────────────────
+	@GetMapping("/top-books")
+	public ResponseEntity<java.util.List<Map<String, Object>>> topBooks(
+		@RequestParam(defaultValue = "10") int limit) {
+		java.util.List<Object[]> rows = circulationService.getRepository().findTopBorrowedBooks();
+		java.util.List<Map<String, Object>> result = new java.util.ArrayList<>();
+		int max = Math.min(limit, rows.size());
+		for (int i = 0; i < max; i++) {
+			Object[] row = rows.get(i);
+			result.add(Map.of("title", row[0] != null ? row[0] : "", "borrowCount", row[1] != null ? row[1] : 0));
+		}
+		return ResponseEntity.ok(result);
+	}
+
+	// ── Active readers count ─────────────────────────────────────────────────
+	@GetMapping("/active-readers")
+	public ResponseEntity<Map<String, Object>> activeReaders() {
+		long count = circulationService.getRepository().countActiveReaders();
+		return ResponseEntity.ok(Map.of("activeReaders", count));
+	}
 }

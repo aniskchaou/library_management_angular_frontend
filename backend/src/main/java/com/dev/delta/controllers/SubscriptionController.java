@@ -120,4 +120,66 @@ public class SubscriptionController {
             });
         });
     }
+
+    /** Upgrade or downgrade plan — super admin only */
+    @PostMapping("/change-plan")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    public ResponseEntity<?> changePlan(@RequestBody Map<String, Object> body) {
+        try {
+            Long orgId = Long.valueOf(body.get("orgId").toString());
+            Long newPlanId = Long.valueOf(body.get("planId").toString());
+            Subscription.BillingCycle cycle = Subscription.BillingCycle.valueOf(
+                    body.getOrDefault("cycle", "MONTHLY").toString());
+            stripeService.changePlan(orgId, newPlanId, cycle);
+            return ResponseEntity.ok(Map.of("message", "Plan changed"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    /** Activate trial for an org */
+    @PostMapping("/activate-trial")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    public ResponseEntity<?> activateTrial(@RequestBody Map<String, Object> body) {
+        try {
+            Long orgId = Long.valueOf(body.get("orgId").toString());
+            Long planId = Long.valueOf(body.get("planId").toString());
+            int days = Integer.parseInt(body.getOrDefault("days", "14").toString());
+            stripeService.activateTrial(orgId, planId, days);
+            return ResponseEntity.ok(Map.of("message", "Trial activated"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    /** Extend trial for an org */
+    @PostMapping("/extend-trial")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    public ResponseEntity<?> extendTrial(@RequestBody Map<String, Object> body) {
+        Long orgId = Long.valueOf(body.get("orgId").toString());
+        int days = Integer.parseInt(body.getOrDefault("days", "7").toString());
+        return subscriptionRepo.findByOrganizationIdAndStatusNot(orgId, Subscription.SubStatus.CANCELED)
+                .map(sub -> {
+                    java.time.LocalDate newEnd = sub.getTrialEnd() != null
+                            ? sub.getTrialEnd().plusDays(days)
+                            : java.time.LocalDate.now().plusDays(days);
+                    sub.setTrialEnd(newEnd);
+                    subscriptionRepo.save(sub);
+                    return ResponseEntity.ok(Map.of("message", "Trial extended", "newTrialEnd", newEnd.toString()));
+                }).orElse(ResponseEntity.notFound().build());
+    }
+
+    /** Issue refund via Stripe */
+    @PostMapping("/refund")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    public ResponseEntity<?> refund(@RequestBody Map<String, Object> body) {
+        try {
+            String chargeId = body.get("chargeId").toString();
+            Long amountCents = body.containsKey("amount") ? Long.valueOf(body.get("amount").toString()) : null;
+            stripeService.createRefund(chargeId, amountCents);
+            return ResponseEntity.ok(Map.of("message", "Refund issued"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
 }

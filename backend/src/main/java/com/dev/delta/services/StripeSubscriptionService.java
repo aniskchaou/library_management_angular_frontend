@@ -172,4 +172,46 @@ public class StripeSubscriptionService {
     public String getWebhookSecret() {
         return webhookSecret;
     }
+
+    public void changePlan(Long orgId, Long newPlanId, Subscription.BillingCycle cycle) throws Exception {
+        Stripe.apiKey = stripeApiKey;
+        Plan newPlan = planRepo.findById(newPlanId)
+                .orElseThrow(() -> new RuntimeException("Plan not found"));
+
+        subscriptionRepo.findByOrganizationIdAndStatusNot(orgId, Subscription.SubStatus.CANCELED)
+                .ifPresent(sub -> {
+                    sub.setPlanId(newPlanId);
+                    sub.setBillingCycle(cycle);
+                    sub.setAmount(cycle == Subscription.BillingCycle.MONTHLY
+                            ? newPlan.getPriceMonthly() : newPlan.getPriceYearly());
+                    subscriptionRepo.save(sub);
+                    // In production: call Stripe to update subscription item price
+                });
+    }
+
+    public void activateTrial(Long orgId, Long planId, int days) {
+        Organization org = orgRepo.findById(orgId)
+                .orElseThrow(() -> new RuntimeException("Org not found"));
+
+        Subscription trial = new Subscription();
+        trial.setOrganizationId(orgId);
+        trial.setPlanId(planId);
+        trial.setStatus(Subscription.SubStatus.TRIALING);
+        trial.setBillingCycle(Subscription.BillingCycle.MONTHLY);
+        trial.setCurrentPeriodStart(LocalDate.now());
+        trial.setCurrentPeriodEnd(LocalDate.now().plusDays(days));
+        trial.setTrialEnd(LocalDate.now().plusDays(days));
+        trial.setAmount(BigDecimal.ZERO);
+        subscriptionRepo.save(trial);
+    }
+
+    public void createRefund(String chargeId, Long amountCents) throws StripeException {
+        Stripe.apiKey = stripeApiKey;
+        com.stripe.param.RefundCreateParams.Builder refundParams =
+                com.stripe.param.RefundCreateParams.builder().setCharge(chargeId);
+        if (amountCents != null) {
+            refundParams.setAmount(amountCents);
+        }
+        com.stripe.model.Refund.create(refundParams.build());
+    }
 }

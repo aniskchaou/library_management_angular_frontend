@@ -62,6 +62,14 @@
               (click)="setQuickFilter('available')">
         <mat-icon>check_circle</mat-icon> Available Now
       </button>
+      <button class="opac-chip" [class.opac-chip--active]="quickFilter === 'popular'"
+              (click)="setQuickFilter('popular')">
+        <mat-icon>trending_up</mat-icon> Popular
+      </button>
+      <button class="opac-chip" [class.opac-chip--active]="quickFilter === 'audio'"
+              (click)="setQuickFilter('audio')">
+        <mat-icon>headset</mat-icon> Audio Books
+      </button>
     </div>
   </section>
 

@@ -18,7 +18,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +35,7 @@ public class AuthController {
     private AuditLogService auditLogService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody JwtAuthRequest request,
+    public ResponseEntity<?> login(@RequestBody JwtAuthRequest request,
                                    HttpServletRequest httpRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(

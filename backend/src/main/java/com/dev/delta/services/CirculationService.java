@@ -292,4 +292,8 @@ public class CirculationService {
 	public List<Circulation> getCirculationByMember(Long memberId) {
 		return circulationRepository.findByMemberName(memberId);
 	}
+	// Expose repository for direct queries from controller
+	public com.dev.delta.repositories.CirculationRepository getRepository() {
+		return circulationRepository;
+	}
 }

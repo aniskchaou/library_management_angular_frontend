@@ -1,0 +1,115 @@
+<div class="ll-section">
+  <div class="ll-section__header" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px">
+    <mat-icon style="color:#0ea5e9;font-size:28px">webhook</mat-icon>
+    <h2 style="margin:0;font-size:1.4rem;font-weight:600">Webhooks</h2>
+    <span style="flex:1"></span>
+    <button mat-flat-button color="primary" (click)="openForm(whModal)">
+      <mat-icon>add</mat-icon> Add Webhook
+    </button>
+  </div>
+
+  <p style="color:#6b7280;margin-bottom:20px">
+    Subscribe to library events and receive real-time HTTP POST notifications to your endpoint.
+    Each payload is signed with HMAC-SHA256 using your secret.
+  </p>
+
+  @if (testResult) {
+    <div class="alert" [ngClass]="testResult.startsWith('✓') ? 'alert-success' : 'alert-warning'"
+         style="margin-bottom:16px">
+      {{ testResult }}
+      <button class="btn-close float-end" (click)="testResult = null"></button>
+    </div>
+  }
+
+  @if (loading) {
+    <div style="text-align:center;padding:40px"><mat-spinner diameter="40" style="margin:auto"></mat-spinner></div>
+  } @else if (webhooks.length === 0) {
+    <div style="text-align:center;padding:60px;color:#9ca3af">
+      <mat-icon style="font-size:48px">webhook</mat-icon>
+      <h3>No webhooks configured</h3>
+      <p>Click "Add Webhook" to subscribe to library events.</p>
+    </div>
+  } @else {
+    <div style="display:flex;flex-direction:column;gap:12px">
+      @for (wh of webhooks; track wh.id) {
+        <div class="wh-card" [class.wh-card--inactive]="!wh.active">
+          <div class="wh-card__header">
+            <div class="wh-status-dot" [style.background]="wh.active ? '#22c55e' : '#9ca3af'"></div>
+            <div class="wh-card__url" title="{{ wh.url }}">{{ wh.url }}</div>
+            <div class="wh-card__actions">
+              <button mat-icon-button matTooltip="Send test ping" (click)="testWebhook(wh.id!)">
+                <mat-icon>send</mat-icon>
+              </button>
+              <button mat-icon-button [matTooltip]="wh.active ? 'Disable' : 'Enable'"
+                      (click)="toggleActive(wh)">
+                <mat-icon>{{ wh.active ? 'pause_circle' : 'play_circle' }}</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Edit" (click)="openForm(whModal, wh)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Delete" color="warn" (click)="delete(wh.id!)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          @if (wh.description) {
+            <p style="margin:4px 0 8px;font-size:13px;color:#6b7280">{{ wh.description }}</p>
+          }
+
+          <div class="wh-card__events">
+            @for (ev of eventList(wh.events); track ev) {
+              <span class="wh-event-chip">{{ ev }}</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+
+<!-- ── Webhook Modal ─────────────────────────────────────────────────────────── -->
+<ng-template #whModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ editing ? 'Edit Webhook' : 'Add Webhook' }}</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    @if (formError) { <div class="alert alert-danger">{{ formError }}</div> }
+    <div class="row g-3">
+      <div class="col-12">
+        <label class="form-label">Endpoint URL *</label>
+        <input type="url" class="form-control" [(ngModel)]="form.url"
+               placeholder="https://your-app.com/webhook">
+      </div>
+      <div class="col-12">
+        <label class="form-label">Description</label>
+        <input type="text" class="form-control" [(ngModel)]="form.description"
+               placeholder="What is this webhook for?">
+      </div>
+      <div class="col-12">
+        <label class="form-label">Events (comma-separated)</label>
+        <textarea class="form-control" rows="3" [(ngModel)]="form.events"
+                  placeholder="book.created, circulation.issued, *"></textarea>
+        <small class="text-muted">Supported: {{ supportedEvents.join(', ') }}</small>
+      </div>
+      <div class="col-12">
+        <label class="form-label">Secret (HMAC signing key)</label>
+        <input type="text" class="form-control" [(ngModel)]="form.secret"
+               placeholder="Leave blank to skip signature verification">
+      </div>
+      <div class="col-12">
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="wh-active" [(ngModel)]="form.active">
+          <label class="form-check-label" for="wh-active">Active</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
+    <button type="button" class="btn btn-primary" [disabled]="saving" (click)="save(modal)">
+      {{ saving ? 'Saving…' : (editing ? 'Update' : 'Add Webhook') }}
+    </button>
+  </div>
+</ng-template>

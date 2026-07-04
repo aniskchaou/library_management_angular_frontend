@@ -1,0 +1,59 @@
+<nav class="gn-bar">
+  <div class="gn-bar__inner">
+
+    <!-- Brand -->
+    <a class="gn-brand" (click)="go('opac-home')">
+      <mat-icon class="gn-brand__icon">local_library</mat-icon>
+      <span class="gn-brand__name">{{ libraryName }}</span>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="gn-links">
+      <a class="gn-link" [class.gn-link--active]="activePage==='home'"      (click)="go('opac-home')">Home</a>
+      <a class="gn-link" [class.gn-link--active]="activePage==='catalog'"   (click)="go('opac')">Catalog</a>
+      <a class="gn-link" [class.gn-link--active]="activePage==='browse'"    (click)="go('browse')">Browse</a>
+      <a class="gn-link" [class.gn-link--active]="activePage==='arrivals'"  (click)="go('new-arrivals')">New Arrivals</a>
+      <a class="gn-link" [class.gn-link--active]="activePage==='about'"     (click)="go('about')">About</a>
+      <a class="gn-link" [class.gn-link--active]="activePage==='contact'"   (click)="go('contact')">Contact</a>
+      <a class="gn-link" [class.gn-link--active]="activePage==='faq'"       (click)="go('faq')">FAQ</a>
+    </div>
+
+    <!-- Auth buttons -->
+    <div class="gn-auth">
+      @if (auth.isLoggedIn) {
+        <div class="gn-avatar" title="{{ auth.member?.firstname }} {{ auth.member?.surname }}">
+          {{ memberInitial }}
+        </div>
+        <button class="gn-btn gn-btn--outline" (click)="go('opac-account')">My Account</button>
+        <button class="gn-btn gn-btn--ghost"   (click)="auth.logout(); go('opac-account')">Logout</button>
+      } @else {
+        <button class="gn-btn gn-btn--outline"  (click)="go('opac-account')">Reader Login</button>
+        <button class="gn-btn gn-btn--primary"  (click)="go('member-register')">Join Library</button>
+      }
+      <button class="gn-hamburger" (click)="toggleMenu()" aria-label="Menu">
+        <mat-icon>{{ menuOpen ? 'close' : 'menu' }}</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile drawer -->
+  @if (menuOpen) {
+    <div class="gn-drawer">
+      <a class="gn-drawer__link" (click)="go('opac-home')">Home</a>
+      <a class="gn-drawer__link" (click)="go('opac')">Catalog</a>
+      <a class="gn-drawer__link" (click)="go('browse')">Browse</a>
+      <a class="gn-drawer__link" (click)="go('new-arrivals')">New Arrivals</a>
+      <a class="gn-drawer__link" (click)="go('about')">About</a>
+      <a class="gn-drawer__link" (click)="go('contact')">Contact</a>
+      <a class="gn-drawer__link" (click)="go('faq')">FAQ</a>
+      <div class="gn-drawer__sep"></div>
+      @if (auth.isLoggedIn) {
+        <a class="gn-drawer__link" (click)="go('opac-account')">My Account</a>
+        <a class="gn-drawer__link" (click)="auth.logout(); go('opac-account')">Logout</a>
+      } @else {
+        <a class="gn-drawer__link" (click)="go('opac-account')">Reader Login</a>
+        <a class="gn-drawer__link" (click)="go('member-register')">Join Library</a>
+      }
+    </div>
+  }
+</nav>

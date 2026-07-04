@@ -1,13 +1,9 @@
 package com.dev.delta.dto;
 
-import javax.validation.constraints.NotBlank;
-
 public class JwtAuthRequest {
 
-    @NotBlank
     private String username;
 
-    @NotBlank
     private String password;
 
     public JwtAuthRequest() {}

@@ -1,0 +1,96 @@
+<div class="pg-root">
+  <app-guest-navbar activePage="browse"></app-guest-navbar>
+
+  <section class="br-hero">
+    <span class="br-eyebrow">Library Collection</span>
+    <h1>Browse by Category</h1>
+    <p>Explore our collection organized by subject — click a category to see all available items.</p>
+  </section>
+
+  <div class="br-layout">
+
+    <!-- Left: category list -->
+    <aside class="br-sidebar">
+      <h4 class="br-sidebar__title">
+        <mat-icon>category</mat-icon> Subject Categories
+      </h4>
+
+      <div *ngIf="loading" class="br-loading"><mat-icon class="br-spin">hourglass_empty</mat-icon></div>
+
+      <div *ngIf="!loading" class="br-cat-list">
+        <button *ngFor="let c of categories"
+                class="br-cat-btn"
+                [class.br-cat-btn--active]="selectedCat?.id === c.id"
+                (click)="selectCategory(c)">
+          <mat-icon class="br-cat-icon">{{ iconForCat(c.category_name) }}</mat-icon>
+          <span class="br-cat-name">{{ c.category_name }}</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Right: books in category -->
+    <main class="br-main">
+      @if (!selectedCat) {
+        <div class="br-placeholder">
+          <mat-icon>touch_app</mat-icon>
+          <p>Select a category from the left to browse books</p>
+        </div>
+      } @else {
+        <div class="br-main__header">
+          <div>
+            <h2>{{ selectedCat.category_name }}</h2>
+            <span class="br-count">{{ booksInCategory.length }} item{{ booksInCategory.length !== 1 ? 's' : '' }}</span>
+          </div>
+          <div class="br-main__controls">
+            <mat-form-field appearance="outline" class="br-search">
+              <mat-label>Search in category…</mat-label>
+              <input matInput [(ngModel)]="searchQuery" (ngModelChange)="applySort()">
+              <mat-icon matPrefix>search</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width:140px">
+              <mat-label>Sort by</mat-label>
+              <mat-select [(ngModel)]="sortBy" (ngModelChange)="applySort()">
+                <mat-option value="title">Title</mat-option>
+                <mat-option value="author">Author</mat-option>
+                <mat-option value="year">Newest</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div *ngIf="loadingBooks" class="br-loading">
+          <mat-icon class="br-spin">hourglass_empty</mat-icon> Loading books…
+        </div>
+
+        <div *ngIf="!loadingBooks && booksInCategory.length === 0" class="br-empty">
+          <mat-icon>search_off</mat-icon>
+          <p>No books found in this category.</p>
+        </div>
+
+        <div *ngIf="!loadingBooks && booksInCategory.length > 0" class="br-grid">
+          <div *ngFor="let b of booksInCategory" class="br-card" (click)="openBook(b)">
+            <div class="br-card__cover">
+              <img [src]="coverUrl(b)" [alt]="b.title" loading="lazy"
+                   onerror="this.src='assets/images/no-cover.png'">
+            </div>
+            <div class="br-card__body">
+              <div class="br-card__title">{{ b.title }}</div>
+              <div class="br-card__author">{{ b.writer?.name }}</div>
+              <div class="br-card__year" *ngIf="b.publishing_year">{{ b.publishing_year }}</div>
+              <div class="br-card__isbn" *ngIf="b.isbn">{{ b.isbn }}</div>
+            </div>
+          </div>
+        </div>
+      }
+    </main>
+  </div>
+
+  <footer class="pg-footer">
+    <span>© Library Lab.</span>
+    <span style="display:flex;gap:16px">
+      <a routerLink="/about">About</a>
+      <a routerLink="/contact">Contact</a>
+      <a routerLink="/faq">FAQ</a>
+    </span>
+  </footer>
+</div>

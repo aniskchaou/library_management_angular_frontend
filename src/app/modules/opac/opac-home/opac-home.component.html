@@ -1,20 +1,7 @@
 <div class="fo-root">
 
   <!-- ═══════════════════ TOP BAR ═══════════════════════════════════════════ -->
-  <header class="fo-topbar">
-    <div class="fo-topbar__brand">
-      <mat-icon class="fo-topbar__logo-icon">local_library</mat-icon>
-      <span class="fo-topbar__name">Library Lab</span>
-      <span class="fo-topbar__tag">Public Portal</span>
-    </div>
-
-    <div class="fo-topbar__right">
-      <a class="fo-topbar__nav-link" (click)="goAdminLogin()" style="cursor:pointer; display:flex; align-items:center; gap:4px;">
-        <mat-icon style="font-size:18px; height:18px; width:18px;">admin_panel_settings</mat-icon>
-        Staff Login
-      </a>
-    </div>
-  </header>
+  <app-guest-navbar activePage="home"></app-guest-navbar>
 
   <!-- ═══════════════════ HERO ══════════════════════════════════════════════ -->
   <section class="fo-hero">

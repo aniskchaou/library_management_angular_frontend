@@ -18,3 +18,18 @@ try {
 
 platformBrowserDynamic().bootstrapModule(AppModule, { applicationProviders: [provideZoneChangeDetection()], })
   .catch(err => console.error(err));
+
+// Register service worker for offline support and push notifications
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
+      .then(reg => {
+        console.log('[SW] Registered, scope:', reg.scope);
+        // Request push notification permission if available
+        if ('Notification' in window && Notification.permission === 'default') {
+          Notification.requestPermission().catch(() => {});
+        }
+      })
+      .catch(err => console.warn('[SW] Registration failed:', err));
+  });
+}

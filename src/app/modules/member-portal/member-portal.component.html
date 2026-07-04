@@ -57,6 +57,24 @@
         <mat-icon>manage_accounts</mat-icon>
         <span>My Profile</span>
       </button>
+
+      <button class="mp-nav-item" [class.mp-nav-item--active]="activeTab === 'wishlist'"
+              (click)="goTab('wishlist')">
+        <mat-icon>favorite</mat-icon>
+        <span>Wishlist</span>
+        @if (wishlist.length > 0) {
+          <span class="mp-nav-badge">{{ wishlist.length }}</span>
+        }
+      </button>
+
+      <button class="mp-nav-item" [class.mp-nav-item--active]="activeTab === 'payments'"
+              (click)="goTab('payments')">
+        <mat-icon>payments</mat-icon>
+        <span>Payments</span>
+        @if (fineBalance && fineBalance > 0) {
+          <span class="mp-nav-badge mp-nav-badge--red">!</span>
+        }
+      </button>
     </nav>
 
     <div class="mp-sidebar__footer">
@@ -131,6 +149,11 @@
             <mat-icon>menu_book</mat-icon>
             <div class="mp-stat-card__val">{{ history.length }}</div>
             <div class="mp-stat-card__label">Books Returned</div>
+          </div>
+          <div class="mp-stat-card mp-stat-card--red" (click)="goTab('payments')">
+            <mat-icon>payments</mat-icon>
+            <div class="mp-stat-card__val">{{ fineBalance != null ? (fineBalance | currency) : '—' }}</div>
+            <div class="mp-stat-card__label">Fine Balance</div>
           </div>
         </div>
 
@@ -426,10 +449,161 @@
                 <p style="margin-top: 16px; color: #888;">Loading profile…</p>
               </div>
             }
+
+            <!-- ── Photo + Password actions ─────────────────────────────────── -->
+            @if (member) {
+              <h3 class="mp-profile-section-title" style="margin-top:28px">Account Settings</h3>
+              <div style="display:flex;flex-wrap:wrap;gap:24px;margin-top:12px">
+
+                <!-- Profile photo -->
+                <div class="mp-profile-action-card" style="flex:1;min-width:240px;background:#f9fafb;border-radius:8px;padding:16px">
+                  <h4 style="margin:0 0 12px"><mat-icon style="vertical-align:middle">person</mat-icon> Profile Photo</h4>
+                  @if (member.photoUrl) {
+                    <img [src]="member.photoUrl" alt="Profile photo"
+                         style="width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;margin-bottom:10px"
+                         onerror="this.style.display='none'">
+                  }
+                  <input type="text" class="form-control" placeholder="Photo URL"
+                         style="margin-bottom:8px" [(ngModel)]="newPhotoUrl">
+                  <button mat-flat-button color="primary" style="width:100%"
+                          [disabled]="!newPhotoUrl"
+                          (click)="savePhotoUrl()">
+                    <mat-icon>save</mat-icon> Save Photo
+                  </button>
+                </div>
+
+                <!-- Change password -->
+                <div class="mp-profile-action-card" style="flex:1;min-width:240px;background:#f9fafb;border-radius:8px;padding:16px">
+                  <h4 style="margin:0 0 12px"><mat-icon style="vertical-align:middle">lock</mat-icon> Change Password</h4>
+                  <input type="password" class="form-control" placeholder="Current password"
+                         style="margin-bottom:8px" [(ngModel)]="pwdCurrent">
+                  <input type="password" class="form-control" placeholder="New password"
+                         style="margin-bottom:8px" [(ngModel)]="pwdNew">
+                  <input type="password" class="form-control" placeholder="Confirm new password"
+                         style="margin-bottom:10px" [(ngModel)]="pwdConfirm">
+                  @if (pwdError) {
+                    <p style="color:#ef4444;font-size:12px;margin-bottom:6px">{{ pwdError }}</p>
+                  }
+                  @if (pwdSuccess) {
+                    <p style="color:#22c55e;font-size:12px;margin-bottom:6px">Password updated successfully!</p>
+                  }
+                  <button mat-flat-button color="primary" style="width:100%"
+                          [disabled]="!pwdNew || pwdChanging"
+                          (click)="changePassword()">
+                    <mat-icon>lock_reset</mat-icon> {{ pwdChanging ? 'Saving…' : 'Update Password' }}
+                  </button>
+                </div>
+              </div>
+            }
           </div>
         </div>
       </div>
     }
 
+    <!-- ══════════════════════════════════════════════════════════════════════
+         TAB: WISHLIST
+    ══════════════════════════════════════════════════════════════════════ -->
+    @if (activeTab === 'wishlist') {
+      <div class="mp-content">
+        <h2 class="mp-section-title"><mat-icon>favorite</mat-icon> My Wishlist</h2>
+
+        @if (wishlistLoading) {
+          <div class="mp-empty-state"><mat-icon class="spin">sync</mat-icon></div>
+        } @else if (wishlist.length === 0) {
+          <div class="mp-empty-state">
+            <mat-icon>favorite_border</mat-icon>
+            <h3>Your wishlist is empty</h3>
+            <p>Browse the catalog and click the heart icon to save books you want to read.</p>
+            <button mat-flat-button color="primary" (click)="goCatalog()">Browse Catalog</button>
+          </div>
+        } @else {
+          <div class="mp-loan-grid">
+            @for (w of wishlist; track w.id) {
+              <div class="mp-loan-card">
+                <img class="mp-loan-card__cover"
+                     [src]="wishlistCoverUrl(w)"
+                     [alt]="w.catalogItem?.title"
+                     onerror="this.src='assets/images/no-cover.png'">
+                <div class="mp-loan-card__body">
+                  <div class="mp-loan-card__title">{{ w.catalogItem?.title ?? '—' }}</div>
+                  <div class="mp-loan-card__author">{{ w.catalogItem?.writer?.name ?? '' }}</div>
+                  <div class="mp-loan-card__actions" style="margin-top:8px;display:flex;gap:6px">
+                    <button mat-stroked-button color="primary" style="font-size:12px"
+                            (click)="goCatalog()">View</button>
+                    <button mat-stroked-button color="warn" style="font-size:12px"
+                            (click)="removeFromWishlist(w.id)">Remove</button>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         TAB: PAYMENTS
+    ══════════════════════════════════════════════════════════════════════ -->
+    @if (activeTab === 'payments') {
+      <div class="mp-content">
+        <h2 class="mp-section-title"><mat-icon>payments</mat-icon> My Payments & Fines</h2>
+
+        <!-- Balance banner -->
+        <div class="mp-alert" [ngClass]="fineBalance && fineBalance > 0 ? 'mp-alert--red' : 'mp-alert--green'"
+             style="margin-bottom:20px">
+          <mat-icon>{{ fineBalance && fineBalance > 0 ? 'warning' : 'check_circle' }}</mat-icon>
+          <div>
+            <strong>Outstanding Balance: {{ fineBalance != null ? (fineBalance | currency) : '...' }}</strong>
+            @if (fineBalance && fineBalance > 0) {
+              <span> — Please contact the library desk to settle your fines.</span>
+            } @else {
+              <span> — No outstanding fines. You're all clear!</span>
+            }
+          </div>
+        </div>
+
+        <!-- Payment history -->
+        @if (memberPayments.length === 0) {
+          <div class="mp-empty-state">
+            <mat-icon>receipt_long</mat-icon>
+            <h3>No payment records</h3>
+            <p>Your payment history will appear here.</p>
+          </div>
+        } @else {
+          <table class="table table-bordered">
+            <thead class="table-light">
+              <tr>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Receipt</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (p of memberPayments; track p.id) {
+                <tr>
+                  <td>{{ p.paymentDate ?? p.date ?? '—' }}</td>
+                  <td>{{ p.amountPaid ?? p.amount }}</td>
+                  <td>{{ p.paymentMethod ?? 'Cash' }}</td>
+                  <td>
+                    <span class="mp-badge" [ngClass]="p.paymentStatus === 'WAIVED' ? 'mp-badge--amber' : 'mp-badge--green'">
+                      {{ p.paymentStatus ?? 'Completed' }}
+                    </span>
+                  </td>
+                  <td>
+                    <button mat-icon-button title="Print Receipt" (click)="openPaymentReceipt(p.id)">
+                      <mat-icon>print</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+      </div>
+    }
+
   </main>
 </div>
+

@@ -41,7 +41,7 @@
       <span (click)="closeChatbot()"> <mat-icon class="close-icon">close</mat-icon></span>
     </div>
     <div class="chatbot-body">
-      <div class="messages-container">
+      <div class="messages-container" #msgContainer>
         @for (message of messages; track message) {
           <div class="message" [ngClass]="{'user': message.user}">
             <span>{{ message.text }}</span>
@@ -49,7 +49,14 @@
         }
       </div>
       <div class="chatbot-input">
-        <input [(ngModel)]="userMessage" type="text" [placeholder]="'chatbot.inputPlaceholder' | translate" (keyup.enter)="sendMessage()" />
+        <textarea
+          [(ngModel)]="userMessage"
+          [placeholder]="'chatbot.inputPlaceholder' | translate"
+          (keydown.enter)="handleEnterKey($event)"
+          rows="1"
+          class="chatbot-textarea"
+          #chatInput
+        ></textarea>
         <button (click)="sendMessage()"><mat-icon class="send-icon">send</mat-icon></button>
       </div>
     </div>

@@ -32,7 +32,11 @@ export class OpacSearchComponent implements OnInit {
   filterLang   = '';
   filterType   = '';
   filterYear   = '';
-  quickFilter  = 'all';    // 'all' | 'new' | 'ebook' | 'available'
+  quickFilter  = 'all';    // 'all' | 'new' | 'ebook' | 'available' | 'popular' | 'audio'
+
+  // Map of bookId → borrow count (from circulation top-borrowers, populated lazily)
+  private _borrowCounts = new Map<number, number>();
+  private _borrowCountsLoaded = false;
 
   // ─── Pagination ───────────────────────────────────────────────────────────
   page        = 1;
@@ -103,6 +107,18 @@ export class OpacSearchComponent implements OnInit {
       .subscribe({ next: cats => this.categories = cats || [], error: () => {} });
     this.http.get<any[]>(`${CONFIG.URL_BASE}/mediatype/all`)
       .subscribe({ next: mt => this.mediaTypes = mt || [], error: () => {} });
+    // Pre-load borrow counts for "popular" filter
+    this.http.get<any[]>(`${CONFIG.URL_BASE}/circulation/top-borrowers?limit=50`)
+      .subscribe({
+        next: rows => {
+          (rows || []).forEach((r: any) => {
+            if (r.bookId) this._borrowCounts.set(Number(r.bookId), r.borrowCount ?? 0);
+          });
+          this._borrowCountsLoaded = true;
+          if (this.quickFilter === 'popular') this.applyFilters();
+        },
+        error: () => { this._borrowCountsLoaded = true; }
+      });
   }
 
   // ─── Filtering ────────────────────────────────────────────────────────────
@@ -135,8 +151,28 @@ export class OpacSearchComponent implements OnInit {
       if (this.quickFilter === 'available') {
         if (!item.number_of_books || Number(item.number_of_books) < 1) return false;
       }
+      if (this.quickFilter === 'popular') {
+        // Must appear in borrow counts map (i.e., has been borrowed at least once)
+        if (!this._borrowCounts.has(Number(item.id))) return false;
+      }
+      if (this.quickFilter === 'audio') {
+        // Audio books: mediaType name contains "audio", or marc_347 / notes contains "audio"
+        const mt = (item.mediaType as any)?.name ?? (item.mediaType as any)?.type ?? '';
+        const notes = (item as any).notes ?? '';
+        const marc347 = (item as any).marc_347 ?? '';
+        if (!mt.toLowerCase().includes('audio') &&
+            !notes.toLowerCase().includes('audio') &&
+            !marc347.toLowerCase().includes('audio')) return false;
+      }
       return true;
     });
+
+    // For "popular" filter — sort by borrow count descending
+    if (this.quickFilter === 'popular') {
+      result = result.sort((a, b) =>
+        (this._borrowCounts.get(Number(b.id)) ?? 0) - (this._borrowCounts.get(Number(a.id)) ?? 0)
+      );
+    }
 
     this.filtered    = result;
     this.totalPages  = Math.max(1, Math.ceil(result.length / this.pageSize));

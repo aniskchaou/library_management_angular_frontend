@@ -1,0 +1,184 @@
+<div class="pg-root">
+  <app-guest-navbar activePage=""></app-guest-navbar>
+
+  <section class="mr-hero">
+    <span class="mr-eyebrow">Membership</span>
+    <h1>Join the Library</h1>
+    <p>Create your free account to borrow books, manage loans, and access digital resources.</p>
+  </section>
+
+  <div class="mr-body">
+
+    <!-- Success state -->
+    @if (success) {
+      <div class="mr-success">
+        <mat-icon class="mr-success__icon">check_circle</mat-icon>
+        <h2>Welcome to the Library!</h2>
+        <p>Your membership has been registered successfully.
+           @if (memberId) { Your member ID is <strong>#{{ memberId }}</strong>. }
+        </p>
+        <p style="color:#6b7280;font-size:14px">
+          Your account may require staff verification before you can borrow items.
+          You can log in to the reader portal to check your status.
+        </p>
+        <button mat-flat-button color="primary" (click)="goLogin()">Go to Reader Portal</button>
+      </div>
+    } @else {
+
+      <!-- Stepper progress -->
+      <div class="mr-steps">
+        <div class="mr-step" [class.mr-step--active]="step===1" [class.mr-step--done]="step>1">
+          <div class="mr-step__dot">{{ step > 1 ? '✓' : '1' }}</div>
+          <span>Personal Info</span>
+        </div>
+        <div class="mr-step__line"></div>
+        <div class="mr-step" [class.mr-step--active]="step===2" [class.mr-step--done]="step>2">
+          <div class="mr-step__dot">{{ step > 2 ? '✓' : '2' }}</div>
+          <span>Contact Details</span>
+        </div>
+        <div class="mr-step__line"></div>
+        <div class="mr-step" [class.mr-step--active]="step===3">
+          <div class="mr-step__dot">3</div>
+          <span>Account Setup</span>
+        </div>
+      </div>
+
+      @if (error) {
+        <div class="mr-error"><mat-icon>error_outline</mat-icon> {{ error }}</div>
+      }
+
+      <div class="mr-card">
+
+        <!-- Step 1: Personal -->
+        @if (step === 1) {
+          <h3>Personal Information</h3>
+          <div class="mr-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>First Name *</mat-label>
+              <input matInput [(ngModel)]="form.firstname">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Surname *</mat-label>
+              <input matInput [(ngModel)]="form.surname">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput type="date" [(ngModel)]="form.dob">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Gender</mat-label>
+              <mat-select [(ngModel)]="form.gender">
+                <mat-option value="">Prefer not to say</mat-option>
+                <mat-option value="MALE">Male</mat-option>
+                <mat-option value="FEMALE">Female</mat-option>
+                <mat-option value="OTHER">Other</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" *ngIf="memberTypes.length > 0">
+              <mat-label>Membership Type</mat-label>
+              <mat-select [(ngModel)]="form.userType">
+                <mat-option *ngFor="let t of memberTypes" [value]="t.type_name || t.name">
+                  {{ t.type_name || t.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        }
+
+        <!-- Step 2: Contact -->
+        @if (step === 2) {
+          <h3>Contact Details</h3>
+          <div class="mr-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Primary Email *</mat-label>
+              <input matInput type="email" [(ngModel)]="form.primary_email">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Secondary Email</mat-label>
+              <input matInput type="email" [(ngModel)]="form.secondary_email">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Primary Phone</mat-label>
+              <input matInput [(ngModel)]="form.primary_phone">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Secondary Phone</mat-label>
+              <input matInput [(ngModel)]="form.secondary_phone">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Street / Address</mat-label>
+              <input matInput [(ngModel)]="form.address">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>City</mat-label>
+              <input matInput [(ngModel)]="form.city">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>State / Province</mat-label>
+              <input matInput [(ngModel)]="form.state">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>ZIP / Postal Code</mat-label>
+              <input matInput [(ngModel)]="form.zip">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Country</mat-label>
+              <input matInput [(ngModel)]="form.country">
+            </mat-form-field>
+          </div>
+        }
+
+        <!-- Step 3: Account -->
+        @if (step === 3) {
+          <h3>Create Your Account</h3>
+          <p class="mr-hint">Choose a password for the reader portal. You will use your email and this password to log in.</p>
+          <div class="mr-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Password *</mat-label>
+              <input matInput type="password" [(ngModel)]="form.memberPassword">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Confirm Password *</mat-label>
+              <input matInput type="password" [(ngModel)]="form.confirmPassword">
+            </mat-form-field>
+          </div>
+          <div class="mr-terms">
+            <mat-icon style="font-size:16px;color:#6b7280">info</mat-icon>
+            <span>By registering, you agree to the library's terms of service and privacy policy.
+              Your data is used solely for membership management purposes.</span>
+          </div>
+        }
+
+        <!-- Navigation buttons -->
+        <div class="mr-actions">
+          <button mat-stroked-button *ngIf="step > 1" (click)="prevStep()">
+            <mat-icon>arrow_back</mat-icon> Back
+          </button>
+          <span style="flex:1"></span>
+          <button mat-flat-button color="primary" *ngIf="step < 3" (click)="nextStep()">
+            Next <mat-icon>arrow_forward</mat-icon>
+          </button>
+          <button mat-flat-button color="primary" *ngIf="step === 3"
+                  (click)="submit()" [disabled]="submitting">
+            <mat-icon>how_to_reg</mat-icon>
+            {{ submitting ? 'Registering…' : 'Create Membership' }}
+          </button>
+        </div>
+      </div>
+
+      <p class="mr-login-link">
+        Already a member?
+        <a routerLink="/opac-account" style="color:#3b82f6;cursor:pointer">Sign in to your account</a>
+      </p>
+    }
+  </div>
+
+  <footer class="pg-footer">
+    <span>© Library Lab. Powered by Library Lab.</span>
+    <span style="display:flex;gap:16px">
+      <a routerLink="/about">About</a>
+      <a routerLink="/contact">Contact</a>
+      <a routerLink="/faq">FAQ</a>
+    </span>
+  </footer>
+</div>

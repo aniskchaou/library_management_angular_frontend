@@ -143,4 +143,22 @@ public interface CirculationRepository extends JpaRepository<Circulation, Long> 
 	@Query("SELECT c FROM Circulation c WHERE c.memberName.id = :memberId")
 	List<Circulation> findByMemberName(@Param("memberId") Long memberId);
 
+	/**
+	 * Count distinct members who currently have at least one item checked out
+	 * (return_status name is NOT 'returned' and returnDate is null).
+	 */
+	@Query("SELECT COUNT(DISTINCT c.memberName.id) FROM Circulation c " +
+		   "WHERE c.returnDate IS NULL AND c.returnStatus.name <> 'returned'")
+	long countActiveReaders();
+
+	/**
+	 * Top N borrowed books — returns [title, borrowCount] pairs ordered desc.
+	 * Use with Pageable or slice the result in the controller.
+	 */
+	@Query("SELECT c.catalogItemName.title, COUNT(c) AS cnt " +
+		   "FROM Circulation c " +
+		   "GROUP BY c.catalogItemName.title " +
+		   "ORDER BY cnt DESC")
+	List<Object[]> findTopBorrowedBooks();
+
 }

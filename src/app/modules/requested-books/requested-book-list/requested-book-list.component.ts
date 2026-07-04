@@ -56,6 +56,18 @@ export class RequestedBookListComponent extends URLLoader implements OnInit,Afte
       });
   }
 
+  notify(id) {
+    this.httpService
+      .create(CONFIG.URL_BASE + '/requestedbook/' + id + '/notify', {})
+      .then(() => this.reloadPage());
+  }
+
+  cancel(id) {
+    this.httpService
+      .create(CONFIG.URL_BASE + '/requestedbook/' + id + '/cancel', {})
+      .then(() => this.reloadPage());
+  }
+
   editCategory(value: string) {
     this.idEvent.emit(value);
   }

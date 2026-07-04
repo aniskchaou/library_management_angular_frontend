@@ -13,6 +13,10 @@ export default class Member {
   status: string;        // Current status of the member (e.g., Active, Inactive)
 
   // Fields as returned by the actual API
+  photoUrl?: string;
+  membershipExpiry?: string;
+  maxBorrowLimit?: number;
+  memberPassword?: string;
   primary_email?: string;
   secondary_email?: string;
   primary_phone?: string;

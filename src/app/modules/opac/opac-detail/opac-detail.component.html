@@ -76,6 +76,16 @@
         @if (holdError) {
           <p class="opac-det-actions__error">{{ holdError }}</p>
         }
+
+        <!-- Wishlist button -->
+        @if (auth?.isLoggedIn) {
+          <button mat-stroked-button style="margin-top:6px"
+                  [disabled]="wishlistAdded"
+                  (click)="addToWishlist()">
+            <mat-icon>{{ wishlistAdded ? 'favorite' : 'favorite_border' }}</mat-icon>
+            {{ wishlistAdded ? 'In Wishlist' : 'Add to Wishlist' }}
+          </button>
+        }
       </div>
     </aside>
 
@@ -95,6 +105,13 @@
         <button class="opac-det-tab" [class.opac-det-tab--active]="activeTab === 'dc'"
                 (click)="activeTab = 'dc'">
           <mat-icon>share</mat-icon> {{ 'opac.tabDC' | translate }}
+        </button>
+        <button class="opac-det-tab" [class.opac-det-tab--active]="activeTab === 'reviews'"
+                (click)="activeTab = 'reviews'">
+          <mat-icon>star</mat-icon> Reviews
+          @if (reviews.length > 0) {
+            <span style="margin-left:4px;font-size:12px;opacity:.8">({{ reviews.length }})</span>
+          }
         </button>
       </div>
 
@@ -416,4 +433,86 @@
     </div>
   </div>
 
+  <!-- ══ REVIEWS TAB ════════════════════════════════════════════════════════ -->
+  @if (activeTab === 'reviews') {
+    <div class="opac-det__reviews" style="padding:24px 0">
+
+      <!-- Average rating -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <div style="font-size:3rem;font-weight:700;color:#f59e0b">{{ averageRating || '—' }}</div>
+        <div>
+          <div style="display:flex;gap:4px">
+            @for (s of [1,2,3,4,5]; track s) {
+              <mat-icon [style.color]="s <= averageRating ? '#f59e0b' : '#d1d5db'">star</mat-icon>
+            }
+          </div>
+          <div style="font-size:13px;color:#6b7280">{{ reviews.length }} review{{ reviews.length !== 1 ? 's' : '' }}</div>
+        </div>
+      </div>
+
+      <!-- Write a review (logged-in only) -->
+      @if (auth?.isLoggedIn) {
+        <div class="opac-det-review-form" style="background:#f9fafb;border-radius:8px;padding:16px;margin-bottom:24px">
+          <h4 style="margin:0 0 12px">{{ reviewSubmitted ? 'Update your review' : 'Write a review' }}</h4>
+
+          <!-- Star picker -->
+          <div style="display:flex;gap:6px;margin-bottom:10px">
+            @for (s of [1,2,3,4,5]; track s) {
+              <mat-icon style="cursor:pointer;font-size:28px"
+                        [style.color]="s <= myRating ? '#f59e0b' : '#d1d5db'"
+                        (click)="setMyRating(s)">star</mat-icon>
+            }
+          </div>
+
+          <textarea rows="3" class="form-control" style="margin-bottom:10px"
+                    placeholder="Share your thoughts about this book (optional)"
+                    [(ngModel)]="myReviewText"></textarea>
+
+          @if (reviewError) {
+            <p style="color:#ef4444;font-size:13px;margin-bottom:8px">{{ reviewError }}</p>
+          }
+
+          <button mat-flat-button color="primary"
+                  [disabled]="!myRating || reviewSubmitting"
+                  (click)="submitReview()">
+            @if (reviewSubmitting) { Submitting… }
+            @else { {{ reviewSubmitted ? 'Update Review' : 'Submit Review' }} }
+          </button>
+        </div>
+      }
+
+      <!-- Reviews list -->
+      @if (!reviewsLoaded) {
+        <p style="color:#6b7280">Loading reviews…</p>
+      } @else if (reviews.length === 0) {
+        <p style="color:#6b7280">No reviews yet. Be the first to review this book!</p>
+      } @else {
+        @for (rv of reviews; track rv.id) {
+          @if (!rv.reported) {
+            <div class="opac-det-review-item"
+                 style="border-bottom:1px solid #e5e7eb;padding:14px 0">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+                <strong>{{ rv.member?.firstname ?? rv.member?.name ?? 'Member ' + rv.member?.id }}</strong>
+                <span style="font-size:12px;color:#9ca3af">{{ rv.reviewDate }}</span>
+              </div>
+              <div style="display:flex;gap:3px;margin-bottom:6px">
+                @for (s of [1,2,3,4,5]; track s) {
+                  <mat-icon style="font-size:16px" [style.color]="s <= rv.rating ? '#f59e0b' : '#e5e7eb'">star</mat-icon>
+                }
+              </div>
+              @if (rv.reviewText) {
+                <p style="margin:0;color:#374151">{{ rv.reviewText }}</p>
+              }
+              @if (auth?.isLoggedIn && (auth?.member?.id !== (rv.member?.id ?? rv.memberId))) {
+                <button mat-button style="font-size:11px;color:#9ca3af;padding:0;margin-top:4px"
+                        (click)="reportReview(rv.id)">Report</button>
+              }
+            </div>
+          }
+        }
+      }
+    </div>
+  }
+
 </div>
+

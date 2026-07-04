@@ -1,0 +1,81 @@
+<div class="pg-root">
+  <app-guest-navbar activePage="arrivals"></app-guest-navbar>
+
+  <section class="na-hero">
+    <span class="na-eyebrow">Collection</span>
+    <h1>New Arrivals</h1>
+    <p>The latest additions to our collection — fresh books added in the past {{ windowDays }} days.</p>
+  </section>
+
+  <!-- Controls -->
+  <div class="na-controls">
+    <mat-form-field appearance="outline" class="na-search">
+      <mat-label>Search new arrivals…</mat-label>
+      <input matInput [(ngModel)]="searchQuery" (ngModelChange)="applyFilter()">
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width:180px">
+      <mat-label>Category</mat-label>
+      <mat-select [(ngModel)]="selectedCategory" (ngModelChange)="applyFilter()">
+        <mat-option value="">All categories</mat-option>
+        <mat-option *ngFor="let c of categories" [value]="c">{{ c }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width:160px">
+      <mat-label>Timeframe</mat-label>
+      <mat-select [(ngModel)]="windowDays" (ngModelChange)="load()">
+        <mat-option *ngFor="let w of windowOptions" [value]="w">
+          Last {{ w }} days
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <span class="na-count">{{ filtered.length }} item{{ filtered.length !== 1 ? 's' : '' }}</span>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="na-loading">
+    <mat-icon class="na-spin">hourglass_empty</mat-icon> Loading…
+  </div>
+
+  <!-- Empty -->
+  <div *ngIf="!loading && filtered.length === 0" class="na-empty">
+    <mat-icon>search_off</mat-icon>
+    <p>No new arrivals match your filters.</p>
+    <button mat-stroked-button (click)="searchQuery=''; selectedCategory=''; applyFilter()">Clear filters</button>
+  </div>
+
+  <!-- Grid -->
+  <div *ngIf="!loading && filtered.length > 0" class="na-grid">
+    <div *ngFor="let b of filtered" class="na-card" (click)="openDetail(b)">
+      <div class="na-card__cover">
+        <img [src]="coverUrl(b)" [alt]="b.title" loading="lazy"
+             onerror="this.src='assets/images/no-cover.png'">
+        <span *ngIf="badgeDays(b)" class="na-card__badge">{{ badgeDays(b) }}</span>
+      </div>
+      <div class="na-card__body">
+        <div class="na-card__title" [title]="b.title">{{ b.title }}</div>
+        <div class="na-card__author">{{ b.writer?.name }}</div>
+        <div class="na-card__meta">
+          <span *ngIf="b.category?.category_name" class="na-chip">{{ b.category.category_name }}</span>
+          <span *ngIf="b.publishing_year" class="na-chip">{{ b.publishing_year }}</span>
+        </div>
+        <div *ngIf="b.isbn" class="na-card__isbn">ISBN: {{ b.isbn }}</div>
+        <button mat-stroked-button class="na-card__btn" (click)="openDetail(b); $event.stopPropagation()">
+          <mat-icon>search</mat-icon> View in Catalog
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="pg-footer">
+    <span>© Library Lab.</span>
+    <span style="display:flex;gap:16px">
+      <a routerLink="/about">About</a>
+      <a routerLink="/contact">Contact</a>
+      <a routerLink="/faq">FAQ</a>
+    </span>
+  </footer>
+</div>

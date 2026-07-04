@@ -1,0 +1,131 @@
+<div class="pg-root">
+  <app-guest-navbar activePage="contact"></app-guest-navbar>
+
+  <!-- Hero -->
+  <section class="ct-hero">
+    <div class="ct-hero__inner">
+      <span class="ct-eyebrow">Get In Touch</span>
+      <h1>Contact Us</h1>
+      <p>We're here to help. Reach out with questions about membership, collections, or services.</p>
+    </div>
+  </section>
+
+  <div class="ct-body">
+
+    <!-- Info column -->
+    <div class="ct-info">
+      <h3>Library Information</h3>
+
+      @if (address) {
+        <div class="ct-info-item">
+          <div class="ct-info-icon"><mat-icon>place</mat-icon></div>
+          <div>
+            <div class="ct-info-label">Address</div>
+            <div>{{ address }}</div>
+          </div>
+        </div>
+      }
+      @if (telephone) {
+        <div class="ct-info-item">
+          <div class="ct-info-icon"><mat-icon>phone</mat-icon></div>
+          <div>
+            <div class="ct-info-label">Phone</div>
+            <div>{{ telephone }}</div>
+          </div>
+        </div>
+      }
+      @if (fax) {
+        <div class="ct-info-item">
+          <div class="ct-info-icon"><mat-icon>fax</mat-icon></div>
+          <div>
+            <div class="ct-info-label">Fax</div>
+            <div>{{ fax }}</div>
+          </div>
+        </div>
+      }
+
+      <div class="ct-info-item">
+        <div class="ct-info-icon"><mat-icon>support_agent</mat-icon></div>
+        <div>
+          <div class="ct-info-label">Online Support</div>
+          <div>Use the contact form → or chat with our AI assistant</div>
+        </div>
+      </div>
+
+      <!-- Opening hours -->
+      <h3 style="margin-top:28px">Opening Hours</h3>
+      <div class="ct-hours">
+        <div *ngFor="let h of hours" class="ct-hours-row"
+             [class.ct-hours-row--closed]="h.time === 'Closed'">
+          <span>{{ h.day }}</span>
+          <span>{{ h.time }}</span>
+        </div>
+      </div>
+
+      <!-- Quick links -->
+      <div class="ct-quick">
+        <a class="ct-quick-btn" routerLink="/member-register">
+          <mat-icon>person_add</mat-icon> Join Library
+        </a>
+        <a class="ct-quick-btn" routerLink="/faq">
+          <mat-icon>help_outline</mat-icon> FAQ
+        </a>
+        <a class="ct-quick-btn" routerLink="/opac">
+          <mat-icon>search</mat-icon> Search Catalog
+        </a>
+      </div>
+    </div>
+
+    <!-- Contact form -->
+    <div class="ct-form-wrap">
+      <h3>Send Us a Message</h3>
+      @if (sent) {
+        <div class="ct-success">
+          <mat-icon>check_circle</mat-icon>
+          <div>
+            <strong>Message sent!</strong><br>
+            We'll get back to you as soon as possible.
+          </div>
+        </div>
+      } @else {
+        <div class="ct-form">
+          <div class="ct-form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Your Name *</mat-label>
+              <input matInput [(ngModel)]="form.name">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Email Address *</mat-label>
+              <input matInput type="email" [(ngModel)]="form.email">
+            </mat-form-field>
+          </div>
+          <mat-form-field appearance="outline" style="width:100%">
+            <mat-label>Subject</mat-label>
+            <input matInput [(ngModel)]="form.subject" placeholder="e.g. Membership inquiry">
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="width:100%">
+            <mat-label>Message *</mat-label>
+            <textarea matInput rows="6" [(ngModel)]="form.message"
+                      placeholder="Tell us how we can help…"></textarea>
+          </mat-form-field>
+          @if (error) {
+            <div class="ct-error">{{ error }}</div>
+          }
+          <button mat-flat-button color="primary" (click)="send()" [disabled]="sending">
+            <mat-icon>send</mat-icon>
+            {{ sending ? 'Sending…' : 'Send Message' }}
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  <footer class="pg-footer">
+    <span>© {{ libraryName }}. Powered by Library Lab.</span>
+    <span style="display:flex;gap:16px">
+      <a routerLink="/about">About</a>
+      <a routerLink="/faq">FAQ</a>
+      <a routerLink="/login">Staff Login</a>
+    </span>
+  </footer>
+</div>

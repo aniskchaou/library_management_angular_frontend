@@ -363,6 +363,38 @@ export class DashboardComponent extends URLLoader implements OnInit {
         name: gauge.name,
         value: gauge.value
       }));
+
+    this.loadTodayStats();
+  }
+
+  // ── Today's activity KPIs ──────────────────────────────────────────────────
+  todayIssues: number | null = null;
+  todayReturns: number | null = null;
+  todayFines: number | null = null;
+  overdueCount: number | null = null;
+  pendingReservations: number | null = null;
+
+  private loadTodayStats(): void {
+    this.httpService.getAll(CONFIG.URL_BASE + '/circulation/today-issues').subscribe({
+      next: (d: any) => this.todayIssues = d?.todayIssues ?? 0,
+      error: () => {}
+    });
+    this.httpService.getAll(CONFIG.URL_BASE + '/circulation/today-returns').subscribe({
+      next: (d: any) => this.todayReturns = d?.todayReturns ?? 0,
+      error: () => {}
+    });
+    this.httpService.getAll(CONFIG.URL_BASE + '/payment/today-total').subscribe({
+      next: (d: any) => this.todayFines = d?.todayFines ?? 0,
+      error: () => {}
+    });
+    this.httpService.getAll(CONFIG.URL_BASE + '/circulation/overdue').subscribe({
+      next: (d: any[]) => this.overdueCount = Array.isArray(d) ? d.length : 0,
+      error: () => {}
+    });
+    this.httpService.getAll(CONFIG.URL_BASE + '/requestedbook/active').subscribe({
+      next: (d: any[]) => this.pendingReservations = Array.isArray(d) ? d.length : 0,
+      error: () => {}
+    });
   }
 
   getGenderData(): void {

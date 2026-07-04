@@ -1,1 +1,52 @@
-<p>advanced-search works!</p>
+<div class="container mt-4">
+  <h2>Search Books</h2>
+
+  <div class="input-group mb-3">
+    <select class="form-select" style="max-width:140px" [(ngModel)]="searchBy">
+      <option value="title">Title</option>
+      <option value="author">Author</option>
+      <option value="category">Category</option>
+    </select>
+    <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="query"
+           (keydown)="onKeydown($event)">
+    <button class="btn btn-primary" (click)="search()" [disabled]="loading || !query.trim()">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+      Search
+    </button>
+  </div>
+
+  <div *ngIf="searched && results.length === 0" class="alert alert-info">
+    No results found for "{{ query }}".
+  </div>
+
+  <table class="table table-hover" *ngIf="results.length">
+    <thead class="table-light">
+      <tr>
+        <th>Cover</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>ISBN</th>
+        <th>Category</th>
+        <th>Edition</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let b of results">
+        <td>
+          <img *ngIf="b.photo" [src]="b.photo" alt="cover" style="width:40px;height:56px;object-fit:cover">
+          <mat-icon *ngIf="!b.photo">menu_book</mat-icon>
+        </td>
+        <td>{{ b.title }}</td>
+        <td>{{ b.writer?.name ?? '—' }}</td>
+        <td>{{ b.isbn ?? '—' }}</td>
+        <td>{{ b.category?.category_name ?? b.category?.categoryName ?? '—' }}</td>
+        <td>{{ b.edition ?? '—' }}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-primary" (click)="viewBook(b)">View</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

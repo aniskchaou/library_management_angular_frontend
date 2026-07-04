@@ -293,4 +293,31 @@
     }
   </div>
 
+  <!-- Top Borrowers (server-aggregated) -->
+  <div class="bs-section" *ngIf="topBorrowers.length">
+    <div class="bs-section__header">
+      <h2 class="bs-section__title">
+        <mat-icon>emoji_events</mat-icon> Top Borrowers (All Time)
+      </h2>
+    </div>
+    <table class="table table-sm table-striped mt-2">
+      <thead>
+        <tr>
+          <th>#</th><th>Member ID</th><th>Name</th><th>Total Borrows</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of topBorrowers; let i = $index; track row.memberId) {
+          <tr>
+            <td>{{ i + 1 }}</td>
+            <td>{{ row.memberId }}</td>
+            <td>{{ row.memberName }}</td>
+            <td><strong>{{ row.borrowCount }}</strong></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
 </div>
+

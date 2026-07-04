@@ -5,7 +5,7 @@ import Circulation from 'src/app/main/models/Circulation';
 import Member from 'src/app/main/models/Member';
 import CONFIG from 'src/app/main/urls/urls';
 
-export type MpTab = 'dashboard' | 'loans' | 'holds' | 'history' | 'profile';
+export type MpTab = 'dashboard' | 'loans' | 'holds' | 'history' | 'profile' | 'wishlist' | 'payments';
 
 @Component({
   selector: 'app-member-portal',
@@ -39,6 +39,23 @@ export class MemberPortalComponent implements OnInit {
 
   historySearch = '';
 
+  // ── Fine balance ──────────────────────────────────────────────────────────
+  fineBalance: number | null = null;
+  memberPayments: any[] = [];
+
+  // ── Wishlist ──────────────────────────────────────────────────────────────
+  wishlist: any[] = [];
+  wishlistLoading = false;
+
+  // ── Profile photo + password ──────────────────────────────────────────────
+  newPhotoUrl = '';
+  pwdCurrent  = '';
+  pwdNew      = '';
+  pwdConfirm  = '';
+  pwdError    = '';
+  pwdSuccess  = false;
+  pwdChanging = false;
+
   today = new Date();
 
   constructor(private router: Router, private http: HttpClient) {}
@@ -56,6 +73,8 @@ export class MemberPortalComponent implements OnInit {
 
     this._loadMemberProfile();
     this._loadCirculations();
+    this._loadFineBalance();
+    this._loadWishlist();
   }
 
   private get _authHeader(): HttpHeaders {
@@ -220,6 +239,100 @@ export class MemberPortalComponent implements OnInit {
   goTab(tab: MpTab): void { this.activeTab = tab; }
 
   goCatalog(): void { this.router.navigate(['/opac']); }
+
+  // ── Fine balance ──────────────────────────────────────────────────────────
+
+  private _loadFineBalance(): void {
+    if (!this.memberId) return;
+    this.http
+      .get<any>(`${CONFIG.URL_BASE}/payment/outstanding/${this.memberId}`, { headers: this._authHeader })
+      .subscribe({
+        next: d => {
+          this.fineBalance = d?.totalPaid ?? 0;
+          // load all payments for this member
+          this.http.get<any[]>(`${CONFIG.URL_BASE}/payment/all`, { headers: this._authHeader }).subscribe({
+            next: all => {
+              this.memberPayments = (all || []).filter(p =>
+                (p.member?.id ?? p.memberId) === this.memberId
+              );
+            },
+            error: () => {}
+          });
+        },
+        error: () => {}
+      });
+  }
+
+  openPaymentReceipt(paymentId: number): void {
+    window.open(`${CONFIG.URL_BASE}/receipt/payment/${paymentId}`, '_blank');
+  }
+
+  // ── Wishlist ──────────────────────────────────────────────────────────────
+
+  private _loadWishlist(): void {
+    if (!this.memberId) return;
+    this.wishlistLoading = true;
+    this.http
+      .get<any[]>(`${CONFIG.URL_BASE}/wishlist/member/${this.memberId}`, { headers: this._authHeader })
+      .subscribe({
+        next: d => { this.wishlist = d || []; this.wishlistLoading = false; },
+        error: () => { this.wishlistLoading = false; }
+      });
+  }
+
+  removeFromWishlist(itemId: number): void {
+    this.http
+      .delete(`${CONFIG.URL_BASE}/wishlist/${itemId}`, { headers: this._authHeader })
+      .subscribe({ next: () => this._loadWishlist(), error: () => {} });
+  }
+
+  wishlistCoverUrl(w: any): string {
+    const photo = w.catalogItem?.photo;
+    return photo ? `${CONFIG.URL_BASE}/book/image/${photo}` : 'assets/images/no-cover.png';
+  }
+
+  // ── Profile photo ─────────────────────────────────────────────────────────
+
+  savePhotoUrl(): void {
+    if (!this.memberId || !this.newPhotoUrl) return;
+    this.http.put(`${CONFIG.URL_BASE}/member/${this.memberId}/photo`,
+      { photoUrl: this.newPhotoUrl }, { headers: this._authHeader })
+      .subscribe({
+        next: () => {
+          if (this.member) this.member.photoUrl = this.newPhotoUrl;
+          this.newPhotoUrl = '';
+        },
+        error: () => {}
+      });
+  }
+
+  // ── Change password ───────────────────────────────────────────────────────
+
+  changePassword(): void {
+    this.pwdError   = '';
+    this.pwdSuccess = false;
+    if (!this.pwdNew) { this.pwdError = 'Please enter a new password.'; return; }
+    if (this.pwdNew !== this.pwdConfirm) { this.pwdError = 'Passwords do not match.'; return; }
+    if (this.pwdNew.length < 6) { this.pwdError = 'Password must be at least 6 characters.'; return; }
+
+    this.pwdChanging = true;
+    this.http.post(`${CONFIG.URL_BASE}/member/${this.memberId}/change-password`,
+      { currentPassword: this.pwdCurrent, newPassword: this.pwdNew },
+      { headers: this._authHeader })
+      .subscribe({
+        next: () => {
+          this.pwdChanging = false;
+          this.pwdSuccess  = true;
+          this.pwdCurrent  = '';
+          this.pwdNew      = '';
+          this.pwdConfirm  = '';
+        },
+        error: (e) => {
+          this.pwdChanging = false;
+          this.pwdError = e?.error?.error || 'Could not update password. Please try again.';
+        }
+      });
+  }
 
   logout(): void {
     localStorage.removeItem('mp_member_id');

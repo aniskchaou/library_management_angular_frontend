@@ -16,19 +16,32 @@ export class OpacDetailComponent implements OnInit {
   @Input() item: CatalogItem;
   @Input() auth: OpacAuthService;
 
-  activeTab: 'details' | 'marc' | 'dc' = 'details';
+  activeTab: 'details' | 'marc' | 'dc' | 'reviews' = 'details';
 
   // Hold request state
   holdSent    = false;
   holdSending = false;
   holdError   = '';
 
+  // Reviews / Ratings
+  reviews: any[]     = [];
+  reviewsLoaded      = false;
+  averageRating      = 0;
+  myRating           = 0;
+  myReviewText       = '';
+  reviewSubmitting   = false;
+  reviewSubmitted    = false;
+  reviewError        = '';
+  wishlistAdded      = false;
+
   constructor(
     public activeModal: NgbActiveModal,
     private http: HttpClient,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._loadReviews();
+  }
 
   // ─── Helpers ──────────────────────────────────────────────────────────────
 
@@ -86,6 +99,86 @@ export class OpacDetailComponent implements OnInit {
         this.holdSending = false;
         this.holdError = e?.error?.message || 'Could not place hold. Please try at the circulation desk.';
       },
+    });
+  }
+
+  // ─── Reviews / Ratings ────────────────────────────────────────────────────
+
+  private _loadReviews(): void {
+    if (!this.item?.id) return;
+    this.http.get<any[]>(`${CONFIG.URL_BASE}/review/book/${this.item.id}`).subscribe({
+      next: r => {
+        this.reviews = r || [];
+        this.reviewsLoaded = true;
+        const total = this.reviews.reduce((s, rv) => s + (rv.rating || 0), 0);
+        this.averageRating = this.reviews.length ? Math.round((total / this.reviews.length) * 10) / 10 : 0;
+
+        // Pre-fill my review if already submitted
+        if (this.auth?.isLoggedIn && this.auth.member?.id) {
+          const mine = this.reviews.find(rv =>
+            (rv.member?.id ?? rv.memberId) === this.auth.member?.id
+          );
+          if (mine) {
+            this.myRating = mine.rating;
+            this.myReviewText = mine.reviewText ?? '';
+            this.reviewSubmitted = true;
+          }
+        }
+      },
+      error: () => { this.reviewsLoaded = true; }
+    });
+  }
+
+  setMyRating(star: number): void {
+    if (this.auth?.isLoggedIn) this.myRating = star;
+  }
+
+  submitReview(): void {
+    if (!this.auth?.isLoggedIn || !this.myRating) return;
+    this.reviewSubmitting = true;
+    this.reviewError = '';
+
+    const body = {
+      memberId:   this.auth.member?.id,
+      bookId:     this.item?.id,
+      rating:     this.myRating,
+      reviewText: this.myReviewText,
+    };
+    this.http.post(`${CONFIG.URL_BASE}/review/add`, body, {
+      headers: this.auth.authHeader,
+    }).subscribe({
+      next: () => {
+        this.reviewSubmitted  = true;
+        this.reviewSubmitting = false;
+        this._loadReviews();
+      },
+      error: (e) => {
+        this.reviewSubmitting = false;
+        this.reviewError = e?.error?.message || 'Could not submit review.';
+      }
+    });
+  }
+
+  starsArray(n: number): number[] {
+    return Array.from({ length: Math.round(n) }, (_, i) => i + 1);
+  }
+
+  reportReview(id: number): void {
+    this.http.post(`${CONFIG.URL_BASE}/review/${id}/report`, {}, {
+      headers: this.auth?.authHeader
+    }).subscribe({ next: () => this._loadReviews(), error: () => {} });
+  }
+
+  // ─── Wishlist ─────────────────────────────────────────────────────────────
+
+  addToWishlist(): void {
+    if (!this.auth?.isLoggedIn) return;
+    this.http.post(`${CONFIG.URL_BASE}/wishlist/add`, {
+      memberId: this.auth.member?.id,
+      bookId:   this.item?.id,
+    }, { headers: this.auth.authHeader }).subscribe({
+      next: () => { this.wishlistAdded = true; },
+      error: () => {}
     });
   }
 }

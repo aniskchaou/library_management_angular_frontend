@@ -305,11 +305,45 @@ export class ViewMemberComponent implements OnInit, OnChanges {
     link.href = CONFIG.URL_BASE+`/member/member-files/${this.member.id}/${filename}`
     link.target = '_blank';
     link.click();
-}
+  }
 
+  // ── Membership management ──────────────────────────────────────────────────
+  renewMonths = 12;
 
+  renewMembership(): void {
+    this.http.post(`${CONFIG.URL_BASE}/member/${this.member.id}/renew-membership`, { months: this.renewMonths })
+      .subscribe({
+        next: (data: any) => {
+          this.member.membershipExpiry = data.membershipExpiry;
+          this.toastr.success('Membership renewed until ' + data.membershipExpiry, 'Success');
+        },
+        error: () => this.toastr.error('Could not renew membership', 'Error')
+      });
+  }
 
+  updatePhotoUrl(newUrl: string): void {
+    this.http.put(`${CONFIG.URL_BASE}/member/${this.member.id}/photo`, { photoUrl: newUrl })
+      .subscribe({
+        next: () => {
+          this.member.photoUrl = newUrl;
+          this.toastr.success('Photo updated', 'Success');
+        },
+        error: () => this.toastr.error('Could not update photo', 'Error')
+      });
+  }
 
+  updateBorrowLimit(limit: number): void {
+    this.http.put(`${CONFIG.URL_BASE}/member/${this.member.id}/borrow-limit`, { limit })
+      .subscribe({
+        next: () => {
+          this.member.maxBorrowLimit = limit;
+          this.toastr.success('Borrow limit updated to ' + limit, 'Success');
+        },
+        error: () => this.toastr.error('Could not update borrow limit', 'Error')
+      });
+  }
 
-
+  openReceipt(circulationId: number): void {
+    window.open(`${CONFIG.URL_BASE}/receipt/circulation/${circulationId}`, '_blank');
+  }
 }

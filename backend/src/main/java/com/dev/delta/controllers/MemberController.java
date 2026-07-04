@@ -367,6 +367,94 @@ public class MemberController {
 		}
 	}
 
+	// ── Renew membership ────────────────────────────────────────────
+	@PostMapping("/{id}/renew-membership")
+	public ResponseEntity<?> renewMembership(@PathVariable Long id, @RequestBody Map<String, Object> body) {
+		try {
+			Member m = memberService.findById(id);
+			int months = body.containsKey("months") ? Integer.parseInt(body.get("months").toString()) : 12;
+			java.time.LocalDate base = m.getMembershipExpiry() != null && m.getMembershipExpiry().isAfter(java.time.LocalDate.now())
+					? m.getMembershipExpiry() : java.time.LocalDate.now();
+			m.setMembershipExpiry(base.plusMonths(months));
+			m.setExpired(false);
+			memberService.saveOrUpdate(m);
+			return ResponseEntity.ok(Map.of("message", "Membership renewed", "expiryDate", m.getMembershipExpiry().toString()));
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
+	// ── Update photo URL ─────────────────────────────────────────────
+	@PutMapping("/{id}/photo")
+	public ResponseEntity<?> updatePhoto(@PathVariable Long id, @RequestBody Map<String, String> body) {
+		try {
+			Member m = memberService.findById(id);
+			m.setPhotoUrl(body.get("photoUrl"));
+			memberService.saveOrUpdate(m);
+			return ResponseEntity.ok(Map.of("message", "Photo updated"));
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
+	// ── Update borrow limit ───────────────────────────────────────────
+	@PutMapping("/{id}/borrow-limit")
+	public ResponseEntity<?> updateBorrowLimit(@PathVariable Long id, @RequestBody Map<String, Object> body) {
+		try {
+			Member m = memberService.findById(id);
+			m.setMaxBorrowLimit(Integer.parseInt(body.get("limit").toString()));
+			memberService.saveOrUpdate(m);
+			return ResponseEntity.ok(Map.of("message", "Borrow limit updated"));
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	// ── Export members as CSV ─────────────────────────────────────────
+	@GetMapping("/export/csv")
+	public void exportCsv(javax.servlet.http.HttpServletResponse response) throws Exception {
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename=\"members.csv\"");
+		java.io.PrintWriter writer = response.getWriter();
+		writer.println("id,surname,firstname,gender,primary_email,primary_phone,userType,status,membershipExpiry,createdDate");
+		for (Member m : memberService.findAll()) {
+			writer.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n",
+					safe(m.getId()), safe(m.getSurname()), safe(m.getFirstname()), safe(m.getGender()),
+					safe(m.getPrimary_email()), safe(m.getPrimary_phone()), safe(m.getUserType()),
+					safe(m.getStatus()), safe(m.getMembershipExpiry()), safe(m.getCreatedDate()));
+		}
+		writer.flush();
+	}
+
+	private String safe(Object o) {
+		return o == null ? "" : o.toString().replace(",", " ").replace("\n", " ");
+	}
+
+        // ── Change member portal password ─────────────────────────────────────────
+        @PostMapping("/{id}/change-password")
+        public ResponseEntity<?> changePassword(@PathVariable Long id, @RequestBody Map<String, Object> body) {
+                try {
+                        Member m = memberService.findById(id);
+                        String current = body.getOrDefault("currentPassword", "").toString();
+                        String newPwd  = body.getOrDefault("newPassword", "").toString();
+                        if (newPwd.isEmpty()) {
+                                return ResponseEntity.badRequest().body(Map.of("error", "New password cannot be empty"));
+                        }
+                        // If a member password has been set, verify current before allowing change
+                        if (m.getMemberPassword() != null && !m.getMemberPassword().isEmpty()) {
+                                org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder enc =
+                                        new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
+                                if (!enc.matches(current, m.getMemberPassword())) {
+                                        return ResponseEntity.status(403).body(Map.of("error", "Current password is incorrect"));
+                                }
+                        }
+                        org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder enc =
+                                new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
+                        m.setMemberPassword(enc.encode(newPwd));
+                        memberService.saveOrUpdate(m);
+                        return ResponseEntity.ok(Map.of("message", "Password updated"));
+                } catch (Exception e) {
+                        return ResponseEntity.notFound().build();
+                }
+        }
 }

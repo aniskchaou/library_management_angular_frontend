@@ -35,6 +35,14 @@ public class Member {
 	private boolean expired;
 	private LocalDate createdDate;
 
+	// --- Added fields ---
+	private String photoUrl;              // Profile photo URL
+	private LocalDate membershipExpiry;   // Membership expiry date
+	private int maxBorrowLimit;           // Per-member borrow limit (0 = use global)
+	private String emergencyContactName;  // Emergency contact
+	private String emergencyContactPhone; // Emergency contact phone
+	private String memberPassword;        // Hashed member portal password
+
 	public Member() {
 		// TODO Auto-generated constructor stub
 	}
@@ -252,4 +260,22 @@ public class Member {
 	public void setCreatedDate(LocalDate createdDate) {
 		this.createdDate = createdDate;
 	}
+
+	public String getPhotoUrl() { return photoUrl; }
+	public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
+
+	public LocalDate getMembershipExpiry() { return membershipExpiry; }
+	public void setMembershipExpiry(LocalDate membershipExpiry) { this.membershipExpiry = membershipExpiry; }
+
+	public int getMaxBorrowLimit() { return maxBorrowLimit; }
+	public void setMaxBorrowLimit(int maxBorrowLimit) { this.maxBorrowLimit = maxBorrowLimit; }
+
+	public String getEmergencyContactName() { return emergencyContactName; }
+	public void setEmergencyContactName(String emergencyContactName) { this.emergencyContactName = emergencyContactName; }
+
+	public String getEmergencyContactPhone() { return emergencyContactPhone; }
+	public void setEmergencyContactPhone(String emergencyContactPhone) { this.emergencyContactPhone = emergencyContactPhone; }
+
+        public String getMemberPassword() { return memberPassword; }
+        public void setMemberPassword(String memberPassword) { this.memberPassword = memberPassword; }
 }

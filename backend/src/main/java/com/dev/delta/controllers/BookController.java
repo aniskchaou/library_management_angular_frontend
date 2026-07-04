@@ -603,5 +603,164 @@ public class BookController {
 		}
 	}
 
-}
+	// ── Duplicate book ────────────────────────────────────────────────
+	@PostMapping("/{id}/duplicate")
+	public ResponseEntity<?> duplicateBook(@PathVariable Long id) {
+		return bookRepository.findById(id).map(original -> {
+			CatalogItem copy = new CatalogItem();
+			copy.setIsbn(original.getIsbn());
+			copy.setTitle(original.getTitle() + " (Copy)");
+			copy.setWriter(original.getWriter());
+			copy.setEdition(original.getEdition());
+			copy.setEdition_year(original.getEdition_year());
+			copy.setPhoto(original.getPhoto());
+			copy.setPublisher(original.getPublisher());
+			copy.setPublishing_year(original.getPublishing_year());
+			copy.setPublication_place(original.getPublication_place());
+			copy.setNumber_of_pages(original.getNumber_of_pages());
+			copy.setNotes(original.getNotes());
+			copy.setStatus(original.getStatus());
+			copy.setCategory(original.getCategory());
+			copy.setMediaType(original.getMediaType());
+			copy.setDepartement(original.getDepartement());
+			copy.setShelf(original.getShelf());
+			copy.setRow(original.getRow());
+			copy.setPurchasePrice(original.getPurchasePrice());
+			copy.setSupplierName(original.getSupplierName());
+			copy.setDuplicateOf(true);
+			CatalogItem saved = bookRepository.save(copy);
+			return ResponseEntity.ok(saved);
+		}).orElse(ResponseEntity.notFound().build());
+	}
 
+	// ── Transfer book (move shelf/row/department) ──────────────────────
+	@PutMapping("/{id}/transfer")
+	public ResponseEntity<?> transferBook(@PathVariable Long id, @RequestBody Map<String, Object> body) {
+		return bookRepository.findById(id).map(book -> {
+			if (body.containsKey("shelfId")) {
+				Long shelfId = Long.valueOf(body.get("shelfId").toString());
+				// Shelf reference — create lightweight proxy
+				com.dev.delta.entities.Shelf shelf = new com.dev.delta.entities.Shelf();
+				shelf.setId(shelfId);
+				book.setShelf(shelf);
+			}
+			if (body.containsKey("notes")) {
+				book.setNotes(body.get("notes").toString());
+			}
+			CatalogItem saved = bookRepository.save(book);
+			return ResponseEntity.ok(Map.of("message", "Book transferred", "bookId", saved.getId()));
+		}).orElse(ResponseEntity.notFound().build());
+	}
+
+	// ── Replace copy (mark original lost, create replacement) ─────────
+	@PostMapping("/{id}/replace")
+	public ResponseEntity<?> replaceCopy(@PathVariable Long id) {
+		return bookRepository.findById(id).map(original -> {
+			// Mark original as replaced
+			original.setNotes((original.getNotes() != null ? original.getNotes() + "; " : "") + "REPLACED");
+			bookRepository.save(original);
+			// Create replacement copy
+			CatalogItem replacement = new CatalogItem();
+			replacement.setIsbn(original.getIsbn());
+			replacement.setTitle(original.getTitle());
+			replacement.setWriter(original.getWriter());
+			replacement.setEdition(original.getEdition());
+			replacement.setEdition_year(original.getEdition_year());
+			replacement.setPhoto(original.getPhoto());
+			replacement.setPublisher(original.getPublisher());
+			replacement.setPublishing_year(original.getPublishing_year());
+			replacement.setPublication_place(original.getPublication_place());
+			replacement.setNumber_of_pages(original.getNumber_of_pages());
+			replacement.setStatus(original.getStatus());
+			replacement.setCategory(original.getCategory());
+			replacement.setMediaType(original.getMediaType());
+			replacement.setDepartement(original.getDepartement());
+			replacement.setShelf(original.getShelf());
+			replacement.setRow(original.getRow());
+			replacement.setPurchasePrice(original.getPurchasePrice());
+			replacement.setSupplierName(original.getSupplierName());
+			replacement.setNotes("Replacement for book ID " + id);
+			CatalogItem saved = bookRepository.save(replacement);
+			return ResponseEntity.ok(Map.of("message", "Replacement copy created", "newBookId", saved.getId()));
+		}).orElse(ResponseEntity.notFound().build());
+	}
+
+	// ── Export books as CSV ────────────────────────────────────────────
+	@GetMapping("/export/csv")
+	public void exportBooks(javax.servlet.http.HttpServletResponse response) throws Exception {
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename=\"books.csv\"");
+		java.io.PrintWriter writer = response.getWriter();
+		writer.println("id,isbn,title,author,publisher,edition,category,shelf,purchasePrice,supplier");
+		for (CatalogItem b : bookRepository.findAll()) {
+			writer.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n",
+					safeStr(b.getId()), safeStr(b.getIsbn()), safeStr(b.getTitle()),
+					safeStr(b.getWriter() != null ? b.getWriter().getName() : null),
+					safeStr(b.getPublisher() != null ? b.getPublisher().getName() : null),
+					safeStr(b.getEdition()),
+					safeStr(b.getCategory() != null ? b.getCategory().getCategory_name() : null),
+					safeStr(b.getShelf() != null ? b.getShelf().getShelfName() : null),
+					safeStr(b.getPurchasePrice()), safeStr(b.getSupplierName()));
+		}
+		writer.flush();
+	}
+
+	private String safeStr(Object o) {
+		return o == null ? "" : o.toString().replace(",", " ").replace("\n", " ");
+	}
+
+        // ── Book cover auto-fetch (OpenLibrary) ───────────────────────────────────
+        /**
+         * Returns the best available cover URL from OpenLibrary for a given ISBN.
+         * Clients can call this and use the returned URL directly in <img src>.
+         * GET /book/cover-fetch?isbn=9780141439518
+         */
+        @GetMapping("/cover-fetch")
+        public org.springframework.http.ResponseEntity<?> fetchCover(
+                        @RequestParam(required = false) String isbn,
+                        @RequestParam(required = false) String title) {
+                // Priority: ISBN → title keyword search
+                if (isbn != null && !isbn.isBlank()) {
+                        String clean = isbn.replaceAll("[^0-9X]", "");
+                        String large  = "https://covers.openlibrary.org/b/isbn/" + clean + "-L.jpg";
+                        String medium = "https://covers.openlibrary.org/b/isbn/" + clean + "-M.jpg";
+                        return org.springframework.http.ResponseEntity.ok(java.util.Map.of(
+                                "coverUrl", large,
+                                "thumbnailUrl", medium,
+                                "source", "openlibrary",
+                                "isbn", clean
+                        ));
+                }
+                if (title != null && !title.isBlank()) {
+                        // Return a Google Books search cover URL as fallback
+                        try {
+                                String encoded = java.net.URLEncoder.encode(title, "UTF-8");
+                                String googleApi = "https://www.googleapis.com/books/v1/volumes?q=" + encoded + "&maxResults=1";
+                                org.springframework.web.client.RestTemplate rt = new org.springframework.web.client.RestTemplate();
+                                @SuppressWarnings("unchecked")
+                                java.util.Map<String, Object> resp = rt.getForObject(googleApi, java.util.Map.class);
+                                if (resp != null) {
+                                        @SuppressWarnings("unchecked")
+                                        java.util.List<java.util.Map<String, Object>> items =
+                                                (java.util.List<java.util.Map<String, Object>>) resp.get("items");
+                                        if (items != null && !items.isEmpty()) {
+                                                @SuppressWarnings("unchecked")
+                                                java.util.Map<String, Object> volumeInfo =
+                                                        (java.util.Map<String, Object>) items.get(0).get("volumeInfo");
+                                                @SuppressWarnings("unchecked")
+                                                java.util.Map<String, String> images =
+                                                        (java.util.Map<String, String>) volumeInfo.get("imageLinks");
+                                                if (images != null) {
+                                                        return org.springframework.http.ResponseEntity.ok(java.util.Map.of(
+                                                                "coverUrl",     images.getOrDefault("thumbnail", ""),
+                                                                "thumbnailUrl", images.getOrDefault("smallThumbnail", ""),
+                                                                "source", "google_books"
+                                                        ));
+                                                }
+                                        }
+                                }
+                        } catch (Exception ignored) {}
+                }
+                return org.springframework.http.ResponseEntity.ok(java.util.Map.of("coverUrl", "", "source", "none"));
+        }
+}

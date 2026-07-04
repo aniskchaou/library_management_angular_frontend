@@ -54,6 +54,12 @@ public class CatalogItem {
 	@JoinColumn(name = "row_id")
 	private Row row;
 
+	// --- Added fields ---
+	private java.math.BigDecimal purchasePrice;   // Purchase price per copy
+	private String supplierName;                  // Supplier/vendor name
+	private boolean archived = false;             // Soft archive flag
+	private boolean duplicateOf;                  // Whether this is a duplicate
+
 	public CatalogItem(String isbn, String title, Writer writer, String edition, String edition_year, String photo, Publisher publisher, String publishing_year, String publication_place, String number_of_pages, String notes, BookStatus status, Category category, PhysicalDescription physicalDescription, MediaType mediaType) {
 		this.isbn = isbn;
 		this.title = title;
@@ -228,6 +234,74 @@ public class CatalogItem {
 		this.category = category;
 	}
 
+	// ── MARC 21 / MARC 21VN cataloging fields ────────────────────────────────
+	/** LDR – Leader (24-char fixed control field) */
+	@Column(name = "marc_leader")
+	private String marcLeader;
+	/** 001 – Control Number */
+	@Column(name = "marc_001")
+	private String marc001;
+	/** 041 – Language Code (ISO 639-2, e.g. "vie", "eng") */
+	@Column(name = "marc_041")
+	private String marc041;
+	/** 082 – Dewey Decimal Classification number */
+	@Column(name = "marc_082")
+	private String marc082;
+	/** 082 edition indicator (e.g. "23") */
+	@Column(name = "marc_082_ed")
+	private String marc082Ed;
+	/** 245 $c – Statement of responsibility */
+	@Column(name = "marc_245_c")
+	private String marc245c;
+	/** 246 – Varying form of title */
+	@Column(name = "marc_246")
+	private String marc246;
+	/** 490 – Series statement */
+	@Column(name = "marc_490")
+	private String marc490;
+	/** 520 – Summary / abstract */
+	@Column(name = "marc_520", length = 2000)
+	private String marc520;
+	/** 650 – Topical subject term */
+	@Column(name = "marc_650")
+	private String marc650;
+	/** 651 – Geographic subject term */
+	@Column(name = "marc_651")
+	private String marc651;
+	/** 700 – Added entry (co-author, editor, illustrator) */
+	@Column(name = "marc_700")
+	private String marc700;
+	/** 856 – Electronic resource URL (overrides link field for MARC compliance) */
+	@Column(name = "marc_856")
+	private String marc856;
+
+	public String getMarcLeader() { return marcLeader; }
+	public void setMarcLeader(String v) { this.marcLeader = v; }
+	public String getMarc001() { return marc001; }
+	public void setMarc001(String v) { this.marc001 = v; }
+	public String getMarc041() { return marc041; }
+	public void setMarc041(String v) { this.marc041 = v; }
+	public String getMarc082() { return marc082; }
+	public void setMarc082(String v) { this.marc082 = v; }
+	public String getMarc082Ed() { return marc082Ed; }
+	public void setMarc082Ed(String v) { this.marc082Ed = v; }
+	public String getMarc245c() { return marc245c; }
+	public void setMarc245c(String v) { this.marc245c = v; }
+	public String getMarc246() { return marc246; }
+	public void setMarc246(String v) { this.marc246 = v; }
+	public String getMarc490() { return marc490; }
+	public void setMarc490(String v) { this.marc490 = v; }
+	public String getMarc520() { return marc520; }
+	public void setMarc520(String v) { this.marc520 = v; }
+	public String getMarc650() { return marc650; }
+	public void setMarc650(String v) { this.marc650 = v; }
+	public String getMarc651() { return marc651; }
+	public void setMarc651(String v) { this.marc651 = v; }
+	public String getMarc700() { return marc700; }
+	public void setMarc700(String v) { this.marc700 = v; }
+	public String getMarc856() { return marc856; }
+	public void setMarc856(String v) { this.marc856 = v; }
+
 	/** Stored filename of an uploaded PDF (e.g. "book_42.pdf") */
 	private String pdf;
 
@@ -248,5 +322,17 @@ public class CatalogItem {
 				+ ", number_of_pages=" + number_of_pages + ", notes=" + notes + ", status=" + status + ", category="
 				+ category + "]";
 	}
+
+	public java.math.BigDecimal getPurchasePrice() { return purchasePrice; }
+	public void setPurchasePrice(java.math.BigDecimal purchasePrice) { this.purchasePrice = purchasePrice; }
+
+	public String getSupplierName() { return supplierName; }
+	public void setSupplierName(String supplierName) { this.supplierName = supplierName; }
+
+	public boolean isArchived() { return archived; }
+	public void setArchived(boolean archived) { this.archived = archived; }
+
+	public boolean isDuplicateOf() { return duplicateOf; }
+	public void setDuplicateOf(boolean duplicateOf) { this.duplicateOf = duplicateOf; }
 
 }

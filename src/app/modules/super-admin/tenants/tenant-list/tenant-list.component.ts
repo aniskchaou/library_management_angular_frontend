@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SuperAdminApiService } from '../../services/super-admin-api.service';
 
 @Component({
+  standalone: false,
   selector: 'app-tenant-list',
   template: `
     <div class="sa-page">

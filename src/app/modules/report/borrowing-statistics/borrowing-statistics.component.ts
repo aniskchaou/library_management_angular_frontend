@@ -83,9 +83,20 @@ export class BorrowingStatisticsComponent extends URLLoader implements OnInit {
 
   constructor(private httpService: HTTPService) { super(); }
 
+  // ─── Top borrowers from backend (server-side aggregation) ────────────────
+  topBorrowers: { memberId: number; memberName: string; borrowCount: number }[] = [];
+
   ngOnInit(): void {
     this.loadScripts();
     this._load();
+    this._loadTopBorrowers();
+  }
+
+  private _loadTopBorrowers(): void {
+    this.httpService.getAll(CONFIG.URL_BASE + '/circulation/top-borrowers?limit=10').subscribe({
+      next: (data: any[]) => { this.topBorrowers = data || []; },
+      error: () => { /* non-critical, silently ignore */ },
+    });
   }
 
   // ─── Data loading ──────────────────────────────────────────────────────────

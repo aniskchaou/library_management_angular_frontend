@@ -88,6 +88,19 @@ import { DashboardComponent } from './modules/dashboard/dashboard/dashboard.comp
 import { EditEmailSettingComponent } from './modules/settings/edit-email-setting/edit-email-setting.component';
 import { BookingSettingsComponent } from './modules/booking-settings/booking-settings/booking-settings.component';
 import { BulkActionsComponent } from './modules/bulk-actions/bulk-actions/bulk-actions.component';
+import { ActivityTimelineComponent } from './modules/activity-timeline/activity-timeline.component';
+import { AudiobooksComponent } from './modules/audiobooks/audiobooks.component';
+import { WebhooksComponent } from './modules/webhooks/webhooks.component';
+import { RfidSettingsComponent } from './modules/rfid-settings/rfid-settings.component';
+import { AiRecommendationsComponent } from './modules/ai-recommendations/ai-recommendations.component';
+import { BankTransferComponent } from './modules/bank-transfer/bank-transfer.component';
+import { GuestNavbarComponent } from './modules/guest/guest-navbar/guest-navbar.component';
+import { AboutComponent } from './modules/guest/about/about.component';
+import { ContactComponent } from './modules/guest/contact/contact.component';
+import { MemberRegisterComponent } from './modules/guest/member-register/member-register.component';
+import { NewArrivalsComponent } from './modules/guest/new-arrivals/new-arrivals.component';
+import { BrowseComponent } from './modules/guest/browse/browse.component';
+import { FaqComponent } from './modules/guest/faq/faq.component';
 import { AddCatalogCopyComponent } from './modules/catalog/add-catalog-copy/add-catalog-copy.component';
 import { TagsComponent } from './modules/tags/tags/tags.component';
 import { ItemTypesComponent } from './modules/item-types/item-types/item-types.component';
@@ -537,6 +550,42 @@ const routes: Routes = [
     canActivate: [AuthguardService],
   },
   {
+    path: 'audiobooks',
+    component: AudiobooksComponent,
+    pathMatch: 'full',
+    canActivate: [AuthguardService],
+  },
+  {
+    path: 'activity-timeline',
+    component: ActivityTimelineComponent,
+    pathMatch: 'full',
+    canActivate: [AuthguardService],
+  },
+  {
+    path: 'webhooks',
+    component: WebhooksComponent,
+    pathMatch: 'full',
+    canActivate: [AuthguardService],
+  },
+  {
+    path: 'rfid-settings',
+    component: RfidSettingsComponent,
+    pathMatch: 'full',
+    canActivate: [AuthguardService],
+  },
+  {
+    path: 'ai-recommendations',
+    component: AiRecommendationsComponent,
+    pathMatch: 'full',
+    canActivate: [AuthguardService],
+  },
+  {
+    path: 'bank-transfer',
+    component: BankTransferComponent,
+    pathMatch: 'full',
+    canActivate: [AuthguardService],
+  },
+  {
     path: 'ebook',
     component: EbookComponent,
     pathMatch: 'full',
@@ -613,6 +662,12 @@ const routes: Routes = [
     component: MemberPortalComponent,
     pathMatch: 'full',
   },
+  { path: 'about',           component: AboutComponent,          pathMatch: 'full' },
+  { path: 'contact',         component: ContactComponent,        pathMatch: 'full' },
+  { path: 'member-register', component: MemberRegisterComponent, pathMatch: 'full' },
+  { path: 'new-arrivals',    component: NewArrivalsComponent,    pathMatch: 'full' },
+  { path: 'browse',          component: BrowseComponent,         pathMatch: 'full' },
+  { path: 'faq',             component: FaqComponent,            pathMatch: 'full' },
   { path: '', redirectTo: 'opac-home', pathMatch: 'full' },
   { path: '**', redirectTo: 'opac-home', pathMatch: 'full' },
   // Super Admin routes (lazy-loaded style via module)
@@ -653,6 +708,19 @@ const routes: Routes = [
         AccountAnalyticsComponent,
         BookingSettingsComponent,
         BulkActionsComponent,
+        ActivityTimelineComponent,
+        AudiobooksComponent,
+        WebhooksComponent,
+        RfidSettingsComponent,
+        AiRecommendationsComponent,
+        BankTransferComponent,
+        GuestNavbarComponent,
+        AboutComponent,
+        ContactComponent,
+        MemberRegisterComponent,
+        NewArrivalsComponent,
+        BrowseComponent,
+        FaqComponent,
         AddCatalogCopyComponent,
         TagsComponent,
         ItemTypesComponent,
@@ -695,6 +763,7 @@ const routes: Routes = [
         PurshaseSuggestionModalComponent,
         NoticeModalComponent,
         NoticeTemplateModalComponent,
+        AdvancedSearchComponent,
         PhoneFormatPipe,
         LoadingComponent,
         DepartmentListComponent,

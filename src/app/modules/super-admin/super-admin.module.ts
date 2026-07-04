@@ -13,6 +13,13 @@ import { PlanFormComponent } from './plans/plan-form/plan-form.component';
 import { UserManagementComponent } from './users/user-management/user-management.component';
 import { AuditLogViewComponent } from './audit-logs/audit-log-view.component';
 import { SaasAnalyticsComponent } from './analytics/saas-analytics.component';
+import { BranchManagementComponent } from './branches/branch-management.component';
+import { GlobalSettingsComponent } from './settings/global-settings.component';
+import { MonitoringComponent } from './monitoring/monitoring.component';
+import { InvoicesComponent } from './billing/invoices.component';
+import { CouponsComponent } from './billing/coupons.component';
+import { GrowthReportComponent } from './reports/growth-report.component';
+import { UserAnalyticsComponent } from './reports/user-analytics.component';
 
 const routes: Routes = [
   {
@@ -29,6 +36,12 @@ const routes: Routes = [
       { path: 'users', component: UserManagementComponent },
       { path: 'audit-logs', component: AuditLogViewComponent },
       { path: 'analytics', component: SaasAnalyticsComponent },
+      { path: 'settings', component: GlobalSettingsComponent },
+      { path: 'monitoring', component: MonitoringComponent },
+      { path: 'invoices', component: InvoicesComponent },
+      { path: 'coupons', component: CouponsComponent },
+      { path: 'reports/growth', component: GrowthReportComponent },
+      { path: 'reports/users', component: UserAnalyticsComponent },
     ],
   },
 ];
@@ -43,6 +56,13 @@ const routes: Routes = [
     UserManagementComponent,
     AuditLogViewComponent,
     SaasAnalyticsComponent,
+    BranchManagementComponent,
+    GlobalSettingsComponent,
+    MonitoringComponent,
+    InvoicesComponent,
+    CouponsComponent,
+    GrowthReportComponent,
+    UserAnalyticsComponent,
   ],
   imports: [
     CommonModule,

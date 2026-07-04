@@ -1,11 +1,7 @@
 package com.dev.delta.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class RequestedBook {
@@ -29,21 +25,19 @@ public class RequestedBook {
 
 	private String status;
 
-	public String getStatus() {
-		return status;
-	}
+	// ── Reservation queue fields ──────────────────────────────────────
+	private Integer queuePosition;      // Position in hold queue (1 = first)
+	private LocalDate reservationDate;  // When reservation was created
+	private LocalDate expiryDate;       // When reservation expires
+	private boolean notified;           // Whether member was notified of availability
+	private LocalDate notifiedDate;     // When notification was sent
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+	public String getStatus() { return status; }
+	public void setStatus(String status) { this.status = status; }
 
-	public RequestedBook() {
-		// TODO Auto-generated constructor stub
-	}
+	public RequestedBook() {}
 
-	public RequestedBook(CatalogItem catalogItem, Writer writer, Category ctagory, String edition, String note, Member member,
-                         String status) {
-		super();
+	public RequestedBook(CatalogItem catalogItem, Writer writer, Category ctagory, String edition, String note, Member member, String status) {
 		this.catalogItem = catalogItem;
 		this.writer = writer;
 		this.ctagory = ctagory;
@@ -53,60 +47,40 @@ public class RequestedBook {
 		this.status = status;
 	}
 
-	public Long getId() {
-		return id;
-	}
+	public Long getId() { return id; }
+	public void setId(Long id) { this.id = id; }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	public CatalogItem getCatalogItem() { return catalogItem; }
+	public void setCatalogItem(CatalogItem catalogItem) { this.catalogItem = catalogItem; }
 
-	public CatalogItem getBook() {
-		return catalogItem;
-	}
+	public Writer getWriter() { return writer; }
+	public void setWriter(Writer writer) { this.writer = writer; }
 
-	public void setBook(CatalogItem catalogItem) {
-		this.catalogItem = catalogItem;
-	}
+	public Category getCtagory() { return ctagory; }
+	public void setCtagory(Category ctagory) { this.ctagory = ctagory; }
 
-	public Writer getWriter() {
-		return writer;
-	}
+	public String getEdition() { return edition; }
+	public void setEdition(String edition) { this.edition = edition; }
 
-	public void setWriter(Writer writer) {
-		this.writer = writer;
-	}
+	public String getNote() { return note; }
+	public void setNote(String note) { this.note = note; }
 
-	public Category getCtagory() {
-		return ctagory;
-	}
+	public Member getMember() { return member; }
+	public void setMember(Member member) { this.member = member; }
 
-	public void setCtagory(Category ctagory) {
-		this.ctagory = ctagory;
-	}
+	public Integer getQueuePosition() { return queuePosition; }
+	public void setQueuePosition(Integer queuePosition) { this.queuePosition = queuePosition; }
 
-	public String getEdition() {
-		return edition;
-	}
+	public LocalDate getReservationDate() { return reservationDate; }
+	public void setReservationDate(LocalDate reservationDate) { this.reservationDate = reservationDate; }
 
-	public void setEdition(String edition) {
-		this.edition = edition;
-	}
+	public LocalDate getExpiryDate() { return expiryDate; }
+	public void setExpiryDate(LocalDate expiryDate) { this.expiryDate = expiryDate; }
 
-	public String getNote() {
-		return note;
-	}
+	public boolean isNotified() { return notified; }
+	public void setNotified(boolean notified) { this.notified = notified; }
 
-	public void setNote(String note) {
-		this.note = note;
-	}
-
-	public Member getMember() {
-		return member;
-	}
-
-	public void setMember(Member member) {
-		this.member = member;
-	}
-
+	public LocalDate getNotifiedDate() { return notifiedDate; }
+	public void setNotifiedDate(LocalDate notifiedDate) { this.notifiedDate = notifiedDate; }
 }
+

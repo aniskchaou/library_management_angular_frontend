@@ -1,0 +1,59 @@
+<div class="ll-section">
+  <div class="ai-rec__header">
+    <span class="ai-rec__icon">🤖</span>
+    <div>
+      <h2 style="margin:0">AI Book Recommendations</h2>
+      <p style="margin:4px 0 0;color:#6b7280;font-size:13px">
+        Personalized suggestions powered by OpenAI, based on member borrowing history.
+      </p>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="ai-rec__controls">
+    <div class="ai-rec__field">
+      <label>Member ID</label>
+      <input type="number" [(ngModel)]="memberId" placeholder="e.g. 42" class="ai-rec__input">
+    </div>
+    <div class="ai-rec__field">
+      <label>Number of suggestions</label>
+      <select [(ngModel)]="count" class="ai-rec__input">
+        <option [value]="3">3</option>
+        <option [value]="5">5</option>
+        <option [value]="10">10</option>
+      </select>
+    </div>
+    <button class="ai-rec__btn" (click)="getRecommendations()" [disabled]="loading">
+      <span *ngIf="!loading">✨ Get Recommendations</span>
+      <span *ngIf="loading">Thinking…</span>
+    </button>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="ai-rec__error">{{ error }}</div>
+
+  <!-- Empty state -->
+  <div *ngIf="hasLoaded && recommendations.length === 0 && !loading" class="ai-rec__empty">
+    No recommendations returned. The member may not have borrowing history yet.
+  </div>
+
+  <!-- Results -->
+  <div *ngIf="recommendations.length > 0" class="ai-rec__grid">
+    <div *ngFor="let rec of recommendations; let i = index" class="ai-rec__card">
+      <div class="ai-rec__card-num">{{ i + 1 }}</div>
+      <div class="ai-rec__card-body">
+        <div class="ai-rec__card-title">{{ rec.title }}</div>
+        <div class="ai-rec__card-author">by {{ rec.author }}</div>
+        <p *ngIf="rec.reason" class="ai-rec__card-reason">{{ rec.reason }}</p>
+        <span *ngIf="rec.isbn" class="ai-rec__isbn">ISBN: {{ rec.isbn }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info box -->
+  <div class="ai-rec__info">
+    <strong>ℹ️ Setup:</strong> Set <code>openai.api-key</code> in
+    <code>backend/src/main/resources/application.properties</code> to enable AI-powered recommendations.
+    Without a key, 5 popular titles are returned as fallback.
+  </div>
+</div>

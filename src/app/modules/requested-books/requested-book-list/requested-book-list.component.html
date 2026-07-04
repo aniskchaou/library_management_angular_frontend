@@ -76,6 +76,26 @@
               <i class="fa fa-ban" aria-hidden="true"></i>
             </button>
           }
+          @if (item?.status === 'PENDING' || item?.status === defautstatus) {
+            <button
+              type="button"
+              class="btn btn-info btn-sm"
+              title="Notify member — book is ready"
+              (click)="notify(item.id)"
+              >
+              <i class="fas fa-bell"></i>
+            </button>
+          }
+          @if (item?.status === 'PENDING' || item?.status === defautstatus) {
+            <button
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              title="Cancel reservation"
+              (click)="cancel(item.id)"
+              >
+              <i class="fas fa-times-circle"></i>
+            </button>
+          }
         </td>
       </tr>
     }

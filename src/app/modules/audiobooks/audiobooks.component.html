@@ -1,0 +1,179 @@
+<div class="ll-section">
+
+  <!-- Header -->
+  <div class="ll-section__header" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px">
+    <mat-icon style="color:#8b5cf6;font-size:28px">headset</mat-icon>
+    <h2 style="margin:0;font-size:1.4rem;font-weight:600">Audiobooks</h2>
+    <span style="flex:1"></span>
+    <button mat-flat-button color="primary" (click)="openForm(addModal)">
+      <mat-icon>add</mat-icon> Add Audiobook
+    </button>
+  </div>
+
+  <!-- Filters -->
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px">
+    <mat-form-field appearance="outline" style="flex:2;min-width:200px">
+      <mat-label>Search audiobooks</mat-label>
+      <input matInput [(ngModel)]="searchQuery" (ngModelChange)="applyFilter()" placeholder="Title, author, narrator…">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="flex:1;min-width:160px">
+      <mat-label>Genre</mat-label>
+      <mat-select [(ngModel)]="filterGenre" (ngModelChange)="applyFilter()">
+        <mat-option value="">All Genres</mat-option>
+        <mat-option *ngFor="let g of genres" [value]="g">{{ g }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div style="text-align:center;padding:40px"><mat-spinner diameter="40" style="margin:auto"></mat-spinner></div>
+  }
+
+  <!-- Empty -->
+  @else if (filtered.length === 0) {
+    <div style="text-align:center;padding:60px;color:#9ca3af">
+      <mat-icon style="font-size:48px">headset_off</mat-icon>
+      <h3>No audiobooks found</h3>
+      <p>Click "Add Audiobook" to add the first one.</p>
+    </div>
+  }
+
+  <!-- Grid -->
+  @else {
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px">
+      @for (ab of filtered; track ab.id) {
+        <div class="ab-card">
+          <div class="ab-card__cover">
+            <img [src]="ab.coverUrl || 'assets/images/no-cover.png'"
+                 [alt]="ab.title"
+                 onerror="this.src='assets/images/no-cover.png'"
+                 style="width:100%;height:100%;object-fit:cover">
+            @if (ab.fileUrl) {
+              <button class="ab-card__play" mat-icon-button (click)="playAudio(ab.fileUrl)"
+                      [title]="playingUrl === ab.fileUrl ? 'Pause' : 'Play preview'">
+                <mat-icon>{{ playingUrl === ab.fileUrl ? 'pause_circle' : 'play_circle' }}</mat-icon>
+              </button>
+            }
+          </div>
+
+          <div class="ab-card__body">
+            <div class="ab-card__title" title="{{ ab.title }}">{{ ab.title }}</div>
+            <div class="ab-card__author">{{ ab.author }}</div>
+            @if (ab.narrator) {
+              <div class="ab-card__narrator">Read by {{ ab.narrator }}</div>
+            }
+            <div class="ab-card__meta">
+              @if (ab.durationMinutes) {
+                <span><mat-icon style="font-size:14px;vertical-align:middle">schedule</mat-icon> {{ formatDuration(ab.durationMinutes) }}</span>
+              }
+              @if (ab.genre) {
+                <span class="ab-badge">{{ ab.genre }}</span>
+              }
+              @if (!ab.active) {
+                <span class="ab-badge ab-badge--inactive">Inactive</span>
+              }
+            </div>
+          </div>
+
+          <!-- Audio player (inline) -->
+          @if (playingUrl === ab.fileUrl) {
+            <div style="padding:0 12px 12px">
+              <audio controls autoplay [src]="ab.fileUrl" style="width:100%;height:36px">
+                Your browser does not support audio playback.
+              </audio>
+            </div>
+          }
+
+          <div class="ab-card__actions">
+            <button mat-icon-button matTooltip="Edit" (click)="openForm(addModal, ab)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Delete" color="warn" (click)="delete(ab.id!)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+
+<!-- ── Add / Edit Modal ──────────────────────────────────────────────────────── -->
+<ng-template #addModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ editing ? 'Edit Audiobook' : 'Add Audiobook' }}</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    @if (formError) {
+      <div class="alert alert-danger">{{ formError }}</div>
+    }
+    <div class="row g-3">
+      <div class="col-md-8">
+        <label class="form-label">Title *</label>
+        <input type="text" class="form-control" [(ngModel)]="form.title" placeholder="Audiobook title">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Genre</label>
+        <input type="text" class="form-control" [(ngModel)]="form.genre" placeholder="Fiction, Non-fiction…">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Author</label>
+        <input type="text" class="form-control" [(ngModel)]="form.author">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Narrator</label>
+        <input type="text" class="form-control" [(ngModel)]="form.narrator">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Duration (minutes)</label>
+        <input type="number" class="form-control" [(ngModel)]="form.durationMinutes" min="0">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Format</label>
+        <select class="form-select" [(ngModel)]="form.format">
+          <option>MP3</option><option>AAC</option><option>M4B</option><option>OGG</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <label class="form-label">Audio File URL</label>
+        <input type="url" class="form-control" [(ngModel)]="form.fileUrl" placeholder="https://…/audiobook.mp3">
+      </div>
+      <div class="col-12">
+        <label class="form-label">Cover Image URL</label>
+        <input type="url" class="form-control" [(ngModel)]="form.coverUrl" placeholder="https://…/cover.jpg">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">ISBN</label>
+        <input type="text" class="form-control" [(ngModel)]="form.isbn">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Language</label>
+        <input type="text" class="form-control" [(ngModel)]="form.language" placeholder="eng">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Publisher</label>
+        <input type="text" class="form-control" [(ngModel)]="form.publisher">
+      </div>
+      <div class="col-12">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" rows="3" [(ngModel)]="form.description"></textarea>
+      </div>
+      <div class="col-12">
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="ab-active" [(ngModel)]="form.active">
+          <label class="form-check-label" for="ab-active">Active (visible in catalog)</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
+    <button type="button" class="btn btn-primary" [disabled]="saving" (click)="save(modal)">
+      {{ saving ? 'Saving…' : (editing ? 'Update' : 'Add Audiobook') }}
+    </button>
+  </div>
+</ng-template>

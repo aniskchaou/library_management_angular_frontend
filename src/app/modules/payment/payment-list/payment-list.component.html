@@ -5,6 +5,7 @@
       <th>{{ 'ui.date' | translate }}</th>
       <th>{{ 'ui.amount' | translate }}</th>
       <th>Payment Method</th>
+      <th>Status</th>
       <th></th>
     </tr>
   </thead>
@@ -14,16 +15,17 @@
       <th>{{ 'ui.date' | translate }}</th>
       <th>{{ 'ui.amount' | translate }}</th>
       <th>Payment Method</th>
+      <th>Status</th>
       <th></th>
     </tr>
   </tfoot>
   @if (payments.length > 0) {
     <tbody>
       @for (c of payments; track c) {
-        <tr>
-          <td>{{ c.memberName.name }}</td>
-          <td>{{ c.date }}</td>
-          <td>{{ c.amount }}</td>
+        <tr [class.table-warning]="c.paymentStatus === 'WAIVED'">
+          <td>{{ c.memberName?.name ?? c.member?.firstname + ' ' + c.member?.surname }}</td>
+          <td>{{ c.paymentDate ?? c.date }}</td>
+          <td>{{ c.amountPaid ?? c.amount }}</td>
           <td>
             @if (c.paymentMethod === 'bank_transfer') { Bank Transfer }
             @else if (c.paymentMethod === 'paypal') { PayPal }
@@ -31,11 +33,24 @@
             @else { Cash }
           </td>
           <td>
-            <button
-              type="button"
-              class="btn btn-danger btn-sm"
-              (click)="delete(c.id)"
-              >
+            <span class="badge" [class.bg-warning]="c.paymentStatus === 'WAIVED'"
+                  [class.bg-success]="c.paymentStatus === 'Completed' || c.paymentStatus === 'COMPLETED'"
+                  [class.bg-secondary]="!c.paymentStatus">
+              {{ c.paymentStatus ?? 'Pending' }}
+            </span>
+          </td>
+          <td class="d-flex gap-1">
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+                    title="Print Receipt" (click)="openReceipt(c.id)">
+              <i class="fas fa-print"></i>
+            </button>
+            <button type="button" class="btn btn-outline-warning btn-sm"
+                    title="Waive Fine"
+                    [disabled]="c.paymentStatus === 'WAIVED'"
+                    (click)="waiveFine(c)">
+              <i class="fas fa-hand-holding-usd"></i> Waive
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="delete(c.id)">
               <i class="fas fa-trash-alt"></i>
             </button>
           </td>

@@ -33,6 +33,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    @Autowired
+    private ApiMonitoringFilter apiMonitoringFilter;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -53,6 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(apiMonitoringFilter, JwtAuthenticationFilter.class);
     }
 
     @Bean

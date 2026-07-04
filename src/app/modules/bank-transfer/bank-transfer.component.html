@@ -1,0 +1,180 @@
+<div class="ll-section">
+  <div class="bt-header">
+    <mat-icon style="color:#3b82f6;font-size:28px">account_balance</mat-icon>
+    <div>
+      <h2 style="margin:0">Bank Transfer / Manual Payment</h2>
+      <p style="margin:4px 0 0;color:#6b7280;font-size:13px">
+        Submit or review payments made by bank transfer, cash, or other manual methods.
+      </p>
+    </div>
+    <div class="bt-header__tabs">
+      <button [class.bt-tab--active]="view==='member'" (click)="view='member'">Submit Payment</button>
+      <button [class.bt-tab--active]="view==='admin'"  (click)="view='admin'">Admin Review</button>
+    </div>
+  </div>
+
+  <!-- ── Bank account info card ──────────────────────────────────────────── -->
+  <div class="bt-info-card">
+    <h4 style="margin:0 0 10px"><mat-icon style="vertical-align:middle;font-size:18px">info</mat-icon> Library Bank Account</h4>
+    <div class="bt-info-grid">
+      <div><span class="bt-label">Bank Name</span><span>{{ accountInfo.bankName || 'Not configured' }}</span></div>
+      <div><span class="bt-label">Account Number</span><span>{{ accountInfo.accountNumber || 'Not configured' }}</span></div>
+      <div><span class="bt-label">Account Holder</span><span>{{ accountInfo.accountHolder }}</span></div>
+      <div><span class="bt-label">Routing / Swift</span><span>{{ accountInfo.routingNumber || accountInfo.swiftCode || 'N/A' }}</span></div>
+    </div>
+    <p style="margin:8px 0 0;font-size:12px;color:#374151"><em>{{ accountInfo.note }}</em></p>
+  </div>
+
+  <!-- ── Member: submit form ─────────────────────────────────────────────── -->
+  @if (view === 'member') {
+    <div class="bt-card">
+      <h4>Submit a Payment</h4>
+      <div class="bt-form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Member ID</mat-label>
+          <input matInput type="number" [(ngModel)]="form.memberId">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Full Name (optional)</mat-label>
+          <input matInput [(ngModel)]="form.memberName">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Amount</mat-label>
+          <input matInput type="number" step="0.01" [(ngModel)]="form.amount">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Currency</mat-label>
+          <mat-select [(ngModel)]="form.currency">
+            <mat-option *ngFor="let c of currencies" [value]="c">{{ c }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Purpose</mat-label>
+          <mat-select [(ngModel)]="form.purpose">
+            <mat-option *ngFor="let p of purposes" [value]="p">{{ p }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Bank / Reference Number</mat-label>
+          <input matInput [(ngModel)]="form.reference" placeholder="e.g. TXN-20241205-001">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Sending Bank Details</mat-label>
+          <input matInput [(ngModel)]="form.bankDetails" placeholder="Your bank name / account">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Transfer Date</mat-label>
+          <input matInput type="date" [(ngModel)]="form.transferDate">
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="outline" style="width:100%">
+        <mat-label>Note (optional)</mat-label>
+        <textarea matInput rows="2" [(ngModel)]="form.note"></textarea>
+      </mat-form-field>
+      <button mat-flat-button color="primary" (click)="submitPayment()" [disabled]="submitting || !form.memberId || !form.amount">
+        <mat-icon>send</mat-icon> {{ submitting ? 'Submitting…' : 'Submit Payment' }}
+      </button>
+
+      @if (submitResult?.success) {
+        <div class="bt-alert bt-alert--ok">
+          Payment submitted successfully. Your reference ID: <strong>{{ submitResult.data?.id }}</strong>.
+          Staff will verify and confirm within 1–2 business days.
+        </div>
+      }
+      @if (submitResult && !submitResult.success) {
+        <div class="bt-alert bt-alert--err">Failed: {{ submitResult.msg }}</div>
+      }
+    </div>
+  }
+
+  <!-- ── Admin: review list ──────────────────────────────────────────────── -->
+  @if (view === 'admin') {
+    <div class="bt-card">
+      <div class="bt-admin-bar">
+        <h4 style="margin:0">Payment Submissions</h4>
+        <div style="display:flex;gap:8px;align-items:center">
+          <mat-form-field appearance="outline" style="width:160px">
+            <mat-label>Filter by status</mat-label>
+            <mat-select [(ngModel)]="statusFilter" (ngModelChange)="loadAll()">
+              <mat-option value="">All</mat-option>
+              <mat-option value="PENDING">Pending</mat-option>
+              <mat-option value="CONFIRMED">Confirmed</mat-option>
+              <mat-option value="REJECTED">Rejected</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-stroked-button (click)="loadAll()"><mat-icon>refresh</mat-icon></button>
+        </div>
+      </div>
+
+      <div *ngIf="loading" style="text-align:center;padding:30px;color:#9ca3af">Loading…</div>
+
+      <div *ngIf="!loading && allPayments.length === 0" style="text-align:center;padding:30px;color:#9ca3af">
+        No payment records found.
+      </div>
+
+      <div class="bt-table-wrap" *ngIf="!loading && allPayments.length > 0">
+        <table class="bt-table">
+          <thead>
+            <tr>
+              <th>ID</th><th>Member</th><th>Amount</th><th>Purpose</th>
+              <th>Reference</th><th>Date</th><th>Status</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of filtered">
+              <td>{{ p.id }}</td>
+              <td>{{ p.memberName || p.memberId }}</td>
+              <td>{{ p.amount | number:'1.2-2' }} {{ p.currency }}</td>
+              <td>{{ p.purpose }}</td>
+              <td>{{ p.reference }}</td>
+              <td>{{ p.transferDate || (p.submittedAt | date:'mediumDate') }}</td>
+              <td>
+                <span class="bt-badge" [style.background]="statusColor(p.status!)">{{ p.status }}</span>
+              </td>
+              <td>
+                <button mat-icon-button color="primary" title="Confirm"
+                        [disabled]="p.status !== 'PENDING'"
+                        (click)="openReview(p, 'confirm')">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" title="Reject"
+                        [disabled]="p.status !== 'PENDING'"
+                        (click)="openReview(p, 'reject')">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+                <button mat-icon-button title="Delete" (click)="delete(p.id!)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</div>
+
+<!-- ── Review modal ─────────────────────────────────────────────────────────── -->
+@if (reviewTarget) {
+  <div class="bt-overlay" (click)="reviewTarget=null">
+    <div class="bt-modal" (click)="$event.stopPropagation()">
+      <h3>{{ reviewAction === 'confirm' ? '✅ Confirm Payment' : '❌ Reject Payment' }}</h3>
+      <p>Member: <strong>{{ reviewTarget.memberName || reviewTarget.memberId }}</strong> |
+         Amount: <strong>{{ reviewTarget.amount }} {{ reviewTarget.currency }}</strong></p>
+      <mat-form-field appearance="outline" style="width:100%">
+        <mat-label>Reviewed by (your name)</mat-label>
+        <input matInput [(ngModel)]="reviewedBy">
+      </mat-form-field>
+      <mat-form-field appearance="outline" style="width:100%">
+        <mat-label>{{ reviewAction === 'confirm' ? 'Confirmation note (optional)' : 'Reason for rejection' }}</mat-label>
+        <textarea matInput rows="3" [(ngModel)]="reviewNote"></textarea>
+      </mat-form-field>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button mat-stroked-button (click)="reviewTarget=null">Cancel</button>
+        <button mat-flat-button [color]="reviewAction==='confirm' ? 'primary' : 'warn'" (click)="submitReview()">
+          {{ reviewAction === 'confirm' ? 'Confirm' : 'Reject' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

@@ -59,6 +59,64 @@
       </mat-card>
     </section>
 
+    <!-- Today's activity KPIs -->
+    <section class="ll-kpis ll-kpis--today">
+      <mat-card class="ll-kpi ll-kpi--primary">
+        <div class="ll-kpi__body">
+          <div class="ll-kpi__label">
+            <mat-icon>call_made</mat-icon>
+            <span>Today's Issues</span>
+          </div>
+          <div class="ll-kpi__value">{{ todayIssues ?? '—' }}</div>
+        </div>
+        <mat-icon class="ll-kpi__bg">call_made</mat-icon>
+      </mat-card>
+
+      <mat-card class="ll-kpi ll-kpi--success">
+        <div class="ll-kpi__body">
+          <div class="ll-kpi__label">
+            <mat-icon>call_received</mat-icon>
+            <span>Today's Returns</span>
+          </div>
+          <div class="ll-kpi__value">{{ todayReturns ?? '—' }}</div>
+        </div>
+        <mat-icon class="ll-kpi__bg">call_received</mat-icon>
+      </mat-card>
+
+      <mat-card class="ll-kpi ll-kpi--warning" routerLink="/overdue">
+        <div class="ll-kpi__body">
+          <div class="ll-kpi__label">
+            <mat-icon>warning</mat-icon>
+            <span>Overdue Books</span>
+          </div>
+          <div class="ll-kpi__value">{{ overdueCount ?? '—' }}</div>
+        </div>
+        <mat-icon class="ll-kpi__bg">warning</mat-icon>
+      </mat-card>
+
+      <mat-card class="ll-kpi ll-kpi--info" routerLink="/requested-books">
+        <div class="ll-kpi__body">
+          <div class="ll-kpi__label">
+            <mat-icon>bookmark_added</mat-icon>
+            <span>Pending Reservations</span>
+          </div>
+          <div class="ll-kpi__value">{{ pendingReservations ?? '—' }}</div>
+        </div>
+        <mat-icon class="ll-kpi__bg">bookmark_added</mat-icon>
+      </mat-card>
+
+      <mat-card class="ll-kpi ll-kpi--danger">
+        <div class="ll-kpi__body">
+          <div class="ll-kpi__label">
+            <mat-icon>payments</mat-icon>
+            <span>Today's Fines</span>
+          </div>
+          <div class="ll-kpi__value">{{ todayFines != null ? (todayFines | currency) : '—' }}</div>
+        </div>
+        <mat-icon class="ll-kpi__bg">payments</mat-icon>
+      </mat-card>
+    </section>
+
     <!-- Chart panels -->
 
     <!-- Dashboard settings -->

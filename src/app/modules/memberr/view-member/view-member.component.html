@@ -85,4 +85,38 @@
     </button>
     <button mat-flat-button color="primary" (click)="closeModal()">Close</button>
   </div>
+
+  <!-- Membership management panel -->
+  <div class="ll-modal__management mt-3 p-3 border rounded">
+    <h6 class="mb-3">Membership Management</h6>
+
+    <!-- Photo URL -->
+    <div class="mb-2" *ngIf="member">
+      <img *ngIf="member.photoUrl" [src]="member.photoUrl" alt="Photo" class="rounded-circle mb-1" style="width:48px;height:48px;object-fit:cover">
+      <div class="input-group input-group-sm">
+        <span class="input-group-text">Photo URL</span>
+        <input type="text" class="form-control" #photoInput [value]="member.photoUrl || ''">
+        <button class="btn btn-outline-secondary btn-sm" (click)="updatePhotoUrl(photoInput.value)">Update</button>
+      </div>
+    </div>
+
+    <!-- Renew membership -->
+    <div class="input-group input-group-sm mb-2">
+      <span class="input-group-text">Renew (months)</span>
+      <input type="number" class="form-control" [(ngModel)]="renewMonths" min="1" max="60">
+      <button class="btn btn-outline-success btn-sm" (click)="renewMembership()">Renew</button>
+    </div>
+    <div class="text-muted small mb-2" *ngIf="member?.membershipExpiry">
+      Current expiry: {{ member.membershipExpiry }}
+    </div>
+
+    <!-- Borrow limit -->
+    <div class="input-group input-group-sm mb-2">
+      <span class="input-group-text">Borrow Limit</span>
+      <input type="number" class="form-control" #limitInput [value]="member?.maxBorrowLimit || 0" min="0">
+      <button class="btn btn-outline-primary btn-sm" (click)="updateBorrowLimit(+limitInput.value)">Save</button>
+    </div>
+    <div class="text-muted small">0 = use global library limit</div>
+  </div>
 </div>
+

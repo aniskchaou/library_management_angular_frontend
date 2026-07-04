@@ -1,0 +1,94 @@
+<div class="pg-root">
+  <app-guest-navbar activePage="about"></app-guest-navbar>
+
+  <!-- Hero -->
+  <section class="ab-hero">
+    <div class="ab-hero__inner">
+      <span class="ab-eyebrow">About Us</span>
+      <h1>{{ libraryName }}</h1>
+      <p>A modern library built for the community — connecting people with knowledge, ideas, and stories.</p>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="ab-stats">
+    <div class="ab-stats__card">
+      <div class="ab-stats__val">{{ stats.books | number }}</div>
+      <div class="ab-stats__lbl">Books & Items</div>
+    </div>
+    <div class="ab-stats__card">
+      <div class="ab-stats__val">{{ stats.members | number }}</div>
+      <div class="ab-stats__lbl">Registered Members</div>
+    </div>
+    <div class="ab-stats__card">
+      <div class="ab-stats__val">{{ stats.categories | number }}</div>
+      <div class="ab-stats__lbl">Subject Categories</div>
+    </div>
+    <div class="ab-stats__card">
+      <div class="ab-stats__val">{{ stats.ebooks | number }}</div>
+      <div class="ab-stats__lbl">Digital Resources</div>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section class="ab-section ab-section--alt">
+    <div class="ab-section__inner">
+      <div class="ab-text-col">
+        <h2>Our Mission</h2>
+        <p>
+          We believe that access to information is a fundamental right. Our mission is to provide
+          free, equitable access to knowledge and foster a love of learning for every member of our community —
+          from the youngest reader to the most seasoned researcher.
+        </p>
+        <p>
+          We are committed to preserving and sharing the collective heritage of human knowledge
+          through up-to-date collections, digital resources, and inclusive community programs.
+        </p>
+        @if (address) {
+          <div class="ab-contact-chip"><mat-icon>place</mat-icon> {{ address }}</div>
+        }
+        @if (telephone) {
+          <div class="ab-contact-chip"><mat-icon>phone</mat-icon> {{ telephone }}</div>
+        }
+      </div>
+      <div class="ab-icon-col">
+        <mat-icon class="ab-big-icon">import_contacts</mat-icon>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="ab-section">
+    <div class="ab-section__inner ab-section__inner--center">
+      <h2>What We Offer</h2>
+      <p class="ab-sub">Everything a modern library should provide — online and in person.</p>
+      <div class="ab-features">
+        <div *ngFor="let f of features" class="ab-feat">
+          <div class="ab-feat__icon"><mat-icon>{{ f.icon }}</mat-icon></div>
+          <h4>{{ f.title }}</h4>
+          <p>{{ f.desc }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="ab-cta">
+    <h2>Ready to start reading?</h2>
+    <p>Join thousands of members who borrow, discover and learn every day.</p>
+    <div class="ab-cta__btns">
+      <a class="ab-btn ab-btn--primary" routerLink="/member-register">Become a Member</a>
+      <a class="ab-btn ab-btn--outline" routerLink="/opac">Browse Catalog</a>
+    </div>
+  </section>
+
+  <footer class="pg-footer">
+    <span>© {{ libraryName }}. Powered by Library Lab.</span>
+    <span style="display:flex;gap:16px">
+      <a routerLink="/about">About</a>
+      <a routerLink="/contact">Contact</a>
+      <a routerLink="/faq">FAQ</a>
+      <a routerLink="/login">Staff Login</a>
+    </span>
+  </footer>
+</div>

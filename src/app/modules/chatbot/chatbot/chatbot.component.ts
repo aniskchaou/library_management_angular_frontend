@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, ViewChild } from '@angular/core';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
@@ -8,23 +8,38 @@ import CONFIG from 'src/app/main/urls/urls';
     styleUrls: ['./chatbot.component.css'],
     standalone: false
 })
-export class ChatbotComponent {
+export class ChatbotComponent implements AfterViewChecked {
+  @ViewChild('msgContainer') private msgContainer!: ElementRef;
+
   isActive = false;
   userMessage = '';
-  showNotification = false; // Flag for showing the notification
+  showNotification = false;
   messages: { text: string, user: boolean }[] = [];
+  private shouldScroll = false;
 
   constructor(private http: HttpClient) {
-    // Add a default message when the bot is initialized
     this.messages.push({ text: 'Hello! How can I assist you today?', user: false });
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.shouldScroll) {
+      this.scrollToBottom();
+      this.shouldScroll = false;
+    }
+  }
+
+  private scrollToBottom(): void {
+    try {
+      const el = this.msgContainer?.nativeElement;
+      if (el) el.scrollTop = el.scrollHeight;
+    } catch {}
   }
 
   toggleChatbot() {
     this.isActive = !this.isActive;
-
-    // Hide notification when the chatbot is opened
     if (this.isActive) {
       this.showNotification = false;
+      this.shouldScroll = true;
     }
   }
 
@@ -32,13 +47,19 @@ export class ChatbotComponent {
     this.isActive = false;
   }
 
+  handleEnterKey(event: Event): void {
+    const kbEvent = event as KeyboardEvent;
+    if (!kbEvent.shiftKey) {
+      kbEvent.preventDefault();
+      this.sendMessage();
+    }
+  }
+
   sendMessage() {
     if (this.userMessage.trim()) {
       this.messages.push({ text: this.userMessage, user: true });
-
-      // Send user message to backend
+      this.shouldScroll = true;
       this.sendMessageToBackend(this.userMessage);
-
       this.userMessage = '';
     }
   }
@@ -62,7 +83,7 @@ export class ChatbotComponent {
         response => {
           // Push the response from the backend as a bot reply
           this.messages.push({ text: response.reply, user: false });
-
+          this.shouldScroll = true;
           // Show the notification if the chatbot is not active
           if (!this.isActive) {
             this.showNotification = true;

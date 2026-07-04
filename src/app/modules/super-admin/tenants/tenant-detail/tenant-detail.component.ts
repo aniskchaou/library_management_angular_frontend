@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SuperAdminApiService } from '../../services/super-admin-api.service';
 
 @Component({
+  standalone: false,
   selector: 'app-tenant-detail',
   template: `
     <div class="sa-page" *ngIf="org">

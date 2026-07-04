@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SuperAdminApiService } from '../services/super-admin-api.service';
 
 @Component({
+  standalone: false,
   selector: 'app-super-admin-dashboard',
   template: `
     <div class="sa-dashboard">
@@ -40,6 +41,10 @@ import { SuperAdminApiService } from '../services/super-admin-api.service';
           <div class="sa-card-label">Churn (30d)</div>
           <div class="sa-card-value">{{ metrics.churnLast30Days }}</div>
         </div>
+        <div class="sa-card sa-card-orange">
+          <div class="sa-card-label">Expiring (7d)</div>
+          <div class="sa-card-value">{{ metrics.expiringSubscriptions7d }}</div>
+        </div>
       </div>
 
       <div class="sa-nav-links">
@@ -48,6 +53,12 @@ import { SuperAdminApiService } from '../services/super-admin-api.service';
         <a routerLink="/super-admin/users" class="sa-nav-btn">User Management</a>
         <a routerLink="/super-admin/analytics" class="sa-nav-btn">Analytics</a>
         <a routerLink="/super-admin/audit-logs" class="sa-nav-btn">Audit Logs</a>
+        <a routerLink="/super-admin/settings" class="sa-nav-btn">Platform Settings</a>
+        <a routerLink="/super-admin/monitoring" class="sa-nav-btn">Monitoring</a>
+        <a routerLink="/super-admin/invoices" class="sa-nav-btn">Invoices</a>
+        <a routerLink="/super-admin/coupons" class="sa-nav-btn">Coupons</a>
+        <a routerLink="/super-admin/reports/growth" class="sa-nav-btn">Growth Report</a>
+        <a routerLink="/super-admin/reports/users" class="sa-nav-btn">User Analytics</a>
       </div>
     </div>
   `,

@@ -1,0 +1,102 @@
+<div class="ll-section">
+
+  <!-- Header -->
+  <div class="ll-section__header" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px">
+    <mat-icon style="color:#6366f1;font-size:28px">timeline</mat-icon>
+    <h2 style="margin:0;font-size:1.4rem;font-weight:600">Activity Timeline</h2>
+    <span style="flex:1"></span>
+    <button mat-stroked-button (click)="load()">
+      <mat-icon>refresh</mat-icon> Refresh
+    </button>
+  </div>
+
+  <!-- Filters -->
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;background:#f9fafb;padding:12px;border-radius:8px">
+    <mat-form-field appearance="outline" style="flex:1;min-width:160px">
+      <mat-label>Action Type</mat-label>
+      <mat-select [(ngModel)]="filterAction" (ngModelChange)="applyFilter()">
+        <mat-option *ngFor="let a of actionOptions" [value]="a">
+          {{ a || 'All Actions' }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="flex:2;min-width:200px">
+      <mat-label>Filter by user</mat-label>
+      <input matInput [(ngModel)]="filterUser" placeholder="Username" (keydown.enter)="applyFilter()">
+      <mat-icon matSuffix>person_search</mat-icon>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" (click)="applyFilter()">
+      <mat-icon>filter_list</mat-icon> Apply
+    </button>
+    <button mat-stroked-button (click)="clearFilter()">
+      <mat-icon>clear</mat-icon> Clear
+    </button>
+  </div>
+
+  <!-- Timeline -->
+  @if (loading) {
+    <div style="text-align:center;padding:40px">
+      <mat-spinner diameter="40" style="margin:auto"></mat-spinner>
+    </div>
+  } @else if (events.length === 0) {
+    <div style="text-align:center;padding:60px;color:#9ca3af">
+      <mat-icon style="font-size:48px">event_note</mat-icon>
+      <p>No activity events found.</p>
+    </div>
+  } @else {
+    <div class="at-timeline">
+      @for (e of events; track e.id) {
+        <div class="at-item">
+          <!-- Dot + line -->
+          <div class="at-item__dot" [style.background]="colorForAction(e.action)">
+            <mat-icon style="font-size:14px;color:#fff;line-height:24px;text-align:center">
+              {{ iconForAction(e.action) }}
+            </mat-icon>
+          </div>
+
+          <!-- Card -->
+          <div class="at-item__card">
+            <div class="at-item__header">
+              <span class="at-badge" [style.background]="colorForAction(e.action) + '22'"
+                    [style.color]="colorForAction(e.action)">
+                {{ e.action }}
+              </span>
+              <span class="at-entity">{{ e.entityType }}
+                @if (e.entityId) { <span style="opacity:.6">#{{ e.entityId }}</span> }
+              </span>
+              <span class="at-time" title="{{ e.createdAt }}">
+                {{ e.createdAt | date:'MMM d, y h:mm a' }}
+              </span>
+            </div>
+
+            @if (e.description) {
+              <p class="at-item__desc">{{ e.description }}</p>
+            }
+
+            <div class="at-item__meta">
+              @if (e.actorUsername) {
+                <span><mat-icon style="font-size:12px;vertical-align:middle">person</mat-icon> {{ e.actorUsername }}</span>
+              }
+              @if (e.ipAddress) {
+                <span><mat-icon style="font-size:12px;vertical-align:middle">computer</mat-icon> {{ e.ipAddress }}</span>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Pagination -->
+    <div style="display:flex;justify-content:center;gap:12px;margin-top:24px;align-items:center">
+      <button mat-stroked-button [disabled]="page === 0" (click)="prevPage()">
+        <mat-icon>chevron_left</mat-icon> Prev
+      </button>
+      <span style="font-size:13px;color:#6b7280">Page {{ page + 1 }} of {{ totalPages }}</span>
+      <button mat-stroked-button [disabled]="page >= totalPages - 1" (click)="nextPage()">
+        Next <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  }
+</div>

@@ -1,6 +1,7 @@
 package com.dev.delta.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.delta.entities.RequestedBook;
+import com.dev.delta.repositories.RequestedBookRepository;
 import com.dev.delta.services.RequestedBookService;
 
 import io.swagger.annotations.Api;
@@ -37,11 +40,11 @@ import io.swagger.annotations.ApiResponses;
  */
 public class RequestedBookController {
 
-	/**
-	 * 
-	 */
 	@Autowired
 	RequestedBookService requestedBookService;
+
+	@Autowired
+	RequestedBookRepository requestedBookRepository;
 
 	/**
 	 * 
@@ -130,5 +133,60 @@ public class RequestedBookController {
 	public ResponseEntity<String> deleteRequestedBook(@PathVariable Long id) throws Exception {
 		requestedBookService.delete(id);
 		return new ResponseEntity<String>("requestedBook was deleted", HttpStatus.OK);
+	}
+
+	// ── Reservation queue for a specific book ─────────────────────────
+	@GetMapping("/queue/{bookId}")
+	public ResponseEntity<List<RequestedBook>> getQueueForBook(@PathVariable Long bookId) {
+		List<RequestedBook> queue = requestedBookRepository.findByCatalogItemIdOrderByQueuePositionAsc(bookId);
+		return ResponseEntity.ok(queue);
+	}
+
+	// ── Cancel reservation (set status = CANCELLED) ───────────────────
+	@PostMapping("/{id}/cancel")
+	public ResponseEntity<?> cancelReservation(@PathVariable Long id) {
+		return requestedBookRepository.findById(id).map(r -> {
+			r.setStatus("CANCELLED");
+			requestedBookRepository.save(r);
+			return ResponseEntity.ok(Map.of("message", "Reservation cancelled"));
+		}).orElse(ResponseEntity.notFound().build());
+	}
+
+	// ── Mark member notified ──────────────────────────────────────────
+	@PostMapping("/{id}/notify")
+	public ResponseEntity<?> markNotified(@PathVariable Long id) {
+		return requestedBookRepository.findById(id).map(r -> {
+			r.setNotified(true);
+			r.setNotifiedDate(java.time.LocalDate.now());
+			r.setStatus("NOTIFIED");
+			requestedBookRepository.save(r);
+			return ResponseEntity.ok(Map.of("message", "Member marked as notified"));
+		}).orElse(ResponseEntity.notFound().build());
+	}
+
+	// ── Expire overdue reservations (called by scheduler or manually) ─
+	@PostMapping("/expire-overdue")
+	public ResponseEntity<?> expireOverdue() {
+		java.time.LocalDate today = java.time.LocalDate.now();
+		List<RequestedBook> all = requestedBookRepository.findAll();
+		long expired = 0;
+		for (RequestedBook r : all) {
+			if ("PENDING".equals(r.getStatus()) || "NOTIFIED".equals(r.getStatus())) {
+				if (r.getExpiryDate() != null && r.getExpiryDate().isBefore(today)) {
+					r.setStatus("EXPIRED");
+					requestedBookRepository.save(r);
+					expired++;
+				}
+			}
+		}
+		return ResponseEntity.ok(Map.of("expired", expired));
+	}
+
+	// ── Get all active reservations ───────────────────────────────────
+	@GetMapping("/active")
+	public ResponseEntity<List<RequestedBook>> getActiveReservations() {
+		List<RequestedBook> active = requestedBookRepository.findByStatusIn(
+				java.util.Arrays.asList("PENDING", "NOTIFIED"));
+		return ResponseEntity.ok(active);
 	}
 }

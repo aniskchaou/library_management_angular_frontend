@@ -109,6 +109,18 @@ export class SuperAdminApiService {
     });
   }
 
+  getLoginHistory(username?: string, page = 0, size = 50): Observable<any> {
+    let params = new HttpParams().set('page', page).set('size', size);
+    if (username) params = params.set('username', username);
+    return this.http.get(`${this.base}/api/super-admin/audit-logs/login-history`, { params });
+  }
+
+  getSecurityEvents(page = 0, size = 50): Observable<any> {
+    return this.http.get(`${this.base}/api/super-admin/audit-logs/security-events`, {
+      params: new HttpParams().set('page', page).set('size', size)
+    });
+  }
+
   // ── SaaS Analytics ────────────────────────────────────────────
   getSaasDashboard(): Observable<any> {
     return this.http.get(`${this.base}/api/super-admin/saas-analytics/dashboard`);
@@ -118,6 +130,20 @@ export class SuperAdminApiService {
     return this.http.get(`${this.base}/api/super-admin/saas-analytics/revenue`);
   }
 
+  getSubscriptionsByPlan(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.base}/api/super-admin/saas-analytics/by-plan`);
+  }
+
+  getUserAnalytics(): Observable<any> {
+    return this.http.get(`${this.base}/api/super-admin/saas-analytics/user-analytics`);
+  }
+
+  getExpiringSubscriptions(days = 30): Observable<any[]> {
+    return this.http.get<any[]>(`${this.base}/api/super-admin/saas-analytics/expiring-subscriptions`, {
+      params: new HttpParams().set('days', days)
+    });
+  }
+
   // ── Subscriptions ─────────────────────────────────────────────
   getSubscriptionMetrics(): Observable<any> {
     return this.http.get(`${this.base}/api/subscriptions/metrics`);
@@ -125,5 +151,92 @@ export class SuperAdminApiService {
 
   createCheckoutSession(orgId: number, planId: number, cycle: string): Observable<any> {
     return this.http.post(`${this.base}/api/subscriptions/checkout`, { orgId, planId, cycle });
+  }
+
+  changePlan(orgId: number, planId: number, cycle: string): Observable<any> {
+    return this.http.post(`${this.base}/api/subscriptions/change-plan`, { orgId, planId, cycle });
+  }
+
+  activateTrial(orgId: number, planId: number, days: number): Observable<any> {
+    return this.http.post(`${this.base}/api/subscriptions/activate-trial`, { orgId, planId, days });
+  }
+
+  extendTrial(orgId: number, days: number): Observable<any> {
+    return this.http.post(`${this.base}/api/subscriptions/extend-trial`, { orgId, days });
+  }
+
+  issueRefund(chargeId: string, amountCents?: number): Observable<any> {
+    return this.http.post(`${this.base}/api/subscriptions/refund`, { chargeId, amount: amountCents });
+  }
+
+  // ── Branches ──────────────────────────────────────────────────
+  getBranches(orgId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.base}/api/super-admin/organizations/${orgId}/branches`);
+  }
+
+  createBranch(orgId: number, branch: any): Observable<any> {
+    return this.http.post(`${this.base}/api/super-admin/organizations/${orgId}/branches`, branch);
+  }
+
+  updateBranch(orgId: number, id: number, branch: any): Observable<any> {
+    return this.http.put(`${this.base}/api/super-admin/organizations/${orgId}/branches/${id}`, branch);
+  }
+
+  deleteBranch(orgId: number, id: number): Observable<any> {
+    return this.http.delete(`${this.base}/api/super-admin/organizations/${orgId}/branches/${id}`);
+  }
+
+  // ── Global Settings ───────────────────────────────────────────
+  getGlobalSettings(): Observable<any> {
+    return this.http.get(`${this.base}/api/super-admin/global-settings`);
+  }
+
+  updateGlobalSettings(settings: any): Observable<any> {
+    return this.http.put(`${this.base}/api/super-admin/global-settings`, settings);
+  }
+
+  // ── Invoices ──────────────────────────────────────────────────
+  getAllInvoices(page = 0, size = 20): Observable<any> {
+    return this.http.get(`${this.base}/api/super-admin/invoices`, {
+      params: new HttpParams().set('page', page).set('size', size)
+    });
+  }
+
+  getInvoicesByOrg(orgId: number, page = 0): Observable<any> {
+    return this.http.get(`${this.base}/api/super-admin/invoices/organization/${orgId}`, {
+      params: new HttpParams().set('page', page).set('size', 20)
+    });
+  }
+
+  // ── Coupons ───────────────────────────────────────────────────
+  getAllCoupons(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.base}/api/super-admin/coupons`);
+  }
+
+  createCoupon(coupon: any): Observable<any> {
+    return this.http.post(`${this.base}/api/super-admin/coupons`, coupon);
+  }
+
+  updateCoupon(id: number, updates: any): Observable<any> {
+    return this.http.put(`${this.base}/api/super-admin/coupons/${id}`, updates);
+  }
+
+  deleteCoupon(id: number): Observable<any> {
+    return this.http.delete(`${this.base}/api/super-admin/coupons/${id}`);
+  }
+
+  // ── Monitoring ────────────────────────────────────────────────
+  getSystemHealth(): Observable<any> {
+    return this.http.get(`${this.base}/api/super-admin/monitoring/health`);
+  }
+
+  getApiRequests(page = 0, size = 50): Observable<any> {
+    return this.http.get(`${this.base}/api/super-admin/monitoring/api-requests`, {
+      params: new HttpParams().set('page', page).set('size', size)
+    });
+  }
+
+  getTopEndpoints(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.base}/api/super-admin/monitoring/top-endpoints`);
   }
 }

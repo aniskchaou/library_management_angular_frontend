@@ -13,7 +13,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import org.springframework.scheduling.annotation.EnableScheduling;
+
 @EnableSwagger2
+@EnableScheduling
 @ComponentScan({ "com.dev.delta.email", "com.dev.delta.swagger", "com.dev.delta.analytics", "com.dev.delta.security",
 		"com.dev.delta.controllers", "com.dev.delta.controllersi18n", "com.dev.delta.services", "com.dev.delta.dto" }) // to
 																														// scan

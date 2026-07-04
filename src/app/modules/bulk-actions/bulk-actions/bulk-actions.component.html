@@ -1,87 +1,69 @@
 <div class="container mt-4">
-    <h2>Bulk Actions (Beta)</h2>
-    <p class="text-muted">
-        Note: Bulk actions module is currently in beta state. Initially, we will process each of your actions manually, so please expect some delay in executing your action. Some operations may change / delete other associated (or dependent) records. Please proceed with caution.
-    </p>
-    <button class="btn btn-primary mb-3">Add Bulk Action</button>
-    <table class="table table-bordered">
-        <thead class="thead-light">
-            <tr>
-                <th>Id</th>
-                <th>Object</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Created</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>6241</td>
-                <td>Change member's status</td>
-                <td>Member</td>
-                <td>Update</td>
-                <td>Completed</td>
-                <td>2024-06-06 09:18:01</td>
-                <td>
-                    <!-- Add any action buttons here -->
-                    <button class="btn btn-sm btn-info">View</button>
-                    <button class="btn btn-sm btn-warning">Edit</button>
-                    <button class="btn btn-sm btn-danger">Delete</button>
-                </td>
-            </tr>
-            <!-- Add more rows as needed -->
-        </tbody>
-    </table>
+  <h2>Bulk Import / Export</h2>
 
+  <!-- Export Section -->
+  <div class="card mb-4">
+    <div class="card-header"><strong>Export Data</strong></div>
+    <div class="card-body d-flex flex-wrap gap-2">
+      <button class="btn btn-outline-primary" (click)="exportBooks()">Export Books CSV</button>
+      <button class="btn btn-outline-success" (click)="exportMembers()">Export Members CSV</button>
+      <button class="btn btn-outline-secondary" (click)="exportCirculations()">Export Circulations CSV</button>
+      <button class="btn btn-outline-danger" (click)="exportBooksExcel()">
+        <i class="fa fa-file-excel-o"></i> Export Books Excel
+      </button>
+      <button class="btn btn-outline-warning" (click)="exportMembersExcel()">
+        <i class="fa fa-file-excel-o"></i> Export Members Excel
+      </button>
+    </div>
+  </div>
 
-    <div class="modal fade" id="additionalFormModal" tabindex="-1" role="dialog" aria-labelledby="additionalFormModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="additionalFormModalLabel">Form</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="form-group">
-                  <label for="object">Object</label>
-                  <select class="form-control" id="object">
-                    <option>Export all catalog to PDF</option>
-                    <option>Change member's status</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="name">Name</label>
-                  <input type="text" class="form-control" id="name">
-                </div>
-                <div class="form-group">
-                  <label for="type">Type</label>
-                  <input type="text" class="form-control" id="type">
-                </div>
-                <div class="form-group">
-                  <label for="status">Status</label>
-                  <input type="text" class="form-control" id="status" value="Created" readonly>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save Form</button>
-            </div>
-          </div>
-        </div>
+  <!-- Book Import -->
+  <div class="card mb-4">
+    <div class="card-header"><strong>Import Books from CSV</strong></div>
+    <div class="card-body">
+      <button class="btn btn-link p-0 mb-2" (click)="downloadBookTemplate()">Download Book CSV Template</button>
+      <div class="input-group mb-2">
+        <input type="file" class="form-control" accept=".csv" (change)="onBookFileChange($event)">
+        <button class="btn btn-primary" (click)="importBooks()" [disabled]="!bookFile || bookLoading">
+          {{ bookLoading ? 'Importing...' : 'Import Books' }}
+        </button>
       </div>
+      <div *ngIf="bookResult" class="mt-2">
+        <div class="alert alert-success" *ngIf="!bookResult.error">
+          Imported: <strong>{{ bookResult.imported }}</strong> books.
+          <span *ngIf="bookResult.errors?.length"> Errors: {{ bookResult.errors.length }}</span>
+        </div>
+        <ul *ngIf="bookResult.errors?.length" class="text-danger small">
+          <li *ngFor="let e of bookResult.errors">{{ e }}</li>
+        </ul>
+        <div class="alert alert-danger" *ngIf="bookResult.error">{{ bookResult.error }}</div>
+      </div>
+    </div>
+  </div>
 
+  <!-- Member Import -->
+  <div class="card mb-4">
+    <div class="card-header"><strong>Import Members from CSV</strong></div>
+    <div class="card-body">
+      <button class="btn btn-link p-0 mb-2" (click)="downloadMemberTemplate()">Download Member CSV Template</button>
+      <div class="input-group mb-2">
+        <input type="file" class="form-control" accept=".csv" (change)="onMemberFileChange($event)">
+        <button class="btn btn-success" (click)="importMembers()" [disabled]="!memberFile || memberLoading">
+          {{ memberLoading ? 'Importing...' : 'Import Members' }}
+        </button>
+      </div>
+      <div *ngIf="memberResult" class="mt-2">
+        <div class="alert alert-success" *ngIf="!memberResult.error">
+          Imported: <strong>{{ memberResult.imported }}</strong> members.
+          <span *ngIf="memberResult.errors?.length"> Errors: {{ memberResult.errors.length }}</span>
+        </div>
+        <ul *ngIf="memberResult.errors?.length" class="text-danger small">
+          <li *ngFor="let e of memberResult.errors">{{ e }}</li>
+        </ul>
+        <div class="alert alert-danger" *ngIf="memberResult.error">{{ memberResult.error }}</div>
+      </div>
+    </div>
+  </div>
 
-
-
-
-
-
-
+  <p class="text-muted small">CSV imports are processed immediately. Large files may take a few seconds.</p>
 </div>

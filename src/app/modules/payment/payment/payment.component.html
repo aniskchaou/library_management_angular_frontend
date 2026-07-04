@@ -23,6 +23,7 @@
           [paymentI18n]="paymentI18n"
           (editEvent)="edit($event)"
           (deleteEvent)="delete($event)"
+          (waiveEvent)="getAll()"
           [payments]="payments$"
         ></app-payment-list>
         <app-modal-payment [paymentI18n]="paymentI18n"></app-modal-payment>

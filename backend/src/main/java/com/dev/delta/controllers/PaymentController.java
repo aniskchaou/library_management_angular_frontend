@@ -106,4 +106,62 @@ public class PaymentController {
 		return new ResponseEntity<String>("member was deleted", HttpStatus.OK);
 	}
 
+	// ── Waive fine for a member ───────────────────────────────────────
+	@PostMapping("/waive")
+	public ResponseEntity<?> waiveFine(@RequestBody Map<String, Object> body) {
+		Long memberId = Long.valueOf(body.get("memberId").toString());
+		String reason = body.getOrDefault("reason", "Waived by admin").toString();
+		// Record a zero-amount payment with waive status
+		try {
+			com.dev.delta.entities.Member member = new com.dev.delta.entities.Member();
+			member.setId(memberId);
+			Payment waive = new Payment(member, java.math.BigDecimal.ZERO, java.time.LocalDate.now(),
+					"WAIVED", java.math.BigDecimal.ZERO, "WAIVE-" + System.currentTimeMillis(), "WAIVED");
+			paymentService.saveOrUpdate(waive);
+			return ResponseEntity.ok(Map.of("message", "Fine waived", "reason", reason));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+		}
+	}
+
+	// ── Revenue from fines (total collected) ─────────────────────────
+	@GetMapping("/revenue")
+	public ResponseEntity<Map<String, Object>> revenue() {
+		java.math.BigDecimal total = java.math.BigDecimal.ZERO;
+		for (Payment p : (Iterable<Payment>) paymentService.findAll()) {
+			if (p.getAmountPaid() != null && !"WAIVED".equals(p.getPaymentStatus())) {
+				total = total.add(p.getAmountPaid());
+			}
+		}
+		return ResponseEntity.ok(Map.of("totalRevenue", total));
+	}
+
+	// ── Today's collected fines total ─────────────────────────────────
+	@GetMapping("/today-total")
+	public ResponseEntity<Map<String, Object>> todayFinesTotal() {
+		String today = java.time.LocalDate.now().toString();
+		java.math.BigDecimal total = java.math.BigDecimal.ZERO;
+		for (Payment p : (Iterable<Payment>) paymentService.findAll()) {
+			if (p.getAmountPaid() != null && !"".equals(p.getPaymentStatus())
+					&& !"WAIVED".equals(p.getPaymentStatus())
+					&& p.getPaymentDate() != null
+					&& p.getPaymentDate().toString().startsWith(today)) {
+				total = total.add(p.getAmountPaid());
+			}
+		}
+		return ResponseEntity.ok(Map.of("date", today, "todayFines", total));
+	}
+
+	// ── Outstanding fines per member ─────────────────────────────────
+	@GetMapping("/outstanding/{memberId}")
+	public ResponseEntity<Map<String, Object>> outstanding(@PathVariable Long memberId) {
+		java.math.BigDecimal paid = java.math.BigDecimal.ZERO;
+		for (Payment p : (Iterable<Payment>) paymentService.findAll()) {
+			if (p.getMember() != null && memberId.equals(p.getMember().getId()) && p.getAmountPaid() != null) {
+				paid = paid.add(p.getAmountPaid());
+			}
+		}
+		return ResponseEntity.ok(Map.of("memberId", memberId, "totalPaid", paid));
+	}
+
 }
