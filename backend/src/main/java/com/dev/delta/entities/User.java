@@ -47,16 +47,38 @@ public class User {
     private Collection<String> roles; // Store user roles
 
     @Column(nullable = true)
-    private boolean isActive; // To represent if the user account is active
+    private boolean isActive = true;
+
+    @Column(nullable = false)
+    private boolean isLocked = false;
+
+    @Column(nullable = false)
+    private boolean isSuperAdmin = false;
+
+    @Column
+    private Long organizationId;
 
     @Column(nullable = true)
-    private String phoneNumber; // Optional phone number
+    private String phoneNumber;
 
     String about;
 
     String address;
 
     String resetToken;
+
+    // MFA fields
+    @Column(nullable = false)
+    private boolean mfaEnabled = false;
+
+    @Column(length = 255)
+    private String mfaSecret;
+
+    @Column
+    private java.time.LocalDateTime lockedAt;
+
+    @Column(length = 500)
+    private String lockReason;
 
     public String getResetToken() {
         return resetToken;
@@ -145,6 +167,27 @@ public class User {
     public void setActive(boolean active) {
         isActive = active;
     }
+
+    public boolean isLocked() { return isLocked; }
+    public void setLocked(boolean locked) { isLocked = locked; }
+
+    public boolean isSuperAdmin() { return isSuperAdmin; }
+    public void setSuperAdmin(boolean superAdmin) { isSuperAdmin = superAdmin; }
+
+    public Long getOrganizationId() { return organizationId; }
+    public void setOrganizationId(Long organizationId) { this.organizationId = organizationId; }
+
+    public boolean isMfaEnabled() { return mfaEnabled; }
+    public void setMfaEnabled(boolean mfaEnabled) { this.mfaEnabled = mfaEnabled; }
+
+    public String getMfaSecret() { return mfaSecret; }
+    public void setMfaSecret(String mfaSecret) { this.mfaSecret = mfaSecret; }
+
+    public java.time.LocalDateTime getLockedAt() { return lockedAt; }
+    public void setLockedAt(java.time.LocalDateTime lockedAt) { this.lockedAt = lockedAt; }
+
+    public String getLockReason() { return lockReason; }
+    public void setLockReason(String lockReason) { this.lockReason = lockReason; }
 
     public String getPhoneNumber() {
         return phoneNumber;

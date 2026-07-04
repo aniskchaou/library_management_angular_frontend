@@ -29,6 +29,7 @@ export class TopbarComponent extends URLLoader implements OnInit {
   userObject: User;
   retrievedImage: string;
   notifications: Notification[];
+  isSuperAdmin = false;
   //retrievedLogoImage: string;
   
   constructor(
@@ -55,6 +56,7 @@ export class TopbarComponent extends URLLoader implements OnInit {
   ngOnInit(): void {
     
     this.retrievedImage=CONFIG.URL_BASE+'/users/get/' +localStorage.getItem('username') +'/'+localStorage.getItem('username')+'_profile.png';
+    this.isSuperAdmin = this.authService.isSuperAdmin();
     this.sysLang = this.translationService.currentLang;
     this.translationService.currentLang$.subscribe(lang => {
       this.sysLang = lang;

@@ -180,6 +180,9 @@ import { OpacHomeComponent } from './modules/opac/opac-home/opac-home.component'
 import { BorrowingStatisticsComponent } from './modules/report/borrowing-statistics/borrowing-statistics.component';
 import { DigitalDocsComponent } from './modules/digital-docs/digital-docs.component';
 import { MemberPortalComponent } from './modules/member-portal/member-portal.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './main/interceptors/jwt.interceptor';
+import { SuperAdminModule } from './modules/super-admin/super-admin.module';
 
 
 
@@ -612,6 +615,9 @@ const routes: Routes = [
   },
   { path: '', redirectTo: 'opac-home', pathMatch: 'full' },
   { path: '**', redirectTo: 'opac-home', pathMatch: 'full' },
+  // Super Admin routes (lazy-loaded style via module)
+  { path: 'super-admin', loadChildren: () =>
+      import('./modules/super-admin/super-admin.module').then(m => m.SuperAdminModule) },
 ];
 
 @NgModule({ declarations: [
@@ -747,5 +753,9 @@ const routes: Routes = [
         NgxDatatableModule,
         NgSelectModule,
         MaterialModule,
-        NgxExtendedPdfViewerModule], providers: [{ provide: APP_BASE_HREF, useValue: '' }, provideHttpClient(withInterceptorsFromDi())] })
+        NgxExtendedPdfViewerModule], providers: [
+        { provide: APP_BASE_HREF, useValue: '' },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {}

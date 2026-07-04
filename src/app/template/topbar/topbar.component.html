@@ -125,6 +125,10 @@
       <mat-icon>settings</mat-icon>
       <span>{{ 'nav.settings' | translate }}</span>
     </a>
+    <a mat-menu-item routerLink="/super-admin" *ngIf="isSuperAdmin">
+      <mat-icon>admin_panel_settings</mat-icon>
+      <span>Super Admin</span>
+    </a>
     <mat-divider></mat-divider>
     <a mat-menu-item routerLink="/" (click)="logout()">
       <mat-icon>logout</mat-icon>
