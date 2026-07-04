@@ -53,3 +53,4 @@ backend/src/main/resources/twilio.properties
 backend/src/main/resources/paypal.properties
 backend/src/main/resources/stripe.properties
 backend/src/main/resources/firebase-service-account.json
+backend/src/main/resources/email.properties
