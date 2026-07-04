@@ -1,0 +1,404 @@
+
+<p>The Member module is designed to manage information about the library's members. It includes fields for personal information, membership details, contact information, and settings related to borrowing and accessing library services.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">Image:</p>
+    <ul>
+        <li><strong>Description:</strong> A field to upload or link to a profile image for the member.</li>
+        <li><strong>Usage:</strong> Upload an image file representing the member.</li>
+        <li><strong>Example:</strong> "Profile picture"</li>
+        <li><strong>Validation:</strong> Must be a valid image file format.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Allow Member Login?</p>
+    <ul>
+        <li><strong>Description:</strong> Indicates whether the member is allowed to log in to the library system.</li>
+        <li><strong>Usage:</strong> Select "Yes" to allow login, otherwise select "No".</li>
+        <li><strong>Example:</strong> "Yes", "No"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes or No).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Booking Quota:</p>
+    <ul>
+        <li><strong>Description:</strong> The quota of bookings that the member is allowed to make.</li>
+        <li><strong>Usage:</strong> Enter the booking quota value.</li>
+        <li><strong>Example:</strong> "5"</li>
+        <li><strong>Validation:</strong> Must be a positive integer.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Type:</p>
+    <ul>
+        <li><strong>Description:</strong> The type of membership the member holds.</li>
+        <li><strong>Usage:</strong> Enter the membership type.</li>
+        <li><strong>Example:</strong> "Regular", "Student"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Card number*:</p>
+    <ul>
+        <li><strong>Description:</strong> The unique card number assigned to the member.</li>
+        <li><strong>Usage:</strong> Enter the member's card number.</li>
+        <li><strong>Example:</strong> "1234567890"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string and unique.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Library*:</p>
+    <ul>
+        <li><strong>Description:</strong> The library branch the member is associated with.</li>
+        <li><strong>Usage:</strong> Select the library branch from the list.</li>
+        <li><strong>Example:</strong> "Centerville"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string and match an existing library branch.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Required Category*:</p>
+    <ul>
+        <li><strong>Description:</strong> The membership category the member falls under.</li>
+        <li><strong>Usage:</strong> Select the category from the list.</li>
+        <li><strong>Example:</strong> "STUDENT"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string and match an existing category.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Sort 1:</p>
+    <ul>
+        <li><strong>Description:</strong> A sorting field for organizational purposes.</li>
+        <li><strong>Usage:</strong> Enter a value for sorting.</li>
+        <li><strong>Example:</strong> "Last Name"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Sort 2:</p>
+    <ul>
+        <li><strong>Description:</strong> An additional sorting field for organizational purposes.</li>
+        <li><strong>Usage:</strong> Enter a value for sorting.</li>
+        <li><strong>Example:</strong> "First Name"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Allow auto-renewal of items:</p>
+    <ul>
+        <li><strong>Description:</strong> Indicates whether the member is allowed to have items auto-renewed.</li>
+        <li><strong>Usage:</strong> Select "Yes" to allow auto-renewal, otherwise select "No".</li>
+        <li><strong>Example:</strong> "Yes", "No"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes or No).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Registration date:</p>
+    <ul>
+        <li><strong>Description:</strong> The date the member registered.</li>
+        <li><strong>Usage:</strong> Enter the registration date in the format dd/mm/yyyy.</li>
+        <li><strong>Example:</strong> "06/04/2024"</li>
+        <li><strong>Validation:</strong> Must be a valid date format (dd/mm/yyyy).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Expiry date (leave blank for auto calc):</p>
+    <ul>
+        <li><strong>Description:</strong> The expiry date of the membership. Leave blank if the system calculates it automatically.</li>
+        <li><strong>Usage:</strong> Enter the expiry date in the format dd/mm/yyyy or leave blank.</li>
+        <li><strong>Example:</strong> "06/04/2026"</li>
+        <li><strong>Validation:</strong> Must be a valid date format (dd/mm/yyyy) if entered.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">OPAC note:</p>
+    <ul>
+        <li><strong>Description:</strong> A note that appears on the member's user page in the OPAC.</li>
+        <li><strong>Usage:</strong> Enter the OPAC note.</li>
+        <li><strong>Example:</strong> "This message appears on this patron's user page in the OPAC."</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Circulation note:</p>
+    <ul>
+        <li><strong>Description:</strong> A note that displays when checking out items to this member.</li>
+        <li><strong>Usage:</strong> Enter the circulation note.</li>
+        <li><strong>Example:</strong> "This message displays when checking out to this patron."</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Username:</p>
+    <ul>
+        <li><strong>Description:</strong> The member's username for logging in to the system.</li>
+        <li><strong>Usage:</strong> Enter the username.</li>
+        <li><strong>Example:</strong> "aniket.pandit1"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string and unique.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Password:</p>
+    <ul>
+        <li><strong>Description:</strong> The member's password for logging in to the system.</li>
+        <li><strong>Usage:</strong> Enter the password.</li>
+        <li><strong>Example:</strong> "••••"</li>
+        <li><strong>Validation:</strong> Must meet the minimum password length requirement.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Minimum password length:</p>
+    <ul>
+        <li><strong>Description:</strong> The minimum length required for the member's password.</li>
+        <li><strong>Usage:</strong> Enter the minimum password length.</li>
+        <li><strong>Example:</strong> "3"</li>
+        <li><strong>Validation:</strong> Must be a positive integer.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Confirm password:</p>
+    <ul>
+        <li><strong>Description:</strong> Field to confirm the member's password.</li>
+        <li><strong>Usage:</strong> Enter the password again to confirm.</li>
+        <li><strong>Example:</strong> "••••"</li>
+        <li><strong>Validation:</strong> Must match the password entered in the Password field.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Lost card:</p>
+    <ul>
+        <li><strong>Description:</strong> Indicates whether the member has reported a lost card.</li>
+        <li><strong>Usage:</strong> Select "Yes" if the card is lost, otherwise select "No".</li>
+        <li><strong>Example:</strong> "Yes", "No"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes or No).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Gone no address:</p>
+    <ul>
+        <li><strong>Description:</strong> Indicates whether the member has no address on record.</li>
+        <li><strong>Usage:</strong> Select "Yes" if the member has no address, otherwise select "No".</li>
+        <li><strong>Example:</strong> "Yes", "No"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes or No).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Patron restrictions:</p>
+    <ul>
+        <li><strong>Description:</strong> Displays any restrictions currently placed on the member.</li>
+        <li><strong>Usage:</strong> This is an informational field.</li>
+        <li><strong>Example:</strong> "Patron is currently unrestricted."</li>
+        <li><strong>Validation:</strong> N/A</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Add manual restriction:</p>
+    <ul>
+        <li><strong>Description:</strong> Allows adding a manual restriction to the member's account.</li>
+        <li><strong>Usage:</strong> Click to add a restriction.</li>
+        <li><strong>Example:</strong> "Click here to add a restriction."</li>
+        <li><strong>Validation:</strong> N/A</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Salutation:</p>
+    <ul>
+        <li><strong>Description:</strong> The member's salutation (e.g., Mr., Ms., Dr.).</li>
+        <li><strong>Usage:</strong> Enter the salutation.</li>
+        <li><strong>Example:</strong> "Mr.", "Ms."</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Surname:</p>
+    <ul>
+        <li><strong>Description:</strong> The member's last name.</li>
+        <li><strong>Usage:</strong> Enter the surname.</li>
+        <li><strong>Example:</strong> "Smith", "Doe"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">First name:</p>
+    <ul>
+        <li><strong>Description:</strong> The member's first name.</li>
+        <li><strong>Usage:</strong> Enter the first name.</li>
+        <li><strong>Example:</strong> "John", "Jane"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Date of birth:</p>
+    <ul>
+        <li><strong>Description:</strong> The member's date of birth.</li>
+        <li><strong>Usage:</strong> Enter the date of birth in the format dd/mm/yyyy.</li>
+        <li><strong>Example:</strong> "01/01/2000"</li>
+        <li><strong>Validation:</strong> Must be a valid date format (dd/mm/yyyy).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Age:</p>
+    <ul>
+        <li><strong>Description:</strong> The member's age calculated from the date of birth.</li>
+        <li><strong>Usage:</strong> This is an informational field.</li>
+        <li><strong>Example:</strong> "21 years 4 months"</li>
+        <li><strong>Validation:</strong> N/A</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Gender:</p>
+    <ul>
+        <li><strong>Description:</strong> The member's gender.</li>
+        <li><strong>Usage:</strong> Enter or select the gender.</li>
+        <li><strong>Example:</strong> "Male", "Female", "Other"</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Street number:</p>
+    <ul>
+        <li><strong>Description:</strong> The member's street number.</li>
+        <li><strong>Usage:</strong> Enter the street number.</li>
+        <li><strong>Example:</strong> "123"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Address:</p>
+    <ul>
+        <li><strong>Description:</strong> The member's address.</li>
+        <li><strong>Usage:</strong> Enter the full address.</li>
+        <li><strong>Example:</strong> "123 Main St, Apt 4B"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">City:</p>
+    <ul>
+        <li><strong>Description:</strong> The city where the member resides.</li>
+        <li><strong>Usage:</strong> Enter the city name.</li>
+        <li><strong>Example:</strong> "New York"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">State:</p>
+    <ul>
+        <li><strong>Description:</strong> The state where the member resides.</li>
+        <li><strong>Usage:</strong> Enter the state name.</li>
+        <li><strong>Example:</strong> "NY"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">ZIP/Postal code:</p>
+    <ul>
+        <li><strong>Description:</strong> The ZIP or postal code for the member's address.</li>
+        <li><strong>Usage:</strong> Enter the ZIP or postal code.</li>
+        <li><strong>Example:</strong> "10001"</li>
+        <li><strong>Validation:</strong> Must be a valid postal code.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Country:</p>
+    <ul>
+        <li><strong>Description:</strong> The country where the member resides.</li>
+        <li><strong>Usage:</strong> Enter the country name.</li>
+        <li><strong>Example:</strong> "United States"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Primary phone:</p>
+    <ul>
+        <li><strong>Description:</strong> The primary phone number for the member.</li>
+        <li><strong>Usage:</strong> Enter the primary phone number.</li>
+        <li><strong>Example:</strong> "(123) 456-7890"</li>
+        <li><strong>Validation:</strong> Must be a valid phone number format.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Secondary phone:</p>
+    <ul>
+        <li><strong>Description:</strong> An additional phone number for the member.</li>
+        <li><strong>Usage:</strong> Enter the secondary phone number.</li>
+        <li><strong>Example:</strong> "(098) 765-4321"</li>
+        <li><strong>Validation:</strong> Must be a valid phone number format.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Primary email:</p>
+    <ul>
+        <li><strong>Description:</strong> The primary email address for the member.</li>
+        <li><strong>Usage:</strong> Enter the primary email address.</li>
+        <li><strong>Example:</strong> "john.doe@example.com"</li>
+        <li><strong>Validation:</strong> Must be a valid email address format.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Secondary email:</p>
+    <ul>
+        <li><strong>Description:</strong> An additional email address for the member.</li>
+        <li><strong>Usage:</strong> Enter the secondary email address.</li>
+        <li><strong>Example:</strong> "jane.doe@example.com"</li>
+        <li><strong>Validation:</strong> Must be a valid email address format.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Fax:</p>
+    <ul>
+        <li><strong>Description:</strong> The fax number for the member.</li>
+        <li><strong>Usage:</strong> Enter the fax number.</li>
+        <li><strong>Example:</strong> "(123) 456-7899"</li>
+        <li><strong>Validation:</strong> Must be a valid fax number format.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Main contact method:</p>
+    <ul>
+        <li><strong>Description:</strong> The preferred method of contact for the member.</li>
+        <li><strong>Usage:</strong> Enter the main contact method (e.g., phone, email).</li>
+        <li><strong>Example:</strong> "Email"</li>
+        <li><strong>Validation:</strong> Must be a valid string.</li>
+    </ul>
+</div>

@@ -6,9 +6,10 @@ import { ViewBookComponent } from '../view-book/view-book.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-arvived-book-list',
-  templateUrl: './arvived-book-list.component.html',
-  styleUrls: ['./arvived-book-list.component.css'],
+    selector: 'app-arvived-book-list',
+    templateUrl: './arvived-book-list.component.html',
+    styleUrls: ['./arvived-book-list.component.css'],
+    standalone: false
 })
 export class ArvivedBookListComponent extends URLLoader implements OnInit,AfterViewInit {
   @Input() books;
@@ -22,7 +23,7 @@ export class ArvivedBookListComponent extends URLLoader implements OnInit,AfterV
   retrieveResonse: any;
   imageName: any;
 
-  loadingIndicator = true;
+  loadingIndicator = false;
   reorderable = true;
 
   columns = [
@@ -83,10 +84,10 @@ export class ArvivedBookListComponent extends URLLoader implements OnInit,AfterV
       centered: true,}); // Open the CategoryViewComponent in modal
     modalRef.componentInstance.book = { ...catalog }; // Pass category data
 
-    console.log(catalog); // Ensure category is passed properly and logged
+
 
     modalRef.result.then(result => {
-      console.log(result); // Handle any result (if needed)
-    }).catch(error => console.log(error)); // Handle any errors
+
+    }).catch(() => {}); // Handle any errors
   }
 }

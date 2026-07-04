@@ -9,9 +9,10 @@ import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-basket',
-  templateUrl: './basket.component.html',
-  styleUrls: ['./basket.component.css']
+    selector: 'app-basket',
+    templateUrl: './basket.component.html',
+    styleUrls: ['./basket.component.css'],
+    standalone: false
 })
 export class BasketComponent implements OnInit {
 
@@ -91,7 +92,6 @@ export class BasketComponent implements OnInit {
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/basket.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }
@@ -106,7 +106,6 @@ export class BasketComponent implements OnInit {
     this.loadingIndicator = true;
     this.basketService.getAllBaskets().subscribe(data => {
       this.baskets = data;
-      console.log(data)
       this.temp = [...data]; // Backup data for filtering
       this.loadingIndicator = false;
     });
@@ -130,13 +129,11 @@ export class BasketComponent implements OnInit {
 
   // Select row
   onSelect({ selected }): void {
-    console.log('Selected row:', selected);
     this.selected = [...selected];
   }
 
   // Activate row
   onActivate(event): void {
-    console.log('Activate Event:', event);
   }
 
   // Edit row
@@ -150,7 +147,7 @@ export class BasketComponent implements OnInit {
           this.loadBaskets();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   // Delete row
@@ -170,6 +167,6 @@ export class BasketComponent implements OnInit {
 
           this.loadBaskets();
   
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 }

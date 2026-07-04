@@ -8,9 +8,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-required-book',
-  templateUrl: './required-book.component.html',
-  styleUrls: ['./required-book.component.css'],
+    selector: 'app-required-book',
+    templateUrl: './required-book.component.html',
+    styleUrls: ['./required-book.component.css'],
+    standalone: false
 })
 export class RequiredBookComponent extends URLLoader implements OnInit {
   requiredBook$ = [{}];

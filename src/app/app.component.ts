@@ -9,27 +9,15 @@ import { HTTPService } from './main/services/HTTPService';
 import CONFIG from './main/urls/urls';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    standalone: false
 })
 export class AppComponent {
-  private allscript = [
-    '../assets/vendors/jquery/dist/jquery.min.js',
-    '../assets/vendors/popper.js/dist/umd/popper.min.js',
-    '../assets/vendors/bootstrap/dist/js/bootstrap.min.js',
+  // jQuery and DataTables scripts removed. Bootstrap 5 JS is loaded via angular.json scripts.
+  private allscript: string[] = [
     '../assets/js/main.js',
-    '../assets/vendors/datatables.net/js/jquery.dataTables.min.js',
-    '../assets/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js',
-    '../assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js',
-    '../assets/vendors/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js',
-    '../assets/vendors/jszip/dist/jszip.min.js',
-    '../assets/vendors/pdfmake/build/pdfmake.min.js',
-    '../assets/vendors/pdfmake/build/vfs_fonts.js',
-    '../assets/vendors/datatables.net-buttons/js/buttons.html5.min.js',
-    '../assets/vendors/datatables.net-buttons/js/buttons.print.min.js',
-    '../assets/vendors/datatables.net-buttons/js/buttons.colVis.min.js',
-    '../assets/js/init-scripts/data-table/datatables-init.js',
   ];
   private loadScripts() {
     let container = document.getElementsByTagName('body')[0];
@@ -66,27 +54,37 @@ export class AppComponent {
     private authService: AuthentificationService
   ) {}
 
+  private readonly _publicRoutes = ['login', 'register', 'reset-password', 'forgot-password', 'opac', 'opac-home', 'opac-account', 'member-portal'];
+
   hasRoute(route: string) {
-    return this._router.url.includes(route);
-    //return this._router.url && this._router.url.includes(route);
+    const urlPath = this._router.url.split('?')[0];
+    return urlPath === '/' + route;
+  }
+
+  isPublicRoute(): boolean {
+    const urlPath = this._router.url.split('?')[0].replace('/', '');
+    return this._publicRoutes.includes(urlPath);
   }
 
   ngOnInit() {
     this.loadScripts();
     if (this.authService.isUserLoggedIn()) {
-      this.getSettings();
-      this.getMenuItems();
-    } else {
-      this._router.navigate(['/login']);
+      // Don't load admin resources for member portal users
+      if (!localStorage.getItem('mp_member_id')) {
+        this.getSettings();
+        this.getMenuItems();
+      }
+    } else if (!this.isPublicRoute()) {
+      this._router.navigate(['/opac-home']);
     }
 
-    console.log('before ' + CONFIG.getInstance().getLang());
+
   }
 
   reloadMenu() {
     this.getSettings();
     this.getMenuItems();
-    console.log('after ' + CONFIG.getInstance().getLang());
+
     //this._router.navigate(['/dashboard']);
     this._router
       .navigateByUrl('/login', { skipLocationChange: true })
@@ -121,7 +119,6 @@ export class AppComponent {
   }
 
   search(value) {
-    console.log(value);
     this._router.navigate(['/search/' + value]);
   }
 }

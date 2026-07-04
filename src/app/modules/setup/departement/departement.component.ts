@@ -10,9 +10,10 @@ import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-departement',
-  templateUrl: './departement.component.html',
-  styleUrls: ['./departement.component.css']
+    selector: 'app-departement',
+    templateUrl: './departement.component.html',
+    styleUrls: ['./departement.component.css'],
+    standalone: false
 })
 export class DepartementComponent extends URLLoader implements OnInit {
 
@@ -106,24 +107,20 @@ export class DepartementComponent extends URLLoader implements OnInit {
     }
   
     onSelect({ selected }) {
-      console.log('Selected row:', selected);
       this.selected = [...selected];
     }
   
     onActivate(event) {
-      console.log('Activate Event:', event);
     }
   
     editRow(row: Department): void {
       // Logic to edit the row
-      console.log('Edit row:', row);
       // Implement your edit logic here
       this.openEditDialog(row)
     }
     
     deleteRow(row: Department): void {
       // Logic to delete the row
-      console.log('Delete row:', row);
       this.departments = this.departments.filter(r => r !== row);
       // If using departments$ as an observable, you should update it as well
       this.departments$.next(this.departments);
@@ -138,9 +135,6 @@ export class DepartementComponent extends URLLoader implements OnInit {
     
     this.loadDepartments();
        // Fetch departments if not already loaded
-      
-    
-    console.log(this.columns)
     this.fetchMarkdownFile()
   }
 
@@ -160,7 +154,6 @@ export class DepartementComponent extends URLLoader implements OnInit {
     fetchMarkdownFile(): void {
       this.http.get('assets/documentation/modules/departement.html', { responseType: 'text' })
         .subscribe(data => {
-          console.log(data)
           this.markdownContent = data;
         });
     }  
@@ -175,7 +168,7 @@ export class DepartementComponent extends URLLoader implements OnInit {
           this.loadDepartments();
 
 
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(department: Department): void {
@@ -188,7 +181,7 @@ export class DepartementComponent extends URLLoader implements OnInit {
           this.loadDepartments();
 
 
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   deleteDepartment(id: number): void {

@@ -3,12 +3,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import Settings from 'src/app/main/models/Settings';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
-import * as $ from 'jquery';
 
 @Component({
-  selector: 'app-navigation',
-  templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.css'],
+    selector: 'app-navigation',
+    templateUrl: './navigation.component.html',
+    styleUrls: ['./navigation.component.css'],
+    standalone: false
 })
 export class NavigationComponent implements OnInit {
   menuI18n;
@@ -21,19 +21,19 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit(): void {
     this.retrievedImage=CONFIG.URL_BASE+'/version/get/logo';
-    $('#sidebarToggle').on('click', function () {
-      $('body').toggleClass('sidebar-toggled');
-      $('.sidebar').toggleClass('toggled');
-      if ($('.sidebar').hasClass('toggled')) {
-       // $('.sidebar .collapse').collapse('hide');
-      }
-    });
+    // Vanilla JS sidebar toggle (replaces former jQuery handler)
+    const toggleBtn = document.getElementById('sidebarToggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('sidebar-toggled');
+        document.querySelectorAll('.sidebar').forEach(el => el.classList.toggle('toggled'));
+      });
+    }
 
     this.httpService
     .getAll(CONFIG.URL_BASE + '/version/api/version')
     .subscribe(
       (data:string) => {
-        console.log(data)
         this.version = data;
       },
       (err: HttpErrorResponse) => {}

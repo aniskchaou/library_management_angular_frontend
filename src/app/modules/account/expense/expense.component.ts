@@ -9,9 +9,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-expense',
-  templateUrl: './expense.component.html',
-  styleUrls: ['./expense.component.css'],
+    selector: 'app-expense',
+    templateUrl: './expense.component.html',
+    styleUrls: ['./expense.component.css'],
+    standalone: false
 })
 export class ExpenseComponent extends URLLoader implements OnInit {
   expenses$ = [];

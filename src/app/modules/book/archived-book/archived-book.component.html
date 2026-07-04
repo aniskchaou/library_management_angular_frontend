@@ -1,9 +1,9 @@
 <div class="container-fluid">
-  <div *ngIf="loading; else loaded">
-    <app-loading></app-loading>
-  </div>
-
-  <ng-template #loaded>
+  @if (loading) {
+    <div>
+      <app-loading></app-loading>
+    </div>
+  } @else {
     <app-statistics-book
       [bookI18n]="bookI18n"
       (result)="filter($event)"
@@ -11,11 +11,10 @@
     <!-- Page Heading -->
     <div class="page-heading mb-4">
       <h1 class="h3 mb-2 text-gray-800">
-        <i class="fas fa-archive"></i> {{ bookI18n?.allTitleI18n }}
+        <i class="fas fa-archive"></i> {{ 'book.archivedTitle' | translate }}
       </h1>
       <p class="mb-4">This module displays all the archived books and allows you to manage them efficiently.</p>
     </div>
-
     <!-- DataTales Example -->
     <div class="card mb-4">
       <div class="card-body">
@@ -31,5 +30,6 @@
         </div>
       </div>
     </div>
-  </ng-template>
+  }
+
 </div>

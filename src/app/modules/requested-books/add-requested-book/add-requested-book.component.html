@@ -2,18 +2,18 @@
   class="form-group odd"
   id="category_name_field_box"
   [formGroup]="requestedBookForm"
->
+  >
   <!-- book -->
   <label
     class="col-sm-3 control-label"
     for="name"
     id="category_name_display_as_box"
-  >
+    >
     <font style="vertical-align: inherit">
       <font style="vertical-align: inherit">
-        {{ requestedBookI18n?.bookI18n }}
+        {{ 'requestedbook.colBook' | translate }}
       </font> </font
-    ><span class="required">
+      ><span class="required">
       <font style="vertical-align: inherit">
         <font style="vertical-align: inherit">*</font>
       </font>
@@ -28,18 +28,24 @@
       id="field-category_name"
       name="book"
       class="form-control"
-    >
-      <option *ngFor="let c of books$" value="{{ c.id }}">
-        {{ c.title }}
-      </option>
+      >
+      @for (c of books$; track c) {
+        <option value="{{ c.id }}">
+          {{ c.title }}
+        </option>
+      }
     </select>
 
     <!-- book validation-->
-    <div *ngIf="submitted && f.book.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.book.errors.required">
-        {{ msg.validationMessage.book }}
+    @if (submitted && f.book.errors) {
+      <div class="alert alert-danger">
+        @if (submitted && f.book.errors.required) {
+          <div>
+            {{ msg.validationMessage.book }}
+          </div>
+        }
       </div>
-    </div>
+    }
   </div>
 
   <!-- writer -->
@@ -47,12 +53,12 @@
     class="col-sm-3 control-label"
     for="name"
     id="category_name_display_as_box"
-  >
+    >
     <font style="vertical-align: inherit">
       <font style="vertical-align: inherit">
-        {{ requestedBookI18n?.writerI18n }}
+        {{ 'requestedbook.colWriter' | translate }}
       </font> </font
-    ><span class="required">
+      ><span class="required">
       <font style="vertical-align: inherit">
         <font style="vertical-align: inherit">*</font>
       </font>
@@ -66,17 +72,23 @@
       id="field-category_name"
       name="writer"
       class="form-control"
-    >
-      <option *ngFor="let c of writers$" value="{{ c.id }}">
-        {{ c.name }}
-      </option>
+      >
+      @for (c of writers$; track c) {
+        <option value="{{ c.id }}">
+          {{ c.name }}
+        </option>
+      }
     </select>
     <!-- writer validation -->
-    <div *ngIf="submitted && f.writer.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.writer.errors.required">
-        {{ msg.validationMessage.writer }}
+    @if (submitted && f.writer.errors) {
+      <div class="alert alert-danger">
+        @if (submitted && f.writer.errors.required) {
+          <div>
+            {{ msg.validationMessage.writer }}
+          </div>
+        }
       </div>
-    </div>
+    }
   </div>
 
   <!-- category -->
@@ -84,12 +96,12 @@
     class="col-sm-3 control-label"
     for="name"
     id="category_name_display_as_box"
-  >
+    >
     <font style="vertical-align: inherit">
       <font style="vertical-align: inherit">
-        {{ requestedBookI18n?.ctagoryI18n }}
+        {{ 'requestedbook.colCategory' | translate }}
       </font> </font
-    ><span class="required">
+      ><span class="required">
       <font style="vertical-align: inherit">
         <font style="vertical-align: inherit">*</font>
       </font>
@@ -103,18 +115,24 @@
       id="field-category_name"
       name="ctagory"
       class="form-control"
-    >
-      <option *ngFor="let c of categories$" value="{{ c.id }}">
-        {{ c.category_name }}
-      </option>
+      >
+      @for (c of categories$; track c) {
+        <option value="{{ c.id }}">
+          {{ c.category_name }}
+        </option>
+      }
     </select>
 
     <!-- category validation-->
-    <div *ngIf="submitted && f.ctagory.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.ctagory.errors.required">
-        {{ msg.validationMessage.ctagory }}
+    @if (submitted && f.ctagory.errors) {
+      <div class="alert alert-danger">
+        @if (submitted && f.ctagory.errors.required) {
+          <div>
+            {{ msg.validationMessage.ctagory }}
+          </div>
+        }
       </div>
-    </div>
+    }
   </div>
 
   <!-- member -->
@@ -122,12 +140,12 @@
     class="col-sm-3 control-label"
     for="name"
     id="category_name_display_as_box"
-  >
+    >
     <font style="vertical-align: inherit">
       <font style="vertical-align: inherit">
-        {{ requestedBookI18n?.memberI18n }}
+        {{ 'requestedbook.colMember' | translate }}
       </font> </font
-    ><span class="required">
+      ><span class="required">
       <font style="vertical-align: inherit">
         <font style="vertical-align: inherit">*</font>
       </font>
@@ -141,24 +159,30 @@
       id="field-category_name"
       name="member"
       class="form-control"
-    >
-      <option *ngFor="let m of members$" value="{{ m.id }}">
-        {{ m.name }}
-      </option>
+      >
+      @for (m of members$; track m) {
+        <option value="{{ m.id }}">
+          {{ m.name }}
+        </option>
+      }
     </select>
 
     <!-- member validation-->
-    <div *ngIf="submitted && f.member.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.member.errors.required">
-        {{ msg.validationMessage.member }}
+    @if (submitted && f.member.errors) {
+      <div class="alert alert-danger">
+        @if (submitted && f.member.errors.required) {
+          <div>
+            {{ msg.validationMessage.member }}
+          </div>
+        }
       </div>
-    </div>
+    }
   </div>
 
   <br />
   <!-- add button -->
   <button (click)="add()" type="button" class="btn btn-info">
     <i class="fas fa-save"></i>
-    {{ requestedBookI18n?.addButtonI18n }}
+    {{ 'ui.save' | translate }}
   </button>
 </form>

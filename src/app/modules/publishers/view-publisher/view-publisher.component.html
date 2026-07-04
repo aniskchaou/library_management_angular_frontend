@@ -1,27 +1,69 @@
+<div class="ll-modal ll-modal--wide">
+  <div class="ll-modal__header">
+    <mat-icon class="ll-modal__icon">apartment</mat-icon>
+    <h2 class="ll-modal__title">Publisher Details</h2>
+    <button mat-icon-button class="ll-modal__close" (click)="closeModal()" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h5 class="modal-title" id="publisherModalLabel">{{ selectedPublisher?.name }}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <!-- Modal Body -->
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-6">
-              <strong>Address:</strong> {{ selectedPublisher?.address }}<br />
-              <strong>Email:</strong> {{ selectedPublisher?.email }}<br />
-              <strong>Phone:</strong> {{ selectedPublisher?.phone }}<br />
-            </div>
-            <div class="col-md-6">
-              <strong>Country:</strong> {{ selectedPublisher?.country }}<br />
-              <strong>Website:</strong> <a [href]="selectedPublisher?.website" target="_blank">{{ selectedPublisher?.website }}</a><br />
-            </div>
+  <div class="ll-modal__content">
+    <div class="ll-view">
+      <mat-card appearance="outlined">
+        <mat-card-content class="ll-view__card-content">
+          <div class="ll-view__avatar">
+            {{ selectedPublisher?.name ? selectedPublisher.name.charAt(0).toUpperCase() : '?' }}
           </div>
-        </div>
-        <!-- Modal Footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary"  (click)="closeModal()" data-dismiss="modal">Close</button>
-        </div>
-    
+          <div class="ll-view__id">
+            <h3>{{ selectedPublisher?.name }}</h3>
+            <p class="ll-view__sub">{{ selectedPublisher?.country || '—' }}</p>
+            @if (selectedPublisher?.website) {
+              <a [href]="selectedPublisher.website" target="_blank" rel="noopener" class="ll-view__link">
+                <mat-icon>open_in_new</mat-icon> {{ selectedPublisher.website }}
+              </a>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card appearance="outlined">
+        <mat-card-content>
+          <dl class="ll-view__details">
+            <div class="ll-view__row">
+              <dt>Publisher Name</dt>
+              <dd>{{ selectedPublisher?.name || '—' }}</dd>
+            </div>
+            <div class="ll-view__row">
+              <dt>Address</dt>
+              <dd>{{ selectedPublisher?.address || '—' }}</dd>
+            </div>
+            <div class="ll-view__row">
+              <dt>Email</dt>
+              <dd>
+                @if (selectedPublisher?.email) {
+                  <a [href]="'mailto:' + selectedPublisher.email">{{ selectedPublisher.email }}</a>
+                } @else { — }
+              </dd>
+            </div>
+            <div class="ll-view__row">
+              <dt>Phone</dt>
+              <dd>{{ selectedPublisher?.phone || '—' }}</dd>
+            </div>
+            <div class="ll-view__row">
+              <dt>Country</dt>
+              <dd>{{ selectedPublisher?.country || '—' }}</dd>
+            </div>
+            <div class="ll-view__row">
+              <dt>Website</dt>
+              <dd>{{ selectedPublisher?.website || '—' }}</dd>
+            </div>
+          </dl>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="ll-modal__actions">
+    <button mat-stroked-button (click)="closeModal()">Close</button>
+  </div>
+</div>

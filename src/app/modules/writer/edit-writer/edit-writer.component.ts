@@ -11,13 +11,14 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-edit-writer',
-  templateUrl: './edit-writer.component.html',
-  styleUrls: ['./edit-writer.component.css'],
+    selector: 'app-edit-writer',
+    templateUrl: './edit-writer.component.html',
+    styleUrls: ['./edit-writer.component.css'],
+    standalone: false
 })
 export class EditWriterComponent extends URLLoader implements OnInit {
-  @Input() model: Writer;
-  @Input() author:Writer
+  @Input() model: any;
+  @Input() author: any;
   @Input() id: string;
   @Output() closeModalEvent = new EventEmitter<string>();
   writerI18n;
@@ -64,7 +65,6 @@ closeModal(): void {
 
   ngOnInit(): void {
     // Initialize any necessary properties here
-    console.log(this.author)
   }
 
   onCancelClick(): void {

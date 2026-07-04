@@ -5,9 +5,10 @@ import { PhysicalDescription } from 'src/app/main/models/PhysicalDescription';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
 @Component({
-  selector: 'app-physical-description-modal',
-  templateUrl: './physical-description-modal.component.html',
-  styleUrls: ['./physical-description-modal.component.css']
+    selector: 'app-physical-description-modal',
+    templateUrl: './physical-description-modal.component.html',
+    styleUrls: ['./physical-description-modal.component.css'],
+    standalone: false
 })
 export class PhysicalDescriptionModalComponent implements OnInit {
 
@@ -20,7 +21,6 @@ export class PhysicalDescriptionModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.description);
   }
 
   onSaveClick(): void {
@@ -75,9 +75,7 @@ export class PhysicalDescriptionModalComponent implements OnInit {
 
   submitDescriptionForm() {
     if (this.validateDescriptionForm()) {
-      console.log('Form is valid. Submitting:', this.description);
     } else {
-      console.log('Form is invalid. Errors:', this.errors);
     }
   }
 }

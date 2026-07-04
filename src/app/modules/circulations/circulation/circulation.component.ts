@@ -13,11 +13,15 @@ import { HoldComponent } from '../hold/hold.component';
 import { CheckInComponent } from '../check-in/check-in.component';
 import { CheckOutComponent } from '../check-out/check-out.component';
 import { DataService } from 'src/app/main/services/data.service';
+import { AddCirculationComponent } from '../add-circulation/add-circulation.component';
+import { EditCirculationComponent } from '../edit-circulation/edit-circulation.component';
+import { ContactMemberComponent } from '../contact-member/contact-member.component';
 
 @Component({
-  selector: 'app-circulation',
-  templateUrl: './circulation.component.html',
-  styleUrls: ['./circulation.component.css'],
+    selector: 'app-circulation',
+    templateUrl: './circulation.component.html',
+    styleUrls: ['./circulation.component.css'],
+    standalone: false
 })
 export class CirculationComponent extends URLLoader implements OnInit {
   circulations$ = [];
@@ -111,7 +115,6 @@ export class CirculationComponent extends URLLoader implements OnInit {
       .getAllLang(CONFIG.URL_BASE + '/i18n/menu/EN', username, password)
       .subscribe(
         (data) => {
-          console.log(data);
           this.httpService.menuI18n.next(data);
         },
         (err: HttpErrorResponse) => {
@@ -120,9 +123,31 @@ export class CirculationComponent extends URLLoader implements OnInit {
         }
       );
   }
-  contact(email) {
-    this.email = email;
-    console.log(email);
+  contact(email: string) {
+    if (!email) {
+      super.show('Warning', 'No email address found for this member', 'warning');
+      return;
+    }
+    const modalRef = this.modalService.open(ContactMemberComponent, { centered: true });
+    modalRef.componentInstance.email = email;
+    modalRef.componentInstance.circulationI18n = {
+      messageI18n: 'Message',
+      sendEmailI18n: 'Send Email'
+    };
+    modalRef.componentInstance.closeModalEvent.subscribe(() => modalRef.close());
+    modalRef.result.then(() => {}).catch(() => {});
+  }
+
+  openAddDialog(): void {
+    const modalRef = this.modalService.open(AddCirculationComponent, { size: 'xl', centered: true });
+    modalRef.result.then(() => this.getAll()).catch(() => {});
+  }
+
+  openEditFromList(id: any): void {
+    const modalRef = this.modalService.open(EditCirculationComponent, { size: 'xl', centered: true });
+    modalRef.componentInstance.id = id;
+    modalRef.componentInstance.ngOnChanges({});
+    modalRef.result.then(() => this.getAll()).catch(() => {});
   }
 
 }

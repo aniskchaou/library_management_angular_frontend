@@ -2,17 +2,17 @@
   class="form-group odd"
   id="category_name_field_box"
   [formGroup]="circulationStatusForm"
->
+  >
   <label
     class="col-sm-3 control-label"
     for="name"
     id="category_name_display_as_box"
-  >
+    >
     <font style="vertical-align: inherit">
       <font style="vertical-align: inherit">
         Name :
       </font> </font
-    ><span class="required">
+      ><span class="required">
       <font style="vertical-align: inherit">
         <font style="vertical-align: inherit">*</font>
       </font>
@@ -27,18 +27,22 @@
       class="form-control"
       type="text"
       maxlength="99"
-    />
+      />
 
-    <div *ngIf="submitted && f.name.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.name.errors.required">
-        {{ msg.validationMessage.name }}
-      </div>
-    </div>
+      @if (submitted && f.name.errors) {
+        <div class="alert alert-danger">
+          @if (submitted && f.name.errors.required) {
+            <div>
+              {{ msg.validationMessage.name }}
+            </div>
+          }
+        </div>
+      }
 
-    <br />
-    <button (click)="add()" type="button" class="btn btn-outline-info">
-      <i class="fas fa-save"></i>
+      <br />
+      <button (click)="add()" type="button" class="btn btn-outline-info">
+        <i class="fas fa-save"></i>
         Create
-    </button>
-  </div>
-</form>
+      </button>
+    </div>
+  </form>

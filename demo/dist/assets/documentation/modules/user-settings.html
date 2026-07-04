@@ -1,0 +1,34 @@
+
+<p>The User Settings module is used to configure the parameters related to user registration and roles within the library management system. It includes options for allowing user registration, requiring email verification, and setting a default user role. These settings help manage user access and ensure secure and organized user management.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">Allow User Registration:</p>
+    <ul>
+        <li><strong>Description:</strong> Determines whether new users are permitted to register themselves in the library management system.</li>
+        <li><strong>Usage:</strong> Select "Yes" to allow users to register on their own, or "No" to disable self-registration and require administrative approval for new accounts.</li>
+        <li><strong>Example:</strong> "Yes"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes/No).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Require Email Verification for New Users:</p>
+    <ul>
+        <li><strong>Description:</strong> Specifies whether new users must verify their email addresses before their accounts are activated.</li>
+        <li><strong>Usage:</strong> Select "Yes" to require email verification, which adds an extra layer of security by ensuring the validity of the user’s email address. Select "No" to bypass email verification.</li>
+        <li><strong>Example:</strong> "Yes"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes/No).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Default User Role:</p>
+    <ul>
+        <li><strong>Description:</strong> Defines the default role assigned to users upon registration or account creation.</li>
+        <li><strong>Usage:</strong> Select the role that new users will automatically receive. This role typically defines the permissions and access levels available to the user.</li>
+        <li><strong>Example:</strong> "Member", "Guest"</li>
+        <li><strong>Validation:</strong> Must be a valid role name that exists within the system’s role management configuration.</li>
+    </ul>
+</div>

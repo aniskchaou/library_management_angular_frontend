@@ -9,9 +9,10 @@ import * as L from 'leaflet';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-physical-description',
-  templateUrl: './physical-description.component.html',
-  styleUrls: ['./physical-description.component.css']
+    selector: 'app-physical-description',
+    templateUrl: './physical-description.component.html',
+    styleUrls: ['./physical-description.component.css'],
+    standalone: false
 })
 export class PhysicalDescriptionComponent extends URLLoader implements OnInit, AfterViewInit {
 
@@ -64,7 +65,7 @@ export class PhysicalDescriptionComponent extends URLLoader implements OnInit, A
           this.loadDescriptions();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(description: PhysicalDescription): void {
@@ -78,7 +79,7 @@ export class PhysicalDescriptionComponent extends URLLoader implements OnInit, A
           this.loadDescriptions();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   deleteRow(row: PhysicalDescription): void {
@@ -103,11 +104,9 @@ export class PhysicalDescriptionComponent extends URLLoader implements OnInit, A
   }
 
   onSelect({ selected }): void {
-    console.log('Selected row:', selected);
   }
 
   onActivate(event): void {
-    console.log('Activate Event:', event);
   }
 
 

@@ -12,9 +12,10 @@ import { saveAs } from 'file-saver';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 @Component({
-  selector: 'app-book-report',
-  templateUrl: './book-report.component.html',
-  styleUrls: ['./book-report.component.css'],
+    selector: 'app-book-report',
+    templateUrl: './book-report.component.html',
+    styleUrls: ['./book-report.component.css'],
+    standalone: false
 })
 export class BookReportComponent extends URLLoader implements OnInit {
   books$: CatalogItem[];
@@ -89,7 +90,6 @@ export class BookReportComponent extends URLLoader implements OnInit {
     this.httpService.getAll(CONFIG.URL_BASE + '/writer/all').subscribe(
       (data: Writer[]) => {
         this.writers$ = data;
-        console.log(this.writers$);
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'error');
@@ -102,7 +102,7 @@ export class BookReportComponent extends URLLoader implements OnInit {
     this.httpService.getAll(CONFIG.URL_BASE + '/publisher/all').subscribe(
       (data: Publisher[]) => {
         this.publishers$ = data;
-        //console.log(this.publishers$);
+        //
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'error');
@@ -138,15 +138,6 @@ export class BookReportComponent extends URLLoader implements OnInit {
     this.searchButtonClicked = true;
     //  this.loading = true;
     this.loadScripts();
-    console.log(  CONFIG.URL_BASE +
-      '/book/bookreport/' +
-      this.selectedYear +
-      '/' +
-      this.selectedWriter +
-      '/' +
-      this.selectedPublisher +
-      '/' +
-      this.selectedCategory)
     this.httpService
       .getAll(
         CONFIG.URL_BASE +

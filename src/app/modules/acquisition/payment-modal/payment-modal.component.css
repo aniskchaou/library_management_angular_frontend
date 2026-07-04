@@ -1,0 +1,210 @@
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+.pm-header {
+  background: linear-gradient(135deg, #1a3a5c 0%, #1d6fa3 100%);
+  color: #fff;
+  padding: 16px 20px;
+  align-items: flex-start;
+}
+.pm-header__left {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.pm-header__icon {
+  font-size: 1.6rem;
+  margin-top: 2px;
+  opacity: .9;
+}
+.pm-header__title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+}
+.pm-header__sub {
+  color: rgba(255,255,255,.75);
+  font-size: .8rem;
+}
+.pm-header__close {
+  color: rgba(255,255,255,.8) !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+  font-size: 1.4rem;
+  padding: 0 !important;
+}
+.pm-header__close:hover { color: #fff !important; }
+
+/* ─── Body ───────────────────────────────────────────────────────────────── */
+.pm-body { padding: 20px; max-height: 70vh; overflow-y: auto; }
+
+.pm-alert {
+  font-size: .88rem;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── Invoice summary strip ──────────────────────────────────────────────── */
+.pm-summary {
+  display: flex;
+  gap: 0;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+.pm-summary__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  border-right: 1px solid #e2e8f0;
+}
+.pm-summary__item:last-child { border-right: none; }
+.pm-summary__label {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: #94a3b8;
+  margin-bottom: 4px;
+}
+.pm-summary__value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+.pm-summary__value--green { color: #059669; }
+.pm-summary__value--red   { color: #dc2626; }
+
+/* ─── Method selector ────────────────────────────────────────────────────── */
+.pm-method-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.pm-method-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all .2s;
+  color: #64748b;
+  font-weight: 500;
+  font-size: .88rem;
+  text-align: center;
+  background: #fff;
+}
+.pm-method-btn i { font-size: 1.4rem; }
+.pm-method-btn small { font-size: .72rem; color: #94a3b8; }
+.pm-method-btn:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+  color: #2563eb;
+}
+.pm-method-btn--active {
+  border-color: #2563eb;
+  background: #eff6ff;
+  color: #2563eb;
+  box-shadow: 0 2px 10px rgba(37,99,235,.2);
+}
+.pm-method-btn--active .fa-paypal { color: #003087; }
+
+/* ─── Section boxes ──────────────────────────────────────────────────────── */
+.pm-section {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 16px 4px;
+  margin-bottom: 14px;
+}
+.pm-section--paypal { background: #eef4ff; border-color: #bfdbfe; }
+.pm-section__title {
+  font-size: .88rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.pm-section__title .fa-paypal { color: #003087; }
+
+.pm-paypal-notice {
+  font-size: .82rem;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* ─── Payment history ────────────────────────────────────────────────────── */
+.pm-history {
+  margin-top: 20px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 16px;
+}
+.pm-history__title {
+  font-size: .88rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.pm-history__list { display: flex; flex-direction: column; gap: 8px; }
+.pm-history__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+.pm-history__item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pm-history__icon {
+  font-size: 1.2rem;
+  color: #475569;
+  width: 20px;
+  text-align: center;
+}
+.pm-history__icon--paypal { color: #003087; }
+.pm-history__amount {
+  font-weight: 700;
+  font-size: .95rem;
+  color: #0f172a;
+  display: block;
+}
+.pm-history__method,
+.pm-history__date,
+.pm-history__ref {
+  font-size: .75rem;
+  color: #64748b;
+  display: inline;
+  margin-right: 8px;
+}
+.pm-history__item-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pm-history__del { padding: 2px 6px; }
+
+/* ─── Footer ─────────────────────────────────────────────────────────────── */
+.pm-footer { justify-content: flex-end; gap: 8px; }
+.pm-footer__save { display: flex; align-items: center; gap: 6px; }

@@ -9,9 +9,10 @@ import { saveAs } from 'file-saver';
 import 'jspdf-autotable';
 
 @Component({
-  selector: 'app-member-report',
-  templateUrl: './member-report.component.html',
-  styleUrls: ['./member-report.component.css'],
+    selector: 'app-member-report',
+    templateUrl: './member-report.component.html',
+    styleUrls: ['./member-report.component.css'],
+    standalone: false
 })
 export class MemberReportComponent extends URLLoader implements OnInit {
   searchButtonClicked: boolean = false;
@@ -75,11 +76,6 @@ export class MemberReportComponent extends URLLoader implements OnInit {
     this.searchButtonClicked = true;
     this.loadScripts();
     // this.loading = true;
-     console.log(CONFIG.URL_BASE +
-      '/member/memberreport/' +
-      this.selectedStatus +
-      '/' +
-      this.selectedUserType)
     this.httpService
       .getAll(
         CONFIG.URL_BASE +

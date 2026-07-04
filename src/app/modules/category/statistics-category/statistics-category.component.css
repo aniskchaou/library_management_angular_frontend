@@ -1,0 +1,26 @@
+:host { display: block; }
+
+.ll-stats { display: flex; flex-direction: column; gap: 16px; }
+.ll-stats__toolbar { display: flex; flex-wrap: wrap; gap: 8px; }
+.ll-stats__toolbar mat-icon { margin-right: 4px; }
+
+.ll-stats__kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.ll-kpi mat-card-content { padding: 14px 16px !important; }
+.ll-kpi__top { display: flex; justify-content: space-between; align-items: center; }
+.ll-kpi__label { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: rgba(0,0,0,.6); }
+.ll-kpi__value { font-size: 28px; font-weight: 500; margin: 8px 0 10px; }
+.ll-kpi mat-icon { color: rgba(0,0,0,.4); }
+
+.ll-kpi--indigo ::ng-deep .mdc-linear-progress__bar-inner { border-color: #3f51b5; }
+.ll-kpi--indigo ::ng-deep .mdc-linear-progress__buffer-bar { background-color: rgba(63,81,181,.18); }
+.ll-kpi--ok ::ng-deep .mdc-linear-progress__bar-inner { border-color: #2e7d32; }
+.ll-kpi--ok ::ng-deep .mdc-linear-progress__buffer-bar { background-color: rgba(46,125,50,.18); }
+.ll-kpi--danger ::ng-deep .mdc-linear-progress__bar-inner { border-color: #c62828; }
+.ll-kpi--danger ::ng-deep .mdc-linear-progress__buffer-bar { background-color: rgba(198,40,40,.18); }
+
+.ll-charts__title { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+.ll-charts__title mat-icon { color: #3f51b5; font-size: 18px; width: 18px; height: 18px; }
+
+@media (max-width: 520px) {
+  .ll-stats__kpis { grid-template-columns: 1fr 1fr; }
+}

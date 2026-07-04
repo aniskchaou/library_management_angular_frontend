@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-view-type-member',
-  templateUrl: './view-type-member.component.html',
-  styleUrls: ['./view-type-member.component.css']
+    selector: 'app-view-type-member',
+    templateUrl: './view-type-member.component.html',
+    styleUrls: ['./view-type-member.component.css'],
+    standalone: false
 })
 export class ViewTypeMemberComponent implements OnInit {
 

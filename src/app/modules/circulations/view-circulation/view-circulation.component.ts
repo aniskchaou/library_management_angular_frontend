@@ -7,9 +7,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-view-circulation',
-  templateUrl: './view-circulation.component.html',
-  styleUrls: ['./view-circulation.component.css'],
+    selector: 'app-view-circulation',
+    templateUrl: './view-circulation.component.html',
+    styleUrls: ['./view-circulation.component.css'],
+    standalone: false
 })
 export class ViewCirculationComponent extends URLLoader implements OnInit {
   @Input() id;

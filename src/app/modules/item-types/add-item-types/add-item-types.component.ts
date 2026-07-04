@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -9,18 +9,19 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-add-item-types',
-  templateUrl: './add-item-types.component.html',
-  styleUrls: ['./add-item-types.component.css']
+    selector: 'app-add-item-types',
+    templateUrl: './add-item-types.component.html',
+    styleUrls: ['./add-item-types.component.css'],
+    standalone: false
 })
 export class AddItemTypesComponent implements OnInit {
 
-  mediaTypeForm: FormGroup;
+  mediaTypeForm: UntypedFormGroup;
   submitted = false;
 
   constructor(
     private toastr: ToastrService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private httpClient: HTTPService,
     private dataService:DataService,

@@ -6,9 +6,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditPublisherComponent } from '../edit-publisher/edit-publisher.component';
 
 @Component({
-  selector: 'app-publisher-list',
-  templateUrl: './publisher-list.component.html',
-  styleUrls: ['./publisher-list.component.css'],
+    selector: 'app-publisher-list',
+    templateUrl: './publisher-list.component.html',
+    styleUrls: ['./publisher-list.component.css'],
+    standalone: false
 })
 export class PublisherListComponent extends URLLoader implements OnInit,AfterViewInit {
   @Input() publishers;
@@ -56,22 +57,18 @@ export class PublisherListComponent extends URLLoader implements OnInit,AfterVie
   }
 
   editRow(row: Publisher): void {
-    console.log('Edit publisher:', row);
     // Add edit logic here
   }
 
   deleteRow(row: Publisher): void {
-    console.log('Delete publisher:', row);
     this.publishers = this.publishers.filter(r => r !== row);
     // Add delete logic here
   }
 
   onSelect(selected) {
-    console.log('Selected row:', selected);
   }
 
   onActivate(event) {
-    console.log('Activate Event:', event);
   }
 
   openViewDialog(item): void {
@@ -79,24 +76,23 @@ export class PublisherListComponent extends URLLoader implements OnInit,AfterVie
       centered: true,});
     modalRef.componentInstance.selectedPublisher = item; // Ensure category is passed properly
   
-    //console.log(category); // Ensure category is not undefined here
+    //
 
     modalRef.result.then(result => {
-      console.log(result)
        //this.fetchItemList()
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(row): void {
-    const modalRef = this.modalService.open(EditPublisherComponent);
-    modalRef.componentInstance.publisher = row;
+    const modalRef = this.modalService.open(EditPublisherComponent, { size: 'xl', centered: true });
+    modalRef.componentInstance.publisher = { ...row };
 
     modalRef.result.then(result => {
       if (result) {
       
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
 }

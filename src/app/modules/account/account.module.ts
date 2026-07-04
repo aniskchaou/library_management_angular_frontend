@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import CategoryTestService from 'src/app/main/mocks/CategoryTestService';
 import CategoryValidation from 'src/app/main/validations/CategoryValidation';
@@ -23,29 +23,22 @@ import { BudgetModalComponent } from './budget-modal/budget-modal.component';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { MatSelectModule } from '@angular/material/select';
 
-@NgModule({
-  declarations: [
-    ExpenseListComponent,
-    IncomeListComponent,
-    ExpenseComponent,
-    IncomeComponent,
-    ModalExpenseComponent,
-    AddExpenseComponent,
-    EditExpenseComponent,
-    ModalIncomeComponent,
-    AddIncomeComponent,
-    EditIncomeComponent,
-    FundModalComponent,
-    BudgetModalComponent
-  ],
-  imports: [
-    SharedModule,
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    CommonModule,
-  ],
-  providers: [],
-})
+@NgModule({ declarations: [
+        ExpenseListComponent,
+        IncomeListComponent,
+        ExpenseComponent,
+        IncomeComponent,
+        ModalExpenseComponent,
+        AddExpenseComponent,
+        EditExpenseComponent,
+        ModalIncomeComponent,
+        AddIncomeComponent,
+        EditIncomeComponent,
+        FundModalComponent,
+        BudgetModalComponent
+    ], imports: [SharedModule,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AccountModule {}

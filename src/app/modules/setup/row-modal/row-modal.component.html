@@ -19,59 +19,63 @@
         type="text"
         placeholder="e.g., Row 1"
         [(ngModel)]="row.rowName"
-      />
-    </div>
+        />
+      </div>
 
-    <!-- Position Field with Tooltip -->
-    <div class="form-group">
-      <label for="position" id="position_display_as_box">
-        Position
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the position of the row."></i>
-      </label>
-      <input
-        id="position"
-        name="position"
-        class="form-control"
-        type="number"
-        placeholder="e.g., 3"
-        [(ngModel)]="row.position"
-      />
-    </div>
+      <!-- Position Field with Tooltip -->
+      <div class="form-group">
+        <label for="position" id="position_display_as_box">
+          Position
+          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the position of the row."></i>
+        </label>
+        <input
+          id="position"
+          name="position"
+          class="form-control"
+          type="number"
+          placeholder="e.g., 3"
+          [(ngModel)]="row.position"
+          />
+        </div>
 
-    <!-- Shelf Field with Tooltip -->
-    <div class="form-group">
-      <label for="shelf" id="shelf_display_as_box">
-        Shelf
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the shelf for this row."></i>
-      </label>
-      <select
-        id="shelf"
-        name="shelf"
-        class="form-control"
-        [(ngModel)]="row.shelf"
-      >
-        <option *ngFor="let shelf of shelves" [ngValue]="shelf">{{ shelf?.shelfName }}</option>
-      </select>
-    </div>
+        <!-- Shelf Field with Tooltip -->
+        <div class="form-group">
+          <label for="shelf" id="shelf_display_as_box">
+            Shelf
+            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the shelf for this row."></i>
+          </label>
+          <select
+            id="shelf"
+            name="shelf"
+            class="form-control"
+            [(ngModel)]="row.shelf"
+            >
+            @for (shelf of shelves; track shelf) {
+              <option [ngValue]="shelf">{{ shelf?.shelfName }}</option>
+            }
+          </select>
+        </div>
 
-    <!-- Department Field with Tooltip -->
-    <div class="form-group">
-      <label for="department" id="department_display_as_box">
-        Department
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the department for this row."></i>
-      </label>
-      <select
-        id="department"
-        name="department"
-        class="form-control"
-        [(ngModel)]="row.department"
-      >
-        <option *ngFor="let department of departments" [ngValue]="department">{{ department?.departmentName }}</option>
-      </select>
+        <!-- Department Field with Tooltip -->
+        <div class="form-group">
+          <label for="department" id="department_display_as_box">
+            Department
+            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the department for this row."></i>
+          </label>
+          <select
+            id="department"
+            name="department"
+            class="form-control"
+            [(ngModel)]="row.department"
+            >
+            @for (department of departments; track department) {
+              <option [ngValue]="department">{{ department?.departmentName }}</option>
+            }
+          </select>
+        </div>
+      </form>
     </div>
-  </form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
-  <button type="button" class="btn btn-outline-primary" (click)="saveRow()">Save</button>
-</div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
+      <button type="button" class="btn btn-outline-primary" (click)="saveRow()">Save</button>
+    </div>

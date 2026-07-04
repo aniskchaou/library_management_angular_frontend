@@ -1,0 +1,4 @@
+:host { display: block; }
+.ll-table { width: 100%; }
+.ll-chip--ok { background: #e8f5e9 !important; color: #2e7d32 !important; }
+.ll-chip--off { background: #ffebee !important; color: #c62828 !important; }

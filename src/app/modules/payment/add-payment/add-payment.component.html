@@ -2,18 +2,18 @@
   class="form-group odd"
   id="category_name_field_box"
   [formGroup]="paymentForm"
->
+  >
   <!-- member -->
   <label
     class="col-sm-3 control-label"
     for="name"
     id="category_name_display_as_box"
-  >
+    >
     <font style="vertical-align: inherit">
       <font style="vertical-align: inherit">
-        {{ paymentI18n?.nameI18n }}
+        {{ 'ui.name' | translate }}
       </font> </font
-    ><span class="required">
+      ><span class="required">
       <font style="vertical-align: inherit">
         <font style="vertical-align: inherit">*</font>
       </font>
@@ -27,30 +27,36 @@
       id="field-category_name"
       name="memberName"
       class="form-control"
-    >
-      <option *ngFor="let m of members$" value="{{ m.id }}">
-        {{ m.name }}
-      </option>
+      >
+      @for (m of members$; track m) {
+        <option value="{{ m.id }}">
+          {{ m.name }}
+        </option>
+      }
     </select>
 
     <!-- member validation-->
-    <div *ngIf="submitted && f.memberName.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.memberName.errors.required">
-        {{ msg.validationMessage.memberName }}
+    @if (submitted && f.memberName.errors) {
+      <div class="alert alert-danger">
+        @if (submitted && f.memberName.errors.required) {
+          <div>
+            {{ msg.validationMessage.memberName }}
+          </div>
+        }
       </div>
-    </div>
+    }
   </div>
 
   <label
     class="col-sm-3 control-label"
     for="name"
     id="payment_name_display_as_box"
-  >
+    >
     <font style="vertical-align: inherit">
       <font style="vertical-align: inherit">
-        {{ paymentI18n?.dateI18n }}
+        {{ 'ui.date' | translate }}
       </font> </font
-    ><span class="required">
+      ><span class="required">
       <font style="vertical-align: inherit">
         <font style="vertical-align: inherit">*</font>
       </font>
@@ -66,79 +72,112 @@
       class="form-control"
       type="date"
       maxlength="99"
-    />
-    <!-- payment Validation message -->
-    <div *ngIf="submitted && f.date.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.date.errors.required">
-        {{ msg.validationMessage.date }}
-      </div>
+      />
+      <!-- payment Validation message -->
+      @if (submitted && f.date.errors) {
+        <div class="alert alert-danger">
+          @if (submitted && f.date.errors.required) {
+            <div>
+              {{ msg.validationMessage.date }}
+            </div>
+          }
+        </div>
+      }
     </div>
-  </div>
 
-  <label
-    class="col-sm-3 control-label"
-    for="name"
-    id="payment_name_display_as_box"
-  >
-    <font style="vertical-align: inherit">
+    <label
+      class="col-sm-3 control-label"
+      for="name"
+      id="payment_name_display_as_box"
+      >
       <font style="vertical-align: inherit">
-        {{ paymentI18n?.amountI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-  <div class="col-sm-9 col-md-6 col-lg-6" id="payment_name_input_box">
-    <!-- payment text field-->
-    <input
-      [ngClass]="{ 'is-invalid': submitted && f.amount.errors }"
-      formControlName="amount"
-      id="field-payment_name"
-      name="amount"
-      class="form-control"
-      type="text"
-      maxlength="99"
-    />
-    <!-- payment Validation message -->
-    <div *ngIf="submitted && f.amount.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.amount.errors.required">
-        {{ msg.validationMessage.amount }}
+        <font style="vertical-align: inherit">
+          {{ 'ui.amount' | translate }}
+        </font> </font
+        ><span class="required">
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit">*</font>
+        </font>
+      </span>
+    </label>
+    <div class="col-sm-9 col-md-6 col-lg-6" id="payment_name_input_box">
+      <!-- payment text field-->
+      <input
+        [ngClass]="{ 'is-invalid': submitted && f.amount.errors }"
+        formControlName="amount"
+        id="field-payment_name"
+        name="amount"
+        class="form-control"
+        type="text"
+        maxlength="99"
+        />
+        <!-- payment Validation message -->
+        @if (submitted && f.amount.errors) {
+          <div class="alert alert-danger">
+            @if (submitted && f.amount.errors.required) {
+              <div>
+                {{ msg.validationMessage.amount }}
+              </div>
+            }
+          </div>
+        }
       </div>
-    </div>
-  </div>
-  <label
-    class="col-sm-3 control-label"
-    for="name"
-    id="payment_name_display_as_box"
-  >
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ paymentI18n?.noteI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-  <div class="col-sm-9 col-md-6 col-lg-6" id="payment_name_input_box">
-    <!-- payment text field-->
-    <textarea
-      formControlName="note"
-      id="field-payment_name"
-      name="note"
-      class="form-control"
-      type="text"
-      maxlength="99"
-    ></textarea>
-    <!-- payment Validation message -->
-  </div>
-  <br />
-  <!-- add button -->
-  <button (click)="add()" type="button" class="btn btn-info">
-    <i class="fas fa-save"></i>
-    {{ paymentI18n?.addButtonI18n }}
-  </button>
-</form>
+      <label
+        class="col-sm-3 control-label"
+        for="name"
+        id="payment_name_display_as_box"
+        >
+        <font style="vertical-align: inherit">
+          <font style="vertical-align: inherit">
+            {{ 'ui.notes' | translate }}
+          </font> </font
+          ><span class="required">
+          <font style="vertical-align: inherit">
+            <font style="vertical-align: inherit">*</font>
+          </font>
+        </span>
+      </label>
+      <div class="col-sm-9 col-md-6 col-lg-6" id="payment_name_input_box">
+        <!-- payment text field-->
+        <textarea
+          formControlName="note"
+          id="field-payment_name"
+          name="note"
+          class="form-control"
+          type="text"
+          maxlength="99"
+        ></textarea>
+        <!-- payment Validation message -->
+      </div>
+
+      <label class="col-sm-3 control-label" for="paymentMethod">
+        Payment Method<span class="required">*</span>
+      </label>
+      <div class="col-sm-9 col-md-6 col-lg-6">
+        <select
+          [ngClass]="{ 'is-invalid': submitted && f.paymentMethod.errors }"
+          formControlName="paymentMethod"
+          id="field-payment-method"
+          name="paymentMethod"
+          class="form-control"
+        >
+          <option value="cash">Cash</option>
+          <option value="bank_transfer">Bank Transfer</option>
+          <option value="paypal">PayPal</option>
+          <option value="credit_card">Credit / Debit Card</option>
+        </select>
+        @if (submitted && f.paymentMethod.errors) {
+          <div class="alert alert-danger">
+            @if (f.paymentMethod.errors.required) {
+              <div>Payment method is required.</div>
+            }
+          </div>
+        }
+      </div>
+      <br />
+      <!-- add button -->
+      <button (click)="add()" type="button" class="btn btn-info">
+        <i class="fas fa-save"></i>
+        {{ 'ui.save' | translate }}
+      </button>
+    </form>

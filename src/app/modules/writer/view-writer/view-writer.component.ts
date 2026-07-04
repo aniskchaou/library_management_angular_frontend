@@ -7,9 +7,10 @@ import CONFIG from 'src/app/main/urls/urls';
 import { DataService } from 'src/app/main/services/data.service';
 
 @Component({
-  selector: 'app-view-writer',
-  templateUrl: './view-writer.component.html',
-  styleUrls: ['./view-writer.component.css']
+    selector: 'app-view-writer',
+    templateUrl: './view-writer.component.html',
+    styleUrls: ['./view-writer.component.css'],
+    standalone: false
 })
 export class ViewWriterComponent implements OnInit {
   @Input() writer
@@ -33,15 +34,12 @@ export class ViewWriterComponent implements OnInit {
   }
 
   openEditDialog(writer): void {
-    console.log(writer);
-    const modalRef = this.modalService.open(EditWriterComponent); // Open the CategoryViewComponent in modal
-    modalRef.componentInstance.model = { ...writer }; // Pass category data
-    this.closeModal()
-    // Ensure category is passed properly and logged
+    const modalRef = this.modalService.open(EditWriterComponent, { size: 'xl', centered: true });
+    modalRef.componentInstance.author = { ...writer };
+    this.closeModal();
 
     modalRef.result.then(result => {
-      console.log(result); // Handle any result (if needed)
-    }).catch(error => console.log(error)); // Handle any errors
+    }).catch(() => {});
   }
 
   delete(writer) {

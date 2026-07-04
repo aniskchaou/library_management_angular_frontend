@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'titlecapital',
+    name: 'titlecapital',
+    standalone: false
 })
 export class TitlecapitalPipe implements PipeTransform {
   transform(value: string, ...args: unknown[]): string {

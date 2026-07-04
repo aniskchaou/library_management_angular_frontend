@@ -1,289 +1,94 @@
-<!-- <table class="table table-bordered" id="dataTabled" width="100%" cellspacing="0">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Note</th>
-      <th>Date of Birth</th>
-      <th>Died</th>
-      <th>Date of Death</th>
-      <th>Publications</th>
-      <th>Bio</th>
-      <th>Award</th>
-      <th>References</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tfoot>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Note</th>
-      <th>Date of Birth</th>
-      <th>Died</th>
-      <th>Date of Death</th>
-      <th>Publications</th>
-      <th>Bio</th>
-      <th>Award</th>
-      <th>References</th>
-      <th>Actions</th>
-    </tr>
-  </tfoot>
-  <tbody>
-    <tr *ngFor="let writer of writers">
-      <td>{{ writer?.id }}</td>
-      <td>{{ writer?.name }}</td>
-      <td>{{ writer?.note }}</td>
-      <td>{{ writer?.dateOfBirth | date:'shortDate' }}</td>
-      <td>{{ writer?.died ? 'Yes' : 'No' }}</td>
-      <td>{{ writer?.dateOfDeath ? (writer?.dateOfDeath | date:'shortDate') : 'N/A' }}</td>
-      <td>
-        <ul>
-          <li *ngFor="let book of writer?.publications">{{ book.title }}</li>
-        </ul>
-      </td>
-      <td>{{ writer?.bio }}</td>
-      <td>{{ writer?.award }}</td>
-      <td>{{ writer?.references }}</td>
-      <td>
-        <div class="btn-group">
-          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Actions
-          </button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" (click)="edit(writer?.id)"><i class="fas fa-edit"></i> Edit</a>
-            <a class="dropdown-item" (click)="delete(writer?.id)"><i class="fas fa-trash-alt"></i> Delete</a>
-            <a class="dropdown-item" (click)="showPublications(writer?.id)" data-toggle="modal" data-target="#publicationsModal"><i class="fas fa-eye"></i> Show Publications</a>
-          </div>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-<div class="modal fade" id="publicationsModal" tabindex="-1" role="dialog" aria-labelledby="publicationsModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="publicationsModalLabel">Publications</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-
-            <table  class="table table-bordered">
-              <tr>
-                <th>Id</th>
-                <td>{{ writer?.id }}</td>
-              </tr>
-              <tr>
-                <th>Name</th>
-                <td>{{ writer?.name }}</td>
-              </tr>
-              <tr>
-                <th>Note</th>
-                <td>{{ writer?.note }}</td>
-              </tr>
-              <tr>
-                <th>Date of Birth</th>
-                <td>{{ writer?.dateOfBirth | date:'shortDate' }}</td>
-              </tr>
-              <tr>
-                <th>Died</th>
-                <td>{{ writer?.died ? 'Yes' : 'No' }}</td>
-              </tr>
-              <tr>
-                <th>Date of Death</th>
-                <td>{{ writer?.dateOfDeath ? (writer?.dateOfDeath | date:'shortDate') : 'N/A' }}</td>
-              </tr>
-              <tr>
-                <th>Publications</th>
-                <td>
-                  <ul>
-                    <li *ngFor="let book of writer?.publications">{{ book.title }}</li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <th>Bio</th>
-                <td>{{ writer?.bio }}</td>
-              </tr>
-              <tr>
-                <th>Award</th>
-                <td>{{ writer?.award }}</td>
-              </tr>
-              <tr>
-                <th>References</th>
-                <td>{{ writer?.references }}</td>
-              </tr>
-              <tr>
-                <th>User Id</th>
-                <td>{{ writer?.userId }}</td>
-              </tr>
-              <tr>
-                <th>Library Id</th>
-                <td>{{ writer?.libraryId }}</td>
-              </tr>
-              <tr>
-                <th>Created</th>
-                <td>{{ writer?.created | date:'short' }}</td>
-              </tr>
-              <tr>
-                <th>Modified</th>
-                <td>{{ writer?.modified | date:'short' }}</td>
-              </tr>
-            </table>
-            
-              <table class="table">
-                  <thead>
-                      <tr>
-                          <th>Id</th>
-                          <th>Title</th>
-                          <th>Media Type Id</th>
-                          <th>Isbn</th>
-                          <th>Issn</th>
-                          <th>Edition</th>
-                          <th>Tags</th>
-                          <th>Actions</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      
-                  </tbody>
-              </table>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-             
-          </div>
-      </div>
+<div class="ll-list">
+  <div class="ll-list__toolbar">
+    <mat-form-field appearance="outline" class="ll-list__search">
+      <mat-label>Search writers…</mat-label>
+      <input matInput type="text" placeholder="Name, awards, references…" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
   </div>
+
+  <ngx-datatable
+    class="bootstrap ll-list__table"
+    [rows]="writers"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [limit]="10"
+    [loadingIndicator]="loading"
+    [reorderable]="reorderable"
+    (select)="onSelect($event)"
+    (activate)="onActivate($event)">
+
+    <ngx-datatable-column name="" [width]="70" [sortable]="false">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        <div class="ll-avatar">
+          {{ row.name ? row.name.charAt(0).toUpperCase() : '?' }}
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="{{ 'writer.colName' | translate }}" [prop]="'name'">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        <div class="ll-cell--stack">
+          <span class="ll-cell--strong">{{ row.name }}</span>
+          @if (row.note) {
+            <span class="ll-cell--muted">{{ row.note }}</span>
+          }
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Date of Birth" [prop]="'dob'" [width]="140">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        <span>{{ row.dob || '—' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Status" [prop]="'died'" [width]="120">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        @if (row.died) {
+          <mat-chip class="ll-chip--off">
+            <mat-icon matChipAvatar>history_toggle_off</mat-icon> Deceased
+          </mat-chip>
+        } @else {
+          <mat-chip class="ll-chip--ok">
+            <mat-icon matChipAvatar>check_circle</mat-icon> Living
+          </mat-chip>
+        }
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Awards" [prop]="'awards'">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        <span class="ll-cell--muted">{{ row.awards || '—' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Publications" [prop]="'publications'">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        <span class="ll-cell--muted">{{ row.publications || '—' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Actions" [width]="120" [sortable]="false">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        <button mat-icon-button [matMenuTriggerFor]="actions" matTooltip="Actions">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #actions="matMenu">
+          <button mat-menu-item (click)="openViewDialog(row)">
+            <mat-icon>visibility</mat-icon><span>View</span>
+          </button>
+          <button mat-menu-item (click)="openEditDialog(row)">
+            <mat-icon>edit</mat-icon><span>Edit</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item class="ll-menu--danger" (click)="delete(row)">
+            <mat-icon>delete</mat-icon><span>Delete</span>
+          </button>
+        </mat-menu>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
 </div>
-
- -->
-
- <ngx-datatable
- class="bootstrap"
- [rows]="writers"
- [columnMode]="'force'"
- [headerHeight]="50"
- [footerHeight]="50"
- [rowHeight]="'auto'"
- [limit]="7"
- [loadingIndicator]="loading"
- [reorderable]="reorderable"
- (select)="onSelect($event)"
- (activate)="onActivate($event)"
->
-
- <!-- ID Column -->
-<!--  <ngx-datatable-column name="ID" [prop]="'id'">
-   <ng-template ngx-datatable-cell-template let-row="row">
-     {{ row.id }}
-   </ng-template>
- </ngx-datatable-column> -->
-
- <ngx-datatable-column name="Thumbnail">
-  <ng-template ngx-datatable-cell-template let-row="row">
-    <!-- Generate random background color -->
-    <div [style.background-color]="getRandomColor()" 
-         style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; font-weight: bold;">
-      {{ row.name ? row.name.charAt(0).toUpperCase() : '' }}
-    </div>
-  </ng-template>
-</ngx-datatable-column>
- <!-- Name Column -->
- <ngx-datatable-column name="Name" [prop]="'name'">
-   <ng-template ngx-datatable-cell-template let-row="row">
-    <span style="color: blue;">{{ row.name }}</span>
-   </ng-template>
- </ngx-datatable-column>
-
- <!-- Note Column -->
-<!--  <ngx-datatable-column name="Note" [prop]="'note'">
-   <ng-template ngx-datatable-cell-template let-row="row">
-     {{ row.note }}
-   </ng-template>
- </ngx-datatable-column>
- -->
- <!-- Date of Birth Column -->
- <ngx-datatable-column name="Date of Birth" [prop]="'dob'">
-   <ng-template ngx-datatable-cell-template let-row="row">
-     {{ row.dob | date }}
-   </ng-template>
- </ngx-datatable-column>
-
- <!-- Died Column -->
- <ngx-datatable-column name="Died" [prop]="'died'">
-   <ng-template ngx-datatable-cell-template let-row="row">
-     {{ row.died }}
-   </ng-template>
- </ngx-datatable-column>
-
- <!-- Date of Death Column -->
- <ngx-datatable-column name="Date of Death" [prop]="'dod'">
-   <ng-template ngx-datatable-cell-template let-row="row">
-     {{ row.dod  }}
-   </ng-template>
- </ngx-datatable-column>
-
- <!-- Publications Column -->
- <ngx-datatable-column name="Publications" [prop]="'publications'">
-   <ng-template ngx-datatable-cell-template let-row="row">
-    <span style="color: red;">{{ row.publications }}</span>
-   </ng-template>
- </ngx-datatable-column>
-
- <!-- Bio Column -->
- <!-- <ngx-datatable-column name="Bio" [prop]="'bio'">
-   <ng-template ngx-datatable-cell-template let-row="row">
-     {{ row.bio }}
-   </ng-template>
- </ngx-datatable-column>
- -->
- <!-- Awards Column -->
- <!-- <ngx-datatable-column name="Awards" [prop]="'awards'">
-   <ng-template ngx-datatable-cell-template let-row="row">
-     {{ row.awards }}
-   </ng-template>
- </ngx-datatable-column> -->
-
- <!-- refrences Column -->
- <!-- <ngx-datatable-column name="refrences" [prop]="'refrences'">
-   <ng-template ngx-datatable-cell-template let-row="row">
-     {{ row.refrences }}
-   </ng-template>
- </ngx-datatable-column> -->
-
- <!-- Actions Column -->
- <ngx-datatable-column name="Actions">
-   <ng-template ngx-datatable-cell-template let-row="row">
-    <!--   <button class="btn btn-sm btn-outline-primary mr-2" (click)="openViewDialog(row)">
-       View
-     </button>
-     <button type="button" class="btn btn-outline-primary" (click)="openEditDialog(writer)">
-      <i class="fas fa-edit"></i> Edit
-    </button>
-    
-    <button type="button" class="btn btn-outline-danger" (click)="deleteRow(writer)">
-      <i class="fas fa-trash-alt"></i> Delete
-    </button> -->
-    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Actions
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item"  (click)="openViewDialog(row)">
-        <i class="fas fa-eye"></i> View
-      </a>
-      <a class="dropdown-item"  (click)="openEditDialog(row)">
-        <i class="fas fa-edit"></i> Edit
-      </a>
-      <a class="dropdown-item text-danger" (click)="deleteRow(row)">
-        <i class="fas fa-trash-alt"></i> Delete
-      </a>
-    </div>
-   </ng-template>
- </ngx-datatable-column>
-</ngx-datatable>

@@ -1,163 +1,48 @@
-<div class="container mt-4">
-    <!-- Notice Templates Title with Icon -->
-    <h1 class="h3 mb-2 text-gray-800"><i class="fas fa-file-alt"></i> Notice Templates</h1>
-    
-    <!-- Description -->
-    <p class="lead">The Notice Template module allows you to create and manage templates for notifications. These templates can be used for consistent messaging across different notifications.</p>
-  
-    <ul class="nav nav-tabs">
-       <!--  <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#Overview">
-                <i class="fas fa-chart-bar mr-2"></i> Overview
-            </a>
-        </li> -->
-        <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#List">
-                <i class="fas fa-list mr-2"></i> List
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#UserManual">
-                <i class="fas fa-book mr-2"></i> User Manual
-            </a>
-        </li>
-    </ul>
-  
-    <div class="tab-content">
-        <!-- Overview tab content -->
-     <!--    <div id="Overview" class="tab-pane fade show active">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6">
-                        <ngx-charts-bar-vertical
-                            [results]="barChartData"
-                            [view]="[400,300]"
-                            [scheme]="'cool'"
-                            [gradient]="true"
-                            [xAxis]="true"
-                            [yAxis]="true"
-                            [legend]="true"
-                            [showXAxisLabel]="true"
-                            [showYAxisLabel]="true"
-                            xAxisLabel="Category"
-                            yAxisLabel="Number of Books">
-                        </ngx-charts-bar-vertical>
-                    </div>
-                    <div class="col-md-6">
-                        <ngx-charts-pie-chart
-                            [results]="pieChartData"
-                            [view]="[400,300]"
-                            [scheme]="'cool'"
-                            [legend]="true"
-                            [explodeSlices]="false"
-                            [labels]="true">
-                        </ngx-charts-pie-chart>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <ngx-charts-line-chart
-                            [results]="lineChartData"
-                            [view]="[400,300]"
-                            [scheme]="'cool'"
-                            [legend]="true"
-                            [xAxis]="true"
-                            [yAxis]="true"
-                            [autoScale]="true">
-                        </ngx-charts-line-chart>
-                    </div>
-                    <div class="col-md-6">
-                        <ngx-charts-pie-chart
-                            [results]="doughnutChartData"
-                            [view]="[400,300]"
-                            [scheme]="'cool'"
-                            [legend]="true"
-                            [explodeSlices]="false"
-                            [doughnut]="true"
-                            [labels]="true">
-                        </ngx-charts-pie-chart>
-                    </div>
-                </div>
+﻿<div class="ll-page">
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <mat-icon class="ll-page__icon">article</mat-icon>
+      <div class="ll-page__title">
+        <h1>{{ 'noticetemplate.pageTitle' | translate }}</h1>
+        <p>{{ 'noticetemplate.pageDesc' | translate }}</p>
+      </div>
+      <div class="ll-page__actions">
+        <button mat-flat-button color="primary" (click)="openAddDialog()"><mat-icon>add</mat-icon> {{ 'ui.create' | translate }}</button>
+        <button mat-stroked-button (click)="loadNoticeTemplates()"><mat-icon>refresh</mat-icon> {{ 'ui.reload' | translate }}</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="ll-page__body" appearance="outlined">
+    <mat-card-content>
+      @if (loading) {
+        <div class="ll-loading"><mat-progress-spinner diameter="48" mode="indeterminate"></mat-progress-spinner></div>
+      } @else {
+        <mat-tab-group animationDuration="200ms" class="ll-tabs">
+          <mat-tab>
+            <ng-template mat-tab-label><mat-icon class="ll-tab__icon">list</mat-icon> {{ 'ui.list' | translate }}</ng-template>
+            <div class="ll-tab__content">
+              <ngx-datatable class="material" [rows]="noticeTemplates" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10">
+                <ngx-datatable-column name="Title" prop="title"></ngx-datatable-column>
+                <ngx-datatable-column name="Content Template" prop="contentTemplate"></ngx-datatable-column>
+                <ngx-datatable-column name="Actions">
+                  <ng-template ngx-datatable-cell-template let-row="row">
+                    <button mat-icon-button [matMenuTriggerFor]="ntMenu"><mat-icon>more_vert</mat-icon></button>
+                    <mat-menu #ntMenu="matMenu">
+                      <button mat-menu-item (click)="openEditDialog(row)"><mat-icon>edit</mat-icon> {{ 'ui.edit' | translate }}</button>
+                      <button mat-menu-item (click)="deleteNoticeTemplate(row.id)"><mat-icon>delete</mat-icon> {{ 'ui.delete' | translate }}</button>
+                      <button mat-menu-item (click)="clone(row)"><mat-icon>content_copy</mat-icon> Clone</button>
+                    </mat-menu>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
             </div>
-        </div> -->
-  
-        <!-- List tab content -->
-        <div id="List" class="tab-pane fade show active">
-            <div class="container-fluid">
-                
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <button class="btn btn-outline-primary btn-icon-split" (click)="openAddDialog()"> <span class="icon text-primary">
-                            <i class="fas fa-plus"></i>
-                        </span> <span class="text">Add Notice Template</span> </button>
-                <button
-                    
-                    role="button"
-                    class="btn btn-outline-warning btn-icon-split"
-                    (click)="loadNoticeTemplates()"
-                    >
-                    <span class="icon text-warning">
-                        <i class="fas fa-redo"></i>
-                    </span>
-                    <span class="text">Reload</span>
-                    </button>
-                        <div class="table-responsive">
-                            <div *ngIf="loading; else loaded">
-                                <div class="d-flex justify-content-center">
-                                  <div class="spinner-border text-primary" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                  </div>
-                                </div>
-                              </div>
-                      
-                              <ng-template #loaded>
-                            <ngx-datatable
-                                class="bootstrap"
-                                [rows]="noticeTemplates"
-                                [columnMode]="'force'"
-                                [headerHeight]="50"
-                                [footerHeight]="50"
-                                [rowHeight]="'auto'"
-                                [limit]="10"
-                                [reorderable]="true">
-                                <ngx-datatable-column name="Title" [prop]="'title'"></ngx-datatable-column>
-                                <ngx-datatable-column name="Content Template" [prop]="'contentTemplate'"></ngx-datatable-column>
-                                <ngx-datatable-column name="Actions">
-                                    <ng-template ngx-datatable-cell-template let-row="row">
-                                        <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Actions
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item"  (click)="openEditDialog(row)">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </a>
-                                            <a class="dropdown-item"  (click)="deleteNoticeTemplate(row.id!)">
-                                                <i class="fas fa-trash"></i> Delete
-                                            </a>
-                                            <a class="dropdown-item" (click)="clone(row)">
-                                                <i class="fas fa-clone"></i> Clone
-                                            </a>
-                                           <!--  <a class="dropdown-item" >
-                                                <i class="fas fa-star"></i> Set as Default
-                                            </a> -->
-                                        </div>
-                                    </ng-template>
-                                </ngx-datatable-column>
-                            </ngx-datatable>
-                            </ng-template>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-  
-        <!-- User Manual tab content -->
-        <div id="UserManual" class="tab-pane custom-tab-pane">
-            <!-- User Manual content here -->
-            <div>
-               <!-- <markdown [src]="markdownContent" [data]="markdownContent"></markdown>  -->
-                <div  [innerHTML]="markdownContent"></div>
-            </div>
-          </div>
-    </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label><mat-icon class="ll-tab__icon">menu_book</mat-icon> {{ 'ui.userManual' | translate }}</ng-template>
+            <div class="ll-tab__content"><div [innerHTML]="markdownContent"></div></div>
+          </mat-tab>
+        </mat-tab-group>
+      }
+    </mat-card-content>
+  </mat-card>
 </div>

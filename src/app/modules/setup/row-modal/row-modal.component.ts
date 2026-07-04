@@ -7,9 +7,10 @@ import { Shelf } from 'src/app/main/models/Shelf';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
 @Component({
-  selector: 'app-row-modal',
-  templateUrl: './row-modal.component.html',
-  styleUrls: ['./row-modal.component.css']
+    selector: 'app-row-modal',
+    templateUrl: './row-modal.component.html',
+    styleUrls: ['./row-modal.component.css'],
+    standalone: false
 })
 export class RowModalComponent implements OnInit {
 
@@ -31,7 +32,7 @@ export class RowModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   // console.log(this.row);
+   //
   }
 
   onSaveClick(): void {
@@ -44,10 +45,9 @@ export class RowModalComponent implements OnInit {
 
   saveRow(): void {
     if( this.validateRowForm()){
-    //console.log(this.row)
+    //
     this.row.department = this.departments.find(item => item.id === this.row.department.id);
     this.row.shelf = this.shelves.find(item => item.id === this.row.shelf.id);
-      console.log(this.row)
       this.rowService.createRow(this.row).subscribe(() => {
         this.activeModal.close(this.row);
         

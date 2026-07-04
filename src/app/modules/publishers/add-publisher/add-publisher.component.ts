@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Optional, Output } from '@angular/core';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookMessage from 'src/app/main/messages/BookMessage';
@@ -12,12 +13,13 @@ import CONFIG from 'src/app/main/urls/urls';
 import PublisherValidation from 'src/app/main/validations/PublisherValidation';
 declare var google: any;
 @Component({
-  selector: 'app-add-publisher',
-  templateUrl: './add-publisher.component.html',
-  styleUrls: ['./add-publisher.component.css'],
+    selector: 'app-add-publisher',
+    templateUrl: './add-publisher.component.html',
+    styleUrls: ['./add-publisher.component.css'],
+    standalone: false
 })
 export class AddPublisherComponent extends URLLoader implements OnInit {
-  publisherForm: FormGroup;
+  publisherForm: UntypedFormGroup;
   msg: PublisherMessage;
   submitted = false;
   @Output() closeModalEvent = new EventEmitter<string>();
@@ -31,7 +33,8 @@ export class AddPublisherComponent extends URLLoader implements OnInit {
     private message: PublisherMessage,
     private httpService: HTTPService,
     private router: Router,
-    private dataService:DataService
+    private dataService:DataService,
+    @Optional() private activeModal: NgbActiveModal
   ) {
     super();
     this.publisherForm = this.validation.formGroupInstance;
@@ -40,6 +43,7 @@ export class AddPublisherComponent extends URLLoader implements OnInit {
 
   closeModal() {
     this.closeModalEvent.emit();
+    if (this.activeModal) { this.activeModal.dismiss(); }
   }
 
   goBack() {
@@ -62,7 +66,6 @@ export class AddPublisherComponent extends URLLoader implements OnInit {
       document.getElementById('addressInput') as HTMLInputElement,
       { types: ['geocode'] }
     );
-    console.log(autocomplete)
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
       if (place && place.formatted_address) {
@@ -93,7 +96,6 @@ export class AddPublisherComponent extends URLLoader implements OnInit {
   }
 
   add() {
-    console.log(this.publisherForm.value)
     this.submitted = true;
     if (this.validatePublisherForm(this.publisherForm.value,true)) {
       this.httpService.create(
@@ -135,7 +137,6 @@ export class AddPublisherComponent extends URLLoader implements OnInit {
     // Replace this with an actual API call to fetch address suggestions
     this.httpService.get(`https://api.example.com/address?query=${query}`).subscribe((data: any) => {
       this.addressSuggestions = data.suggestions; // Process the API response
-      console.log(this.addressSuggestions)
     });
   }
 

@@ -11,9 +11,10 @@ import CONFIG from 'src/app/main/urls/urls';
 import { AddTypeMemberComponent } from '../add-type-member/add-type-member.component';
 
 @Component({
-  selector: 'app-type-member',
-  templateUrl: './type-member.component.html',
-  styleUrls: ['./type-member.component.css'],
+    selector: 'app-type-member',
+    templateUrl: './type-member.component.html',
+    styleUrls: ['./type-member.component.css'],
+    standalone: false
 })
 export class TypeMemberComponent extends URLLoader implements OnInit {
   showsummary: boolean = false;
@@ -51,7 +52,7 @@ export class TypeMemberComponent extends URLLoader implements OnInit {
       if (result) {
         this.getAll()
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   delete(id) {

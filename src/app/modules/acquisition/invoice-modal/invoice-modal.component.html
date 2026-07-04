@@ -1,53 +1,55 @@
- <div class="modal-header">
-    <h5 class="modal-title">{{ invoice.id ? 'Edit' : 'Add' }} Invoice</h5>
-    <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form>
-      <div class="form-group">
-        <label for="invoiceNumber">
-          Invoice Number
-          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the unique invoice number."></i>
-        </label>
-        <input type="text" class="form-control" id="invoiceNumber" [(ngModel)]="invoice.invoiceNumber" name="invoiceNumber" placeholder="e.g., INV-123456">
-      </div>
-      <div class="form-group">
-        <label for="invoiceDate">
-          Invoice Date
-          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the date of the invoice."></i>
-        </label>
-        <input type="date" class="form-control" id="invoiceDate" [(ngModel)]="invoice.invoiceDate" name="invoiceDate" placeholder="e.g., 2023-10-03">
-      </div>
-      <div class="form-group">
-        <label for="vendor">
-          Vendor
-          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the vendor for this invoice."></i>
-        </label>
-        <select class="form-control" id="vendor" [(ngModel)]="invoice.vendor" name="vendor">
-          <option *ngFor="let vendor of vendors" [ngValue]="vendor">{{ vendor.name }}</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="totalAmount">
-          Total Amount
-          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the total amount for the invoice."></i>
-        </label>
-        <input type="number" class="form-control" id="totalAmount" [(ngModel)]="invoice.totalAmount" name="totalAmount" step="0.01" placeholder="e.g., 199.99">
-      </div>
-      <div class="form-group">
-        <label for="notes">
-          Notes
-          <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Add any additional notes related to this invoice."></i>
-        </label>
-        <textarea class="form-control" id="notes" [(ngModel)]="invoice.notes" name="notes" placeholder="e.g., Payment due within 30 days."></textarea>
-      </div>
-    </form>
-    
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
-    <button type="button" class="btn btn-outline-primary" (click)="onSaveClick()">Save</button>
-  </div> 
-  
+<div class="modal-header">
+  <h5 class="modal-title">{{ invoice.id ? 'Edit' : 'Add' }} Invoice</h5>
+  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <label for="invoiceNumber">
+        Invoice Number
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the unique invoice number."></i>
+      </label>
+      <input type="text" class="form-control" id="invoiceNumber" [(ngModel)]="invoice.invoiceNumber" name="invoiceNumber" placeholder="e.g., INV-123456">
+    </div>
+    <div class="form-group">
+      <label for="invoiceDate">
+        Invoice Date
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the date of the invoice."></i>
+      </label>
+      <input type="date" class="form-control" id="invoiceDate" [(ngModel)]="invoice.invoiceDate" name="invoiceDate" placeholder="e.g., 2023-10-03">
+    </div>
+    <div class="form-group">
+      <label for="vendor">
+        Vendor
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the vendor for this invoice."></i>
+      </label>
+      <select class="form-control" id="vendor" [(ngModel)]="invoice.vendor" name="vendor">
+        @for (vendor of vendors; track vendor) {
+          <option [ngValue]="vendor">{{ vendor.name }}</option>
+        }
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="totalAmount">
+        Total Amount
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the total amount for the invoice."></i>
+      </label>
+      <input type="number" class="form-control" id="totalAmount" [(ngModel)]="invoice.totalAmount" name="totalAmount" step="0.01" placeholder="e.g., 199.99">
+    </div>
+    <div class="form-group">
+      <label for="notes">
+        Notes
+        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Add any additional notes related to this invoice."></i>
+      </label>
+      <textarea class="form-control" id="notes" [(ngModel)]="invoice.notes" name="notes" placeholder="e.g., Payment due within 30 days."></textarea>
+    </div>
+  </form>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
+  <button type="button" class="btn btn-outline-primary" (click)="onSaveClick()">Save</button>
+</div>
+

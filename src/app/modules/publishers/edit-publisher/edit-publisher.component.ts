@@ -10,9 +10,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-edit-publisher',
-  templateUrl: './edit-publisher.component.html',
-  styleUrls: ['./edit-publisher.component.css'],
+    selector: 'app-edit-publisher',
+    templateUrl: './edit-publisher.component.html',
+    styleUrls: ['./edit-publisher.component.css'],
+    standalone: false
 })
 export class EditPublisherComponent  implements OnInit {
   @Input() publisher
@@ -38,7 +39,6 @@ export class EditPublisherComponent  implements OnInit {
 
   savePublisher(): void {
     this.publisherService.create(CONFIG.URL_BASE + '/publisher/create', this.publisher).then((data)=>{
-      console.log(data)
       this.toastr.success('Item edited successfully!', 'Success');
       this.onCancelClick()
     });

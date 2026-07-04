@@ -1,110 +1,130 @@
-<div class="container-fluid"><form>
-    <!-- Booking Time -->
-    <div class="form-group">
-      <label for="bookingTime">Booking Time:</label>
-      <input type="text" class="form-control" id="bookingTime" name="bookingTime">
-      <small class="form-text text-muted">
-        Default circulation duration in days. This value changes the default "Return Date" in circulation form.
-      </small>
-    </div>
-  
-    <!-- Booking Quota -->
-    <div class="form-group">
-      <label for="bookingQuota">Booking Quota:</label>
-      <input type="text" class="form-control" id="bookingQuota" name="bookingQuota">
-      <small class="form-text text-muted">
-        Combined maximum number of items a member can request / checkout / loan at a time.
-      </small>
-    </div>
-  
-    <!-- Enable member checkouts -->
-    <div class="form-group">
-      <label>Enable member checkouts:</label>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" id="enableCheckoutsYes" name="enableCheckouts" value="yes">
-        <label class="form-check-label" for="enableCheckoutsYes">Yes</label>
+<div class="ll-page">
+
+  <!-- Page Header -->
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <div class="ll-page__title">
+        <mat-icon class="ll-page__icon">book_online</mat-icon>
+        <div>
+          <h2>{{ 'settings.bookingTitle' | translate }}</h2>
+          <p class="ll-page__subtitle">{{ 'settings.bookingDesc' | translate }}</p>
+        </div>
       </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" id="enableCheckoutsNo" name="enableCheckouts" value="no">
-        <label class="form-check-label" for="enableCheckoutsNo">No</label>
-      </div>
-      <small class="form-text text-muted">
-        Member can do self checkout of library item through their member area. Suitable for corporate, small business, office, family and other unattended libraries.
-      </small>
-    </div>
-  
-    <!-- Enable member check-ins -->
-    <div class="form-group">
-      <label>Enable member check-ins:</label>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" id="enableCheckinsYes" name="enableCheckins" value="yes">
-        <label class="form-check-label" for="enableCheckinsYes">Yes</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" id="enableCheckinsNo" name="enableCheckins" value="no">
-        <label class="form-check-label" for="enableCheckinsNo">No</label>
-      </div>
-      <small class="form-text text-muted">
-        Member can also return items by themselves.
-      </small>
-    </div>
-  
-    <!-- Enable member check-ins for overdue items -->
-    <div class="form-group">
-      <label>Enable member check-ins for overdue items:</label>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" id="enableOverdueCheckinsYes" name="enableOverdueCheckins" value="yes">
-        <label class="form-check-label" for="enableOverdueCheckinsYes">Yes</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" id="enableOverdueCheckinsNo" name="enableOverdueCheckins" value="no">
-        <label class="form-check-label" for="enableOverdueCheckinsNo">No</label>
-      </div>
-      <small class="form-text text-muted">
-        Member can also return overdue items by themselves. This setting only works when "Enable member check-ins" is enabled.
-      </small>
-    </div>
-  
-    <!-- Member -->
-    <div class="form-group">
-      <label for="memberType">Member:</label>
-      <select class="form-control" id="memberType" name="memberType">
-        <option value="all">All Members</option>
-        <option value="regular">Regular</option>
-      </select>
-      <small class="form-text text-muted">
-        Member type who can do self checkouts and checkins.
-      </small>
-    </div>
-  
-    <!-- Checkout Time -->
-    <div class="form-group">
-      <label for="checkoutTime">Checkout Time:</label>
-      <input type="text" class="form-control" id="checkoutTime" name="checkoutTime">
-      <small class="form-text text-muted">
-        Default checkout duration in days. Will be displayed in request form.
-      </small>
-    </div>
-  
-    <!-- Checkout Limit -->
-    <div class="form-group">
-      <label for="checkoutLimit">Checkout Limit:</label>
-      <input type="text" class="form-control" id="checkoutLimit" name="checkoutLimit">
-      <small class="form-text text-muted">
-        Maximum checkout duration in days. Member can not exceed this limit for self checkout.
-      </small>
-    </div>
-  
-    <!-- Checkout Quota -->
-    <div class="form-group">
-      <label for="checkoutQuota">Checkout Quota:</label>
-      <input type="text" class="form-control" id="checkoutQuota" name="checkoutQuota">
-      <small class="form-text text-muted">
-        Maximum number of items a member can checkout at a time.
-      </small>
-    </div>
-  
-    <!-- Submit button -->
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-  </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Settings Form -->
+  <mat-card class="ll-page__body" appearance="outlined">
+    <mat-card-content>
+      <form class="ll-settings-form">
+
+        <!-- Circulation section -->
+        <h3 class="ll-settings-section-title">
+          <mat-icon>schedule</mat-icon> Circulation Defaults
+        </h3>
+        <mat-divider></mat-divider>
+
+        <div class="ll-settings-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Booking Time (days)</mat-label>
+            <mat-icon matPrefix>calendar_today</mat-icon>
+            <input matInput type="number" id="bookingTime" name="bookingTime" placeholder="14">
+            <mat-hint>Default circulation duration in days — sets the "Return Date" in the circulation form.</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Booking Quota</mat-label>
+            <mat-icon matPrefix>layers</mat-icon>
+            <input matInput type="number" id="bookingQuota" name="bookingQuota" placeholder="5">
+            <mat-hint>Max items a member can request / checkout / loan at a time.</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <!-- Self-service section -->
+        <h3 class="ll-settings-section-title" style="margin-top:24px">
+          <mat-icon>manage_accounts</mat-icon> Member Self-Service
+        </h3>
+        <mat-divider></mat-divider>
+
+        <div class="ll-settings-radios">
+          <div class="ll-settings-radio-group">
+            <p class="ll-settings-radio-label">Enable member checkouts</p>
+            <p class="ll-settings-radio-hint">Members can self-checkout library items through their member area.</p>
+            <mat-radio-group name="enableCheckouts" class="ll-radio-row">
+              <mat-radio-button value="yes">Yes</mat-radio-button>
+              <mat-radio-button value="no">No</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="ll-settings-radio-group">
+            <p class="ll-settings-radio-label">Enable member check-ins</p>
+            <p class="ll-settings-radio-hint">Members can also return items by themselves.</p>
+            <mat-radio-group name="enableCheckins" class="ll-radio-row">
+              <mat-radio-button value="yes">Yes</mat-radio-button>
+              <mat-radio-button value="no">No</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="ll-settings-radio-group">
+            <p class="ll-settings-radio-label">Enable check-ins for overdue items</p>
+            <p class="ll-settings-radio-hint">Members can return overdue items themselves (requires "Enable check-ins").</p>
+            <mat-radio-group name="enableOverdueCheckins" class="ll-radio-row">
+              <mat-radio-button value="yes">Yes</mat-radio-button>
+              <mat-radio-button value="no">No</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+
+        <!-- Checkout settings section -->
+        <h3 class="ll-settings-section-title" style="margin-top:24px">
+          <mat-icon>checklist</mat-icon> Checkout Settings
+        </h3>
+        <mat-divider></mat-divider>
+
+        <div class="ll-settings-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Member Type</mat-label>
+            <mat-icon matPrefix>badge</mat-icon>
+            <mat-select id="memberType" name="memberType">
+              <mat-option value="all">All Members</mat-option>
+              <mat-option value="regular">Regular</mat-option>
+            </mat-select>
+            <mat-hint>Which member type can do self-checkouts and check-ins.</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Checkout Time (days)</mat-label>
+            <mat-icon matPrefix>timer</mat-icon>
+            <input matInput type="number" id="checkoutTime" name="checkoutTime" placeholder="7">
+            <mat-hint>Default checkout duration shown in the request form.</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Checkout Limit (days)</mat-label>
+            <mat-icon matPrefix>event_busy</mat-icon>
+            <input matInput type="number" id="checkoutLimit" name="checkoutLimit" placeholder="30">
+            <mat-hint>Maximum checkout duration — members cannot exceed this for self-checkout.</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Checkout Quota</mat-label>
+            <mat-icon matPrefix>inventory_2</mat-icon>
+            <input matInput type="number" id="checkoutQuota" name="checkoutQuota" placeholder="3">
+            <mat-hint>Max number of items a member can checkout at a time.</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <!-- Actions -->
+        <div class="ll-settings-actions">
+          <button mat-flat-button color="primary" type="submit">
+            <mat-icon>save</mat-icon> Save Settings
+          </button>
+          <button mat-stroked-button type="reset">
+            <mat-icon>restart_alt</mat-icon> Reset
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -7,13 +7,14 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import CONFIG from 'src/app/main/urls/urls';
 import Member from 'src/app/main/models/Member';
 import { NoticeTemplate } from 'src/app/main/models/NoticeTemplate';
-import { not } from '@angular/compiler/src/output/output_ast';
+// removed: unused @angular/compiler internal import
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-notice',
-  templateUrl: './notice.component.html',
-  styleUrls: ['./notice.component.css']
+    selector: 'app-notice',
+    templateUrl: './notice.component.html',
+    styleUrls: ['./notice.component.css'],
+    standalone: false
 })
 export class NoticeComponent implements OnInit {
   
@@ -97,12 +98,10 @@ export class NoticeComponent implements OnInit {
   }
 
   onSelect({ selected }): void {
-    console.log('Selected row:', selected);
     this.selected = [...selected];
   }
 
   onActivate(event): void {
-    console.log('Activate Event:', event);
   }
 
   openAddDialog(): void {
@@ -115,7 +114,7 @@ export class NoticeComponent implements OnInit {
           this.loadNotices();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(notice: Notice): void {
@@ -128,7 +127,7 @@ export class NoticeComponent implements OnInit {
           this.loadNotices();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   deleteNotice(id: number): void {
@@ -152,7 +151,6 @@ export class NoticeComponent implements OnInit {
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/notice.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }
@@ -168,7 +166,6 @@ export class NoticeComponent implements OnInit {
       .replace("[Name]", userName)  // Replace [Name] with the username
       .replace("[All]", "Members")  // Replace [ALL] with "Members"
       .replace("[Date]", today).replace("[Library Name]", "");; 
-     console.log(notice.subject)
     
      
 
@@ -180,7 +177,6 @@ export class NoticeComponent implements OnInit {
         subject: notice.type,
         body: notice.subject
       };
-       console.log(CONFIG.URL_BASE+'/notice/+33643824870/'+notice.subject+'/send')
      this.httpService.create(CONFIG.URL_BASE+'/notice/send-sms',bodysms).finally(()=>{
       this.toastr.success("Your SMS was sent successfully! Keep an eye out for a reply")
 

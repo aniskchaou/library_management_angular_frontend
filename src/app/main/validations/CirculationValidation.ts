@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 @Injectable({
   providedIn: 'root',
 })
 export default class CirculationValidation {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  public get formGroupInstance(): FormGroup {
+  public get formGroupInstance(): UntypedFormGroup {
     return this.formGroup;
   }
 
@@ -21,16 +21,16 @@ export default class CirculationValidation {
     return true;
   }
   createFormGroup() {
-    return new FormGroup({
-      memberName: new FormControl('', Validators.required),
-      bookName: new FormControl('', Validators.required),
-      writer: new FormControl('', Validators.required),
-      issueDate: new FormControl('', Validators.required),
-      lastDate: new FormControl('', Validators.required),
-      toReturn: new FormControl('', Validators.required),
-      returnDate: new FormControl('', Validators.required),
-      penalty: new FormControl('', Validators.required),
-      returnStatus: new FormControl('', Validators.required),
+    return new UntypedFormGroup({
+      memberName: new UntypedFormControl('', Validators.required),
+      bookName: new UntypedFormControl('', Validators.required),
+      writer: new UntypedFormControl('', Validators.required),
+      issueDate: new UntypedFormControl('', Validators.required),
+      lastDate: new UntypedFormControl('', Validators.required),
+      toReturn: new UntypedFormControl('', Validators.required),
+      returnDate: new UntypedFormControl('', Validators.required),
+      penalty: new UntypedFormControl('', Validators.required),
+      returnStatus: new UntypedFormControl('', Validators.required),
     });
   }
 }

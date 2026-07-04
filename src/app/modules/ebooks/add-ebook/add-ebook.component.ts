@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookMessage from 'src/app/main/messages/BookMessage';
@@ -8,12 +8,13 @@ import CONFIG from 'src/app/main/urls/urls';
 import EBookValidation from 'src/app/main/validations/EBookValidation';
 
 @Component({
-  selector: 'app-add-ebook',
-  templateUrl: './add-ebook.component.html',
-  styleUrls: ['./add-ebook.component.css'],
+    selector: 'app-add-ebook',
+    templateUrl: './add-ebook.component.html',
+    styleUrls: ['./add-ebook.component.css'],
+    standalone: false
 })
 export class AddEbookComponent extends URLLoader implements OnInit {
-  ebookForm: FormGroup;
+  ebookForm: UntypedFormGroup;
   msg: BookMessage;
   submitted = false;
 

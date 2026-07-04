@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-publisher-modal',
-  templateUrl: './publisher-modal.component.html',
-  styleUrls: ['./publisher-modal.component.css'],
+    selector: 'app-publisher-modal',
+    templateUrl: './publisher-modal.component.html',
+    styleUrls: ['./publisher-modal.component.css'],
+    standalone: false
 })
 export class PublisherModalComponent implements OnInit {
   @Input() id: string;

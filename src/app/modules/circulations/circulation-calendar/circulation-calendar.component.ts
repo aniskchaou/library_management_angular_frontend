@@ -8,9 +8,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-circulation-calendar',
-  templateUrl: './circulation-calendar.component.html',
-  styleUrls: ['./circulation-calendar.component.css'],
+    selector: 'app-circulation-calendar',
+    templateUrl: './circulation-calendar.component.html',
+    styleUrls: ['./circulation-calendar.component.css'],
+    standalone: false
 })
 export class CirculationCalendarComponent extends URLLoader implements OnInit {
   circulations$: Circulation[];
@@ -34,7 +35,6 @@ export class CirculationCalendarComponent extends URLLoader implements OnInit {
       (data: Circulation[]) => {
         this.circulations$ = data;
         // this.loading = false;
-        console.log(this.circulations$);
         this.setData(this.circulations$);
       },
       (err: HttpErrorResponse) => {
@@ -56,7 +56,6 @@ export class CirculationCalendarComponent extends URLLoader implements OnInit {
     ];
 
     data.forEach((e) => {
-      console.log(e)
       let index = Math.floor(Math.random() * (data.length - 1 + 1));
       this.dataArray.push({
         id: e.id,
@@ -110,12 +109,10 @@ export class CirculationCalendarComponent extends URLLoader implements OnInit {
 
 
   selectDay(event: any): void {
-    console.log('Selected day:', event);
     // Handle day selection logic here
   }
 
   addEvent(event: any): void {
-    console.log('New event:', event);
     // Handle adding a new event logic here
     this.dataArray.push(event);
   }

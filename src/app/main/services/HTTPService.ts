@@ -65,12 +65,10 @@ export class HTTPService implements Service {
     if (!this.username || !this.password) {
       console.error('Username or password not found in localStorage.');
     }
-    console.log(this.header);
     return this.http.get(url, { headers: this.header });
   }
 
   put(url: string) {
-    console.log(localStorage.getItem('password'));
     return this.http.put(url, {}, { headers: this.header });
   }
 
@@ -706,7 +704,6 @@ export class HTTPService implements Service {
   // Method to fetch book data from Open Library API
   getBookByISBNOpenLibrary(isbn: string): Observable<any> {
     const url = `${this.openLibraryApiUrl}${isbn}`;
-    console.log(url)
     return this.http.get(url);
   }
 
@@ -729,7 +726,7 @@ export class HTTPService implements Service {
       .set('catalogItemId', catalogItemId)
       .set('memberId', memberId)
       .set('statusName', statusName);
-       console.log(params)
+
     return this.http.put(CONFIG.URL_BASE+'/circulation/update-status', null, { headers: this.header,params:params,responseType: 'text'  });
   }
   

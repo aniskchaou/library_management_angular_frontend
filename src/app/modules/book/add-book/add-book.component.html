@@ -1,501 +1,139 @@
-<!--  <form class="form-horizontal">
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item">
-      <a class="nav-link active" id="identification-tab" data-toggle="tab" href="#identification" role="tab" aria-controls="identification" aria-selected="true">Identification</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="media-information-tab" data-toggle="tab" href="#media-information" role="tab" aria-controls="media-information" aria-selected="false">Media Information</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="library-information-tab" data-toggle="tab" href="#library-information" role="tab" aria-controls="library-information" aria-selected="false">Library Information</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="additional-details-tab" data-toggle="tab" href="#additional-details" role="tab" aria-controls="additional-details" aria-selected="false">Additional Details</a>
-    </li>
-  </ul>
-
-  <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="identification" role="tabpanel" aria-labelledby="identification-tab">
-      <div class="box-body">
-        <fieldset>
-          <legend>Identification</legend>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="col-sm-6 control-label">ISSN</label>
-                <div class="col-sm-12">
-                  <input  formControlName="issn" name="issn" class="form-control" type="text" />
-                  <div class="alert alert-danger" *ngIf="submitted && f.issn.errors">
-                    {{ msg.validationMessage.issn }}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="col-sm-6 control-label">{{ bookI18n?.isbnI18n }} -10</label>
-                <div class="col-sm-12">
-                  <input formControlName="isbn" name="isbn" class="form-control" type="text" />
-                  <div class="alert alert-danger" *ngIf="submitted && f.isbn.errors">
-                    {{ msg.validationMessage.isbn }}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="col-sm-6 control-label">Photo</label>
-                <div class="col-sm-12">
-                  <input type="file">
-                </div>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-      </div>
-    </div>
-    <div class="tab-pane fade" id="media-information" role="tabpanel" aria-labelledby="media-information-tab">
-      <div class="box-body">
-        <fieldset>
-          <legend>Media Information</legend>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="col-sm-6 control-label">Media Type</label>
-                <div class="col-sm-12">
-                  <select formControlName="media_type" name="media_type" class="form-control">
-                    <option>Books</option>
-                    <option>Journals</option>
-
-                  </select>
-                  <div class="alert alert-danger" *ngIf="submitted && f.media_type.errors">
-                    {{ msg.validationMessage.media_type }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-      </div>
-    </div>
-    <div class="tab-pane fade" id="library-information" role="tabpanel" aria-labelledby="library-information-tab">
-      <div class="box-body">
-        <fieldset>
-          <legend>Library Information</legend>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="col-sm-6 control-label">Library Branch</label>
-                <div class="col-sm-12">
-                  <select  formControlName="media_type" name="media_type" class="form-control">
-                    <option>Books</option>
-                    <option>Journals</option>
-
-                  </select>
-                  <div class="alert alert-danger" *ngIf="submitted && f.media_type.errors">
-                    {{ msg.validationMessage.media_type }}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="col-sm-6 control-label">Edition</label>
-                <div class="col-sm-12">
-                  <input  formControlName="edition" name="edition" class="form-control" type="text" />
-                  <div class="alert alert-danger" *ngIf="submitted && f.edition.errors">
-                    {{ msg.validationMessage.edition }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-      </div>
-    </div>
-    <div class="tab-pane fade" id="additional-details" role="tabpanel" aria-labelledby="additional-details-tab">
-      <div class="box-body">
-        <fieldset>
-          <legend>Additional Details</legend>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="col-sm-6 control-label">Subject</label>
-                <div class="col-sm-12">
-                  <input  name="subject" class="form-control" type="text" />
-                  <div class="alert alert-danger" *ngIf="submitted && f.subject.errors">
-                    {{ msg.validationMessage.subject }}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="col-sm-6 control-label">Abstract</label>
-                <div class="col-sm-12">
-                  <input  name="abstract" class="form-control" type="text" />
-                  <div class="alert
-                  alert-danger" *ngIf="submitted && f.abstract.errors">
-                  {{ msg.validationMessage.abstract }}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="col-sm-6 control-label">Description</label>
-              <div class="col-sm-12">
-                <input name="description" class="form-control" type="text" />
-                <div class="alert alert-danger" *ngIf="submitted && f.description.errors">
-                  {{ msg.validationMessage.description }}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="col-sm-6 control-label">Volume</label>
-              <div class="col-sm-12">
-                <input formControlName="volume" name="volume" class="form-control" type="text" />
-                <div class="alert alert-danger" *ngIf="submitted && f.volume.errors">
-                  {{ msg.validationMessage.volume }}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="col-sm-6 control-label">OCLC</label>
-              <div class="col-sm-12">
-                <input  formControlName="oclc" name="oclc" class="form-control" type="text" />
-                <div class="alert alert-danger" *ngIf="submitted && f.oclc.errors">
-                  {{ msg.validationMessage.oclc }}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="col-sm-6 control-label">Tags</label>
-              <div class="col-sm-12">
-                <input formControlName="tags" name="tags" class="form-control" type="text" />
-                <div class="alert alert-danger" *ngIf="submitted && f.tags.errors">
-                  {{ msg.validationMessage.tags }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </fieldset>
-    </div>
-  </div>
-</div>
-
-
-<div class="box-footer">
-  <div class="form-group">
-    <button (click)="add()" type="button" class="btn btn-info">
-      <i class="fas fa-save"></i>
-      {{ bookI18n?.addButtonI18n }}
+<div class="ll-modal">
+  <div class="ll-modal__header">
+    <mat-icon>{{ catalogItem?.id ? 'edit' : 'add' }}</mat-icon>
+    <span>{{ catalogItem?.id ? 'Edit' : 'Add' }} Catalog Item</span>
+    <button mat-icon-button class="ll-modal__close" type="button" (click)="onCancelClick()" aria-label="Close">
+      <mat-icon>close</mat-icon>
     </button>
   </div>
-</div>
 
-</form> -->
-<div class="modal-header">
-  <h5 class="modal-title">{{ catalogItem.id ? 'Edit' : 'Add' }} Catalog Item</h5>
-  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-  <form>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="isbn">
-            ISBN
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the ISBN of the book.<br><b>Example:</b> 978-3-16-148410-0"></i>
-          </label>
-          <input type="text" class="form-control" id="isbn" [(ngModel)]="catalogItem.isbn" name="isbn" placeholder="e.g., 978-3-16-148410-0">
-        </div>
+  <div class="ll-modal__content">
+    <form class="ll-form">
+      <div class="ll-form__grid">
+        <!-- Column 1 -->
+        <mat-form-field appearance="outline">
+          <mat-label>ISBN</mat-label>
+          <input matInput [(ngModel)]="catalogItem.isbn" name="isbn" placeholder="e.g., 978-3-16-148410-0">
+          <mat-hint>Enter the ISBN of the book</mat-hint>
+        </mat-form-field>
 
-        <div class="form-group">
-          <label for="title">
-            Title
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the title of the book.<br><b>Example:</b> The Great Gatsby"></i>
-          </label>
-          <input type="text" class="form-control" id="title" [(ngModel)]="catalogItem.title" name="title" placeholder="e.g., The Great Gatsby">
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Title</mat-label>
+          <input matInput [(ngModel)]="catalogItem.title" name="title" placeholder="e.g., The Great Gatsby">
+        </mat-form-field>
 
-        <div class="form-group">
-          <label for="edition">
-            Edition
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the edition of the book.<br><b>Example:</b> 1st Edition"></i>
-          </label>
-          <input type="text" class="form-control" id="edition" [(ngModel)]="catalogItem.edition" name="edition" placeholder="e.g., 1st Edition">
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Edition</mat-label>
+          <input matInput [(ngModel)]="catalogItem.edition" name="edition" placeholder="e.g., 1st Edition">
+        </mat-form-field>
 
-        <div class="form-group">
-          <label for="editionYear">
-            Edition Year
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the year of the edition.<br><b>Example:</b> 2020"></i>
-          </label>
-          <input type="text" class="form-control" id="editionYear" [(ngModel)]="catalogItem.edition_year" name="editionYear" placeholder="e.g., 2020">
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Edition Year</mat-label>
+          <input matInput [(ngModel)]="catalogItem.edition_year" name="editionYear" placeholder="e.g., 2020">
+        </mat-form-field>
 
-       <!--  <div class="form-group">
-          <label for="photo">
-            Photo URL
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the URL for the book's photo.<br><b>Example:</b> https://example.com/photo.jpg"></i>
-          </label>
-          <input type="text" class="form-control" id="photo" [(ngModel)]="catalogItem.photo" name="photo" placeholder="e.g., https://example.com/photo.jpg">
-        </div> -->
+        <mat-form-field appearance="outline">
+          <mat-label>Publishing Year</mat-label>
+          <input matInput [(ngModel)]="catalogItem.publishing_year" name="publishingYear" placeholder="e.g., 2021">
+        </mat-form-field>
 
-        <div class="form-group">
-          <label for="publishingYear">
-            Publishing Year
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the year the book was published.<br><b>Example:</b> 2021"></i>
-          </label>
-          <input type="text" class="form-control" id="publishingYear" [(ngModel)]="catalogItem.publishing_year" name="publishingYear" placeholder="e.g., 2021">
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Publication Place</mat-label>
+          <input matInput [(ngModel)]="catalogItem.publication_place" name="publicationPlace" placeholder="e.g., New York">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Number of Pages</mat-label>
+          <input matInput type="number" [(ngModel)]="catalogItem.number_of_pages" name="numberOfPages" placeholder="e.g., 200">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Media Type</mat-label>
+          <mat-select [(ngModel)]="catalogItem.mediaType" name="mediaType" required>
+            @for (mediaType of mediaTypes; track mediaType) {
+              <mat-option [value]="mediaType">{{ mediaType.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Physical Description</mat-label>
+          <mat-select [(ngModel)]="catalogItem.physical_description" name="physical_description">
+            @for (description of physicalDescriptions; track description) {
+              <mat-option [value]="description">{{ description.bindingType }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Writer</mat-label>
+          <mat-select [(ngModel)]="catalogItem.writer" name="writer">
+            @for (writer of writers; track writer) {
+              <mat-option [value]="writer">{{ writer.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Publisher</mat-label>
+          <mat-select [(ngModel)]="catalogItem.publisher" name="publisher">
+            @for (publisher of publishers; track publisher) {
+              <mat-option [value]="publisher">{{ publisher.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Department</mat-label>
+          <mat-select [(ngModel)]="catalogItem.departement" name="department">
+            @for (department of departments; track department) {
+              <mat-option [value]="department">{{ department.departmentName }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Shelf</mat-label>
+          <mat-select [(ngModel)]="catalogItem.shelf" name="shelf">
+            @for (shelf of shelves; track shelf) {
+              <mat-option [value]="shelf">{{ shelf.location }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Row</mat-label>
+          <mat-select [(ngModel)]="catalogItem.row" name="row">
+            @for (row of rows; track row) {
+              <mat-option [value]="row">{{ row.rowName }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Category</mat-label>
+          <mat-select [(ngModel)]="catalogItem.category" name="category">
+            @for (category of categories; track category) {
+              <mat-option [value]="category">{{ category.category_name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
       </div>
 
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="publicationPlace">
-            Publication Place
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter where the book was published.<br><b>Example:</b> New York"></i>
-          </label>
-          <input type="text" class="form-control" id="publicationPlace" [(ngModel)]="catalogItem.publication_place" name="publicationPlace" placeholder="e.g., New York">
-        </div>
+      <mat-form-field appearance="outline" class="ll-form__full">
+        <mat-label>Notes</mat-label>
+        <textarea matInput [(ngModel)]="catalogItem.notes" name="notes" rows="3"
+                  placeholder="e.g., Important for studies"></textarea>
+      </mat-form-field>
+    </form>
+  </div>
 
-        <div class="form-group">
-          <label for="numberOfPages">
-            Number of Pages
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the total number of pages in the book.<br><b>Example:</b> 200"></i>
-          </label>
-          <input type="number" class="form-control" id="numberOfPages" [(ngModel)]="catalogItem.number_of_pages" name="numberOfPages" placeholder="e.g., 200">
-        </div>
-
-        <div class="form-group">
-          <label for="notes">
-            Notes
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter any additional notes about the book.<br><b>Example:</b> Important for studies"></i>
-          </label>
-          <textarea class="form-control" id="notes" [(ngModel)]="catalogItem.notes" name="notes" rows="3" placeholder="e.g., Important for studies"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="mediaType">
-            Media Type
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the media type of the book.<br><b>Example:</b> E-book, Paperback"></i>
-          </label>
-         <!--  <ng-select
-          *ngIf="mediaTypes && mediaTypes.length > 0"
-            name="mediaType"
-            [items]="mediaTypes"
-            bindLabel="name"
-            bindValue="id"
-            [(ngModel)]="catalogItem.mediaType"
-            [searchable]="true"
-            placeholder="Select media type">
-          </ng-select> -->
-          <select
-           
-            name="mediaType"
-            [(ngModel)]="catalogItem.mediaType"
-            class="form-control"
-            required>
-            <option *ngFor="let mediaType of mediaTypes" [ngValue]="mediaType">
-              {{ mediaType.name }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="physicalDescription">
-            Physical Description
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the physical description of the book (e.g., hardcover, paperback, etc.)."></i>
-          </label>
-<!--           <ng-select
-            name="writer"
-            [items]="physicalDescriptions"
-            bindLabel="bindingType"
-            bindValue="id"
-            [(ngModel)]="catalogItem.writer"
-            [searchable]="true"
-            placeholder="Select writer">
-          </ng-select> -->
-          <select
-            name="writer"
-            [(ngModel)]="catalogItem.physical_description"
-            class="form-control">
-            <option *ngFor="let description of physicalDescriptions" [ngValue]="description">
-              {{ description.bindingType }}
-            </option>
-          </select>
-
-        </div>
-
-        <div class="form-group">
-          <label for="writer">
-            Writer
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the writer of the book.<br><b>Example:</b> F. Scott Fitzgerald"></i>
-          </label>
-        <!--   <ng-select
-            name="writer"
-            [items]="writers"
-            bindLabel="name"
-            bindValue="id"
-            [(ngModel)]="catalogItem.writer"
-            [searchable]="true"
-            placeholder="Select writer">
-          </ng-select> -->
-          <select
-          name="writer"
-          [(ngModel)]="catalogItem.writer"
-          class="form-control">
-          <option *ngFor="let writer of writers" [ngValue]="writer">
-            {{ writer.name }}
-          </option>
-        </select>
-
-        </div>
-
-        <div class="form-group">
-          <label for="publisher">
-            Publisher
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the publisher of the book.<br><b>Example:</b> Scribner"></i>
-          </label>
-         <!--  <ng-select
-            name="publisher"
-            [items]="publishers"
-            bindLabel="name"
-            bindValue="id"
-            [(ngModel)]="catalogItem.publisher"
-            [searchable]="true"
-            placeholder="Select publisher">
-          </ng-select> -->
-          <select
-          name="publisher"
-          [(ngModel)]="catalogItem.publisher"
-          class="form-control">
-          <option *ngFor="let publisher of publishers" [ngValue]="publisher">
-            {{ publisher.name }}
-          </option>
-        </select>
-
-        </div>
-
-        <div class="form-group">
-          <label for="department">
-            Department
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the department for the book.<br><b>Example:</b> Literature"></i>
-          </label>
-          <!-- <ng-select
-            name="department"
-            [items]="departments"
-            bindLabel="departmentName"
-            bindValue="id"
-            [(ngModel)]="catalogItem.departement"
-            [searchable]="true"
-            placeholder="Select department">
-          </ng-select> -->
-          <select
-            name="department"
-            [(ngModel)]="catalogItem.departement"
-            class="form-control">
-            <option *ngFor="let department of departments" [ngValue]="department">
-              {{ department.departmentName }}
-            </option>
-          </select>
-
-        </div>
-
-        <div class="form-group">
-          <label for="shelf">
-            Shelf
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the shelf location for the book.<br><b>Example:</b> Shelf 3A"></i>
-          </label>
-         <!--  <ng-select
-            name="shelf"
-            [items]="shelves"
-            bindLabel="location"
-            bindValue="id"
-            [(ngModel)]="catalogItem.shelf"
-            [searchable]="true"
-            placeholder="Select shelf">
-          </ng-select> -->
-
-          <select
-          name="shelf"
-          [(ngModel)]="catalogItem.shelf"
-          class="form-control">
-          <option *ngFor="let shelf of shelves" [ngValue]="shelf">
-            {{ shelf.location }}
-          </option>
-        </select>
-
-        </div>
-
-        <div class="form-group">
-          <label for="row">
-            Row
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the row location for the book.<br><b>Example:</b> Row 2"></i>
-          </label>
-        <!--   <ng-select
-            name="row"
-            [items]="rows"
-            bindLabel="rowName"
-            bindValue="id"
-            [(ngModel)]="catalogItem.row"
-            [searchable]="true"
-            placeholder="Select row">
-          </ng-select> -->
-          <select
-            name="row"
-            [(ngModel)]="catalogItem.row"
-            class="form-control">
-            <option *ngFor="let row of rows" [ngValue]="row">
-              {{ row.rowName }}
-            </option>
-          </select>
-
-        </div>
-
-        <div class="form-group">
-          <label for="category">
-            Category
-            <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" 
-               title="<b>Description:</b> Select the category of the book.<br><b>Example:</b> Fiction, Non-fiction"></i>
-          </label>
-        <!--   <ng-select
-            name="category"
-            [items]="categories"         
-            bindLabel="category_name"              
-            bindValue="id"                 
-            [(ngModel)]="catalogItem.category"   
-            [searchable]="true"
-            placeholder="Select category">
-          </ng-select> -->
-          <select
-          name="category"
-          [(ngModel)]="catalogItem.category"
-          class="form-control">
-          <option *ngFor="let category of categories" [ngValue]="category">
-            {{ category.category_name }}
-          </option>
-        </select>
-
-        </div>
-        
-      </div>
-    </div>
-
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
-      <button type="button" class="btn btn-outline-primary" (click)="saveCatalogItem()">Save</button>
-    </div>
-  </form>
+  <div class="ll-modal__actions">
+    <button mat-stroked-button type="button" (click)="onCancelClick()">
+      <mat-icon>close</mat-icon> Cancel
+    </button>
+    <button mat-flat-button color="primary" type="button" (click)="saveCatalogItem()">
+      <mat-icon>save</mat-icon> Save
+    </button>
+  </div>
 </div>

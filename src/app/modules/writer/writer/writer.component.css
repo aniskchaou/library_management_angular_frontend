@@ -1,0 +1,18 @@
+:host { display: block; }
+
+.ll-page { display: flex; flex-direction: column; gap: 16px; padding: 16px; }
+.ll-page__header-content { display: flex !important; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 16px !important; }
+.ll-page__title { display: flex; align-items: center; gap: 12px; }
+.ll-page__icon { color: #3f51b5; font-size: 32px; width: 32px; height: 32px; }
+.ll-page__title h2 { margin: 0; font-size: 20px; font-weight: 500; }
+.ll-page__subtitle { margin: 4px 0 0; color: rgba(0,0,0,.6); font-size: 13px; }
+.ll-page__actions { display: flex; align-items: center; gap: 8px; }
+.ll-page__actions mat-icon { margin-right: 4px; }
+.ll-page__loading { display: flex; justify-content: center; padding: 24px; }
+
+.ll-tab__icon { margin-right: 6px; font-size: 18px; width: 18px; height: 18px; vertical-align: middle; }
+.ll-tab__content { padding: 16px 4px; }
+
+.ll-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 16px; }
+.ll-charts__title { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+.ll-charts__title mat-icon { color: #3f51b5; font-size: 18px; width: 18px; height: 18px; }

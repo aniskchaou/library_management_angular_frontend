@@ -1,0 +1,431 @@
+<div class="ddm-root">
+
+  <!-- ═══════════════════════════════ HEADER ════════════════════════════════ -->
+  <div class="ddm-header">
+    <div class="ddm-header__left">
+      <mat-icon class="ddm-header__icon">picture_as_pdf</mat-icon>
+      <div>
+        <h2 class="ddm-header__title">{{ 'digitaldoc.pageTitle' | translate }}</h2>
+        <p class="ddm-header__sub">{{ 'digitaldoc.pageDesc' | translate }}</p>
+      </div>
+    </div>
+    <div class="ddm-header__kpis">
+      <div class="ddm-kpi ddm-kpi--blue">
+        <span class="ddm-kpi__value">{{ allBooks.length }}</span>
+        <span class="ddm-kpi__label">{{ 'digitaldoc.kpiTotal' | translate }}</span>
+      </div>
+      <div class="ddm-kpi ddm-kpi--green">
+        <span class="ddm-kpi__value">{{ pdfCount }}</span>
+        <span class="ddm-kpi__label">{{ 'digitaldoc.kpiPDF' | translate }}</span>
+      </div>
+      <div class="ddm-kpi ddm-kpi--indigo">
+        <span class="ddm-kpi__value">{{ linkCount }}</span>
+        <span class="ddm-kpi__label">{{ 'digitaldoc.kpiLinks' | translate }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ TABS ════════════════════════════════ -->
+  <div class="ddm-tabs">
+    <button class="ddm-tabs__btn" [class.ddm-tabs__btn--active]="activeTab==='library'"
+            (click)="activeTab='library'">
+      <mat-icon>library_books</mat-icon> Document Library
+    </button>
+    <button class="ddm-tabs__btn" [class.ddm-tabs__btn--active]="activeTab==='access'"
+            (click)="activeTab='access'">
+      <mat-icon>lock</mat-icon> Access Control
+    </button>
+    <button class="ddm-tabs__btn" [class.ddm-tabs__btn--active]="activeTab==='upload'"
+            (click)="activeTab='upload'">
+      <mat-icon>cloud_upload</mat-icon> Upload / Link
+    </button>
+  </div>
+
+  <!-- ═══════════════════════════ TAB: LIBRARY ═══════════════════════════ -->
+  @if (activeTab === 'library') {
+  <div class="ddm-panel">
+
+    <!-- Filter bar -->
+    <div class="ddm-filter-bar">
+      <mat-form-field appearance="outline" class="ddm-filter-bar__search">
+        <mat-label>Search title, author, ISBN…</mat-label>
+        <input matInput [(ngModel)]="filterQuery" />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="ddm-filter-bar__cat">
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="filterCat">
+          <mat-option [value]="0">All Categories</mat-option>
+          @for (cat of categories; track cat.id) {
+            <mat-option [value]="cat.id">{{ cat.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-button-toggle-group [(ngModel)]="filterType" class="ddm-filter-bar__type">
+        <mat-button-toggle value="all">All</mat-button-toggle>
+        <mat-button-toggle value="pdf">PDF</mat-button-toggle>
+        <mat-button-toggle value="link">Links</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+    <!-- Loading -->
+    @if (loading) {
+      <div class="ddm-loading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <p>Loading documents…</p>
+      </div>
+    }
+
+    <!-- Empty state -->
+    @if (!loading && filteredDocs.length === 0) {
+      <div class="ddm-empty">
+        <mat-icon>cloud_off</mat-icon>
+        <p>No digital documents found. Upload a PDF or add an external link via the <strong>Upload / Link</strong> tab.</p>
+      </div>
+    }
+
+    <!-- Document grid -->
+    <div class="ddm-grid">
+      @for (book of filteredDocs; track book.id) {
+        <div class="ddm-card">
+          <div class="ddm-card__cover">
+            <img [src]="coverUrl(book)" [alt]="book.title" class="ddm-card__img"
+                 (error)="$any($event.target).src='assets/images/no-cover.png'" />
+            @if (book.pdf) {
+              <span class="ddm-card__type ddm-card__type--pdf">
+                <mat-icon>picture_as_pdf</mat-icon> PDF
+              </span>
+            } @else if (book.link) {
+              <span class="ddm-card__type ddm-card__type--link">
+                <mat-icon>link</mat-icon> Link
+              </span>
+            }
+          </div>
+          <div class="ddm-card__body">
+            <p class="ddm-card__title" [title]="book.title">{{ book.title }}</p>
+            <p class="ddm-card__author">{{ book.writer?.name || '—' }}</p>
+            <div class="ddm-card__meta">
+              <span [class]="'ddm-badge ' + viewAccessBadge(book.id)">
+                {{ viewAccessLabel(getRuleFor(book.id).viewAccess) }}
+              </span>
+              @if (getRuleFor(book.id).watermark) {
+                <span class="ddm-badge ddm-badge--orange" title="Watermark enabled">
+                  <mat-icon style="font-size:12px;height:12px;width:12px;">branding_watermark</mat-icon>
+                </span>
+              }
+              @if (getRuleFor(book.id).drm) {
+                <span class="ddm-badge ddm-badge--purple" title="DRM enabled">DRM</span>
+              }
+            </div>
+          </div>
+          <div class="ddm-card__actions">
+            <button mat-raised-button color="primary" (click)="openViewer(book)">
+              <mat-icon>visibility</mat-icon> View
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+  }
+
+  <!-- ═══════════════════════════ TAB: ACCESS CONTROL ════════════════════ -->
+  @if (activeTab === 'access') {
+  <div class="ddm-panel">
+    <h3 class="ddm-section-title">
+      <mat-icon>lock_open</mat-icon> Per-Document Access Rules
+      <span class="ddm-section-title__hint">Rules are stored locally; they take effect immediately.</span>
+    </h3>
+
+    <table class="ddm-access-table" mat-table>
+      <thead>
+        <tr>
+          <th>Document</th>
+          <th>View Access</th>
+          <th>Download</th>
+          <th>Print</th>
+          <th>Watermark</th>
+          <th>DRM</th>
+          <th>Session (min)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (book of accessDocs(); track book.id) {
+          @let rule = getRuleFor(book.id);
+          <tr [class.ddm-row--editing]="editingRuleId === book.id">
+            <td class="ddm-access-table__title">
+              <img [src]="coverUrl(book)" class="ddm-access-table__thumb"
+                   (error)="$any($event.target).src='assets/images/no-cover.png'" />
+              <span>{{ book.title }}</span>
+            </td>
+
+            @if (editingRuleId !== book.id) {
+              <td><span [class]="'ddm-badge ' + viewAccessBadge(book.id)">{{ viewAccessLabel(rule.viewAccess) }}</span></td>
+              <td><span class="ddm-badge ddm-badge--gray">{{ viewAccessLabel(rule.downloadAccess) }}</span></td>
+              <td><span class="ddm-badge ddm-badge--gray">{{ viewAccessLabel(rule.printAccess) }}</span></td>
+              <td><mat-icon [style.color]="rule.watermark ? '#f59e0b' : '#cbd5e1'">{{ rule.watermark ? 'branding_watermark' : 'remove' }}</mat-icon></td>
+              <td><mat-icon [style.color]="rule.drm ? '#7c3aed' : '#cbd5e1'">{{ rule.drm ? 'lock' : 'lock_open' }}</mat-icon></td>
+              <td>{{ rule.sessionMinutes === 0 ? '∞' : rule.sessionMinutes }}</td>
+              <td class="ddm-access-table__actions">
+                <button mat-icon-button color="primary" (click)="startEditRule(book)" title="Edit">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="resetRule(book.id)" title="Reset to defaults">
+                  <mat-icon>restart_alt</mat-icon>
+                </button>
+              </td>
+            } @else {
+              <!-- Inline edit row -->
+              <td>
+                <mat-select [(ngModel)]="$any(editingRule).viewAccess" class="ddm-inline-select">
+                  <mat-option value="public">Everyone</mat-option>
+                  <mat-option value="member">Members</mat-option>
+                  <mat-option value="admin">Admin Only</mat-option>
+                </mat-select>
+              </td>
+              <td>
+                <mat-select [(ngModel)]="$any(editingRule).downloadAccess" class="ddm-inline-select">
+                  <mat-option value="all">Everyone</mat-option>
+                  <mat-option value="member">Members</mat-option>
+                  <mat-option value="admin">Admin Only</mat-option>
+                  <mat-option value="none">No Access</mat-option>
+                </mat-select>
+              </td>
+              <td>
+                <mat-select [(ngModel)]="$any(editingRule).printAccess" class="ddm-inline-select">
+                  <mat-option value="all">Everyone</mat-option>
+                  <mat-option value="member">Members</mat-option>
+                  <mat-option value="admin">Admin Only</mat-option>
+                  <mat-option value="none">No Access</mat-option>
+                </mat-select>
+              </td>
+              <td>
+                <mat-checkbox [(ngModel)]="$any(editingRule).watermark"></mat-checkbox>
+              </td>
+              <td>
+                <mat-checkbox [(ngModel)]="$any(editingRule).drm"></mat-checkbox>
+              </td>
+              <td>
+                <input type="number" min="0" max="480" [(ngModel)]="$any(editingRule).sessionMinutes"
+                       class="ddm-inline-number" placeholder="0=∞" />
+              </td>
+              <td class="ddm-access-table__actions">
+                <button mat-icon-button color="primary" (click)="saveRule()" title="Save">
+                  <mat-icon>save</mat-icon>
+                </button>
+                <button mat-icon-button (click)="cancelRule()" title="Cancel">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </td>
+            }
+          </tr>
+          <!-- Copyright field when editing -->
+          @if (editingRuleId === book.id) {
+            <tr class="ddm-row--copyright">
+              <td colspan="8">
+                <mat-form-field appearance="outline" style="width:100%;margin:4px 0">
+                  <mat-label>Copyright / rights statement</mat-label>
+                  <textarea matInput [(ngModel)]="$any(editingRule).copyright" rows="2"></textarea>
+                </mat-form-field>
+              </td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+  }
+
+  <!-- ═════════════════════════ TAB: UPLOAD / LINK ══════════════════════ -->
+  @if (activeTab === 'upload') {
+  <div class="ddm-panel ddm-upload-panel">
+    <div class="ddm-upload-grid">
+
+      <!-- Upload PDF card -->
+      <mat-card class="ddm-upload-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar class="ddm-upload-card__avatar ddm-upload-card__avatar--red">
+            picture_as_pdf
+          </mat-icon>
+          <mat-card-title>Upload PDF File</mat-card-title>
+          <mat-card-subtitle>Attach a PDF document to a catalog item</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field appearance="outline" style="width:100%">
+            <mat-label>Select Catalog Item</mat-label>
+            <mat-select [(ngModel)]="uploadBookId">
+              @for (book of allBooks; track book.id) {
+                <mat-option [value]="book.id">{{ book.title }} ({{ book.isbn }})</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <div class="ddm-file-drop" (click)="fileInput.click()">
+            <mat-icon>upload_file</mat-icon>
+            @if (uploadFile) {
+              <span>{{ uploadFile.name }} ({{ (uploadFile.size / 1024 / 1024).toFixed(2) }} MB)</span>
+            } @else {
+              <span>Click to choose a PDF file</span>
+            }
+          </div>
+          <input #fileInput type="file" accept="application/pdf" hidden (change)="onFileSelected($event)" />
+
+          @if (uploadProgress !== null) {
+            <mat-progress-bar mode="determinate" [value]="uploadProgress" class="ddm-progress"></mat-progress-bar>
+            <p class="ddm-progress__label">Uploading… {{ uploadProgress }}%</p>
+          }
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="uploadPdf()"
+                  [disabled]="!uploadBookId || !uploadFile || uploadProgress !== null">
+            <mat-icon>cloud_upload</mat-icon> Upload PDF
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <!-- Add external link card -->
+      <mat-card class="ddm-upload-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar class="ddm-upload-card__avatar ddm-upload-card__avatar--blue">link</mat-icon>
+          <mat-card-title>Add External Link</mat-card-title>
+          <mat-card-subtitle>Link an online full-text resource (HTTPS only)</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field appearance="outline" style="width:100%">
+            <mat-label>Select Catalog Item</mat-label>
+            <mat-select [(ngModel)]="uploadBookId">
+              @for (book of allBooks; track book.id) {
+                <mat-option [value]="book.id">{{ book.title }} ({{ book.isbn }})</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width:100%">
+            <mat-label>Full-Text URL (https://…)</mat-label>
+            <input matInput type="url" [(ngModel)]="uploadLink" placeholder="https://example.com/document.pdf" />
+            <mat-icon matSuffix>public</mat-icon>
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="accent" (click)="saveExternalLink()"
+                  [disabled]="!uploadBookId || !uploadLink.trim() || uploadSaving">
+            <mat-icon>save</mat-icon> Save Link
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+    </div><!-- /ddm-upload-grid -->
+
+    <!-- Recent uploads table -->
+    @if (accessDocs().length > 0) {
+      <h3 class="ddm-section-title" style="margin-top:28px">
+        <mat-icon>history</mat-icon> Documents with Digital Content
+      </h3>
+      <table class="ddm-access-table">
+        <thead><tr><th>#</th><th>Title</th><th>Type</th><th>Content</th></tr></thead>
+        <tbody>
+          @for (book of accessDocs(); track book.id; let i = $index) {
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ book.title }}</td>
+              <td>
+                @if (book.pdf) {
+                  <span class="ddm-badge ddm-badge--red">PDF</span>
+                } @else if (book.link) {
+                  <span class="ddm-badge ddm-badge--blue">Link</span>
+                }
+              </td>
+              <td class="ddm-upload-content">
+                @if (book.pdf) {
+                  <mat-icon>picture_as_pdf</mat-icon> {{ book.pdf }}
+                } @else if (book.link) {
+                  <a [href]="book.link" target="_blank" rel="noopener noreferrer">{{ book.link }}</a>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+
+  </div>
+  }
+
+</div><!-- /ddm-root -->
+
+<!-- ═══════════════════════ FULL-SCREEN PDF VIEWER ══════════════════════════ -->
+@if (viewerOpen) {
+<div class="ddm-viewer-overlay"
+     (contextmenu)="onViewerContextMenu($event)">
+
+  <!-- Toolbar -->
+  <div class="ddm-viewer-toolbar">
+    <div class="ddm-viewer-toolbar__info">
+      <mat-icon>picture_as_pdf</mat-icon>
+      <span class="ddm-viewer-toolbar__title">{{ viewerBook?.title }}</span>
+    </div>
+    <div class="ddm-viewer-toolbar__right">
+      <!-- Session timer badge -->
+      @if (sessionRemaining > 0) {
+        <span class="ddm-viewer-timer" [class.ddm-viewer-timer--warn]="sessionRemaining <= 300">
+          <mat-icon>timer</mat-icon> {{ timerLabel() }}
+        </span>
+      }
+      <!-- Copyright notice -->
+      @if (currentRule.copyright) {
+        <span class="ddm-viewer-copyright">{{ currentRule.copyright }}</span>
+      }
+      <button mat-icon-button class="ddm-viewer-toolbar__close" (click)="closeViewer()" title="Close viewer">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- PDF loading spinner -->
+  @if (viewerLoadingPdf) {
+    <div class="ddm-viewer-loading">
+      <mat-progress-bar mode="indeterminate" style="max-width:400px"></mat-progress-bar>
+      <p>Loading document…</p>
+    </div>
+  }
+
+  <!-- External link notice (no embedded viewer for external URLs) -->
+  @if (!viewerBook?.pdf && viewerExternalUrl) {
+    <div class="ddm-viewer-ext">
+      <mat-icon>open_in_new</mat-icon>
+      <p>This document is hosted externally.</p>
+      <a [href]="viewerExternalUrl" target="_blank" rel="noopener noreferrer"
+         mat-raised-button color="primary" class="ddm-viewer-ext__btn">
+        Open in New Tab
+      </a>
+    </div>
+  }
+
+  <!-- ngx-extended-pdf-viewer (Uint8Array source — URL never exposed) -->
+  @if (viewerBook?.pdf && viewerPdfData) {
+    <div class="ddm-viewer-pdf-wrap">
+      <ngx-extended-pdf-viewer
+        [src]="viewerPdfData"
+        [showDownloadButton]="showDownloadBtn"
+        [showPrintButton]="showPrintBtn"
+        [textLayer]="false"
+        [showHandToolButton]="true"
+        height="calc(100vh - 56px)">
+      </ngx-extended-pdf-viewer>
+    </div>
+  }
+
+  <!-- Watermark overlay -->
+  @if (currentRule.watermark) {
+    <div class="ddm-watermark" aria-hidden="true">
+      <div class="ddm-watermark__text">
+        {{ viewerIdentity }} &bull; {{ currentRule.copyright || 'LIBRARY CONFIDENTIAL' }}
+      </div>
+    </div>
+  }
+
+</div><!-- /ddm-viewer-overlay -->
+}

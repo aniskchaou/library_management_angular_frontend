@@ -1,247 +1,58 @@
-<div class="container mt-4">
-    <!-- Title with Icon -->
-    <h1 class="h3 mb-2 text-gray-800">
-        <i class="fas fa-cart mr-2"></i> Baskets
-    </h1>
-
-    <!-- Description Below Title -->
-    <p class="lead mb-4">
-        Manage and view information about various baskets. You can explore the different types of baskets through the tabs below. Use the "Add Basket" button to create new baskets and manage existing ones efficiently.
-    </p>
-
-    <!-- Navigation Tabs -->
-    <ul class="nav nav-tabs">
-       <!--  <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#Overview">
-                <i class="fas fa-chart-bar mr-2"></i> Overview
-            </a>
-        </li> -->
-        <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#List">
-                <i class="fas fa-list mr-2"></i> List
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#UserManual">
-                <i class="fas fa-book mr-2"></i> User Manual
-            </a>
-        </li>
-    </ul>
-
-    <div class="tab-content">
-        <!-- Overview tab content -->
-       <!--  <div id="Overview" class="tab-pane fade">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6">
-                        <ngx-charts-bar-vertical
-                            [results]="barChartData"
-                            [view]="[400, 300]"
-                            [scheme]="'cool'"
-                            [gradient]="true"
-                            [xAxis]="true"
-                            [yAxis]="true"
-                            [legend]="true"
-                            [showXAxisLabel]="true"
-                            [showYAxisLabel]="true"
-                            xAxisLabel="Category"
-                            yAxisLabel="Number of Items">
-                        </ngx-charts-bar-vertical>
-                    </div>
-                    <div class="col-md-6">
-                        <ngx-charts-pie-chart
-                            [results]="pieChartData"
-                            [view]="[400, 300]"
-                            [scheme]="'cool'"
-                            [legend]="true"
-                            [explodeSlices]="false"
-                            [labels]="true">
-                        </ngx-charts-pie-chart>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <ngx-charts-line-chart
-                            [results]="lineChartData"
-                            [view]="[400, 300]"
-                            [scheme]="'cool'"
-                            [legend]="true"
-                            [xAxis]="true"
-                            [yAxis]="true"
-                            [autoScale]="true">
-                        </ngx-charts-line-chart>
-                    </div>
-                    <div class="col-md-6">
-                        <ngx-charts-pie-chart
-                            [results]="doughnutChartData"
-                            [view]="[400, 300]"
-                            [scheme]="'cool'"
-                            [legend]="true"
-                            [explodeSlices]="false"
-                            [doughnut]="true"
-                            [labels]="true">
-                        </ngx-charts-pie-chart>
-                    </div>
-                </div>
+﻿<div class="ll-page">
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <mat-icon class="ll-page__icon">shopping_basket</mat-icon>
+      <div class="ll-page__title">
+        <h1>{{ 'acquisition.basketTitle' | translate }}</h1>
+        <p>{{ 'acquisition.basketDesc' | translate }}</p>
+      </div>
+      <div class="ll-page__actions">
+        <button mat-flat-button color="primary" (click)="openAddDialog()"><mat-icon>add</mat-icon> {{ 'ui.create' | translate }}</button>
+        <button mat-stroked-button (click)="refreshData()"><mat-icon>refresh</mat-icon> {{ 'ui.reload' | translate }}</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="ll-page__body" appearance="outlined">
+    <mat-card-content>
+      @if (loadingIndicator) {
+        <div class="ll-loading"><mat-progress-spinner diameter="48" mode="indeterminate"></mat-progress-spinner></div>
+      } @else {
+        <mat-tab-group animationDuration="200ms" class="ll-tabs">
+          <mat-tab>
+            <ng-template mat-tab-label><mat-icon class="ll-tab__icon">list</mat-icon> {{ 'ui.list' | translate }}</ng-template>
+            <div class="ll-tab__content">
+              <ngx-datatable class="material" [rows]="baskets" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10" [loadingIndicator]="loadingIndicator" [reorderable]="reorderable" (select)="onSelect($event)" (activate)="onActivate($event)">
+                <ngx-datatable-column name="Basket Name" prop="basketName">
+                  <ng-template ngx-datatable-cell-template let-row="row"><span style="color:red">{{ row.basketName }}</span></ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Billing Place" prop="billingPlace"></ngx-datatable-column>
+                <ngx-datatable-column name="Delivery Place" prop="deliveryPlace"></ngx-datatable-column>
+                <ngx-datatable-column name="Vendor" prop="vendor.name">
+                  <ng-template ngx-datatable-cell-template let-row="row"><span style="color:blue">{{ row.vendor?.name }}</span></ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Internal Note" prop="internalNote"></ngx-datatable-column>
+                <ngx-datatable-column name="Vendor Note" prop="vendorNote"></ngx-datatable-column>
+                <ngx-datatable-column name="Create Items When" prop="createItemsWhen">
+                  <ng-template ngx-datatable-cell-template let-row="row">{{ row.createItemsWhen | date: 'short' }}</ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Actions">
+                  <ng-template ngx-datatable-cell-template let-row="row">
+                    <button mat-icon-button [matMenuTriggerFor]="basketMenu"><mat-icon>more_vert</mat-icon></button>
+                    <mat-menu #basketMenu="matMenu">
+                      <button mat-menu-item (click)="openEditDialog(row)"><mat-icon>edit</mat-icon> {{ 'ui.edit' | translate }}</button>
+                      <button mat-menu-item (click)="deleteBasket(row.id)"><mat-icon>delete</mat-icon> {{ 'ui.delete' | translate }}</button>
+                    </mat-menu>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
             </div>
-        </div> -->
-
-        <!-- List tab content -->
-        <div id="List" class="tab-pane fade show active">
-            <div class="container-fluid" >
-                <div class="table-responsive" >
- 
-                    <div class="card-body" style="background-color: white;">
-                     
-                        <button class="btn btn-outline-primary btn-icon-split mb-3" (click)="openAddDialog()">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-plus"></i>
-                            </span>
-                            <span class="text">Add Basket</span>
-                        </button>
-                        <button class="btn btn-outline-warning btn-icon-split mb-3" (click)="refreshData()">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-sync-alt"></i>
-                            </span>
-                            <span class="text">Refresh</span>
-                        </button>
-
-                    <div *ngIf="loadingIndicator; else loaded">
-                        <div class="d-flex justify-content-center">
-                            <div class="spinner-border text-primary" role="status">
-                              <span class="sr-only">Loading...</span>
-                            </div>
-                          </div>
-                    </div>
-
-                    <ng-template #loaded>
-                       
-
-                        <!-- Button trigger modal -->
-                        
-
-                        <div>
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Search by name..."
-                                (input)="updateFilter($event)">
-                        </div>
-
-                        <ngx-datatable
-                            class="bootstrap"
-                            [rows]="baskets"
-                            [columnMode]="'force'"
-                            [headerHeight]="50"
-                            [footerHeight]="50"
-                            [rowHeight]="'auto'"
-                            [limit]="10"
-                            [loadingIndicator]="loadingIndicator"
-                            [reorderable]="reorderable"
-                            (select)="onSelect($event)"
-                            (activate)="onActivate($event)">
-                            
-                            <!-- Basket Name -->
-                            <ngx-datatable-column name="Basket Name" [prop]="'basketName'">
-                                <ng-template ngx-datatable-cell-template let-row="row">
-                                   <span style="color: red;">{{ row.basketName }}</span> 
-                                </ng-template>
-                            </ngx-datatable-column>
-
-                            <!-- Billing Place -->
-                            <ngx-datatable-column name="Billing Place" [prop]="'billingPlace'">
-                                <ng-template ngx-datatable-cell-template let-row="row">
-                                    {{ row.billingPlace }}
-                                </ng-template>
-                            </ngx-datatable-column>
-
-                            <!-- Delivery Place -->
-                            <ngx-datatable-column name="Delivery Place" [prop]="'deliveryPlace'">
-                                <ng-template ngx-datatable-cell-template let-row="row">
-                                    {{ row.deliveryPlace }}
-                                </ng-template>
-                            </ngx-datatable-column>
-
-                            <!-- Vendor -->
-                            <ngx-datatable-column name="Vendor" [prop]="'vendor.name'">
-                                <ng-template ngx-datatable-cell-template let-row="row">
-                                    <span style="color: blue;">{{ row.vendor?.name }}</span>
-                                </ng-template>
-                            </ngx-datatable-column>
-
-                            <!-- Internal Note -->
-                            <ngx-datatable-column name="Internal Note" [prop]="'internalNote'">
-                                <ng-template ngx-datatable-cell-template let-row="row">
-                                    {{ row.internalNote }}
-                                </ng-template>
-                            </ngx-datatable-column>
-
-                            <!-- Vendor Note -->
-                            <ngx-datatable-column name="Vendor Note" [prop]="'vendorNote'">
-                                <ng-template ngx-datatable-cell-template let-row="row">
-                                    {{ row.vendorNote }}
-                                </ng-template>
-                            </ngx-datatable-column>
-
-                            <!-- Create Items When -->
-                            <ngx-datatable-column name="Create Items When" [prop]="'createItemsWhen'">
-                                <ng-template ngx-datatable-cell-template let-row="row">
-                                    {{ row.createItemsWhen | date: 'short' }}
-                                </ng-template>
-                            </ngx-datatable-column>
-
-                            <!-- Actions -->
-                            <ngx-datatable-column name="Actions">
-                                <ng-template ngx-datatable-cell-template let-row="row">
-                                   <!--  <button class="dropdown-item" (click)="openEditDialog(row)" title="Edit">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="dropdown-item" (click)="deleteBasket(row.id)" title="Delete">
-                                        <i class="fas fa-trash"></i>
-                                    </button> -->
-
-                                    
-                                        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                          Actions
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                          <li>
-                                            <a class="dropdown-item" (click)="openEditDialog(row)" title="Edit">
-                                              <i class="fas fa-edit"></i> Edit
-                                            </a>
-                                          </li>
-                                          <li>
-                                            <a class="dropdown-item" (click)="deleteBasket(row.id)" title="Delete">
-                                              <i class="fas fa-trash"></i> Delete
-                                            </a>
-                                          </li>
-                                        </ul>
-                                      
-                                      
-                                </ng-template>
-                            </ngx-datatable-column>
-
-                        </ngx-datatable>
-
-                    </ng-template>
-
-
-
-                </div>
-
-
-
-                </div>
-            </div>
-        </div>
-
-        <!-- User Manual tab content -->
-        <div id="UserManual" class="tab-pane custom-tab-pane">
-            <!-- User Manual content here -->
-            <div>
-               <!-- <markdown [src]="markdownContent" [data]="markdownContent"></markdown>  -->
-                <div  [innerHTML]="markdownContent"></div>
-            </div>
-          </div>
-    </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label><mat-icon class="ll-tab__icon">menu_book</mat-icon> {{ 'ui.userManual' | translate }}</ng-template>
+            <div class="ll-tab__content"><div [innerHTML]="markdownContent"></div></div>
+          </mat-tab>
+        </mat-tab-group>
+      }
+    </mat-card-content>
+  </mat-card>
 </div>

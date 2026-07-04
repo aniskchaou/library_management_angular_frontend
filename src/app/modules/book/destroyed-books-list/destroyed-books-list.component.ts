@@ -6,9 +6,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import { ViewBookComponent } from '../view-book/view-book.component';
 
 @Component({
-  selector: 'app-destroyed-books-list',
-  templateUrl: './destroyed-books-list.component.html',
-  styleUrls: ['./destroyed-books-list.component.css'],
+    selector: 'app-destroyed-books-list',
+    templateUrl: './destroyed-books-list.component.html',
+    styleUrls: ['./destroyed-books-list.component.css'],
+    standalone: false
 })
 export class DestroyedBooksListComponent extends URLLoader implements OnInit,AfterViewInit {
   @Input() books;
@@ -22,7 +23,7 @@ export class DestroyedBooksListComponent extends URLLoader implements OnInit,Aft
   retrieveResonse: any;
   imageName: any;
 
-  loadingIndicator = true;
+  loadingIndicator = false;
   reorderable = true;
 
   columns = [
@@ -82,10 +83,10 @@ export class DestroyedBooksListComponent extends URLLoader implements OnInit,Aft
       centered: true,}); // Open the CategoryViewComponent in modal
     modalRef.componentInstance.book = { ...catalog }; // Pass category data
 
-    console.log(catalog); // Ensure category is passed properly and logged
+
 
     modalRef.result.then(result => {
-      console.log(result); // Handle any result (if needed)
-    }).catch(error => console.log(error)); // Handle any errors
+
+    }).catch(() => {}); // Handle any errors
   }
 }

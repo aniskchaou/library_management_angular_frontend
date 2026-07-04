@@ -1,34 +1,46 @@
 <table class="table table-bordered" id="table" width="100%" cellspacing="0">
   <thead>
     <tr>
-      <th>{{ paymentI18n?.nameI18n }}</th>
-      <th>{{ paymentI18n?.dateI18n }}</th>
-      <th>{{ paymentI18n?.amountI18n }}</th>
+      <th>{{ 'ui.name' | translate }}</th>
+      <th>{{ 'ui.date' | translate }}</th>
+      <th>{{ 'ui.amount' | translate }}</th>
+      <th>Payment Method</th>
       <th></th>
     </tr>
   </thead>
   <tfoot>
     <tr>
-      <th>{{ paymentI18n?.nameI18n }}</th>
-      <th>{{ paymentI18n?.dateI18n }}</th>
-      <th>{{ paymentI18n?.amountI18n }}</th>
+      <th>{{ 'ui.name' | translate }}</th>
+      <th>{{ 'ui.date' | translate }}</th>
+      <th>{{ 'ui.amount' | translate }}</th>
+      <th>Payment Method</th>
       <th></th>
     </tr>
   </tfoot>
-  <tbody *ngIf="payments.length > 0">
-    <tr *ngFor="let c of payments">
-      <td>{{ c.memberName.name }}</td>
-      <td>{{ c.date }}</td>
-      <td>{{ c.amount }}</td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-danger btn-sm"
-          (click)="delete(c.id)"
-        >
-          <i class="fas fa-trash-alt"></i>
-        </button>
-      </td>
-    </tr>
-  </tbody>
+  @if (payments.length > 0) {
+    <tbody>
+      @for (c of payments; track c) {
+        <tr>
+          <td>{{ c.memberName.name }}</td>
+          <td>{{ c.date }}</td>
+          <td>{{ c.amount }}</td>
+          <td>
+            @if (c.paymentMethod === 'bank_transfer') { Bank Transfer }
+            @else if (c.paymentMethod === 'paypal') { PayPal }
+            @else if (c.paymentMethod === 'credit_card') { Credit / Debit Card }
+            @else { Cash }
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              (click)="delete(c.id)"
+              >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  }
 </table>

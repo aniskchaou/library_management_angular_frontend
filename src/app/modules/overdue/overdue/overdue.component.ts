@@ -12,11 +12,13 @@ import { RenewComponent } from '../../circulations/renew/renew.component';
 import { HoldComponent } from '../../circulations/hold/hold.component';
 import { CheckInComponent } from '../../circulations/check-in/check-in.component';
 import { CheckOutComponent } from '../../circulations/check-out/check-out.component';
+import { ContactMemberComponent } from '../../circulations/contact-member/contact-member.component';
 
 @Component({
-  selector: 'app-overdue',
-  templateUrl: './overdue.component.html',
-  styleUrls: ['./overdue.component.css']
+    selector: 'app-overdue',
+    templateUrl: './overdue.component.html',
+    styleUrls: ['./overdue.component.css'],
+    standalone: false
 })
 export class OverdueComponent extends URLLoader implements OnInit,AfterViewInit {
   tomorrow: any;
@@ -200,7 +202,7 @@ export class OverdueComponent extends URLLoader implements OnInit,AfterViewInit 
           this.loadOverdues();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(overdue: Overdue): void {
@@ -213,7 +215,7 @@ export class OverdueComponent extends URLLoader implements OnInit,AfterViewInit 
           this.loadOverdues();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   deleteOverdue(id: number): void {
@@ -232,7 +234,6 @@ export class OverdueComponent extends URLLoader implements OnInit,AfterViewInit 
   loadAllCirculations() {
     this.httpService
     .getAll(CONFIG.URL_BASE + '/circulation/overdue' ).subscribe((data:Circulation[] ) => {
-      console.log(data)
       this.circulations = data;
       this.total=data.length
       //this.loadingIndicator = false;
@@ -278,13 +279,12 @@ export class OverdueComponent extends URLLoader implements OnInit,AfterViewInit 
     );
     modalRef.componentInstance.circulation = { ...circulation }; // Ensure category is passed properly
   
-    console.log(circulation); // Ensure category is not undefined here
+
 
     modalRef.result.then(result => {
-      console.log(result)
        //this.getAll()
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   
@@ -295,13 +295,12 @@ export class OverdueComponent extends URLLoader implements OnInit,AfterViewInit 
     );
    // modalRef.componentInstance.circulation = { ...circulation }; // Ensure category is passed properly
   
-    //console.log(circulation); // Ensure category is not undefined here
+    //
 
     modalRef.result.then(result => {
-      console.log(result)
        //this.getAll()
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openCheckIn(): void {
@@ -311,14 +310,13 @@ export class OverdueComponent extends URLLoader implements OnInit,AfterViewInit 
     );
     //modalRef.componentInstance.circulation = { ...circulation }; // Ensure category is passed properly
   
-    //console.log(circulation); // Ensure category is not undefined here
+    //
 
     modalRef.result.then(result => {
-      console.log(result)
        //this.getAll()
        
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openPutOnHold(): void {
@@ -328,13 +326,12 @@ export class OverdueComponent extends URLLoader implements OnInit,AfterViewInit 
     );
     //modalRef.componentInstance.circulation = { ...circulation }; // Ensure category is passed properly
   
-   // console.log(circulation); // Ensure category is not undefined here
+   //
 
     modalRef.result.then(result => {
-      console.log(result)
        //this.getAll()
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openRenew(): void {
@@ -342,15 +339,69 @@ export class OverdueComponent extends URLLoader implements OnInit,AfterViewInit 
       ,{//size: 'xl',
       centered: true}
     );
-    //modalRef.componentInstance.circulation = { ...circulation }; // Ensure category is passed properly
-  
-    //console.log(circulation); // Ensure category is not undefined here
-
     modalRef.result.then(result => {
-      console.log(result)
-       //this.getAll()
-      
-    }).catch(error => console.log(error));
+    }).catch(() => {});
+  }
+
+  sendReminder(row: Circulation): void {
+    const email = row.memberName?.email;
+    const mobile = row.memberName?.mobile;
+    if (!email && !mobile) {
+      super.show('Warning', 'No contact information found for this member', 'warning');
+      return;
+    }
+    const dueDate = row.toReturn || row.lastDate;
+    const template = `Dear ${row.memberName?.firstname || 'Member'},\n\nThis is a reminder that the item "${row.catalogItemName?.title}" was due on ${dueDate}. Please return it as soon as possible to avoid additional fines.\n\nThank you,\nLibrary Management`;
+
+    const modalRef = this.modalService.open(ContactMemberComponent, { centered: true });
+    modalRef.componentInstance.email = email;
+    modalRef.componentInstance.mobile = mobile;
+    modalRef.componentInstance.reminderMessage = template;
+    modalRef.componentInstance.circulationI18n = {
+      messageI18n: 'Overdue Reminder',
+      sendEmailI18n: 'Send Reminder'
+    };
+    modalRef.componentInstance.closeModalEvent.subscribe(() => modalRef.close());
+    modalRef.result.then(() => {}).catch(() => {});
+  }
+
+  sendingBulkReminder = false;
+
+  sendReminderToAll(): void {
+    const overdueCirulations: Circulation[] = this.circulations || [];
+    if (overdueCirulations.length === 0) {
+      super.show('Warning', 'No overdue items to send reminders for', 'warning');
+      return;
+    }
+    const confirmed = confirm(`Send overdue email reminders to ${overdueCirulations.length} member(s)?`);
+    if (!confirmed) return;
+
+    this.sendingBulkReminder = true;
+    const dueDate = new Date().toLocaleDateString();
+    let sent = 0;
+    let failed = 0;
+    const total = overdueCirulations.filter(r => r.memberName?.email).length;
+
+    if (total === 0) {
+      super.show('Warning', 'No members have email addresses on record', 'warning');
+      this.sendingBulkReminder = false;
+      return;
+    }
+
+    for (const row of overdueCirulations) {
+      const email = row.memberName?.email;
+      if (!email) { failed++; continue; }
+      const body = `Dear ${row.memberName?.firstname || 'Member'}, this is a reminder that "${row.catalogItemName?.title}" was due on ${row.toReturn || row.lastDate}. Please return it as soon as possible.`;
+      const payload = { toEmail: email, subject: 'Overdue Item Reminder', body };
+      this.httpService.create(CONFIG.URL_BASE + '/notice/send', payload)
+        .finally(() => {
+          sent++;
+          if (sent + failed >= total) {
+            this.sendingBulkReminder = false;
+            super.show('Confirmation', `Reminders sent to ${sent} member(s)${failed > 0 ? ', ' + failed + ' skipped (no email)' : ''}`, 'success');
+          }
+        });
+    }
   }
 
 }

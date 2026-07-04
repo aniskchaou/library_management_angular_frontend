@@ -1,0 +1,14 @@
+:host { display: block; }
+.ll-list { display: flex; flex-direction: column; gap: 12px; }
+.ll-list__card { border-radius: 10px; }
+.ll-list__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.ll-list__title { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 500; }
+.ll-list__icon { color: #3f51b5; }
+.ll-list__actions { display: flex; gap: 8px; }
+.ll-list__actions mat-icon { margin-right: 4px; }
+.ll-list__divider { margin: 12px 0; }
+.ll-list__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.ll-list__row { display: flex; flex-direction: column; gap: 2px; }
+.ll-list__label { font-size: 12px; color: rgba(0,0,0,.6); text-transform: uppercase; letter-spacing: .04em; }
+.ll-list__value { font-size: 14px; color: rgba(0,0,0,.87); }
+.ll-chip__icon { font-size: 16px; width: 16px; height: 16px; margin-right: 4px; }

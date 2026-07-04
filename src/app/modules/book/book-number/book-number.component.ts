@@ -6,9 +6,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-book-number',
-  templateUrl: './book-number.component.html',
-  styleUrls: ['./book-number.component.css'],
+    selector: 'app-book-number',
+    templateUrl: './book-number.component.html',
+    styleUrls: ['./book-number.component.css'],
+    standalone: false
 })
 export class BookNumberComponent extends URLLoader implements OnInit {
   dashboardAnalytics;

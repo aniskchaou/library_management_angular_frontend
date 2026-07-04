@@ -12,9 +12,10 @@ import { DataService } from 'src/app/main/services/data.service';
 import { UploadDocumentMemberComponent } from '../upload-document-member/upload-document-member.component';
 
 @Component({
-  selector: 'app-member-list',
-  templateUrl: './member-list.component.html',
-  styleUrls: ['./member-list.component.css'],
+    selector: 'app-member-list',
+    templateUrl: './member-list.component.html',
+    styleUrls: ['./member-list.component.css'],
+    standalone: false
 })
 export class MemberListComponent extends URLLoader implements OnInit,AfterViewInit {
   @Input() members;
@@ -178,12 +179,10 @@ export class MemberListComponent extends URLLoader implements OnInit,AfterViewIn
   // Handle Row Selection
   onSelect({ selected }: any): void {
     this.selected = [...selected];
-    console.log('Selected Members:', this.selected);
   }
 
   // Handle Row Activation (e.g., click)
   onActivate(event: any): void {
-    console.log('Activate Event:', event);
   }
 
   openViewDialog(member: Member): void {
@@ -193,11 +192,11 @@ export class MemberListComponent extends URLLoader implements OnInit,AfterViewIn
     }); // Open the CategoryViewComponent in modal
     modalRef.componentInstance.member = { ...member }; // Pass category data
 
-    console.log(member); // Ensure category is passed properly and logged
+
 
     modalRef.result.then(result => {
-      console.log(result); // Handle any result (if needed)
-    }).catch(error => console.log(error)); // Handle any errors
+
+    }).catch(() => {}); // Handle any errors
   }
 
 
@@ -210,6 +209,7 @@ export class MemberListComponent extends URLLoader implements OnInit,AfterViewIn
    showLabels: boolean = true;
    isDoughnut: boolean = false;
    gradient: boolean = true;
+   materialColorScheme = { domain: ['#3f51b5','#e91e63','#009688','#ff9800','#2196f3','#4caf50','#9c27b0','#ff5722','#795548','#607d8b'] };
  
    // Chart Data
    membersByUserTypeData: any[] = [];
@@ -366,9 +366,8 @@ export class MemberListComponent extends URLLoader implements OnInit,AfterViewIn
     modalRef.componentInstance.member = { ...member }; // Pass the member data
    
     modalRef.result.then(result => {
-      console.log(result);
       this.dataService.triggerRefresh(); // Trigger refresh in other components
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   deleteRow(member) {
@@ -394,7 +393,7 @@ export class MemberListComponent extends URLLoader implements OnInit,AfterViewIn
           this.loadDepartments();
         }); */
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
  /*  openEditDialog(member): void {
@@ -407,6 +406,6 @@ export class MemberListComponent extends URLLoader implements OnInit,AfterViewIn
           this.loadDepartments();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   } */
 }

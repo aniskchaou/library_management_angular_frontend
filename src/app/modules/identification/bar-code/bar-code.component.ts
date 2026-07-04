@@ -12,9 +12,10 @@ import { BarcodeViewComponent } from '../barcode-view/barcode-view.component';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-bar-code',
-  templateUrl: './bar-code.component.html',
-  styleUrls: ['./bar-code.component.css']
+    selector: 'app-bar-code',
+    templateUrl: './bar-code.component.html',
+    styleUrls: ['./bar-code.component.css'],
+    standalone: false
 })
 export class BarCodeComponent extends URLLoader implements OnInit, AfterViewInit {
 
@@ -64,7 +65,6 @@ export class BarCodeComponent extends URLLoader implements OnInit, AfterViewInit
       finalize(() => this.loadingIndicator = false)
     ).subscribe(data => {
       this.barcodes = data;
-      console.log(data)
       this.temp = [...data]; // Backup data for filtering
     });
   }
@@ -83,21 +83,17 @@ export class BarCodeComponent extends URLLoader implements OnInit, AfterViewInit
   }
 
   onSelect({ selected }): void {
-    console.log('Selected row:', selected);
     this.selected = [...selected];
   }
 
   onActivate(event): void {
-    console.log('Activate Event:', event);
   }
 
   editRow(row: BarCode): void {
-    console.log('Edit row:', row);
     this.openEditDialog(row);
   }
 
   deleteRow(row: BarCode): void {
-    console.log('Delete row:', row);
     this.barcodes = this.barcodes.filter(r => r !== row);
     this.barcodes$.next(this.barcodes);
     this.deleteBarcode(row.id);
@@ -114,7 +110,7 @@ export class BarCodeComponent extends URLLoader implements OnInit, AfterViewInit
           this.loadBarcodes();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(barcode: BarCode): void {
@@ -127,7 +123,7 @@ export class BarCodeComponent extends URLLoader implements OnInit, AfterViewInit
           this.loadBarcodes();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   deleteBarcode(id: number): void {
@@ -143,7 +139,6 @@ export class BarCodeComponent extends URLLoader implements OnInit, AfterViewInit
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/barcode.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }
@@ -212,14 +207,12 @@ export class BarCodeComponent extends URLLoader implements OnInit, AfterViewInit
           downloadWindow.close();  // Close the window after downloading
       };
   } else {
-      console.log("Failed to open the new window.");
   }
   this.toastr.success('Item is downloded !', 'Success');
 }
 
 regenerateBarCode(qrCode){
   this.httpService.getAll(CONFIG.URL_BASE + '/barcode/saveBarCode/' + qrCode?.isbn ).subscribe((data)=>{
-    console.log(data)
     this.toastr.success('Item is regenerated!', 'Success');
   })
 }

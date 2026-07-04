@@ -1,0 +1,164 @@
+<div class="fo-root">
+
+  <!-- ═══════════════════ TOP BAR ═══════════════════════════════════════════ -->
+  <header class="fo-topbar">
+    <div class="fo-topbar__brand">
+      <mat-icon class="fo-topbar__logo-icon">local_library</mat-icon>
+      <span class="fo-topbar__name">Library Lab</span>
+      <span class="fo-topbar__tag">Public Portal</span>
+    </div>
+
+    <div class="fo-topbar__right">
+      <a class="fo-topbar__nav-link" (click)="goAdminLogin()" style="cursor:pointer; display:flex; align-items:center; gap:4px;">
+        <mat-icon style="font-size:18px; height:18px; width:18px;">admin_panel_settings</mat-icon>
+        Staff Login
+      </a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════ HERO ══════════════════════════════════════════════ -->
+  <section class="fo-hero">
+    <div class="fo-hero__overlay"></div>
+    <div class="fo-hero__content">
+      <p class="fo-hero__eyebrow">Welcome to the Library</p>
+      <h1 class="fo-hero__title">Discover. Read. Learn.</h1>
+      <p class="fo-hero__sub">Search our complete catalog of books, e-books, journals and more — available for every member.</p>
+
+      <div class="fo-hero__search-box">
+        <mat-form-field appearance="outline" class="fo-hero__field">
+          <mat-label>Search books, authors, subjects…</mat-label>
+          <input matInput [(ngModel)]="heroQuery" (keydown.enter)="goSearch()" autocomplete="off" name="q">
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+        <button mat-flat-button class="fo-hero__search-btn" (click)="goSearch()">
+          Search Catalog
+        </button>
+      </div>
+
+      <div class="fo-hero__quick-links">
+        <button class="fo-quick" (click)="goSearch()"><mat-icon>menu_book</mat-icon> Browse All</button>
+        <button class="fo-quick" (click)="goSearchWithCategory('Science')"><mat-icon>science</mat-icon> Science</button>
+        <button class="fo-quick" (click)="goSearchWithCategory('Technology')"><mat-icon>computer</mat-icon> Technology</button>
+        <button class="fo-quick" (click)="goSearchWithCategory('History')"><mat-icon>history_edu</mat-icon> History</button>
+        <button class="fo-quick" (click)="goSearchWithCategory('Literature')"><mat-icon>auto_stories</mat-icon> Literature</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ STATS ROW ═════════════════════════════════════════ -->
+  <section class="fo-stats">
+    <div class="fo-stats__card">
+      <mat-icon class="fo-stats__icon fo-stats__icon--blue">menu_book</mat-icon>
+      <div>
+        <div class="fo-stats__value">{{ totalBooks | number }}</div>
+        <div class="fo-stats__label">Books &amp; Items</div>
+      </div>
+    </div>
+    <div class="fo-stats__card">
+      <mat-icon class="fo-stats__icon fo-stats__icon--indigo">swap_horiz</mat-icon>
+      <div>
+        <div class="fo-stats__value">{{ totalEbooks | number }}</div>
+        <div class="fo-stats__label">Active Circulations</div>
+      </div>
+    </div>
+    <div class="fo-stats__card">
+      <mat-icon class="fo-stats__icon fo-stats__icon--teal">category</mat-icon>
+      <div>
+        <div class="fo-stats__value">{{ totalCategories | number }}</div>
+        <div class="fo-stats__label">Subject Categories</div>
+      </div>
+    </div>
+    <div class="fo-stats__card">
+      <mat-icon class="fo-stats__icon fo-stats__icon--green">people</mat-icon>
+      <div>
+        <div class="fo-stats__value">{{ totalMembers | number }}</div>
+        <div class="fo-stats__label">Registered Members</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ CATEGORIES ════════════════════════════════════════ -->
+  @if (categories.length) {
+    <section class="fo-section">
+      <div class="fo-section__head">
+        <h2 class="fo-section__title">Browse by Subject</h2>
+        <button mat-stroked-button (click)="goSearch()">View All</button>
+      </div>
+      <div class="fo-cat-grid">
+        @for (cat of categories; track cat.id) {
+          <button class="fo-cat-card" (click)="goSearchWithCategory(cat.categoryName)">
+            <mat-icon class="fo-cat-card__icon">{{ iconFor(cat) }}</mat-icon>
+              <span class="fo-cat-card__name">{{ cat.categoryName }}</span>
+          </button>
+        }
+      </div>
+    </section>
+  }
+
+  <!-- ═══════════════════ NEW ARRIVALS ══════════════════════════════════════ -->
+  @if (newArrivals.length) {
+    <section class="fo-section fo-section--alt">
+      <div class="fo-section__head">
+        <h2 class="fo-section__title">
+          <mat-icon class="fo-section__title-icon">fiber_new</mat-icon>
+          New Arrivals
+        </h2>
+        <button mat-stroked-button (click)="goSearch()">Browse Catalog</button>
+      </div>
+      <div class="fo-book-grid">
+        @for (book of newArrivals; track book.id) {
+          <div class="fo-book-card">
+            <div class="fo-book-card__cover-wrap">
+              <img class="fo-book-card__cover"
+                   [src]="coverUrl(book)"
+                   [alt]="book.title"
+                   (error)="$any($event.target).src='assets/images/no-cover.png'">
+            </div>
+            <div class="fo-book-card__body">
+              <p class="fo-book-card__title" [title]="book.title">{{ book.title }}</p>
+              <p class="fo-book-card__author">{{ book.writer?.name || book.publisher?.name || '—' }}</p>
+              @if (book.category?.name) {
+                <span class="fo-book-card__chip">{{ book.category.name }}</span>
+              }
+            </div>
+            <div class="fo-book-card__footer">
+              <button mat-flat-button color="primary" class="fo-book-card__btn" (click)="goSearch()">
+                <mat-icon>info</mat-icon> Details
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  }
+
+  <!-- ═══════════════════ CTA BANNER ════════════════════════════════════════ -->
+  <section class="fo-cta-banner">
+    <div class="fo-cta-banner__content">
+      <mat-icon class="fo-cta-banner__icon">card_membership</mat-icon>
+      <div>
+        <h3>Are you a library member?</h3>
+        <p>Log in to view your borrowed books, holds, reading history and manage your account.</p>
+      </div>
+      <button mat-flat-button class="fo-cta-banner__btn" (click)="goAccount()">
+        <mat-icon>login</mat-icon> Sign In to My Account
+      </button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ FOOTER ════════════════════════════════════════════ -->
+  <footer class="fo-footer">
+    <div class="fo-footer__inner">
+      <div class="fo-footer__brand">
+        <mat-icon>local_library</mat-icon>
+        <span>Library Lab</span>
+      </div>
+      <nav class="fo-footer__nav">
+        <a [routerLink]="['/opac-home']">Home</a>
+        <a [routerLink]="['/opac']">Catalog</a>
+      </nav>
+      <p class="fo-footer__copy">© {{ today | date:'yyyy' }} Library Lab. All rights reserved.</p>
+    </div>
+  </footer>
+
+</div>

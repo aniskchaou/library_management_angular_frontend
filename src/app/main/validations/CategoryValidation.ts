@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 @Injectable({
   providedIn: 'root',
 })
 export default class CategoryValidation {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  public get formGroupInstance(): FormGroup {
+  public get formGroupInstance(): UntypedFormGroup {
     return this.formGroup;
   }
 
@@ -21,10 +21,10 @@ export default class CategoryValidation {
     return true;
   }
   createFormGroup() {
-    return new FormGroup({
-      category_name: new FormControl('', Validators.required),
-      slug: new FormControl('',Validators.required),
-      published: new FormControl(''),
+    return new UntypedFormGroup({
+      category_name: new UntypedFormControl('', Validators.required),
+      slug: new UntypedFormControl('',Validators.required),
+      published: new UntypedFormControl(''),
     });
   }
 }

@@ -6,9 +6,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-writer-result-list',
-  templateUrl: './writer-result-list.component.html',
-  styleUrls: ['./writer-result-list.component.css'],
+    selector: 'app-writer-result-list',
+    templateUrl: './writer-result-list.component.html',
+    styleUrls: ['./writer-result-list.component.css'],
+    standalone: false
 })
 export class WriterResultListComponent extends URLLoader implements OnInit {
   constructor(private httpService: HTTPService) {

@@ -10,9 +10,10 @@ import CONFIG from 'src/app/main/urls/urls';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-qr-code',
-  templateUrl: './qr-code.component.html',
-  styleUrls: ['./qr-code.component.css']
+    selector: 'app-qr-code',
+    templateUrl: './qr-code.component.html',
+    styleUrls: ['./qr-code.component.css'],
+    standalone: false
 })
 export class QrCodeComponent implements OnInit {
 
@@ -126,7 +127,6 @@ export class QrCodeComponent implements OnInit {
 
   generateQRCode(): void {
     // Add your QR code generation logic here
-    console.log('Generate QR Code with data:', this.qrCodeData);
   }
 
   updateFilter(event: any): void {
@@ -142,17 +142,14 @@ export class QrCodeComponent implements OnInit {
   }
 
   onSelect(event: any): void {
-    console.log('Row selected:', event);
   }
 
   onActivate(event: any): void {
-    console.log('Row activated:', event);
   }
 
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/qrcode.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }
@@ -221,14 +218,12 @@ export class QrCodeComponent implements OnInit {
           downloadWindow.close();  // Close the window after downloading
       };
   } else {
-      console.log("Failed to open the new window.");
   }
   this.toastr.success('Item is downloded!', 'Success');
 }
 
 regenerateQRCode(qrCode){
   this.httpService.getAll(CONFIG.URL_BASE + '/qrcode/saveQRCode/' + qrCode?.isbn ).subscribe((data)=>{
-    console.log(data)
     this.toastr.success('Item is regenerated', 'Success');
   })
 }

@@ -1,178 +1,115 @@
-<div class="container-fluid">
- 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">
-      <i class="fas fa-user"></i> <!-- Icon for the title -->
-      {{ memberI18n.allTitleI18n }}
-    </h1>
-    <p class="mb-4 text-muted">
-      The Members Management module allows administrators to oversee and manage all members within the system. You can view detailed lists of members, add new members, edit existing member information, and delete members as needed. This module provides a comprehensive interface for maintaining an organized and efficient member database, ensuring smooth operations and up-to-date records.
-    </p>
-
-    <!-- DataTales Example -->
-    <div class="card mb-4">
-      <div class="card-body">
-        <div class="table-responsive">
-          <button
-          href="#add"
-          role="button"
-          data-toggle="modal"
-          class="btn btn-outline-success btn-icon-split"
-        >
-          <span class="icon text-success">
-            <i class="fas fa-plus"></i>
-          </span>
-          <span class="text">Create</span>
+<div class="ll-page">
+  <mat-card appearance="outlined" class="ll-page__header">
+    <mat-card-content class="ll-page__header-content">
+      <div class="ll-page__title">
+        <mat-icon class="ll-page__icon">groups</mat-icon>
+        <div>
+          <h1>{{ 'member.pageTitle' | translate }}</h1>
+          <p class="ll-page__subtitle">
+            {{ 'member.pageDesc' | translate }}
+          </p>
+        </div>
+      </div>
+      <div class="ll-page__actions">
+        <button mat-flat-button color="primary" (click)="openAddDialog()">
+          <mat-icon>add</mat-icon> {{ 'ui.create' | translate }}
         </button>
-
-        <button
-        href="#"
-        role="button"
-        class="btn btn-outline-warning btn-icon-split"
-        (click)="getAll()"
-      >
-        <span class="icon text-warning">
-          <i class="fas fa-redo"></i>
-        </span>
-        <span class="text">Reload</span>
-      </button>
-
-      
-      <div class="container mt-5">
-
-        <div class="row">
-            <!-- New Arrivals -->
-            <div class="col-md-3 mb-4">
-                <div class="card text-center border">
-                    <div class="card-body">
-                        <h5 class="card-title text-info">New Arrivals</h5>
-                        <p class="card-text h4">
-                            <span *ngIf="newArrivals">{{ newArrivals }}</span>
-                            <span *ngIf="!newArrivals">Loading...</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-      
-            <!-- Blacklist -->
-            <div class="col-md-3 mb-4">
-                <div class="card text-center border">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger">Blacklist</h5>
-                        <p class="card-text h4">
-                            <span *ngIf="blacklist">{{ blacklist }}</span>
-                            <span *ngIf="!blacklist">Loading...</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-      
-            <!-- Unverified -->
-            <div class="col-md-3 mb-4">
-                <div class="card text-center border">
-                    <div class="card-body">
-                        <h5 class="card-title text-warning">Unverified Users</h5>
-                        <p class="card-text h4">
-                            <span *ngIf="unverified">{{ unverified }}</span>
-                            <span *ngIf="!unverified">Loading...</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-      
-            <!-- Expired Users -->
-            <div class="col-md-3 mb-4">
-                <div class="card text-center border">
-                    <div class="card-body">
-                        <h5 class="card-title text-secondary">Expired Users</h5>
-                        <p class="card-text h4">
-                            <span *ngIf="expired">{{ expired }}</span>
-                            <span *ngIf="!expired">Loading...</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <button mat-stroked-button (click)="getAll()">
+          <mat-icon>refresh</mat-icon> {{ 'ui.reload' | translate }}
+        </button>
       </div>
-      
+    </mat-card-content>
+  </mat-card>
 
-      <div *ngIf="loading; else loaded">
-        <div class="d-flex justify-content-center">
-          <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
+  <div class="ll-stats__kpis">
+    <mat-card appearance="outlined" class="ll-kpi ll-kpi--info">
+      <mat-card-content class="ll-kpi__content">
+        <div class="ll-kpi__icon"><mat-icon>fiber_new</mat-icon></div>
+        <div class="ll-kpi__body">
+          <span class="ll-kpi__label">{{ 'member.kpiNewArrivals' | translate }}</span>
+          @if (newArrivals !== undefined && newArrivals !== null) {
+            <span class="ll-kpi__value">{{ newArrivals }}</span>
+          } @else {
+            <mat-progress-spinner diameter="24" mode="indeterminate"></mat-progress-spinner>
+          }
         </div>
-      </div>
+        <mat-chip-set class="ll-kpi__chip">
+          <mat-chip><mat-icon matChipAvatar>person_add</mat-icon> {{ 'member.kpiRecent' | translate }}</mat-chip>
+        </mat-chip-set>
+        <mat-progress-bar class="ll-kpi__bar" mode="determinate" value="100"></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <ng-template #loaded>
-          <app-member-list
-            (editEvent)="edit($event)"
-            (viewEvent)="view($event)"
-            (deleteEvent)="delete($event)"
-            [members]="members$"
-            [memberI18n]="memberI18n"
-          ></app-member-list>
-           <app-member-modal
-            [memberI18n]="memberI18n"
-            [id]="id"
-          ></app-member-modal>
-      </ng-template>    
+    <mat-card appearance="outlined" class="ll-kpi ll-kpi--danger">
+      <mat-card-content class="ll-kpi__content">
+        <div class="ll-kpi__icon"><mat-icon>block</mat-icon></div>
+        <div class="ll-kpi__body">
+          <span class="ll-kpi__label">{{ 'member.kpiBlacklist' | translate }}</span>
+          @if (blacklist !== undefined && blacklist !== null) {
+            <span class="ll-kpi__value">{{ blacklist }}</span>
+          } @else {
+            <mat-progress-spinner diameter="24" mode="indeterminate"></mat-progress-spinner>
+          }
         </div>
-      </div>
-    </div>
+        <mat-chip-set class="ll-kpi__chip">
+          <mat-chip><mat-icon matChipAvatar>gpp_bad</mat-icon> {{ 'member.kpiBlocked' | translate }}</mat-chip>
+        </mat-chip-set>
+        <mat-progress-bar class="ll-kpi__bar" mode="determinate" value="100"></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="ll-kpi ll-kpi--warning">
+      <mat-card-content class="ll-kpi__content">
+        <div class="ll-kpi__icon"><mat-icon>help_outline</mat-icon></div>
+        <div class="ll-kpi__body">
+          <span class="ll-kpi__label">{{ 'member.kpiUnverified' | translate }}</span>
+          @if (unverified !== undefined && unverified !== null) {
+            <span class="ll-kpi__value">{{ unverified }}</span>
+          } @else {
+            <mat-progress-spinner diameter="24" mode="indeterminate"></mat-progress-spinner>
+          }
+        </div>
+        <mat-chip-set class="ll-kpi__chip">
+          <mat-chip><mat-icon matChipAvatar>warning</mat-icon> {{ 'member.kpiPending' | translate }}</mat-chip>
+        </mat-chip-set>
+        <mat-progress-bar class="ll-kpi__bar" mode="determinate" value="100"></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="ll-kpi ll-kpi--muted">
+      <mat-card-content class="ll-kpi__content">
+        <div class="ll-kpi__icon"><mat-icon>schedule</mat-icon></div>
+        <div class="ll-kpi__body">
+          <span class="ll-kpi__label">Expired</span>
+          @if (expired !== undefined && expired !== null) {
+            <span class="ll-kpi__value">{{ expired }}</span>
+          } @else {
+            <mat-progress-spinner diameter="24" mode="indeterminate"></mat-progress-spinner>
+          }
+        </div>
+        <mat-chip-set class="ll-kpi__chip">
+          <mat-chip><mat-icon matChipAvatar>event_busy</mat-icon> Expired</mat-chip>
+        </mat-chip-set>
+        <mat-progress-bar class="ll-kpi__bar" mode="determinate" value="100"></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card appearance="outlined" class="ll-page__body">
+    <mat-card-content>
+      @if (loading) {
+        <div class="ll-loading">
+          <mat-progress-spinner diameter="48" mode="indeterminate"></mat-progress-spinner>
+        </div>
+      } @else {
+        <app-member-list
+          (editEvent)="edit($event)"
+          (viewEvent)="view($event)"
+          (deleteEvent)="delete($event)"
+          [members]="members$"
+          [memberI18n]="memberI18n"
+        ></app-member-list>
+      }
+    </mat-card-content>
+  </mat-card>
 </div>
-

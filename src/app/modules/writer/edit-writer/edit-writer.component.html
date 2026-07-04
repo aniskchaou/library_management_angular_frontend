@@ -1,158 +1,79 @@
-<div class="modal-header">
-  <h5 class="modal-title">{{ author.id ? 'Edit' : 'Add' }} Author</h5>
-  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-  <form>
-    <!-- Author Name Field -->
-    <div class="form-group">
-      <label for="name" id="name_display_as_box">
-        Name
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the author's full name."></i>
-      </label>
-      <input
-        id="name"
-        name="name"
-        class="form-control"
-        type="text"
-        placeholder="e.g., Jane Doe"
-        [(ngModel)]="author.name"
-      />
-    </div>
+<div class="ll-modal ll-modal--wide">
+  <div class="ll-modal__header">
+    <mat-icon class="ll-modal__icon">edit</mat-icon>
+    <h2 class="ll-modal__title">Edit Writer</h2>
+    <button mat-icon-button class="ll-modal__close" (click)="onCancelClick()" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
-    <!-- Note Field -->
-    <div class="form-group">
-      <label for="note" id="note_display_as_box">
-        Note
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Additional notes about the author."></i>
-      </label>
-      <input
-        id="note"
-        name="note"
-        class="form-control"
-        type="text"
-        placeholder="e.g., Renowned novelist"
-        [(ngModel)]="author.note"
-      />
-    </div>
+  <div class="ll-modal__content">
+    @if (author) {
+      <form #writerForm="ngForm" novalidate class="ll-form">
+        <div class="ll-form__grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" [(ngModel)]="author.name" name="name" required #nameRef="ngModel" maxlength="99" />
+            @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
+              <mat-error>Name is required.</mat-error>
+            }
+          </mat-form-field>
 
-    <!-- Date of Birth Field -->
-    <div class="form-group">
-      <label for="dateOfBirth" id="dateOfBirth_display_as_box">
-        Date of Birth
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the author's date of birth."></i>
-      </label>
-      <input
-        id="dateOfBirth"
-        name="dateOfBirth"
-        class="form-control"
-        type="date"
-        [(ngModel)]="author.dateOfBirth"
-      />
-    </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Note / Nickname</mat-label>
+            <input matInput type="text" [(ngModel)]="author.note" name="note" />
+          </mat-form-field>
 
-    <!-- Died Field -->
-    <div class="form-group">
-      <label for="died" id="died_display_as_box">
-        Died
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Check if the author is deceased."></i>
-      </label>
-      <input
-        id="died"
-        name="died"
-        class="form-check-input"
-        type="checkbox"
-        [(ngModel)]="author.died"
-        (change)="onDiedChange()"
-      />
-    </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput type="date" [(ngModel)]="author.dob" name="dob" />
+          </mat-form-field>
 
-    <!-- Date of Death Field -->
-    <div class="form-group" *ngIf="author.died">
-      <label for="dateOfDeath" id="dateOfDeath_display_as_box">
-        Date of Death
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the author's date of death."></i>
-      </label>
-      <input
-        id="dateOfDeath"
-        name="dateOfDeath"
-        class="form-control"
-        type="date"
-        [(ngModel)]="author.dateOfDeath"
-      />
-    </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Deceased?</mat-label>
+            <mat-select [(ngModel)]="author.died" name="died" (selectionChange)="onDiedChange()">
+              <mat-option [value]="false">Living</mat-option>
+              <mat-option [value]="true">Deceased</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-    <!-- Bio Field -->
-    <div class="form-group">
-      <label for="bio" id="bio_display_as_box">
-        Bio
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> A short biography of the author."></i>
-      </label>
-      <textarea
-        id="bio"
-        name="bio"
-        class="form-control"
-        rows="3"
-        placeholder="e.g., Jane Doe is a renowned author known for..."
-        [(ngModel)]="author.bio"
-      ></textarea>
-    </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Date of Death</mat-label>
+            <input matInput type="date" [(ngModel)]="author.dod" name="dod" [disabled]="!author.died" />
+          </mat-form-field>
 
-    <!-- Publications Field -->
-    <div class="form-group">
-      <label for="publications" id="publications_display_as_box">
-        Publications
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> List of publications by the author."></i>
-      </label>
-      <textarea
-        id="publications"
-        name="publications"
-        class="form-control"
-        rows="3"
-        placeholder="e.g., Book 1, Book 2"
-        [(ngModel)]="author.publications"
-      
-      ></textarea>
-    </div>
+          <mat-form-field appearance="outline" class="ll-form__col-full">
+            <mat-label>Biography</mat-label>
+            <textarea matInput rows="3" [(ngModel)]="author.bio" name="bio"></textarea>
+          </mat-form-field>
 
-    <!-- Awards Field -->
-    <div class="form-group">
-      <label for="awards" id="awards_display_as_box">
-        Awards
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> List of awards received by the author."></i>
-      </label>
-      <textarea
-        id="awards"
-        name="awards"
-        class="form-control"
-        rows="3"
-        placeholder="e.g., Pulitzer Prize"
-        [(ngModel)]="author.award"
-       
-      ></textarea>
-    </div>
+          <mat-form-field appearance="outline" class="ll-form__col-full">
+            <mat-label>Publications</mat-label>
+            <textarea matInput rows="2" [(ngModel)]="author.publications" name="publications"></textarea>
+          </mat-form-field>
 
-    <!-- References Field -->
-    <div class="form-group">
-      <label for="references" id="references_display_as_box">
-        References
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> List of references for the author."></i>
-      </label>
-      <textarea
-        id="references"
-        name="references"
-        class="form-control"
-        rows="3"
-        placeholder="e.g., Author's website, Wikipedia"
-        [(ngModel)]="author.references"
-        (ngModelChange)="author.references"
-      ></textarea>
-    </div>
-  </form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
-  <button type="button" class="btn btn-outline-primary" (click)="saveAuthor()">Save</button>
+          <mat-form-field appearance="outline">
+            <mat-label>Awards</mat-label>
+            <input matInput type="text" [(ngModel)]="author.awards" name="awards" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>References</mat-label>
+            <input matInput type="text" [(ngModel)]="author.refrences" name="refrences" />
+          </mat-form-field>
+        </div>
+
+        <div class="ll-modal__actions">
+          <button mat-stroked-button type="button" (click)="onCancelClick()">Cancel</button>
+          <button mat-flat-button color="primary" type="button" (click)="saveAuthor()" [disabled]="writerForm.invalid">
+            <mat-icon>save</mat-icon> Save Changes
+          </button>
+        </div>
+      </form>
+    } @else {
+      <div class="ll-modal__loading">
+        <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+      </div>
+    }
+  </div>
 </div>

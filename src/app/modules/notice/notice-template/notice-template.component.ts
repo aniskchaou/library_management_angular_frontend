@@ -10,9 +10,10 @@ import CONFIG from 'src/app/main/urls/urls';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-notice-template',
-  templateUrl: './notice-template.component.html',
-  styleUrls: ['./notice-template.component.css']
+    selector: 'app-notice-template',
+    templateUrl: './notice-template.component.html',
+    styleUrls: ['./notice-template.component.css'],
+    standalone: false
 })
 export class NoticeTemplateComponent implements OnInit {
 
@@ -84,7 +85,6 @@ export class NoticeTemplateComponent implements OnInit {
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/notice-template.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }
@@ -100,7 +100,7 @@ export class NoticeTemplateComponent implements OnInit {
           this.loadNoticeTemplates();
         });
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(noticeTemplate: NoticeTemplate): void {
@@ -113,7 +113,7 @@ export class NoticeTemplateComponent implements OnInit {
           this.loadNoticeTemplates();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
  /*  deleteNoticeTemplate(id: number): void {

@@ -9,9 +9,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-archived-book',
-  templateUrl: './archived-book.component.html',
-  styleUrls: ['./archived-book.component.css'],
+    selector: 'app-archived-book',
+    templateUrl: './archived-book.component.html',
+    styleUrls: ['./archived-book.component.css'],
+    standalone: false
 })
 export class ArchivedBookComponent extends URLLoader implements OnInit {
   showsummary: boolean = false;
@@ -36,7 +37,6 @@ export class ArchivedBookComponent extends URLLoader implements OnInit {
   }
 
   filter(data) {
-    console.log(data);
     if (data == null) {
       super.show('Search Result', 'No result !', 'info');
     } else {

@@ -4,9 +4,10 @@ import { ViewTypeMemberComponent } from '../view-type-member/view-type-member.co
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-typemember-list',
-  templateUrl: './typemember-list.component.html',
-  styleUrls: ['./typemember-list.component.css'],
+    selector: 'app-typemember-list',
+    templateUrl: './typemember-list.component.html',
+    styleUrls: ['./typemember-list.component.css'],
+    standalone: false
 })
 export class TypememberListComponent extends URLLoader implements OnInit,AfterViewInit {
   @Input() typeMembers;
@@ -63,10 +64,10 @@ export class TypememberListComponent extends URLLoader implements OnInit,AfterVi
     }); // Open the CategoryViewComponent in modal
     modalRef.componentInstance.selectedMember = { ...member }; // Pass category data
 
-    console.log(member); // Ensure category is passed properly and logged
+
 
     modalRef.result.then(result => {
-      console.log(result); // Handle any result (if needed)
-    }).catch(error => console.log(error)); // Handle any errors
+
+    }).catch(() => {}); // Handle any errors
   }
 }

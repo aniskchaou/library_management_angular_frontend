@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
@@ -12,15 +12,16 @@ import { AddBookComponent } from '../add-book/add-book.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-statistics-book',
-  templateUrl: './statistics-book.component.html',
-  styleUrls: ['./statistics-book.component.css'],
+    selector: 'app-statistics-book',
+    templateUrl: './statistics-book.component.html',
+    styleUrls: ['./statistics-book.component.css'],
+    standalone: false
 })
 export class StatisticsBookComponent extends URLLoader implements OnInit {
   showsummary: boolean = false;
   showgraphic: boolean = false;
   showfilter: boolean = false;
-  filterForm: FormGroup;
+  filterForm: UntypedFormGroup;
   submitted: boolean = false;
   @Output() result = new EventEmitter();
   @Output() groupByAuthors = new EventEmitter();
@@ -114,7 +115,6 @@ export class StatisticsBookComponent extends URLLoader implements OnInit {
           this.filterForm.value.number_of_pages
       )
       .subscribe((data: CatalogItem) => {
-        console.log(data);
         this.result.emit(data);
         this.showfilter = false;
       });
@@ -185,6 +185,6 @@ export class StatisticsBookComponent extends URLLoader implements OnInit {
           this.loadDepartments();
         }); */
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 }

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -13,9 +13,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-edit-member',
-  templateUrl: './edit-member.component.html',
-  styleUrls: ['./edit-member.component.css'],
+    selector: 'app-edit-member',
+    templateUrl: './edit-member.component.html',
+    styleUrls: ['./edit-member.component.css'],
+    standalone: false
 })
 export class EditMemberComponent  implements OnInit {
  /*  model: Member = new Member(0, '', '', '', '', '', '', '', '',new Date(),'','');
@@ -52,7 +53,6 @@ export class EditMemberComponent  implements OnInit {
     this.httpService.getAll(CONFIG.URL_BASE + '/i18n/member/' + lang).subscribe(
       (data) => {
         this.memberI18n = data;
-        console.log(this.memberI18n);
         //document.getElementById('table').DataTable().ajax.reload();
       },
       (err: HttpErrorResponse) => {
@@ -62,12 +62,10 @@ export class EditMemberComponent  implements OnInit {
   }
 
   ngOnChanges(changes: any) {
-    console.log('jkv');
     this.httpService
       .get(CONFIG.URL_BASE + '/member/' + this.id)
       .subscribe((data: Member) => {
         this.model = data;
-        console.log(this.model);
       });
   }
 
@@ -91,12 +89,12 @@ export class EditMemberComponent  implements OnInit {
       });
   } */
 
-      memberForm: FormGroup;
+      memberForm: UntypedFormGroup;
       member: Member;
     
       constructor(
         private toastr: ToastrService,
-        private fb: FormBuilder,
+        private fb: UntypedFormBuilder,
         private route: ActivatedRoute,
         private memberService: HTTPService,
         private router: Router,
@@ -150,7 +148,6 @@ export class EditMemberComponent  implements OnInit {
       onSubmit() {
         //if (this.memberForm.valid) {
           const member = this.buildMemberObject();
-          console.log(member)
           // Submit the member object via service
           this.memberService.create(CONFIG.URL_BASE+'/member/create',member).then(() => {
             this.toastr.success('Item edited successfully!', 'Success');

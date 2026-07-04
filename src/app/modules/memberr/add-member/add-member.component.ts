@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Optional, Output } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import MemberMessage from 'src/app/main/messages/MemberMessage';
@@ -12,12 +12,13 @@ import CONFIG from 'src/app/main/urls/urls';
 import MemberValidation from 'src/app/main/validations/MemberValidation';
 
 @Component({
-  selector: 'app-add-member',
-  templateUrl: './add-member.component.html',
-  styleUrls: ['./add-member.component.css'],
+    selector: 'app-add-member',
+    templateUrl: './add-member.component.html',
+    styleUrls: ['./add-member.component.css'],
+    standalone: false
 })
 export class AddMemberComponent extends URLLoader implements OnInit {
-  memberForm: FormGroup;
+  memberForm: UntypedFormGroup;
   msg: MemberMessage;
   submitted = false;
   @Output() closeModalEvent = new EventEmitter<string>();
@@ -25,6 +26,9 @@ export class AddMemberComponent extends URLLoader implements OnInit {
 
   closeModal() {
     this.closeModalEvent.emit();
+    if (this.activeModal) {
+      this.activeModal.dismiss();
+    }
   }
 
   goBack() {
@@ -64,7 +68,6 @@ export class AddMemberComponent extends URLLoader implements OnInit {
     this.httpService.getAll(CONFIG.URL_BASE + '/i18n/member/' + lang).subscribe(
       (data) => {
         this.memberI18n = data;
-        console.log(this.memberI18n);
         //document.getElementById('table').DataTable().ajax.reload();
       },
       (err: HttpErrorResponse) => {
@@ -100,10 +103,11 @@ export class AddMemberComponent extends URLLoader implements OnInit {
   genderOptions= [];  // Dropdown options for gender
   contactMethodOptions= [];  // Dropdown options for contact methods
 
-  constructor(private toastr: ToastrService,private fb: FormBuilder, private tooltipConfig: NgbTooltipConfig,private validation: MemberValidation,
+  constructor(private toastr: ToastrService,private fb: UntypedFormBuilder, private tooltipConfig: NgbTooltipConfig,private validation: MemberValidation,
     private message: MemberMessage,
     private router: Router,
-    private httpService: HTTPService) {
+    private httpService: HTTPService,
+    @Optional() private activeModal: NgbActiveModal) {
       super()
     // Configure tooltips globally
     tooltipConfig.placement = 'right';
@@ -152,18 +156,18 @@ export class AddMemberComponent extends URLLoader implements OnInit {
 
   onSubmit(): void {
     const formData = this.memberForm.value; // Get the form data
-      console.log('Form Submitted', formData);
     //if (this.memberForm.valid) {
       const formDataa = this.memberForm.value; // Get the form data
-      console.log('Form Submitted', formData);
       this.add()
       // You can send the form data to the server or handle it accordingly here
     //} else {
-    //  console.log('Form is invalid');
+    //
     //}
   }
 
-  onCancel(){}
+  onCancel(){
+    this.closeModal();
+  }
 
   // Optionally, you can add a method to reset the form
   resetForm(): void {

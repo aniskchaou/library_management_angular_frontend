@@ -6,9 +6,10 @@ import { Vendor } from 'src/app/main/models/Vendor';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
 @Component({
-  selector: 'app-basket-modal',
-  templateUrl: './basket-modal.component.html',
-  styleUrls: ['./basket-modal.component.css']
+    selector: 'app-basket-modal',
+    templateUrl: './basket-modal.component.html',
+    styleUrls: ['./basket-modal.component.css'],
+    standalone: false
 })
 export class BasketModalComponent implements OnInit {
 
@@ -24,14 +25,12 @@ export class BasketModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.basket);
     this.loadVendors();
   }
 
   onSaveClick(): void {
     if(this.validateBasketForm(this.basket)){
       this.basket.vendor=this.vendors.find(item=>item.id===this.basket.vendor.id)
-   console.log(this.basket)
       this.basketService.createBasket(this.basket).subscribe((newBasket) => {
         this.activeModal.close(newBasket);
         this.toastr.success('Item added successfully!', 'Success');

@@ -1,3 +1,255 @@
-.card{
-    margin: 10px;
+:host {
+  display: block;
+}
+
+.ll-dashboard {
+  padding: 24px 28px 48px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.ll-dashboard__loading {
+  display: flex;
+  justify-content: center;
+  padding: 80px 0;
+}
+
+.ll-dashboard__header {
+  margin: 8px 0 20px;
+}
+
+.ll-dashboard__header h1,
+.ll-dashboard__header h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 6px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.ll-dashboard__header h1 { font-size: 26px; }
+.ll-dashboard__header h2 { font-size: 22px; }
+
+.ll-dashboard__header mat-icon {
+  color: #3f51b5;
+  font-size: 28px;
+  height: 28px;
+  width: 28px;
+}
+
+.ll-dashboard__header--sub {
+  margin-top: 32px;
+}
+
+.ll-dashboard__lede {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 900px;
+}
+
+/* KPI grid */
+.ll-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 20px 0 24px;
+}
+
+.ll-kpi {
+  position: relative;
+  overflow: hidden;
+  padding: 18px 20px !important;
+  border-left: 4px solid #3f51b5;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ll-kpi:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.ll-kpi--primary { border-left-color: #3f51b5; }
+.ll-kpi--success { border-left-color: #2e7d32; }
+.ll-kpi--info    { border-left-color: #0288d1; }
+.ll-kpi--warning { border-left-color: #ed6c02; }
+
+.ll-kpi__body {
+  position: relative;
+  z-index: 1;
+}
+
+.ll-kpi__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 8px;
+}
+
+.ll-kpi--primary .ll-kpi__label { color: #3f51b5; }
+.ll-kpi--success .ll-kpi__label { color: #2e7d32; }
+.ll-kpi--info    .ll-kpi__label { color: #0288d1; }
+.ll-kpi--warning .ll-kpi__label { color: #ed6c02; }
+
+.ll-kpi__label mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+.ll-kpi__value {
+  font-size: 30px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.87);
+  line-height: 1.1;
+}
+
+.ll-kpi__bg {
+  position: absolute;
+  right: 8px;
+  bottom: -8px;
+  font-size: 80px;
+  height: 80px;
+  width: 80px;
+  color: rgba(0, 0, 0, 0.06);
+  z-index: 0;
+}
+
+/* Charts grid */
+.ll-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ll-chart {
+  display: flex;
+  flex-direction: column;
+}
+
+.ll-chart mat-card-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Insight panel */
+.ll-insight {
+  padding: 0 !important;
+  margin-bottom: 32px;
+}
+
+.ll-insight__list {
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.ll-insight__empty {
+  padding: 32px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.5);
+  font-style: italic;
+}
+
+.ll-tab__icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* Compact spacing on small screens */
+@media (max-width: 720px) {
+  .ll-dashboard { padding: 16px; }
+  .ll-kpi__value { font-size: 24px; }
+  .ll-kpi__bg { font-size: 64px; height: 64px; width: 64px; }
+}
+
+/* Settings bar */
+.ll-dash-settings-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 12px;
+}
+.ll-dash-settings-btn {
+  gap: 6px;
+  font-size: 13px;
+}
+
+/* Settings panel */
+.ll-settings-panel {
+  margin-bottom: 20px;
+}
+.ll-settings-panel mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+.ll-settings-panel__body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding-top: 8px !important;
+}
+.ll-settings-check {
+  min-width: 200px;
+}
+
+/* Drag handle inside chart cards */
+.ll-drag-handle {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  cursor: grab;
+  color: rgba(0, 0, 0, 0.3);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  transition: color 0.15s, background 0.15s;
+}
+.ll-drag-handle:hover {
+  color: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.05);
+}
+.ll-drag-handle:active {
+  cursor: grabbing;
+}
+
+/* Keep cards relatively positioned for the handle */
+.ll-chart {
+  position: relative;
+}
+
+/* CDK drag-drop preview and placeholder */
+.cdk-drag-preview {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  opacity: 0.9;
+  border-radius: 8px;
+}
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.ll-chart-placeholder {
+  background: rgba(63, 81, 181, 0.06);
+  border: 2px dashed #3f51b5;
+  border-radius: 8px;
+  min-height: 200px;
+}
+.ll-charts.cdk-drop-list-dragging .ll-chart:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

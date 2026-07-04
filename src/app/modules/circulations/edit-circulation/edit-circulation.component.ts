@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, Optional } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import CategoryMessage from 'src/app/main/messages/CategoryMessage';
 import CatalogItem from 'src/app/main/models/Book';
@@ -11,9 +12,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-edit-circulation',
-  templateUrl: './edit-circulation.component.html',
-  styleUrls: ['./edit-circulation.component.css'],
+    selector: 'app-edit-circulation',
+    templateUrl: './edit-circulation.component.html',
+    styleUrls: ['./edit-circulation.component.css'],
+    standalone: false
 })
 export class EditCirculationComponent extends URLLoader implements OnInit {
   model: Circulation;
@@ -23,16 +25,18 @@ export class EditCirculationComponent extends URLLoader implements OnInit {
   writers$: CatalogItem[];
   returnStatus$: CirculationStatus[];
   bookNames$: CatalogItem[];
-  circulationI18n: Object;
+  circulationI18n: any;
 
   closeModal() {
     this.closeModalEvent.emit();
+    if (this.activeModal) { this.activeModal.dismiss(); }
   }
 
   constructor(
     private httpService: HTTPService,
     private message: CategoryMessage,
-    private router: Router
+    private router: Router,
+    @Optional() private activeModal: NgbActiveModal
   ) {
     super();
   }
@@ -42,7 +46,6 @@ export class EditCirculationComponent extends URLLoader implements OnInit {
   }
 
   getCirculation() {
-    console.log(this.id);
     if (this.id) {
       this.httpService
         .get(CONFIG.URL_BASE + '/circulation/' + this.id)

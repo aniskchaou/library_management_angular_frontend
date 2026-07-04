@@ -1,657 +1,336 @@
-<ul
-  class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-  id="accordionSidebar"
->
-  <a
-    class="sidebar-brand d-flex align-items-center justify-content-center"
-    style="background-color: white"
-  >
-    <div class="sidebar-brand-icon rotate-n-15"></div>
-    <div class="sidebar-brand-text mx-3">
-      <img style="object-fit: cover" [src]="retrievedImage" />
-    </div>
+<!-- Material sidenav contents -->
+<div class="ll-nav">
+
+  <!-- Brand -->
+  <a class="ll-nav__brand" routerLink="/dashboard">
+    <img [src]="retrievedImage" alt="Library Lab" />
   </a>
 
-  <!-- Divider -->
-  <hr class="sidebar-divider my-0" />
+  <mat-divider></mat-divider>
 
-  <!-- Nav Item - Dashboard -->
-  <li class="nav-item active">
-    <a routerLinkActive="active" class="nav-link" routerLink="/dashboard">
-      <i class="fas fa-fw fa-tachometer-alt"></i>
-      <span>{{ menuI18n?.dashboardI18n }}</span></a
-    >
-  </li>
-
-  <!-- Divider -->
-  <hr class="sidebar-divider" />
-
-  <!-- Heading 
-  <div class="sidebar-heading">Interface</div>-->
-
-  <!-- Nav Item - Pages Collapse Menu -->
-  <li class="nav-item">
-    <a
-      class="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#collapseTwo"
-      aria-expanded="true"
-      aria-controls="collapseTwo"
-    >
-      <i class="fas fa-fw fa-book"></i>
-      <span>{{ "Catalogs" }} 
-      </span>
+  <!-- Top-level items -->
+  <mat-nav-list class="ll-nav__list">
+    <a mat-list-item routerLink="/dashboard" routerLinkActive="ll-nav__item--active">
+      <mat-icon matListIcon>dashboard</mat-icon>
+      <span>{{ 'nav.dashboard' | translate }}</span>
     </a>
-    <div
-      id="collapseTwo"
-      class="collapse"
-      aria-labelledby="headingTwo"
-      data-parent="#accordionSidebar"
-    >
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">{{ "Catalogs" }} :</h6>
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/category"
-          >{{ menuI18n?.categoriesI18n }}</a
-        >
-        <a routerLinkActive="active" class="collapse-item" routerLink="/book">{{
-          "Catalogs Items"
-        }}<span class="badge badge-pill badge-danger small-radius ml-2">{{ dashboardAnalytics?.bookNumber }}</span></a>
-        <h6 class="collapse-header">{{ "Catalog Mangement" }} :</h6>
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/archived-books"
-          >{{ menuI18n?.archivedBookI18n }}</a
-        >
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/destroyed-books"
-          >{{ menuI18n?.destroyedBookI18n }}</a
-        >
-        <!-- <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/requested-book"
-          >{{ menuI18n?.requesredBooksI18n }}</a
-        > -->
-        
-        <h6 class="collapse-header">3D Library</h6>
-        <a routerLinkActive="active" class="collapse-item" routerLink="/shelf-viewer"
-          >Shelf Viewer</a>
-        <h6 class="collapse-header">Setup :</h6>
-       
-          <a routerLinkActive="active" class="collapse-item" routerLink="/publisher"
-          >Publishers</a>
-          <a routerLinkActive="active" class="collapse-item" routerLink="/writer"
-          >Authors</a>
-          <a routerLinkActive="active" class="collapse-item" routerLink="/item-types"
-          >Item Types</a>
-      </div>
-    </div>
-  </li>
+  </mat-nav-list>
 
-  <!-- Nav Item - Utilities Collapse Menu -->
-  <li class="nav-item">
-    <a
-      class="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#membreUtilities"
-      aria-expanded="true"
-      aria-controls="membreUtilities"
-    >
-      <i class="fas fa-fw fa-users"></i>
-      <span>{{ menuI18n?.membersI18n }}</span>
+  <mat-nav-list class="ll-nav__list">
+    <h6 class="ll-nav__heading">Public Portal:</h6>
+    <a mat-list-item routerLink="/opac-home" routerLinkActive="ll-nav__item--active">
+      <mat-icon matListIcon>public</mat-icon>
+      <span>Frontoffice Home</span>
     </a>
-    <div
-      id="membreUtilities"
-      class="collapse"
-      aria-labelledby="headingUtilities"
-      data-parent="#accordionSidebar"
-    >
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">{{ menuI18n?.membersI18n }}</h6>
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/type-member"
-          >{{ menuI18n?.typeMembersI18n }}</a
-        >
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/member"
-          >{{ menuI18n?.membersI18n }}<span class="badge badge-pill badge-danger small-radius ml-2">{{ dashboardAnalytics?.memberNumber }}</span></a
-        >
-        <!-- <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/booking-settings"
-          >Booking Settings</a
-        > -->
-      </div>
-    </div>
-  </li>
-  <hr class="sidebar-divider" />
-  <li class="nav-item">
-    <a
-      class="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#circulation"
-      aria-expanded="true"
-      aria-controls="circulation"
-    >
-    <i class="fas fa-fw fa-clipboard"></i>
-      <span>{{ menuI18n?.circulationsMenuI18n }}</span>
+    <a mat-list-item routerLink="/opac" routerLinkActive="ll-nav__item--active">
+      <mat-icon matListIcon>search</mat-icon>
+      <span>{{ 'nav.opac' | translate }}</span>
     </a>
-    <div
-      id="circulation"
-      class="collapse"
-      aria-labelledby="headingUtilities"
-      data-parent="#accordionSidebar"
-    >
-      <div class="bg-white py-2 collapse-inner rounded">
-       <!--  <h6 class="collapse-header">Actions</h6> -->
-      <!--   <a
-        routerLinkActive="active"
-        class="collapse-item"
-        routerLink="/check-in"
-        >Check-In
-      </a> -->
-     <!--  <a
-      routerLinkActive="active"
-      class="collapse-item"
-      routerLink="/check-out"
-      >Check-Out
-    </a> -->
-   <!--  <a
-    routerLinkActive="active"
-    class="collapse-item"
-    routerLink="/renew"
-    >Renew
-  </a> -->
+    <a mat-list-item routerLink="/opac-account" routerLinkActive="ll-nav__item--active">
+      <mat-icon matListIcon>manage_accounts</mat-icon>
+      <span>Reader Account</span>
+    </a>
+  </mat-nav-list>
 
+  <mat-divider></mat-divider>
 
-        <h6 class="collapse-header">{{ menuI18n?.circulationsMenuI18n }}</h6>
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/circulation"
-          >{{ menuI18n?.circulationsI18n }}
+  <!-- Collapsible groups -->
+  <mat-accordion class="ll-nav__accordion" multi displayMode="flat">
+
+    <!-- Catalogs -->
+    <mat-expansion-panel class="ll-nav__panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>menu_book</mat-icon>
+          <span>{{ 'nav.catalogs' | translate }}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-nav-list dense>
+        <h6 class="ll-nav__heading">{{ 'nav.catalogs' | translate }}:</h6>
+        <a mat-list-item routerLink="/category" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.categories' | translate }}
         </a>
-      <!--   <a
-        routerLinkActive="active"
-        class="collapse-item"
-        routerLink="/hold"
-        >Holds
-      </a> -->
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/circulation-calendar"
-          >{{ menuI18n?.calendarI18n }}</a
-        >
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/circulation-status"
-          >{{ menuI18n?.circulationStatusI18n }}</a
-        >
-        <!-- <h6 class="collapse-header">Settings</h6>
-        <a
-    routerLinkActive="active"
-    class="collapse-item"
-    routerLink="/circulation-rules"
-    >circulation  rules
-  </a> -->
-      </div>
-    </div>
-  </li>
+        <a mat-list-item routerLink="/book" routerLinkActive="ll-nav__item--active">
+          <span>{{ 'nav.catalogItems' | translate }}</span>
+          @if (dashboardAnalytics?.bookNumber) {
+            <span class="ll-nav__badge">{{ dashboardAnalytics?.bookNumber }}</span>
+          }
+        </a>
 
-  <li class="nav-item">
-    <a
-      class="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#overdues"
-      aria-expanded="true"
-      aria-controls="overdues"
-    >
-    <i class="fas fa-fw fa-clock"></i>
-      <span>Overdues</span>
+        <h6 class="ll-nav__heading">{{ 'nav.catalogManagement' | translate }}:</h6>
+        <a mat-list-item routerLink="/cataloging" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.cataloging' | translate }}
+        </a>
+        <a mat-list-item routerLink="/archived-books" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.archivedBooks' | translate }}
+        </a>
+        <a mat-list-item routerLink="/destroyed-books" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.destroyedBooks' | translate }}
+        </a>
+
+        <h6 class="ll-nav__heading">{{ 'nav.shelfViewer' | translate }}</h6>
+        <a mat-list-item routerLink="/shelf-viewer" routerLinkActive="ll-nav__item--active">{{ 'nav.shelfViewer' | translate }}</a>
+
+        <h6 class="ll-nav__heading">{{ 'nav.digitalLibrary' | translate }}:</h6>
+        <a mat-list-item routerLink="/digital-docs" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.digitalDocuments' | translate }}
+        </a>
+
+        <h6 class="ll-nav__heading">{{ 'nav.setup' | translate }}:</h6>
+        <a mat-list-item routerLink="/publisher" routerLinkActive="ll-nav__item--active">{{ 'nav.publishers' | translate }}</a>
+        <a mat-list-item routerLink="/writer" routerLinkActive="ll-nav__item--active">{{ 'nav.authors' | translate }}</a>
+        <a mat-list-item routerLink="/item-types" routerLinkActive="ll-nav__item--active">{{ 'nav.itemTypes' | translate }}</a>
+      </mat-nav-list>
+    </mat-expansion-panel>
+
+    <!-- Members -->
+    <mat-expansion-panel class="ll-nav__panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>group</mat-icon>
+          <span>{{ 'nav.members' | translate }}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-nav-list dense>
+        <h6 class="ll-nav__heading">{{ 'nav.members' | translate }}</h6>
+        <a mat-list-item routerLink="/type-member" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.memberTypes' | translate }}
+        </a>
+        <a mat-list-item routerLink="/member" routerLinkActive="ll-nav__item--active">
+          <span>{{ 'nav.members' | translate }}</span>
+          @if (dashboardAnalytics?.memberNumber) {
+            <span class="ll-nav__badge">{{ dashboardAnalytics?.memberNumber }}</span>
+          }
+        </a>
+      </mat-nav-list>
+    </mat-expansion-panel>
+
+    <!-- Circulations -->
+    <mat-expansion-panel class="ll-nav__panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>swap_horiz</mat-icon>
+          <span>{{ 'nav.circulations' | translate }}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-nav-list dense>
+        <h6 class="ll-nav__heading">{{ 'nav.circulations' | translate }}</h6>
+        <a mat-list-item routerLink="/circulation" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.circulations' | translate }}
+        </a>
+        <a mat-list-item routerLink="/circulation-calendar" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.calendar' | translate }}
+        </a>
+        <a mat-list-item routerLink="/circulation-status" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.circulationStatus' | translate }}
+        </a>
+        <a mat-list-item routerLink="/returnedbook" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.returnedBooks' | translate }}
+        </a>
+        <h6 class="ll-nav__heading">{{ 'nav.overdues' | translate }}:</h6>
+        <a mat-list-item routerLink="/overdue" routerLinkActive="ll-nav__item--active">{{ 'nav.overdues' | translate }}</a>
+        <a mat-list-item routerLink="/overdue-fines" routerLinkActive="ll-nav__item--active">{{ 'nav.overdueFines' | translate }}</a>
+      </mat-nav-list>
+    </mat-expansion-panel>
+
+    <!-- Acquisitions -->
+    <mat-expansion-panel class="ll-nav__panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>shopping_cart</mat-icon>
+          <span>{{ 'nav.acquisitions' | translate }}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-nav-list dense>
+        <h6 class="ll-nav__heading">{{ 'nav.account' | translate }}:</h6>
+        <a mat-list-item routerLink="/vendor" routerLinkActive="ll-nav__item--active">{{ 'nav.vendors' | translate }}</a>
+        <a mat-list-item routerLink="/basket" routerLinkActive="ll-nav__item--active">{{ 'nav.baskets' | translate }}</a>
+        <a mat-list-item routerLink="/contract" routerLinkActive="ll-nav__item--active">{{ 'nav.contracts' | translate }}</a>
+        <a mat-list-item routerLink="/order" routerLinkActive="ll-nav__item--active">{{ 'nav.orders' | translate }}</a>
+        <a mat-list-item routerLink="/purchase-suggestion" routerLinkActive="ll-nav__item--active">{{ 'nav.purchaseSuggestion' | translate }}</a>
+        <a mat-list-item routerLink="/invoice" routerLinkActive="ll-nav__item--active">{{ 'nav.invoices' | translate }}</a>
+      </mat-nav-list>
+    </mat-expansion-panel>
+
+    <!-- Accounting -->
+    <mat-expansion-panel class="ll-nav__panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>calculate</mat-icon>
+          <span>{{ 'nav.accounting' | translate }}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-nav-list dense>
+        <a mat-list-item routerLink="/budget" routerLinkActive="ll-nav__item--active">{{ 'nav.budgets' | translate }}</a>
+        <a mat-list-item routerLink="/fund" routerLinkActive="ll-nav__item--active">{{ 'nav.funds' | translate }}</a>
+      </mat-nav-list>
+    </mat-expansion-panel>
+
+    <!-- Notices -->
+    <mat-expansion-panel class="ll-nav__panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>mail_outline</mat-icon>
+          <span>{{ 'nav.notices' | translate }}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-nav-list dense>
+        <a mat-list-item routerLink="/notice" routerLinkActive="ll-nav__item--active">{{ 'nav.notices' | translate }}</a>
+        <a mat-list-item routerLink="/notice-template" routerLinkActive="ll-nav__item--active">{{ 'nav.noticeTemplates' | translate }}</a>
+      </mat-nav-list>
+    </mat-expansion-panel>
+
+    <!-- Identifications -->
+    <mat-expansion-panel class="ll-nav__panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>fingerprint</mat-icon>
+          <span>{{ 'nav.identifications' | translate }}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-nav-list dense>
+        <a mat-list-item routerLink="/bar-code" routerLinkActive="ll-nav__item--active">{{ 'nav.barCodes' | translate }}</a>
+        <a mat-list-item routerLink="/qr-code" routerLinkActive="ll-nav__item--active">{{ 'nav.qrCodes' | translate }}</a>
+      </mat-nav-list>
+    </mat-expansion-panel>
+
+    <!-- Setup -->
+    <mat-expansion-panel class="ll-nav__panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>build</mat-icon>
+          <span>{{ 'nav.setup' | translate }}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-nav-list dense>
+        <h6 class="ll-nav__heading">{{ 'nav.location' | translate }}:</h6>
+        <a mat-list-item routerLink="/department" routerLinkActive="ll-nav__item--active">{{ 'nav.departments' | translate }}</a>
+        <a mat-list-item routerLink="/shelf" routerLinkActive="ll-nav__item--active">{{ 'nav.shelves' | translate }}</a>
+        <a mat-list-item routerLink="/row" routerLinkActive="ll-nav__item--active">{{ 'nav.rows' | translate }}</a>
+
+        <h6 class="ll-nav__heading">{{ 'nav.bookAttribute' | translate }}:</h6>
+        <a mat-list-item routerLink="/physical-description" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.physicalDescriptions' | translate }}
+        </a>
+      </mat-nav-list>
+    </mat-expansion-panel>
+
+    <!-- Reports -->
+    <mat-expansion-panel class="ll-nav__panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>assessment</mat-icon>
+          <span>{{ 'nav.reports' | translate }}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-nav-list dense>
+        <h6 class="ll-nav__heading">{{ 'nav.reports' | translate }}:</h6>
+        <a mat-list-item routerLink="/book-report" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.bookReport' | translate }}
+        </a>
+        <a mat-list-item routerLink="/member-report" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.memberReport' | translate }}
+        </a>
+        <a mat-list-item routerLink="/circulation-report" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.circulationReport' | translate }}
+        </a>
+        <h6 class="ll-nav__heading">{{ 'nav.statistics' | translate }}:</h6>
+        <a mat-list-item routerLink="/borrowing-statistics" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.borrowingStatistics' | translate }}
+        </a>
+      </mat-nav-list>
+    </mat-expansion-panel>
+
+    <!-- Analytics -->
+    <mat-expansion-panel class="ll-nav__panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>insights</mat-icon>
+          <span>{{ 'nav.analytics' | translate }}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-nav-list dense>
+        <h6 class="ll-nav__heading">{{ 'nav.analytics' | translate }}:</h6>
+        <a mat-list-item routerLink="/bookanalytics" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.bookAnalytics' | translate }}
+        </a>
+        <a mat-list-item routerLink="/account-analytics" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.accountAnalytics' | translate }}
+        </a>
+      </mat-nav-list>
+    </mat-expansion-panel>
+
+    <!-- Settings -->
+    <mat-expansion-panel class="ll-nav__panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>settings</mat-icon>
+          <span>{{ 'nav.settings' | translate }}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-nav-list dense>
+        <h6 class="ll-nav__heading">{{ 'nav.systemAdministration' | translate }}</h6>
+        <a mat-list-item routerLink="/settings" routerLinkActive="ll-nav__item--active"
+           [routerLinkActiveOptions]="{exact: true}">
+          {{ 'nav.generalSettings' | translate }}
+        </a>
+        <a mat-list-item routerLink="/settings" [queryParams]="{tab:'user'}" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.userSettings' | translate }}
+        </a>
+        <a mat-list-item routerLink="/settings" [queryParams]="{tab:'display'}" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.interfaceDisplay' | translate }}
+        </a>
+        <a mat-list-item routerLink="/emailsettings" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.emailNotifications' | translate }}
+        </a>
+        <a mat-list-item routerLink="/smssettings" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.smsSettings' | translate }}
+        </a>
+        <a mat-list-item routerLink="/circulation-rules" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.circulationRules' | translate }}
+        </a>
+        <a mat-list-item routerLink="/booking-settings" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.bookingSettings' | translate }}
+        </a>
+        <a mat-list-item routerLink="/settings" [queryParams]="{tab:'database'}" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.databaseSettings' | translate }}
+        </a>
+        <h6 class="ll-nav__heading">{{ 'nav.integrations' | translate }}</h6>
+        <a mat-list-item routerLink="/settings" [queryParams]="{tab:'integrations'}" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.deviceIntegrations' | translate }}
+        </a>
+        <a mat-list-item routerLink="/settings" [queryParams]="{tab:'payment'}" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.paymentPaypal' | translate }}
+        </a>
+        <a mat-list-item routerLink="/settings" [queryParams]="{tab:'ai'}" routerLinkActive="ll-nav__item--active">
+          {{ 'nav.aiOpenai' | translate }}
+        </a>
+      </mat-nav-list>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+
+  <mat-divider></mat-divider>
+
+  <!-- Help -->
+  <mat-nav-list class="ll-nav__list">
+    <a mat-list-item routerLink="/help" routerLinkActive="ll-nav__item--active">
+      <mat-icon matListIcon>support_agent</mat-icon>
+      <span>{{ 'nav.help' | translate }}</span>
     </a>
-    <div
-      id="overdues"
-      class="collapse"
-      aria-labelledby="headingUtilities"
-      data-parent="#accordionSidebar"
-    >
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">{{ menuI18n?.account18n }}:</h6>
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/overdue"
-          >Overdues</a>
-      </div>
-    </div>
-  </li>
+  </mat-nav-list>
 
-  <li class="nav-item">
-    <a
-      class="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#acquisitionsUtilities"
-      aria-expanded="true"
-      aria-controls="acquisitionsUtilities"
-    >
-    <i class="fas fa-fw fa-shopping-cart"></i>
-      <span>Acquisitions</span>
-    </a>
-    <div
-      id="acquisitionsUtilities"
-      class="collapse"
-      aria-labelledby="headingUtilities"
-      data-parent="#accordionSidebar"
-    >
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">{{ menuI18n?.account18n }}:</h6>
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/vendor"
-          >Vendors</a
-        >
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/basket"
-          >Baskets</a
-        >
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/contract"
-          >Contracts</a
-        >
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/order"
-          >Orders</a
-        >
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/purshase-suggestion"
-          >Purchase suggestion</a
-        >
-        <a
-      routerLinkActive="active"
-      class="collapse-item"
-      routerLink="/invoice"
-      >Invoices</a>
-      </div>
-      
-  </div>
-  </li>
-
-   <li class="nav-item">
-    <a
-      class="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#accounting"
-      aria-expanded="true"
-      aria-controls="accounting"
-    >
-    <i class="fas fa-fw fa-calculator"></i>
-
-      <span>Accounting</span>
-    </a>
-    <div
-      id="accounting"
-      class="collapse"
-      aria-labelledby="headingUtilities"
-      data-parent="#accordionSidebar"
-    >
-      <div class="bg-white py-2 collapse-inner rounded">
-      
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/budget"
-          >Budgets</a
-        >
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/fund"
-          >Funds</a
-        >
-      </div>
-    </div>
-  </li> 
-
-  <li class="nav-item">
-    <!-- <a
-      class="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#Ebookss"
-      aria-expanded="true"
-      aria-controls="Ebookss"
-    >
-      <i class="fas fa-fw fa-bell"></i>
-      <span>Ebooks</span>
-    </a> -->
-    <div
-      id="Ebookss"
-      class="collapse"
-      aria-labelledby="headingUtilities"
-      data-parent="#accordionSidebar"
-    >
-      <div class="bg-white py-2 collapse-inner rounded">
-      
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/ebook"
-          >Ebooks</a
-        >
-      </div>
-    </div>
-  </li> 
-
-  <li class="nav-item">
-    <a
-      class="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#notice"
-      aria-expanded="true"
-      aria-controls="notice"
-    >
-    <i class="fas fa-fw fa-envelope"></i>
-
-      <span>Notices</span>
-    </a>
-    <div
-      id="notice"
-      class="collapse"
-      aria-labelledby="headingUtilities"
-      data-parent="#accordionSidebar"
-    >
-      <div class="bg-white py-2 collapse-inner rounded">
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/notice"
-          >Notices</a
-        >
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/notice-template"
-          >Notice Templates</a
-        >
-      </div>
-    </div>
-  </li>
-
-  <hr class="sidebar-divider" />
-
-  <li class="nav-item">
-    <a
-      class="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#identifications"
-      aria-expanded="true"
-      aria-controls="identifications"
-    >
-    <i class="fas fa-fw fa-fingerprint"></i>
-
-      <span>Identifications</span>
-    </a>
-    <div
-      id="identifications"
-      class="collapse"
-      aria-labelledby="headingUtilities"
-      data-parent="#accordionSidebar"
-    >
-      <div class="bg-white py-2 collapse-inner rounded">
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/bar-code"
-          >Bar Codes</a
-        >
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/qr-code"
-          >QR Codes</a
-        >
-      </div>
-    </div>
-  </li>
-  
-  <!-- <li class="nav-item">
-    <a routerLinkActive="active" class="nav-link" routerLink="/advanced-search">
-      <i class="fas fa-fw fa-glasses"></i>
-      <span>Advanced search</span>
-    </a>
-  </li> -->
-
-  <!-- <li class="nav-item">
-    <a routerLinkActive="active" class="nav-link" routerLink="/bulk-actions">
-      <i class="fas fa-fw fa-glasses"></i>
-      <span>Bulk Actions</span>
-    </a>
-  </li> -->
-<!--   <li class="nav-item">
-    <a routerLinkActive="active" class="nav-link" href="#" routerLink="/writer">
-      <i class="fas fa-fw fa-address-book"></i>
-      <span>{{ menuI18n?.weitersI18n }}</span>
-    </a>
-  </li>
-
--->
- <!--  <li class="nav-item">
-    <a routerLinkActive="active" class="nav-link" routerLink="/publisher">
-      <i class="fas fa-fw fa-glasses"></i>
-      <span>{{ menuI18n?.publishersI18n }}</span>
-    </a>
-  </li> -->
-  <li class="nav-item">
-    <a
-      class="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#memberUtilities"
-      aria-expanded="true"
-      aria-controls="memberUtilities"
-    >
-    <i class="fas fa-fw fa-tools"></i>
-
-      <span>Setup</span>
-    </a>
-    <div
-      id="memberUtilities"
-      class="collapse"
-      aria-labelledby="headingUtilities"
-      data-parent="#accordionSidebar"
-    >
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Location:</h6>
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/departement"
-          >Departements</a
-        >
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/shelf"
-          >Shelves</a
-        >
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/row"
-          >Rows</a
-        >
-        <h6 class="collapse-header">Book Attribute:</h6>
-        <a
-        routerLinkActive="active"
-        class="collapse-item"
-        routerLink="/physical-description"
-        >Physical Descriptions</a
-      >
-      <!-- <a routerLinkActive="active" class="collapse-item" routerLink="/tags"
-      >Tags</a> -->
-        
-      </div>
-    </div>
-  </li> 
-
-  <li class="nav-item">
-    <a
-      class="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#rapportUtilities"
-      aria-expanded="true"
-      aria-controls="rapportUtilities"
-    >
-      <i class="fas fa-fw fa-comment-dollar"></i>
-      <span>{{ menuI18n?.reportI18n }}</span>
-    </a>
-    <div
-      id="rapportUtilities"
-      class="collapse"
-      aria-labelledby="headingUtilities"
-      data-parent="#accordionSidebar"
-    >
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">{{ menuI18n?.reportI18n }}:</h6>
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/book-report"
-          >{{ menuI18n?.bookReportI18n }}</a
-        >
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/member-report"
-          >{{ menuI18n?.memberReportI18n }}</a
-        >
-        <!-- <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/circulation-report"
-          >{{ menuI18n?.circulationReportI18n }}</a
-        >-->
-      </div>
-    </div>
-  </li>
-
-  <li class="nav-item">
-    <a
-      class="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#analyticsUtilities"
-      aria-expanded="true"
-      aria-controls="analyticsUtilities"
-    >
-    <i class="fas fa-fw fa-signal"></i>
-      <span>{{ menuI18n?.analyticsI18n }}</span>
-    </a>
-    <div
-      id="analyticsUtilities"
-      class="collapse"
-      aria-labelledby="headingUtilities"
-      data-parent="#accordionSidebar"
-    >
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">{{ menuI18n?.analyticsI18n }}:</h6>
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/bookanalytics"
-          >{{ menuI18n?.bookAnalayticsI18n }}</a
-        >
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/account-analytics"
-          >{{ menuI18n?.accountAnalyticsI18n }}</a
-        >
-      </div>
-    </div>
-  </li>
-
-  <hr class="sidebar-divider" />
-  <li  class="nav-item active">
-    <!-- <a routerLinkActive="active" class="nav-link" routerLink="/dashboard"> -->
-      <a
-      routerLinkActive="active" 
-      class="nav-link"
-          routerLink="/help"
-          ><i class="fas fa-fw fa-headset"></i><span>Help</span> </a>
-  </li>
-  <li class="nav-item">
-    <a
-      class="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#settingsMenu"
-      aria-expanded="true"
-      aria-controls="settingsMenu"
-    >
-    <i class="fas fa-fw fa-sliders-h"></i>
-
-      <span>{{ menuI18n?.settingsI18n }}</span>
-    </a>
-    <div
-      id="settingsMenu"
-      class="collapse"
-      aria-labelledby="headingUtilities"
-      data-parent="#accordionSidebar"
-    >
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">{{ menuI18n?.accountI18n }}</h6>
-        <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/settings"
-          >{{ menuI18n?.generalSettingsI18n }}</a
-        >
-      <!--   <a
-          routerLinkActive="active"
-          class="collapse-item"
-          routerLink="/emailsettings"
-          >{{ menuI18n?.emailSettingsI18n }}</a
-        > -->
-      </div>
-    </div>
-  </li>
-  <hr class="sidebar-divider" /> 
-  <li class="nav-item" style="text-align: center; color: white;font-size: small;">
-    v{{version}}
-  </li>  
-  <div class="text-center d-none d-md-inline">
-    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+  <!-- Version footer -->
+  <div class="ll-nav__version">v{{ version }}</div>
 </div>
-</ul>

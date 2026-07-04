@@ -15,29 +15,33 @@
       <th></th>
     </tr>
   </tfoot>
-  <tbody *ngIf="incomes.length > 0">
-    <tr *ngFor="let c of incomes">
-      <td>{{ c.name }}</td>
-      <td>{{ c.date }}</td>
-      <td>{{ c.amount }}</td>
-      <td>
-        <button
-          type="button"
-          data-toggle="modal"
-          (click)="edit(c.id)"
-          data-target="#edit"
-          class="btn btn-warning btn-sm"
-        >
-          <i class="fas fa-edit"></i>
-        </button>
-        <button
-          type="button"
-          class="btn btn-danger btn-sm"
-          (click)="delete(c.id)"
-        >
-          <i class="fas fa-trash-alt"></i>
-        </button>
-      </td>
-    </tr>
-  </tbody>
+  @if (incomes.length > 0) {
+    <tbody>
+      @for (c of incomes; track c) {
+        <tr>
+          <td>{{ c.name }}</td>
+          <td>{{ c.date }}</td>
+          <td>{{ c.amount }}</td>
+          <td>
+            <button
+              type="button"
+              data-toggle="modal"
+              (click)="edit(c.id)"
+              data-target="#edit"
+              class="btn btn-warning btn-sm"
+              >
+              <i class="fas fa-edit"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              (click)="delete(c.id)"
+              >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  }
 </table>

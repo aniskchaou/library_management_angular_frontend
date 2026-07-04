@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { CategoryComponent } from './category/category.component';
@@ -21,55 +21,77 @@ import { MarkdownModule, MarkdownService } from 'ngx-markdown';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
 
-@NgModule({
-  declarations: [
-    AddCategoryComponent,
-    CategoryListComponent,
-    EditCategoryComponent,
-    ModalCategoryComponent,
-    CategoryComponent,
-    TitlecapitalPipe,
-    StatisticsCategoryComponent
-  ],
-  imports: [
-    SharedModule,
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    CommonModule,
-    NgxChartsModule,
-    BrowserAnimationsModule,
-    NgxDatatableModule,
-    NgbModalModule,
-    ToastrModule.forRoot({
-      "timeOut": 5000,  // Duration the toast is displayed (in milliseconds)
-    "extendedTimeOut": 1000,  // Time the toast stays visible after mouse hover (in milliseconds)
-    "positionClass": 'toast-top-right',  // Position of the toast (e.g., top-right, bottom-right, top-center)
-    "preventDuplicates": true,  // Prevent duplicate toasts from appearing
-    "closeButton": true,  // Show a close button to dismiss the toast
-    "progressBar": true,  // Display a progress bar indicating remaining time
-    "newestOnTop": true,  // New toasts appear at the top if multiple are shown
-    //"hideDuration": 300,  // Duration for the hide animation (in milliseconds)
-    //"showDuration": 300,  // Duration for the show animation (in milliseconds)
-    //"showEasing": 'swing',  // Easing function for the show animation (e.g., 'swing', 'linear')
-    //"hideEasing": 'linear',  // Easing function for the hide animation
-    //"showMethod": 'fadeIn',  // Method used to show the toast (e.g., 'fadeIn', 'slideDown')
-    //"hideMethod": 'fadeOut',  // Method used to hide the toast
-    //"onclick": null,  // Callback function if the toast is clicked
-    "tapToDismiss": true,  // Dismiss the toast when clicked/tapped
-    //"rtl": false  // Enable right-to-left support
-    }),
-  ],
-  exports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    CommonModule,
-    CategoryComponent,
-  ],
-  providers: [CategoryTestService, CategoryValidation],
-})
+@NgModule({ declarations: [
+        AddCategoryComponent,
+        CategoryListComponent,
+        EditCategoryComponent,
+        ModalCategoryComponent,
+        CategoryComponent,
+        TitlecapitalPipe,
+        StatisticsCategoryComponent
+    ],
+    exports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        CategoryComponent,
+    ], imports: [SharedModule,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        NgxChartsModule,
+        BrowserAnimationsModule,
+        NgxDatatableModule,
+        NgbModalModule,
+        ToastrModule.forRoot({
+            "timeOut": 5000, // Duration the toast is displayed (in milliseconds)
+            "extendedTimeOut": 1000, // Time the toast stays visible after mouse hover (in milliseconds)
+            "positionClass": 'toast-top-right', // Position of the toast (e.g., top-right, bottom-right, top-center)
+            "preventDuplicates": true, // Prevent duplicate toasts from appearing
+            "closeButton": true, // Show a close button to dismiss the toast
+            "progressBar": true, // Display a progress bar indicating remaining time
+            "newestOnTop": true, // New toasts appear at the top if multiple are shown
+            //"hideDuration": 300,  // Duration for the hide animation (in milliseconds)
+            //"showDuration": 300,  // Duration for the show animation (in milliseconds)
+            //"showEasing": 'swing',  // Easing function for the show animation (e.g., 'swing', 'linear')
+            //"hideEasing": 'linear',  // Easing function for the hide animation
+            //"showMethod": 'fadeIn',  // Method used to show the toast (e.g., 'fadeIn', 'slideDown')
+            //"hideMethod": 'fadeOut',  // Method used to hide the toast
+            //"onclick": null,  // Callback function if the toast is clicked
+            "tapToDismiss": true, // Dismiss the toast when clicked/tapped
+            //"rtl": false  // Enable right-to-left support
+        }),
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatTabsModule,
+        MatMenuModule,
+        MatDividerModule,
+        MatProgressSpinnerModule,
+        MatProgressBarModule,
+        MatTooltipModule,
+        MatChipsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatDialogModule], providers: [CategoryTestService, CategoryValidation, provideHttpClient(withInterceptorsFromDi())] })
 export class CategoryModule {}

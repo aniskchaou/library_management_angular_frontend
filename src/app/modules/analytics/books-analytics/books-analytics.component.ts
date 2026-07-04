@@ -5,9 +5,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-books-analytics',
-  templateUrl: './books-analytics.component.html',
-  styleUrls: ['./books-analytics.component.css'],
+    selector: 'app-books-analytics',
+    templateUrl: './books-analytics.component.html',
+    styleUrls: ['./books-analytics.component.css'],
+    standalone: false
 })
 export class BooksAnalyticsComponent implements OnInit {
   data;
@@ -38,7 +39,6 @@ export class BooksAnalyticsComponent implements OnInit {
   }
 
   onSelect(event) {
-    console.log(event);
   }
 
   constructor(private httpService: HTTPService) {

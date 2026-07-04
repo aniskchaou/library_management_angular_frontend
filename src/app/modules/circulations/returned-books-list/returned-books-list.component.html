@@ -1,1 +1,56 @@
-<p>returned-books-list works!</p>
+<div class="ll-list">
+  <div class="ll-list__toolbar">
+    <mat-form-field appearance="outline" class="ll-list__search">
+      <mat-label>Search by book title</mat-label>
+      <input matInput type="text" (keyup)="updateFilter($event)" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <button mat-stroked-button (click)="load()">
+      <mat-icon>refresh</mat-icon> Reload
+    </button>
+  </div>
+
+  @if (loading) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+
+  <ngx-datatable
+    class="material"
+    [rows]="rows"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [loadingIndicator]="loading"
+    [reorderable]="true">
+
+    <ngx-datatable-column name="Member" prop="memberName.firstname"></ngx-datatable-column>
+    <ngx-datatable-column name="Book" prop="catalogItemName.title">
+      <ng-template ngx-datatable-cell-template let-value="value">
+        <span class="ll-cell--strong">{{ value }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Writer" prop="catalogItemName.writer.name"></ngx-datatable-column>
+    <ngx-datatable-column name="Issue Date" prop="issueDate"></ngx-datatable-column>
+    <ngx-datatable-column name="Due Date" prop="toReturn"></ngx-datatable-column>
+    <ngx-datatable-column name="Returned On" prop="returnDate">
+      <ng-template ngx-datatable-cell-template let-value="value">
+        <mat-chip class="ll-chip--ok">{{ value || 'N/A' }}</mat-chip>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Penalty" prop="penalty">
+      <ng-template ngx-datatable-cell-template let-value="value">
+        @if (value && value !== '0' && value !== '0.0') {
+          <mat-chip class="ll-chip--danger">{{ value | currency }}</mat-chip>
+        } @else {
+          <mat-chip class="ll-chip--ok">None</mat-chip>
+        }
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Status" prop="returnStatus.name">
+      <ng-template ngx-datatable-cell-template let-value="value">
+        <mat-chip class="ll-chip--ok">{{ value || 'Returned' }}</mat-chip>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>

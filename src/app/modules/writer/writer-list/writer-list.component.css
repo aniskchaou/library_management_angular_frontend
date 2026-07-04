@@ -1,0 +1,19 @@
+:host { display: block; }
+
+.ll-list { display: flex; flex-direction: column; gap: 12px; }
+.ll-list__toolbar { display: flex; justify-content: flex-end; }
+.ll-list__search { width: 100%; max-width: 360px; }
+.ll-list__table { box-shadow: none !important; }
+
+.ll-avatar { width: 36px; height: 36px; border-radius: 50%; background: #3f51b5; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 500; }
+.ll-cell--stack { display: flex; flex-direction: column; }
+.ll-cell--strong { font-weight: 500; }
+.ll-cell--muted { color: rgba(0,0,0,.55); font-size: 12px; }
+
+.ll-chip--ok { background-color: rgba(46,125,50,.12) !important; color: #2e7d32 !important; }
+.ll-chip--ok mat-icon { color: #2e7d32 !important; }
+.ll-chip--off { background-color: rgba(0,0,0,.08) !important; color: rgba(0,0,0,.66) !important; }
+.ll-chip--off mat-icon { color: rgba(0,0,0,.55) !important; }
+
+.ll-menu--danger { color: #c62828; }
+.ll-menu--danger mat-icon { color: #c62828; }

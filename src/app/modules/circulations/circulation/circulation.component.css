@@ -1,0 +1,16 @@
+:host { display: block; margin-top: 20px; }
+
+.ll-page { display: flex; flex-direction: column; gap: 12px; }
+.ll-page__loading { display: flex; justify-content: center; padding: 40px; }
+.ll-page__header-content { display: flex !important; align-items: center; gap: 16px; padding: 16px !important; }
+.ll-page__icon { color: #3f51b5; width: 32px; height: 32px; font-size: 32px; }
+.ll-page__title { flex: 1; }
+.ll-page__title h1 { margin: 0; font-size: 22px; font-weight: 500; }
+.ll-page__title p { margin: 4px 0 0; color: rgba(0,0,0,.6); font-size: 13px; }
+.ll-page__actions { display: flex; gap: 8px; }
+.ll-page__actions mat-icon { margin-right: 4px; }
+
+@media (max-width: 720px) {
+  .ll-page__header-content { flex-direction: column; align-items: flex-start; }
+  .ll-page__actions { width: 100%; }
+}

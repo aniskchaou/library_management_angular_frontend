@@ -1,22 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-register-user',
-  templateUrl: './register-user.component.html',
-  styleUrls: ['./register-user.component.css']
+    selector: 'app-register-user',
+    templateUrl: './register-user.component.html',
+    styleUrls: ['./register-user.component.css'],
+    standalone: false
 })
 export class RegisterUserComponent extends URLLoader implements OnInit {
 
-  registerForm: FormGroup;
+  registerForm: UntypedFormGroup;
   submitted = false;
+  hidePassword = true;
+  hideConfirm = true;
 
-  constructor(private router:Router,private formBuilder: FormBuilder, private http: HttpClient,private toastr: ToastrService) {
+  constructor(private router:Router,private formBuilder: UntypedFormBuilder, private http: HttpClient,private toastr: ToastrService) {
     super()
     this.registerForm = this.formBuilder.group({
       firstName: ['', [Validators.required]],
@@ -37,7 +40,7 @@ export class RegisterUserComponent extends URLLoader implements OnInit {
 
   // Custom validator to check if password and confirm password fields match
   mustMatch(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
 

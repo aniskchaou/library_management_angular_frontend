@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Optional, Output } from '@angular/core';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -13,12 +13,13 @@ import CONFIG from 'src/app/main/urls/urls';
 import WriterValidation from 'src/app/main/validations/WriterValidation';
 
 @Component({
-  selector: 'app-add-writer',
-  templateUrl: './add-writer.component.html',
-  styleUrls: ['./add-writer.component.css'],
+    selector: 'app-add-writer',
+    templateUrl: './add-writer.component.html',
+    styleUrls: ['./add-writer.component.css'],
+    standalone: false
 })
 export class AddWriterComponent extends URLLoader implements OnInit {
-  writerForm: FormGroup;
+  writerForm: UntypedFormGroup;
   msg: WriterMessage;
   submitted = false;
   @Output() closeModalEvent = new EventEmitter<string>();
@@ -37,7 +38,10 @@ export class AddWriterComponent extends URLLoader implements OnInit {
   }
 
   closeModal(): void {
-    this.activeModal.dismiss(); // Close the modal using NgbActiveModal
+    this.closeModalEvent.emit();
+    if (this.activeModal) {
+      this.activeModal.dismiss();
+    }
   }
 
   reloadPage() {
@@ -59,7 +63,7 @@ export class AddWriterComponent extends URLLoader implements OnInit {
     private httpService: HTTPService,
     private router: Router,
     private dataService:DataService,
-    private activeModal: NgbActiveModal
+    @Optional() private activeModal: NgbActiveModal
   ) {
     super();
     this.writerForm = this.validation.formGroupInstance;
@@ -77,7 +81,6 @@ export class AddWriterComponent extends URLLoader implements OnInit {
   add() {
     this.submitted = true;
     if (this.validateWriterForm(this.writerForm.value,true)) {
-      console.log(this.writerForm.value)
       this.httpService.create(
         CONFIG.URL_BASE + '/writer/create',
         this.writerForm.value

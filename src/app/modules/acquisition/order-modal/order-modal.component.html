@@ -26,7 +26,9 @@
         <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the vendor for this order."></i>
       </label>
       <select class="form-control" id="vendor" [(ngModel)]="order.vendor" name="vendor">
-        <option *ngFor="let vendor of vendors" [ngValue]="vendor">{{ vendor.name }}</option>
+        @for (vendor of vendors; track vendor) {
+          <option [ngValue]="vendor">{{ vendor.name }}</option>
+        }
       </select>
     </div>
     <div class="form-group">
@@ -47,8 +49,8 @@
         <option value="Cancelled">Cancelled</option>
         <option value="Shipped">Shipped</option>
         <option value="Delivered">Delivered</option>
-    </select>
-    
+      </select>
+
     </div>
     <div class="form-group">
       <label for="notes">
@@ -63,7 +65,9 @@
         <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the related contract."></i>
       </label>
       <select class="form-control" id="contract" [(ngModel)]="order.contract" name="contract">
-        <option *ngFor="let contract of contracts" [ngValue]="contract">{{ contract.contractNumber }}</option>
+        @for (contract of contracts; track contract) {
+          <option [ngValue]="contract">{{ contract.contractNumber }}</option>
+        }
       </select>
     </div>
     <div class="form-group">
@@ -72,7 +76,9 @@
         <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the associated invoice."></i>
       </label>
       <select class="form-control" id="invoice" [(ngModel)]="order.invoice" name="invoice">
-        <option *ngFor="let invoice of invoices" [ngValue]="invoice">{{ invoice.invoiceNumber }}</option>
+        @for (invoice of invoices; track invoice) {
+          <option [ngValue]="invoice">{{ invoice.invoiceNumber }}</option>
+        }
       </select>
     </div>
   </form>

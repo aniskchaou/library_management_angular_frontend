@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import IncomeMessage from 'src/app/main/messages/incomeMessage';
@@ -9,12 +9,13 @@ import CONFIG from 'src/app/main/urls/urls';
 import IncomeValidation from 'src/app/main/validations/IncomeValidation';
 
 @Component({
-  selector: 'app-add-income',
-  templateUrl: './add-income.component.html',
-  styleUrls: ['./add-income.component.css'],
+    selector: 'app-add-income',
+    templateUrl: './add-income.component.html',
+    styleUrls: ['./add-income.component.css'],
+    standalone: false
 })
 export class AddIncomeComponent extends URLLoader implements OnInit {
-  incomeForm: FormGroup;
+  incomeForm: UntypedFormGroup;
   msg: IncomeMessage;
   submitted = false;
   @Output() closeModalEvent = new EventEmitter<string>();

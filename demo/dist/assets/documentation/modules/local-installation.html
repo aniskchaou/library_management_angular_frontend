@@ -1,0 +1,58 @@
+<h2 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 5px;">Installation Guide</h2>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 1: Download JDK</h3>
+<p>Go to <a href="https://www.oracle.com/java/technologies/downloads/#jdk17-windows" style="color: #3498db; text-decoration: none;">Oracle’s Java downloads page</a> and download the latest JDK version.</p>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 2: Install Java</h3>
+<p>Open the downloaded JDK installer and follow the on-screen instructions.</p>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 3: Verify Java Installation</h3>
+<pre style="background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 5px; overflow-x: auto;">
+<code style="font-family: 'Courier New', Courier, monospace; font-size: 14px;">java --version</code>
+</pre>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 4: Download and Install XAMPP</h3>
+<p>Go to <a href="https://www.apachefriends.org/index.html" style="color: #3498db; text-decoration: none;">Apache Friends</a> and download the latest version of XAMPP.</p>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 5: Open XAMPP</h3>
+<p>Search for "XAMPP" in the start menu and open the XAMPP Control Panel.</p>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 6: Start MySQL and Apache Services</h3>
+<p>In the XAMPP Control Panel, click <b style="color: #e74c3c;">Start</b> next to MySQL and Apache services.</p>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 7: Install Angular CLI</h3>
+<p>Download <a href="https://nodejs.org/en/download/" style="color: #3498db; text-decoration: none;">Node.js</a> and install it.</p>
+<pre style="background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 5px; overflow-x: auto;">
+<code style="font-family: 'Courier New', Courier, monospace; font-size: 14px;">node -v
+npm install -g @angular/cli</code>
+</pre>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 8: Create Database in phpMyAdmin</h3>
+<p>
+    Open <a href="http://localhost/phpmyadmin/" style="color: #3498db; text-decoration: none;">phpMyAdmin</a>, click 
+    <b style="color: #e74c3c;">New</b>, go to the <b style="color: #e74c3c;">Databases</b> tab, type
+    <b style="color: #e74c3c;">librarylab</b>, and click <b style="color: #e74c3c;">Create</b>.
+</p>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 9: Download Maven</h3>
+<p>Go to <a href="https://maven.apache.org/install.html" style="color: #3498db; text-decoration: none;">Maven’s official website</a> and download the latest version.</p>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 10: Install Maven</h3>
+<p>Add Maven’s <b style="color: #e74c3c;">bin</b> directory to the system environment variables.</p>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 11: Generate JAR File</h3>
+<pre style="background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 5px; overflow-x: auto;">
+<code style="font-family: 'Courier New', Courier, monospace; font-size: 14px;">mvn package</code>
+</pre>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 12: Run Spring Boot Application</h3>
+<pre style="background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 5px; overflow-x: auto;">
+<code style="font-family: 'Courier New', Courier, monospace; font-size: 14px;">java -jar springbootlibrary-lab-codecanyon-0.0.1-SNAPSHOT.jar</code>
+</pre>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 13: Run Angular Application</h3>
+<pre style="background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 5px; overflow-x: auto;">
+<code style="font-family: 'Courier New', Courier, monospace; font-size: 14px;">npm install
+ng serve</code>
+</pre>
+<p>Open the browser and go to <a href="http://localhost:4200/" style="color: #3498db; text-decoration: none;">http://localhost:4200/</a></p>

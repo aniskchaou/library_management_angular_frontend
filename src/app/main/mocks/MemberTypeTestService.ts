@@ -23,7 +23,7 @@ export default class MemberTypeTestService implements Service {
         data["id"] = MemberTypeTestService.id
         this._memberType.push(data);
         MemberTypeTestService.id++
-        console.log(data)
+
     };
 
     public update(data) {

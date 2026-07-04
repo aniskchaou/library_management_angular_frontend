@@ -16,7 +16,7 @@ import { TopbarComponent } from './template/topbar/topbar.component';
 import { ModalBookComponent } from './modules/book/modal-book/modal-book.component';
 
 import { StatisticsBookComponent } from './modules/book/statistics-book/statistics-book.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { EbookComponent } from './modules/ebooks/ebook/ebook.component';
 
 import { EditEbookComponent } from './modules/ebooks/edit-ebook/edit-ebook.component';
@@ -80,8 +80,7 @@ import { CirculationHistoryComponent } from './modules/book/circulation-history/
 import { TagComponent } from './modules/book/tag/tag.component';
 import { AccountAnalyticsComponent } from './modules/analytics/account-analytics/account-analytics.component';
 import { CirculationCalendarComponent } from './modules/circulations/circulation-calendar/circulation-calendar.component';
-import { NgxEventCalendarModule } from 'ngx-event-calendar';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// removed: ngx-event-calendar (incompatible with Angular 21)
 
 import { ContactMemberComponent } from './modules/circulations/contact-member/contact-member.component';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
@@ -129,12 +128,14 @@ import { VendorModalComponent } from './modules/acquisition/vendor-modal/vendor-
 import { ContractModalComponent } from './modules/acquisition/contract-modal/contract-modal.component';
 import { OrderModalComponent } from './modules/acquisition/order-modal/order-modal.component';
 import { InvoiceModalComponent } from './modules/acquisition/invoice-modal/invoice-modal.component';
+import { PaymentModalComponent } from './modules/acquisition/payment-modal/payment-modal.component';
 import { PurshaseSuggestionModalComponent } from './modules/acquisition/purshase-suggestion-modal/purshase-suggestion-modal.component';
 import { NoticeModalComponent } from './modules/notice/notice-modal/notice-modal.component';
 import { NoticeTemplateModalComponent } from './modules/notice/notice-template-modal/notice-template-modal.component';
 import { TooltipDirective } from './main/directives/tooltip.directive';
 import { PhoneFormatPipe } from './modules/setup/phone-format.pipe';
 import { LoadingComponent } from './modules/shared/loading/loading.component';
+import { SharedModule } from './modules/shared/shared.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DepartmentListComponent } from './modules/setup/department-list/department-list.component';
 import { RowListComponent } from './modules/setup/row-list/row-list.component';
@@ -168,6 +169,17 @@ import { OpenaiSettingsComponent } from './modules/settings/openai-settings/open
 import { UploadBookCoverComponent } from './modules/book/upload-book-cover/upload-book-cover.component';
 import { PaypalSettingsComponent } from './modules/settings/paypal-settings/paypal-settings.component';
 import { ShowContentDocPageComponent } from './modules/help/show-content-doc-page/show-content-doc-page.component';
+import { MaterialModule } from './modules/shared/material/material.module';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { CatalogingComponent } from './modules/book/cataloging/cataloging.component';
+import { MarcEditorComponent } from './modules/book/marc-editor/marc-editor.component';
+import { OpacSearchComponent } from './modules/opac/opac-search/opac-search.component';
+import { OpacDetailComponent } from './modules/opac/opac-detail/opac-detail.component';
+import { OpacAccountComponent } from './modules/opac/opac-account/opac-account.component';
+import { OpacHomeComponent } from './modules/opac/opac-home/opac-home.component';
+import { BorrowingStatisticsComponent } from './modules/report/borrowing-statistics/borrowing-statistics.component';
+import { DigitalDocsComponent } from './modules/digital-docs/digital-docs.component';
+import { MemberPortalComponent } from './modules/member-portal/member-portal.component';
 
 
 
@@ -247,7 +259,7 @@ const routes: Routes = [
     canActivate: [AuthguardService],
   },
   {
-    path: 'purshase-suggestion',
+    path: 'purchase-suggestion',
     component: PurshaseSuggestionComponent,
     pathMatch: 'full',
     canActivate: [AuthguardService],
@@ -264,7 +276,7 @@ const routes: Routes = [
     pathMatch: 'full',
     canActivate: [AuthguardService],
   },{
-    path: 'departement',
+    path: 'department',
     component: DepartementComponent,
     pathMatch: 'full',
     canActivate: [AuthguardService],
@@ -540,6 +552,12 @@ const routes: Routes = [
     canActivate: [AuthguardService],
   },
   {
+    path: 'cataloging',
+    component: CatalogingComponent,
+    pathMatch: 'full',
+    canActivate: [AuthguardService],
+  },
+  {
     path: 'shelf-viewer',
     component: ShelfViewerComponent,
     pathMatch: 'full',
@@ -560,137 +578,174 @@ const routes: Routes = [
     component: ResetPasswordComponent,
     pathMatch: 'full'
   },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
+  {
+    path: 'borrowing-statistics',
+    component: BorrowingStatisticsComponent,
+    pathMatch: 'full',
+    canActivate: [AuthguardService],
+  },
+  {
+    path: 'digital-docs',
+    component: DigitalDocsComponent,
+    pathMatch: 'full',
+    canActivate: [AuthguardService],
+  },
+  {
+    path: 'opac-home',
+    component: OpacHomeComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'opac',
+    component: OpacSearchComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'opac-account',
+    component: OpacAccountComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'member-portal',
+    component: MemberPortalComponent,
+    pathMatch: 'full',
+  },
+  { path: '', redirectTo: 'opac-home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'opac-home', pathMatch: 'full' },
 ];
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    NavigationComponent,
-    FooterComponent,
-    TopbarComponent,
-    EbookComponent,
-    StatusDirective,
-    LoginComponent,
-    ArvivedBookListComponent,
-    ArchivedBookComponent,
-    DestroyedBooksComponent,
-    DestroyedBooksListComponent,
-    ReturnedBooksComponent,
-    ReturnedBooksListComponent,
-    EmailSettingComponent,
-    SettingsEmailListComponent,
-    SettingsSmsListComponent,
-    BooksAnalyticsComponent,
-    BookReportComponent,
-    MemberReportComponent,
-    CirculationReportComponent,
-    AccountAnalyticsComponent,
-    BookingSettingsComponent,
-    BulkActionsComponent,
-    AddCatalogCopyComponent,
-    TagsComponent,
-    ItemTypesComponent,
-    CheckInComponent,
-    CheckOutComponent,
-    RenewComponent,
-    HoldComponent,
-    OverdueComponent,
-    OverdueFinesComponent,
-    CirculationRulesComponent,
-    PhysicalDescriptionComponent,
-    VendorComponent,
-    BasketComponent,
-    ContractComponent,
-    OrderComponent,
-    PurshaseSuggestionComponent,
-    BudgetComponent,
-    FundComponent,
-    InvoiceComponent,
-    BasketComponent,
-    NoticeComponent,
-    NoticeTemplateComponent,
-    BarCodeComponent,
-    QrCodeComponent,
-    ShelfComponent,
-    RowComponent,
-    DepartementComponent,
-    DepartmentModalComponentComponent,
-    ShelfModalComponent,
-    RowModalComponent,
-    PhysicalDescriptionModalComponent,
-    QrCodeModalComponent,
-    BarCodeModalComponent,
-    BasketModalComponent,
-    VendorModalComponent,
-    ContractModalComponent,
-    OrderModalComponent,
-    InvoiceModalComponent,
-    PurshaseSuggestionModalComponent,
-    NoticeModalComponent,
-    NoticeTemplateModalComponent,
-    PhoneFormatPipe,
-    LoadingComponent,
-    DepartmentListComponent,
-    RowListComponent,
-    PhysicalDescriptionListComponent,
-    ChatbotComponent,
-    ViewCategoryComponent,
-    ViewWriterComponent,
-    AddItemTypesComponent,
-    ViewItemTypesComponent,
-    ViewPublisherComponent,
-    ViewTypeMemberComponent,
-    DocumentationComponent,
-    ViewQrcodeComponent,
-    BarcodeViewComponent,
-    ShelfViewerComponent,
-    UploadDocumentComponent,
-    ViewContractComponent,
-    UploadDocumentMemberComponent,
-    ViewUserProfileComponent,
-    EditPasswordComponent,
-    UploadProfilePhotoComponent,
-    UploadAppLogoComponent,
-    RegisterUserComponent,
-    ForgotPasswordComponent,
-    ResetPasswordComponent,
-    EditItemTypesComponent,
-    ShowContentDocPageComponent,
-    //PaypalSettingsComponent
-  ],
-  imports: [
-    NgSelectModule,
-    PaymentModule,
-    BookModule,
-    SettingsModule,
-    CirculationStatusModule,
-    CirculationsModule,
-    MemberrModule,
-    TypememberModule,
-    WriterModule,
-    PublishersModule,
-    RequestedBooksModule,
-    CategoryModule,
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
-    HttpClientModule,
-    CommonModule,
-    NgxChartsModule,
-    BrowserAnimationsModule,
-    AccountModule,
-    DashboardModule,
-    NgxChartsModule,
-    NgbModule,
-    NgbTooltipModule,
-    NgxDatatableModule,
-    NgSelectModule,
-    //MarkdownModule.forRoot()
-  ],
-  providers: [{ provide: APP_BASE_HREF, useValue: '' }],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        NavigationComponent,
+        FooterComponent,
+        TopbarComponent,
+        EbookComponent,
+        StatusDirective,
+        LoginComponent,
+        ArvivedBookListComponent,
+        ArchivedBookComponent,
+        DestroyedBooksComponent,
+        DestroyedBooksListComponent,
+        CatalogingComponent,
+        MarcEditorComponent,
+        OpacHomeComponent,
+        OpacSearchComponent,
+        OpacDetailComponent,
+        OpacAccountComponent,
+        BorrowingStatisticsComponent,
+        MemberPortalComponent,
+        DigitalDocsComponent,
+        ReturnedBooksComponent,
+        ReturnedBooksListComponent,
+        EmailSettingComponent,
+        SettingsEmailListComponent,
+        SettingsSmsListComponent,
+        BooksAnalyticsComponent,
+        BookReportComponent,
+        MemberReportComponent,
+        CirculationReportComponent,
+        AccountAnalyticsComponent,
+        BookingSettingsComponent,
+        BulkActionsComponent,
+        AddCatalogCopyComponent,
+        TagsComponent,
+        ItemTypesComponent,
+        CheckInComponent,
+        CheckOutComponent,
+        RenewComponent,
+        HoldComponent,
+        OverdueComponent,
+        OverdueFinesComponent,
+        CirculationRulesComponent,
+        PhysicalDescriptionComponent,
+        VendorComponent,
+        BasketComponent,
+        ContractComponent,
+        OrderComponent,
+        PurshaseSuggestionComponent,
+        BudgetComponent,
+        FundComponent,
+        InvoiceComponent,
+        BasketComponent,
+        NoticeComponent,
+        NoticeTemplateComponent,
+        BarCodeComponent,
+        QrCodeComponent,
+        ShelfComponent,
+        RowComponent,
+        DepartementComponent,
+        DepartmentModalComponentComponent,
+        ShelfModalComponent,
+        RowModalComponent,
+        PhysicalDescriptionModalComponent,
+        QrCodeModalComponent,
+        BarCodeModalComponent,
+        BasketModalComponent,
+        VendorModalComponent,
+        ContractModalComponent,
+        OrderModalComponent,
+        InvoiceModalComponent,
+        PaymentModalComponent,
+        PurshaseSuggestionModalComponent,
+        NoticeModalComponent,
+        NoticeTemplateModalComponent,
+        PhoneFormatPipe,
+        LoadingComponent,
+        DepartmentListComponent,
+        RowListComponent,
+        PhysicalDescriptionListComponent,
+        ChatbotComponent,
+        ViewCategoryComponent,
+        ViewWriterComponent,
+        AddItemTypesComponent,
+        ViewItemTypesComponent,
+        ViewPublisherComponent,
+        ViewTypeMemberComponent,
+        DocumentationComponent,
+        ViewQrcodeComponent,
+        BarcodeViewComponent,
+        ShelfViewerComponent,
+        UploadDocumentComponent,
+        ViewContractComponent,
+        UploadDocumentMemberComponent,
+        ViewUserProfileComponent,
+        EditPasswordComponent,
+        UploadProfilePhotoComponent,
+        UploadAppLogoComponent,
+        RegisterUserComponent,
+        ForgotPasswordComponent,
+        ResetPasswordComponent,
+        EditItemTypesComponent,
+        ShowContentDocPageComponent,
+        //PaypalSettingsComponent
+    ],
+    bootstrap: [AppComponent], imports: [NgSelectModule,
+        SharedModule,
+        PaymentModule,
+        BookModule,
+        SettingsModule,
+        CirculationStatusModule,
+        CirculationsModule,
+        MemberrModule,
+        TypememberModule,
+        WriterModule,
+        PublishersModule,
+        RequestedBooksModule,
+        CategoryModule,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+        CommonModule,
+        NgxChartsModule,
+        BrowserAnimationsModule,
+        AccountModule,
+        DashboardModule,
+        NgxChartsModule,
+        NgbModule,
+        NgbTooltipModule,
+        NgxDatatableModule,
+        NgSelectModule,
+        MaterialModule,
+        NgxExtendedPdfViewerModule], providers: [{ provide: APP_BASE_HREF, useValue: '' }, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}

@@ -1,0 +1,247 @@
+<!-- ═══════════════════════════ HEADER ═══════════════════════════════════ -->
+<div class="modal-header pm-header">
+  <div class="pm-header__left">
+    <i class="fas fa-money-check-alt pm-header__icon"></i>
+    <div>
+      <h5 class="modal-title pm-header__title">Add Payment</h5>
+      <small class="pm-header__sub">
+        Invoice {{ invoice.invoiceNumber }} &bull; {{ invoice.vendor?.name }}
+      </small>
+    </div>
+  </div>
+  <button type="button" class="close pm-header__close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<!-- ═══════════════════════════ BODY ═════════════════════════════════════ -->
+<div class="modal-body pm-body">
+
+  <!-- ── Invoice summary strip ──────────────────────────────────────────── -->
+  <div class="pm-summary">
+    <div class="pm-summary__item">
+      <span class="pm-summary__label">Invoice Total</span>
+      <span class="pm-summary__value">{{ invoice.totalAmount | currency }}</span>
+    </div>
+    <div class="pm-summary__item">
+      <span class="pm-summary__label">Already Paid</span>
+      <span class="pm-summary__value pm-summary__value--green">{{ totalPaid | currency }}</span>
+    </div>
+    <div class="pm-summary__item">
+      <span class="pm-summary__label">Remaining</span>
+      <span class="pm-summary__value" [class.pm-summary__value--red]="remaining > 0">
+        {{ remaining | currency }}
+      </span>
+    </div>
+  </div>
+
+  <!-- ── Validation error ───────────────────────────────────────────────── -->
+  @if (validationError) {
+    <div class="alert alert-danger pm-alert" role="alert">
+      <i class="fas fa-exclamation-triangle"></i> {{ validationError }}
+    </div>
+  }
+
+  <!-- ════════════════════════ NEW PAYMENT FORM ════════════════════════════ -->
+  <form>
+
+    <!-- Method selector -->
+    <div class="pm-method-row">
+      <div class="pm-method-btn" [class.pm-method-btn--active]="method === 'bank_transfer'"
+           (click)="method = 'bank_transfer'">
+        <i class="fas fa-university"></i>
+        <span>Bank Transfer</span>
+      </div>
+      <div class="pm-method-btn" [class.pm-method-btn--active]="method === 'paypal'"
+           (click)="method = 'paypal'">
+        <i class="fab fa-paypal"></i>
+        <span>PayPal <small>(manual record)</small></span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <!-- Amount -->
+      <div class="form-group col-md-6">
+        <label for="pm-amount">
+          Amount <span class="text-danger">*</span>
+        </label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+          </div>
+          <input id="pm-amount" type="number" class="form-control"
+                 [(ngModel)]="amount" name="amount" min="0.01" step="0.01"
+                 placeholder="0.00" />
+        </div>
+      </div>
+
+      <!-- Payment date -->
+      <div class="form-group col-md-6">
+        <label for="pm-date">
+          Payment Date <span class="text-danger">*</span>
+        </label>
+        <input id="pm-date" type="date" class="form-control"
+               [(ngModel)]="paymentDate" name="paymentDate" />
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div class="form-group">
+      <label for="pm-status">Payment Status</label>
+      <select id="pm-status" class="form-control" [(ngModel)]="status" name="status">
+        <option value="pending">Pending — transfer initiated, awaiting confirmation</option>
+        <option value="confirmed">Confirmed — funds received / transaction verified</option>
+      </select>
+    </div>
+
+    <!-- ── BANK TRANSFER fields ──────────────────────────────────────── -->
+    @if (method === 'bank_transfer') {
+    <div class="pm-section">
+      <h6 class="pm-section__title">
+        <i class="fas fa-university"></i> Bank Transfer Details
+      </h6>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="pm-bank">Bank Name <span class="text-danger">*</span></label>
+          <input id="pm-bank" type="text" class="form-control"
+                 [(ngModel)]="bankName" name="bankName" placeholder="e.g., Chase Bank" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="pm-holder">Account Holder</label>
+          <input id="pm-holder" type="text" class="form-control"
+                 [(ngModel)]="accountHolder" name="accountHolder"
+                 placeholder="Beneficiary name" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="pm-acc">Account Number</label>
+          <input id="pm-acc" type="text" class="form-control"
+                 [(ngModel)]="accountNumber" name="accountNumber"
+                 placeholder="e.g., 1234567890" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="pm-swift">
+            SWIFT / BIC
+            <i class="fas fa-info-circle text-muted" title="8 or 11-character bank identifier code"></i>
+          </label>
+          <input id="pm-swift" type="text" class="form-control" maxlength="11"
+                 [(ngModel)]="swiftBic" name="swiftBic"
+                 placeholder="e.g., CHASUS33" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="pm-iban">
+            IBAN
+            <i class="fas fa-info-circle text-muted" title="International Bank Account Number"></i>
+          </label>
+          <input id="pm-iban" type="text" class="form-control"
+                 [(ngModel)]="iban" name="iban"
+                 placeholder="e.g., GB29 NWBK 6016 1331 9268 19" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="pm-ref">
+            Transfer Reference <span class="text-danger">*</span>
+            <i class="fas fa-info-circle text-muted" title="Wire transfer confirmation or reference number from the bank"></i>
+          </label>
+          <input id="pm-ref" type="text" class="form-control"
+                 [(ngModel)]="transferReference" name="transferReference"
+                 placeholder="e.g., WT20240530-001" />
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- ── PAYPAL (manual) fields ──────────────────────────────────────── -->
+    @if (method === 'paypal') {
+    <div class="pm-section pm-section--paypal">
+      <h6 class="pm-section__title">
+        <i class="fab fa-paypal"></i> PayPal Payment Record
+      </h6>
+      <div class="alert alert-info pm-paypal-notice" role="alert">
+        <i class="fas fa-info-circle"></i>
+        Record the details of a PayPal payment that was made outside this system.
+        No funds are transferred here — this is a manual bookkeeping entry.
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="pm-pp-email">
+            PayPal Email <span class="text-danger">*</span>
+          </label>
+          <input id="pm-pp-email" type="email" class="form-control"
+                 [(ngModel)]="paypalEmail" name="paypalEmail"
+                 placeholder="payee@example.com" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="pm-pp-txn">
+            Transaction ID
+            <i class="fas fa-info-circle text-muted" title="PayPal transaction ID from your PayPal account activity"></i>
+          </label>
+          <input id="pm-pp-txn" type="text" class="form-control"
+                 [(ngModel)]="paypalTransactionId" name="paypalTransactionId"
+                 placeholder="e.g., 5HT01234XY5678901" />
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- Notes -->
+    <div class="form-group">
+      <label for="pm-notes">Notes</label>
+      <textarea id="pm-notes" class="form-control" rows="2"
+                [(ngModel)]="notes" name="notes"
+                placeholder="Receipt number, additional info…"></textarea>
+    </div>
+
+  </form>
+
+  <!-- ══════════════════════════ PAYMENT HISTORY ═══════════════════════════ -->
+  @if (history.length > 0) {
+  <div class="pm-history">
+    <h6 class="pm-history__title">
+      <i class="fas fa-history"></i> Payment History ({{ history.length }})
+    </h6>
+    <div class="pm-history__list">
+      @for (p of history; track p.id) {
+        <div class="pm-history__item">
+          <div class="pm-history__item-left">
+            @if (p.method === 'bank_transfer') {
+              <i class="fas fa-university pm-history__icon"></i>
+            } @else {
+              <i class="fab fa-paypal pm-history__icon pm-history__icon--paypal"></i>
+            }
+            <div>
+              <span class="pm-history__amount">{{ p.amount | currency }}</span>
+              <span class="pm-history__method">{{ methodLabel(p.method) }}</span>
+              <span class="pm-history__date">{{ p.paymentDate }}</span>
+              @if (p.transferReference) {
+                <span class="pm-history__ref">Ref: {{ p.transferReference }}</span>
+              }
+              @if (p.paypalTransactionId) {
+                <span class="pm-history__ref">TXN: {{ p.paypalTransactionId }}</span>
+              }
+            </div>
+          </div>
+          <div class="pm-history__item-right">
+            <span [class]="'badge ' + statusClass(p.status)">{{ p.status }}</span>
+            <button class="btn btn-sm btn-outline-danger pm-history__del"
+                    (click)="removePayment(p.id)" title="Remove record">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+  }
+
+</div>
+
+<!-- ═══════════════════════════ FOOTER ══════════════════════════════════ -->
+<div class="modal-footer pm-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="dismiss()">Cancel</button>
+  <button type="button" class="btn btn-primary pm-footer__save" (click)="save()">
+    <i class="fas fa-save"></i> Record Payment
+  </button>
+</div>

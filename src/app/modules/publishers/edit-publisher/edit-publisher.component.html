@@ -1,109 +1,69 @@
-<div class="modal-header">
-  <h5 class="modal-title">Edit  Publisher</h5>
-  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-  <form>
-    <!-- Publisher Name Field with Tooltip -->
-    <div class="form-group">
-      <label for="publisherName" id="publisherName_display_as_box">
-        Publisher Name
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the name of the publisher."></i>
-      </label>
-      <input
-        id="publisherName"
-        name="name"
-        class="form-control"
-        type="text"
-        placeholder="e.g., Penguin Random House"
-        [(ngModel)]="publisher.name"
-      />
-    </div>
+<div class="ll-modal ll-modal--wide">
+  <div class="ll-modal__header">
+    <mat-icon class="ll-modal__icon">edit</mat-icon>
+    <h2 class="ll-modal__title">Edit Publisher</h2>
+    <button mat-icon-button class="ll-modal__close" (click)="onCancelClick()" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
-    <!-- Address Field with Tooltip -->
-    <div class="form-group">
-      <label for="address" id="address_display_as_box">
-        Address
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the publisher's address."></i>
-      </label>
-      <input
-        id="address"
-        name="address"
-        class="form-control"
-        type="text"
-        placeholder="e.g., 123 Main St, City, Country"
-        [(ngModel)]="publisher.address"
-      />
-    </div>
+  <div class="ll-modal__content">
+    @if (publisher) {
+      <form #publisherForm="ngForm" novalidate class="ll-form">
+        <div class="ll-form__grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Publisher Name</mat-label>
+            <input matInput type="text" [(ngModel)]="publisher.name" name="name" required #nameRef="ngModel" maxlength="99" />
+            @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
+              <mat-error>Publisher Name is required.</mat-error>
+            }
+          </mat-form-field>
 
-    <!-- Email Field with Tooltip -->
-    <div class="form-group">
-      <label for="email" id="email_display_as_box">
-        Email
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the publisher's email address."></i>
-      </label>
-      <input
-        id="email"
-        name="email"
-        class="form-control"
-        type="email"
-        placeholder="e.g., contact@publisher.com"
-        [(ngModel)]="publisher.email"
-      />
-    </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Address</mat-label>
+            <input matInput type="text" [(ngModel)]="publisher.address" name="address" />
+            <mat-icon matSuffix>place</mat-icon>
+          </mat-form-field>
 
-    <!-- Phone Field with Tooltip -->
-    <div class="form-group">
-      <label for="phone" id="phone_display_as_box">
-        Phone
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the publisher's phone number."></i>
-      </label>
-      <input
-        id="phone"
-        name="phone"
-        class="form-control"
-        type="tel"
-        placeholder="e.g., +1-234-567-8900"
-        [(ngModel)]="publisher.phone"
-      />
-    </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" [(ngModel)]="publisher.email" name="email" />
+            <mat-icon matSuffix>mail</mat-icon>
+          </mat-form-field>
 
-    <!-- Country Field with Tooltip -->
-    <div class="form-group">
-      <label for="country" id="country_display_as_box">
-        Country
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Select the publisher's country."></i>
-      </label>
-      <select
-        id="country"
-        name="country"
-        class="form-control"
-        [(ngModel)]="publisher.country"
-      >
-        <option *ngFor="let country of countries" [ngValue]="country">{{ country }}</option>
-      </select>
-    </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input matInput type="tel" [(ngModel)]="publisher.phone" name="phone" />
+            <mat-icon matSuffix>call</mat-icon>
+          </mat-form-field>
 
-    <!-- Website Field with Tooltip -->
-    <div class="form-group">
-      <label for="website" id="website_display_as_box">
-        Website
-        <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the publisher's website URL."></i>
-      </label>
-      <input
-        id="website"
-        name="website"
-        class="form-control"
-        type="url"
-        placeholder="e.g., https://www.publisher.com"
-        [(ngModel)]="publisher.website"
-      />
-    </div>
-  </form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
-  <button type="button" class="btn btn-outline-primary" (click)="savePublisher()">Save</button>
+          <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select [(ngModel)]="publisher.country" name="country">
+              @for (c of countries; track c) {
+                <mat-option [value]="c">{{ c }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Website</mat-label>
+            <input matInput type="url" [(ngModel)]="publisher.website" name="website" />
+            <mat-icon matSuffix>language</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="ll-modal__actions">
+          <button mat-stroked-button type="button" (click)="onCancelClick()">Cancel</button>
+          <button mat-flat-button color="primary" type="button" (click)="savePublisher()" [disabled]="publisherForm.invalid">
+            <mat-icon>save</mat-icon> Save Changes
+          </button>
+        </div>
+      </form>
+    } @else {
+      <div class="ll-modal__loading">
+        <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+      </div>
+    }
+  </div>
 </div>

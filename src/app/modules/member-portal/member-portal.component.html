@@ -1,0 +1,435 @@
+<div class="mp-root">
+
+  <!-- ══ LEFT SIDEBAR ════════════════════════════════════════════════════════ -->
+  <aside class="mp-sidebar">
+
+    <div class="mp-sidebar__brand">
+      <mat-icon>menu_book</mat-icon>
+      <span>Library Lab</span>
+    </div>
+
+    <div class="mp-sidebar__member">
+      <div class="mp-avatar">{{ initials }}</div>
+      <div class="mp-sidebar__member-info">
+        <div class="mp-sidebar__member-name">{{ memberName }}</div>
+        <div class="mp-sidebar__member-type">{{ memberType }}</div>
+      </div>
+    </div>
+
+    <nav class="mp-nav">
+      <button class="mp-nav-item" [class.mp-nav-item--active]="activeTab === 'dashboard'"
+              (click)="goTab('dashboard')">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </button>
+
+      <button class="mp-nav-item" [class.mp-nav-item--active]="activeTab === 'loans'"
+              (click)="goTab('loans')">
+        <mat-icon>book</mat-icon>
+        <span>My Loans</span>
+        @if (loans.length > 0) {
+          <span class="mp-nav-badge">{{ loans.length }}</span>
+        }
+      </button>
+
+      <button class="mp-nav-item" [class.mp-nav-item--active]="activeTab === 'holds'"
+              (click)="goTab('holds')">
+        <mat-icon>bookmark</mat-icon>
+        <span>My Holds</span>
+        @if (holds.length > 0) {
+          <span class="mp-nav-badge">{{ holds.length }}</span>
+        }
+      </button>
+
+      <button class="mp-nav-item" [class.mp-nav-item--active]="activeTab === 'history'"
+              (click)="goTab('history')">
+        <mat-icon>history</mat-icon>
+        <span>Borrowing History</span>
+      </button>
+
+      <button class="mp-nav-item" (click)="goCatalog()">
+        <mat-icon>search</mat-icon>
+        <span>Browse Catalog</span>
+      </button>
+
+      <button class="mp-nav-item" [class.mp-nav-item--active]="activeTab === 'profile'"
+              (click)="goTab('profile')">
+        <mat-icon>manage_accounts</mat-icon>
+        <span>My Profile</span>
+      </button>
+    </nav>
+
+    <div class="mp-sidebar__footer">
+      <button class="mp-logout-btn" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Sign Out</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ══ MAIN AREA ═══════════════════════════════════════════════════════════ -->
+  <main class="mp-main">
+
+    <!-- Top bar -->
+    <header class="mp-topbar">
+      <div class="mp-topbar__title">
+        @switch (activeTab) {
+          @case ('dashboard') { Dashboard }
+          @case ('loans')     { My Current Loans }
+          @case ('holds')     { My Holds &amp; Reservations }
+          @case ('history')   { Borrowing History }
+          @case ('profile')   { My Profile }
+        }
+      </div>
+      <div class="mp-topbar__right">
+        <span class="mp-topbar__date">{{ today | date:'fullDate' }}</span>
+        <div class="mp-topbar__avatar" (click)="goTab('profile')" title="My Profile">
+          {{ initials }}
+        </div>
+      </div>
+    </header>
+
+    @if (loading) {
+      <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+    }
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         TAB: DASHBOARD
+    ══════════════════════════════════════════════════════════════════════ -->
+    @if (activeTab === 'dashboard') {
+      <div class="mp-content">
+
+        <!-- Welcome banner -->
+        <div class="mp-welcome-banner">
+          <div>
+            <h1>Welcome back, {{ firstName }}! 👋</h1>
+            <p>Your personal library dashboard — manage your loans, holds, and reading history.</p>
+          </div>
+          <button mat-flat-button class="mp-catalog-btn" (click)="goCatalog()">
+            <mat-icon>search</mat-icon>&nbsp;Browse Catalog
+          </button>
+        </div>
+
+        <!-- Stats row -->
+        <div class="mp-stats-row">
+          <div class="mp-stat-card mp-stat-card--blue" (click)="goTab('loans')">
+            <mat-icon>book</mat-icon>
+            <div class="mp-stat-card__val">{{ loans.length }}</div>
+            <div class="mp-stat-card__label">Active Loans</div>
+          </div>
+          <div class="mp-stat-card mp-stat-card--red" (click)="goTab('loans')">
+            <mat-icon>warning</mat-icon>
+            <div class="mp-stat-card__val">{{ overdueCount }}</div>
+            <div class="mp-stat-card__label">Overdue Books</div>
+          </div>
+          <div class="mp-stat-card mp-stat-card--amber" (click)="goTab('holds')">
+            <mat-icon>bookmark</mat-icon>
+            <div class="mp-stat-card__val">{{ holds.length }}</div>
+            <div class="mp-stat-card__label">Pending Holds</div>
+          </div>
+          <div class="mp-stat-card mp-stat-card--green" (click)="goTab('history')">
+            <mat-icon>menu_book</mat-icon>
+            <div class="mp-stat-card__val">{{ history.length }}</div>
+            <div class="mp-stat-card__label">Books Returned</div>
+          </div>
+        </div>
+
+        <!-- Currently borrowed preview -->
+        @if (loans.length > 0) {
+          <div class="mp-section">
+            <div class="mp-section__header">
+              <h2><mat-icon>book</mat-icon> Currently Borrowed</h2>
+              <button mat-stroked-button (click)="goTab('loans')">View All</button>
+            </div>
+            <div class="mp-loan-grid">
+              @for (c of loans.slice(0, 4); track c.id) {
+                <div class="mp-loan-card" [class.mp-loan-card--overdue]="isOverdue(c)">
+                  <img class="mp-loan-card__cover"
+                       [src]="coverUrl(c)"
+                       [alt]="getBookTitle(c)"
+                       onerror="this.src='assets/images/no-cover.png'">
+                  <div class="mp-loan-card__body">
+                    <div class="mp-loan-card__title">{{ getBookTitle(c) }}</div>
+                    <div class="mp-loan-card__author">{{ getAuthorName(c) }}</div>
+                    <span class="mp-badge" [ngClass]="dueBadge(c).cls">{{ dueBadge(c).label }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Overdue alert -->
+        @if (overdueCount > 0) {
+          <div class="mp-alert mp-alert--red">
+            <mat-icon>warning</mat-icon>
+            <div>
+              <strong>You have {{ overdueCount }} overdue book{{ overdueCount > 1 ? 's' : '' }}!</strong>
+              Please return or renew them to avoid fines.
+            </div>
+            <button mat-stroked-button (click)="goTab('loans')">View Loans</button>
+          </div>
+        }
+
+        <!-- Empty state -->
+        @if (loans.length === 0 && !loading) {
+          <div class="mp-empty-state">
+            <mat-icon>menu_book</mat-icon>
+            <h3>No active loans</h3>
+            <p>Visit the catalog to discover your next great read!</p>
+            <button mat-flat-button color="primary" (click)="goCatalog()">
+              <mat-icon>search</mat-icon> Browse Catalog
+            </button>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         TAB: MY LOANS
+    ══════════════════════════════════════════════════════════════════════ -->
+    @if (activeTab === 'loans') {
+      <div class="mp-content">
+
+        @if (overdueCount > 0) {
+          <div class="mp-alert mp-alert--red" style="margin-bottom: 20px;">
+            <mat-icon>warning</mat-icon>
+            <span>{{ overdueCount }} overdue book{{ overdueCount > 1 ? 's' : '' }} — please renew or return as soon as possible.</span>
+          </div>
+        }
+
+        @if (loans.length === 0 && !loading) {
+          <div class="mp-empty-state">
+            <mat-icon>book</mat-icon>
+            <h3>No active loans</h3>
+            <p>You don't have any books currently borrowed.</p>
+            <button mat-flat-button color="primary" (click)="goCatalog()">Browse Catalog</button>
+          </div>
+        }
+
+        @for (c of loans; track c.id) {
+          <div class="mp-list-row" [class.mp-list-row--overdue]="isOverdue(c)">
+            <img class="mp-list-row__cover"
+                 [src]="coverUrl(c)"
+                 [alt]="getBookTitle(c)"
+                 onerror="this.src='assets/images/no-cover.png'">
+            <div class="mp-list-row__body">
+              <div class="mp-list-row__title">{{ getBookTitle(c) }}</div>
+              <div class="mp-list-row__meta">
+                @if (getAuthorName(c)) {
+                  <span><mat-icon>person</mat-icon>{{ getAuthorName(c) }}</span>
+                }
+                <span><mat-icon>calendar_today</mat-icon>Issued: {{ safeDate(c.issueDate) }}</span>
+                <span><mat-icon>event</mat-icon>Due: {{ safeDate(c.toReturn) }}</span>
+                @if (c.penalty && c.penalty !== '0') {
+                  <span class="mp-fine"><mat-icon>attach_money</mat-icon>Fine: {{ c.penalty }}</span>
+                }
+              </div>
+            </div>
+            <div class="mp-list-row__right">
+              <span class="mp-badge" [ngClass]="dueBadge(c).cls">{{ dueBadge(c).label }}</span>
+              <button mat-stroked-button color="primary" class="mp-renew-btn"
+                      [disabled]="renewingId === c.id || renewSuccess === c.id"
+                      (click)="requestRenew(c)">
+                @if (renewingId === c.id) {
+                  <mat-spinner diameter="16"></mat-spinner>
+                } @else if (renewSuccess === c.id) {
+                  <mat-icon>check_circle</mat-icon> Requested
+                } @else {
+                  <mat-icon>autorenew</mat-icon> Renew
+                }
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         TAB: MY HOLDS
+    ══════════════════════════════════════════════════════════════════════ -->
+    @if (activeTab === 'holds') {
+      <div class="mp-content">
+
+        @if (holds.length === 0 && !loading) {
+          <div class="mp-empty-state">
+            <mat-icon>bookmark_border</mat-icon>
+            <h3>No pending holds</h3>
+            <p>Place a hold on a book from the catalog and it will appear here.</p>
+            <button mat-flat-button color="primary" (click)="goCatalog()">Browse Catalog</button>
+          </div>
+        }
+
+        @for (c of holds; track c.id) {
+          <div class="mp-list-row">
+            <img class="mp-list-row__cover"
+                 [src]="coverUrl(c)"
+                 [alt]="getBookTitle(c)"
+                 onerror="this.src='assets/images/no-cover.png'">
+            <div class="mp-list-row__body">
+              <div class="mp-list-row__title">{{ getBookTitle(c) }}</div>
+              <div class="mp-list-row__meta">
+                @if (getAuthorName(c)) {
+                  <span><mat-icon>person</mat-icon>{{ getAuthorName(c) }}</span>
+                }
+                <span><mat-icon>calendar_today</mat-icon>Requested: {{ safeDate(c.issueDate) }}</span>
+              </div>
+            </div>
+            <div class="mp-list-row__right">
+              <span class="mp-badge mp-badge--amber">
+                {{ getStatusName(c) }}
+              </span>
+              <button mat-stroked-button color="warn"
+                      [disabled]="cancellingId === c.id"
+                      (click)="cancelHold(c)">
+                @if (cancellingId === c.id) {
+                  <mat-spinner diameter="16"></mat-spinner>
+                } @else {
+                  <mat-icon>cancel</mat-icon> Cancel Hold
+                }
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         TAB: HISTORY
+    ══════════════════════════════════════════════════════════════════════ -->
+    @if (activeTab === 'history') {
+      <div class="mp-content">
+        <div class="mp-search-bar">
+          <mat-form-field appearance="outline" class="mp-search-field">
+            <mat-label>Search history by title…</mat-label>
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput [(ngModel)]="historySearch">
+          </mat-form-field>
+        </div>
+
+        @if (filteredHistory.length === 0 && !loading) {
+          <div class="mp-empty-state">
+            <mat-icon>history</mat-icon>
+            <h3>No borrowing history</h3>
+            <p>Books you return will appear here.</p>
+          </div>
+        }
+
+        @for (c of filteredHistory; track c.id) {
+          <div class="mp-list-row">
+            <img class="mp-list-row__cover"
+                 [src]="coverUrl(c)"
+                 [alt]="getBookTitle(c)"
+                 onerror="this.src='assets/images/no-cover.png'">
+            <div class="mp-list-row__body">
+              <div class="mp-list-row__title">{{ getBookTitle(c) }}</div>
+              <div class="mp-list-row__meta">
+                @if (getAuthorName(c)) {
+                  <span><mat-icon>person</mat-icon>{{ getAuthorName(c) }}</span>
+                }
+                <span><mat-icon>calendar_today</mat-icon>Borrowed: {{ safeDate(c.issueDate) }}</span>
+                @if (c.returnDate) {
+                  <span><mat-icon>check_circle</mat-icon>Returned: {{ safeDate(c.returnDate) }}</span>
+                }
+              </div>
+            </div>
+            <div class="mp-list-row__right">
+              <span class="mp-badge mp-badge--green">Returned</span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         TAB: MY PROFILE
+    ══════════════════════════════════════════════════════════════════════ -->
+    @if (activeTab === 'profile') {
+      <div class="mp-content">
+        <div class="mp-profile-card">
+
+          <!-- Hero header -->
+          <div class="mp-profile-header">
+            <div class="mp-profile-avatar">{{ initials }}</div>
+            <div class="mp-profile-hero-info">
+              <h2>{{ memberName }}</h2>
+              <p><mat-icon>badge</mat-icon> {{ memberType }}</p>
+              <p><mat-icon>email</mat-icon> {{ memberEmail }}</p>
+            </div>
+          </div>
+
+          <!-- Details grid -->
+          <div class="mp-profile-body">
+            @if (member) {
+              <h3 class="mp-profile-section-title">Personal Information</h3>
+              <div class="mp-profile-grid">
+                <div class="mp-profile-field">
+                  <span class="mp-profile-field__label">First Name</span>
+                  <span class="mp-profile-field__val">{{ member.firstname || '—' }}</span>
+                </div>
+                <div class="mp-profile-field">
+                  <span class="mp-profile-field__label">Last Name</span>
+                  <span class="mp-profile-field__val">{{ member.surname || '—' }}</span>
+                </div>
+                <div class="mp-profile-field">
+                  <span class="mp-profile-field__label">Email Address</span>
+                  <span class="mp-profile-field__val">{{ member.primary_email || member.email || '—' }}</span>
+                </div>
+                <div class="mp-profile-field">
+                  <span class="mp-profile-field__label">Mobile</span>
+                  <span class="mp-profile-field__val">{{ member.primary_phone || member.mobile || '—' }}</span>
+                </div>
+                <div class="mp-profile-field">
+                  <span class="mp-profile-field__label">Address</span>
+                  <span class="mp-profile-field__val">{{ member.address || '—' }}</span>
+                </div>
+                <div class="mp-profile-field">
+                  <span class="mp-profile-field__label">Gender</span>
+                  <span class="mp-profile-field__val">{{ member.gender || '—' }}</span>
+                </div>
+                <div class="mp-profile-field">
+                  <span class="mp-profile-field__label">Date of Birth</span>
+                  <span class="mp-profile-field__val">{{ safeDate(member.dob?.toString()) }}</span>
+                </div>
+                <div class="mp-profile-field">
+                  <span class="mp-profile-field__label">Account Status</span>
+                  <span class="mp-profile-field__val">
+                    <span class="mp-badge" [ngClass]="member.status === 'Active' ? 'mp-badge--green' : 'mp-badge--red'">
+                      {{ member.status || '—' }}
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <h3 class="mp-profile-section-title" style="margin-top: 28px;">Reading Summary</h3>
+              <div class="mp-profile-stats">
+                <div class="mp-pstat">
+                  <div class="mp-pstat__val">{{ loans.length }}</div>
+                  <div class="mp-pstat__label">Current Loans</div>
+                </div>
+                <div class="mp-pstat">
+                  <div class="mp-pstat__val">{{ holds.length }}</div>
+                  <div class="mp-pstat__label">Holds</div>
+                </div>
+                <div class="mp-pstat">
+                  <div class="mp-pstat__val">{{ history.length }}</div>
+                  <div class="mp-pstat__label">Books Returned</div>
+                </div>
+                <div class="mp-pstat">
+                  <div class="mp-pstat__val">{{ overdueCount }}</div>
+                  <div class="mp-pstat__label">Overdue</div>
+                </div>
+              </div>
+            } @else {
+              <div style="text-align:center; padding: 40px;">
+                <mat-spinner diameter="40" style="margin: auto;"></mat-spinner>
+                <p style="margin-top: 16px; color: #888;">Loading profile…</p>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+
+  </main>
+</div>

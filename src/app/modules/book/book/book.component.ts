@@ -11,9 +11,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-book',
-  templateUrl: './book.component.html',
-  styleUrls: ['./book.component.css'],
+    selector: 'app-book',
+    templateUrl: './book.component.html',
+    styleUrls: ['./book.component.css'],
+    standalone: false
 })
 export class BookComponent extends URLLoader implements OnInit {
   showsummary: boolean = false;
@@ -108,7 +109,6 @@ export class BookComponent extends URLLoader implements OnInit {
   }
 
   filter(data) {
-    console.log(data);
     if (data == null) {
       super.show('Search Result', 'No result !', 'info');
     } else {
@@ -239,7 +239,6 @@ export class BookComponent extends URLLoader implements OnInit {
   getMenuByLang(lang) {
     this.httpService.getAll(CONFIG.URL_BASE + '/i18n/menu/EN').subscribe(
       (data) => {
-        console.log(data);
         this.httpService.menuI18n.next(data);
       },
       (err: HttpErrorResponse) => {
@@ -379,7 +378,6 @@ export class BookComponent extends URLLoader implements OnInit {
   fetchMarkdownFile(): void {
     this.httpService.getDocs('assets/documentation/modules/catalog.html')
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }
@@ -393,7 +391,6 @@ export class BookComponent extends URLLoader implements OnInit {
       // Fetch book information from Google Books API
       this.httpService.getBookByISBN(this.isbn).subscribe(
         (response: any) => {
-          console.log(response)
           if (response.items && response.items.length > 0) {
             const bookInfo = response.items[0].volumeInfo;
 
@@ -427,7 +424,6 @@ export class BookComponent extends URLLoader implements OnInit {
               category: bookInfo.categories ? bookInfo.categories.join(', ') : '',
               departement:''
             };
-            console.log(this.bookData)
 
             
           }
@@ -442,11 +438,9 @@ export class BookComponent extends URLLoader implements OnInit {
 
 
   onSubmitOpenLibrary() {
-      console.log(this.isbn)
       // Fetch book information from Open Library API
       this.httpService.getBookByISBNOpenLibrary(this.isbn).subscribe(
         (response: any) => {
-          console.log(response)
           if (response.docs && response.docs.length > 0) {
             const bookInfo = response.docs[0];
 
@@ -477,10 +471,7 @@ export class BookComponent extends URLLoader implements OnInit {
             this.catalogItem.notes= bookInfo.notes || '',
             this.catalogItem.pdf= '',  // Not available in Open Library API
             this.catalogItem.link= `https://openlibrary.org${bookInfo.key}`,
-            this.catalogItem.category= null,
-            
-
-            console.log(this.bookData)
+            this.catalogItem.category= null;
 
             const bookDetails = `
             Title: ${bookInfo.title}
@@ -510,7 +501,6 @@ export class BookComponent extends URLLoader implements OnInit {
             // Send the book data to the backend
            /*  this.openLibraryService.sendBookDataToBackend(this.bookData).subscribe(
               (result) => {
-                console.log('Book data sent successfully!', result);
               },
               (error) => {
                 console.error('Error sending book data to the backend', error);
@@ -532,7 +522,6 @@ export class BookComponent extends URLLoader implements OnInit {
       // Fetch book information from Library of Congress API
       this.httpService.getBookByISBNCongressLibrary(this.isbn).subscribe(
         (response: any) => {
-          console.log(response)
           if (response.results && response.results.length > 0) {
             const bookInfo = response.results[0];
   
@@ -592,7 +581,6 @@ export class BookComponent extends URLLoader implements OnInit {
             // Send the book data to the backend
             /* this.locLibraryService.sendBookDataToBackend(this.bookData).subscribe(
               (result) => {
-                console.log('Book data sent successfully!', result);
               },
               (error) => {
                 console.error('Error sending book data to the backend', error);
@@ -609,7 +597,6 @@ export class BookComponent extends URLLoader implements OnInit {
 
   
   saveCatalogItem(): void {
-    console.log(this.catalogItem);
   
     
       // Fetch book data from Google Books API using the ISBN
@@ -696,6 +683,18 @@ export class BookComponent extends URLLoader implements OnInit {
         }
       );
     
+  }
+
+  getPercent(value: number, data: any[]): number {
+    if (!data?.length) return 0;
+    const max = Math.max(...data.map(d => d.value || 0));
+    return max > 0 ? Math.round((value / max) * 100) : 0;
+  }
+
+  getSeriesPercent(value: number, series: any[]): number {
+    if (!series?.length) return 0;
+    const max = Math.max(...series.map(p => p.value || 0));
+    return max > 0 ? Math.round((value / max) * 100) : 0;
   }
   
   

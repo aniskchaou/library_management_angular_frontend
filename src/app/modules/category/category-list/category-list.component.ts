@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import { HTTPService } from 'src/app/main/services/HTTPService';
-import 'datatables.net';
-import 'datatables.net-dt/css/jquery.dataTables.css';
+// removed: datatables.net (using ngx-datatable instead)
 import { HttpClient } from '@angular/common/http';
 import CONFIG from 'src/app/main/urls/urls';
 import { BehaviorSubject } from 'rxjs';
@@ -11,9 +10,10 @@ import { ViewCategoryComponent } from '../view-category/view-category.component'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-category-list',
-  templateUrl: './category-list.component.html',
-  styleUrls: ['./category-list.component.css'],
+    selector: 'app-category-list',
+    templateUrl: './category-list.component.html',
+    styleUrls: ['./category-list.component.css'],
+    standalone: false
 })
 export class CategoryListComponent extends URLLoader implements OnInit, AfterViewInit {
   @Input() categories;
@@ -86,35 +86,26 @@ export class CategoryListComponent extends URLLoader implements OnInit, AfterVie
 
   // Row selection
   onSelect({ selected }): void {
-    console.log('Selected row:', selected);
     this.selected = [...selected];
   }
 
   // Row activation event
   onActivate(event): void {
-    console.log('Activate Event:', event);
   }
 
   // Edit row logic
   editRow(row): void {
-    console.log('Edit row:', row);
     this.editCategory(row);
   }
 
   openViewDialog(category: Category): void {
-    const modalRef = this.modalService.open(ViewCategoryComponent); // Open the CategoryViewComponent in modal
-    modalRef.componentInstance.category = { ...category }; // Pass category data
-
-    console.log(category); // Ensure category is passed properly and logged
-
-    modalRef.result.then(result => {
-      console.log(result); // Handle any result (if needed)
-    }).catch(error => console.log(error)); // Handle any errors
+    const modalRef = this.modalService.open(ViewCategoryComponent, { size: 'xl', centered: true });
+    modalRef.componentInstance.category = { ...category };
+    modalRef.result.then(() => {}).catch(() => {});
   }
 
   // Delete row logic
   deleteRow(row): void {
-    console.log('Delete row:', row);
     this.categories = this.categories.filter(r => r !== row);
     this.categories$.next(this.categories); // Update observable
     this.deleteCategory(row);
@@ -122,7 +113,6 @@ export class CategoryListComponent extends URLLoader implements OnInit, AfterVie
 
   // Trigger edit event
   editCategory(value): void {
-    console.log(value)
     this.editEvent.emit(value);
   }
 

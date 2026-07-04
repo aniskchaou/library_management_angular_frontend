@@ -10,9 +10,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-edit-type-member',
-  templateUrl: './edit-type-member.component.html',
-  styleUrls: ['./edit-type-member.component.css'],
+    selector: 'app-edit-type-member',
+    templateUrl: './edit-type-member.component.html',
+    styleUrls: ['./edit-type-member.component.css'],
+    standalone: false
 })
 export class EditTypeMemberComponent extends URLLoader implements OnInit {
   model;
@@ -51,7 +52,6 @@ export class EditTypeMemberComponent extends URLLoader implements OnInit {
       .get(CONFIG.URL_BASE + '/typemember/' + this.id)
       .subscribe((data: Publisher) => {
         this.model = data;
-        console.log(this.model);
       });
   }
 

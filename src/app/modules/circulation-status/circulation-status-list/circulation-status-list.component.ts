@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-circulation-status-list',
-  templateUrl: './circulation-status-list.component.html',
-  styleUrls: ['./circulation-status-list.component.css'],
+    selector: 'app-circulation-status-list',
+    templateUrl: './circulation-status-list.component.html',
+    styleUrls: ['./circulation-status-list.component.css'],
+    standalone: false
 })
 export class CirculationStatusListComponent
   extends URLLoader
@@ -54,13 +55,12 @@ export class CirculationStatusListComponent
     );
     modalRef.componentInstance.model = { ...circulation }; // Ensure category is passed properly
   
-    console.log(circulation); // Ensure category is not undefined here
+
 
     modalRef.result.then(result => {
-      console.log(result)
        //this.getAll()
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   delete(id: number): void {

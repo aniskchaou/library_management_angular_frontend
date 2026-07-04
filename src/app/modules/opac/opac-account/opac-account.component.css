@@ -1,0 +1,144 @@
+/* ── Root ────────────────────────────────────────────────────────────────── */
+.opac-acc-root { min-height: 100vh; background: #f4f6fb; }
+
+/* ── Top bar (shared with search page) ──────────────────────────────────── */
+.opac-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; height: 56px;
+  background: #1a237e; color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+.opac-topbar__brand { display: flex; align-items: center; gap: 8px; font-size: 1.1rem; font-weight: 700; }
+.opac-topbar__tag {
+  background: rgba(255,255,255,.15); padding: 2px 8px; border-radius: 20px;
+  font-size: .7rem; letter-spacing: .06em; text-transform: uppercase;
+}
+.opac-topbar__back { color: rgba(255,255,255,.9) !important; border-color: rgba(255,255,255,.4) !important; }
+
+/* ── Login card ──────────────────────────────────────────────────────────── */
+.opac-acc-login-wrap {
+  display: flex; align-items: center; justify-content: center;
+  min-height: calc(100vh - 56px); padding: 2rem;
+}
+.opac-acc-login-card { max-width: 420px; width: 100%; border-radius: 14px !important; }
+.opac-acc-login__error {
+  display: flex; align-items: center; gap: 6px;
+  background: #fce4ec; color: #b71c1c; padding: 10px 14px; border-radius: 8px; margin-bottom: 1rem; font-size: .85rem;
+}
+.opac-acc-login__field { width: 100%; margin-bottom: .5rem; }
+.opac-acc-login__btn { width: 100%; height: 44px; }
+mat-card-footer .opac-acc-login__note {
+  font-size: .78rem; color: #6c757d; padding: 8px 16px 12px; margin: 0; text-align: center; line-height: 1.5;
+}
+
+/* ── Account body ───────────────────────────────────────────────────────── */
+.opac-acc-body { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+
+/* ── Profile header ──────────────────────────────────────────────────────── */
+.opac-acc-profile {
+  display: flex; align-items: center; gap: 16px;
+  background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 1.25rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+.opac-acc-profile__avatar {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: #1a237e; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; font-weight: 800; flex-shrink: 0;
+}
+.opac-acc-profile__name { font-size: 1.1rem; font-weight: 700; color: #212529; }
+.opac-acc-profile__email { font-size: .85rem; color: #6c757d; }
+.opac-acc-profile__logout { margin-left: auto; }
+
+/* ── Stats row ───────────────────────────────────────────────────────────── */
+.opac-acc-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 1.25rem;
+}
+.opac-acc-stat {
+  background: #fff; border-radius: 10px; padding: 16px; text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+.opac-acc-stat__num { font-size: 2rem; font-weight: 800; color: #1a237e; }
+.opac-acc-stat__num--warn   { color: #b71c1c; }
+.opac-acc-stat__num--accent { color: #1565c0; }
+.opac-acc-stat__num--muted  { color: #6c757d; }
+.opac-acc-stat__label { font-size: .78rem; color: #6c757d; text-transform: uppercase; letter-spacing: .04em; }
+
+/* ── Tab bar ─────────────────────────────────────────────────────────────── */
+.opac-acc-tabs {
+  display: flex; gap: 0; border-bottom: 2px solid #e8eaf6; margin-bottom: 1.25rem;
+  background: #fff; border-radius: 10px 10px 0 0; overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.opac-acc-tab {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 12px 16px; border: none; background: transparent;
+  font-size: .85rem; color: #6c757d; cursor: pointer; transition: all .15s;
+  border-bottom: 3px solid transparent; margin-bottom: -2px;
+}
+.opac-acc-tab mat-icon { font-size: 18px; width: 18px; height: 18px; }
+.opac-acc-tab__count {
+  background: #e8eaf6; color: #3f51b5; padding: 1px 7px; border-radius: 20px;
+  font-size: .72rem; font-weight: 700; margin-left: 2px;
+}
+.opac-acc-tab:hover { color: #1a237e; background: #f4f6fb; }
+.opac-acc-tab--active { color: #1a237e; font-weight: 700; border-bottom-color: #1a237e; }
+
+/* ── Content panel ───────────────────────────────────────────────────────── */
+.opac-acc-content { background: #fff; border-radius: 0 0 12px 12px; padding: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+
+/* ── Loan rows ───────────────────────────────────────────────────────────── */
+.opac-acc-loan-row {
+  display: flex; align-items: flex-start; gap: 12px; padding: 12px 0;
+  border-bottom: 1px solid #f4f6fb;
+}
+.opac-acc-loan-row:last-child { border-bottom: none; }
+.opac-acc-loan-row--overdue { background: #fff5f5; border-radius: 8px; padding: 12px; margin-bottom: 4px; }
+.opac-acc-loan-row__thumb {
+  width: 44px; height: 64px; object-fit: cover; border-radius: 4px; flex-shrink: 0; background: #e8eaf6;
+}
+.opac-acc-loan-row__body { flex: 1; min-width: 0; }
+.opac-acc-loan-row__title { font-weight: 700; font-size: .9rem; color: #212529; margin-bottom: 5px; }
+.opac-acc-loan-row__meta {
+  display: flex; flex-wrap: wrap; gap: 10px; font-size: .78rem; color: #6c757d;
+}
+.opac-acc-loan-row__meta span { display: flex; align-items: center; gap: 3px; }
+.opac-acc-loan-row__meta mat-icon { font-size: 14px; width: 14px; height: 14px; }
+.opac-acc-fine { color: #b71c1c !important; font-weight: 600; }
+.opac-acc-loan-row__right { flex-shrink: 0; }
+
+/* Due badges */
+.opac-acc-badge {
+  display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: .75rem; font-weight: 700;
+}
+.opac-acc-badge--ok       { background: #e8f5e9; color: #2e7d32; }
+.opac-acc-badge--soon     { background: #fff8e1; color: #f57f17; }
+.opac-acc-badge--overdue  { background: #fce4ec; color: #b71c1c; }
+.opac-acc-badge--returned { background: #ede7f6; color: #4527a0; }
+.opac-acc-badge--hold     { background: #e3f2fd; color: #0d47a1; }
+
+/* ── Empty state ─────────────────────────────────────────────────────────── */
+.opac-acc-empty { text-align: center; padding: 3rem 1rem; color: #6c757d; }
+.opac-acc-empty mat-icon { font-size: 48px; width: 48px; height: 48px; opacity: .3; margin-bottom: .75rem; }
+.opac-acc-empty p { margin-bottom: 1rem; }
+
+/* ── Profile tab ─────────────────────────────────────────────────────────── */
+.opac-profile-card { border: 1px solid #e8eaf6; border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
+.opac-profile-row {
+  display: grid; grid-template-columns: 24px 140px 1fr;
+  align-items: center; gap: 10px; padding: 10px 14px;
+  border-bottom: 1px solid #f4f6fb; font-size: .88rem;
+}
+.opac-profile-row:last-child { border-bottom: none; }
+.opac-profile-row mat-icon { color: #6c757d; font-size: 18px; width: 18px; height: 18px; }
+.opac-profile-row__label { font-weight: 600; color: #6c757d; font-size: .78rem; text-transform: uppercase; letter-spacing: .03em; }
+.opac-profile-note { font-size: .8rem; color: #6c757d; text-align: center; }
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 680px) {
+  .opac-acc-stats { grid-template-columns: repeat(2, 1fr); }
+  .opac-acc-tabs { flex-wrap: wrap; }
+  .opac-acc-tab span:not(.opac-acc-tab__count) { display: none; }
+  .opac-topbar { padding: 0 1rem; }
+  .opac-profile-row { grid-template-columns: 24px 100px 1fr; }
+}

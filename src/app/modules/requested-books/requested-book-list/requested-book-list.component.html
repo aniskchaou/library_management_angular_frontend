@@ -1,78 +1,83 @@
 <table class="table table-bordered" id="dataTabled" width="100%" cellspacing="0">
   <thead>
     <tr>
-      <th>{{ requestedBookI18n?.bookI18n }}</th>
-      <th>{{ requestedBookI18n?.writerI18n }}</th>
-      <th>{{ requestedBookI18n?.ctagoryI18n }}</th>
-      <th>{{ requestedBookI18n?.memberI18n }}</th>
-      <th>status</th>
+      <th>{{ 'requestedbook.colBook' | translate }}</th>
+      <th>{{ 'requestedbook.colWriter' | translate }}</th>
+      <th>{{ 'requestedbook.colCategory' | translate }}</th>
+      <th>{{ 'requestedbook.colMember' | translate }}</th>
+      <th>{{ 'ui.status' | translate }}</th>
       <th></th>
     </tr>
   </thead>
   <tfoot>
     <tr>
-      <th>{{ requestedBookI18n?.bookI18n }}</th>
-      <th>{{ requestedBookI18n?.writerI18n }}</th>
-      <th>{{ requestedBookI18n?.ctagoryI18n }}</th>
-      <th>{{ requestedBookI18n?.memberI18n }}</th>
-      <th>status"</th>
+      <th>{{ 'requestedbook.colBook' | translate }}</th>
+      <th>{{ 'requestedbook.colWriter' | translate }}</th>
+      <th>{{ 'requestedbook.colCategory' | translate }}</th>
+      <th>{{ 'requestedbook.colMember' | translate }}</th>
+      <th>{{ 'ui.status' | translate }}</th>
       <th></th>
     </tr>
   </tfoot>
   <tbody>
-    <tr *ngFor="let item of requiredBook">
-      <td>{{ item?.book?.title }}</td>
-      <td>{{ item?.writer?.name }}</td>
-      <td>{{ item?.ctagory?.category_name }}</td>
-      <td>{{ item?.member?.name }}</td>
-      <td>
-        <span class="badge badge-info">{{ item?.status }}</span>
-      </td>
-      <td>
-        <button
-          (click)="view(item.id)"
-          href="#view"
-          role="button"
-          data-toggle="modal"
-          class="btn btn-primary btn-sm"
-        >
-          <i class="fas fa-eye"></i>
-        </button>
-        <!--
-        <button
-          type="button"
-          data-toggle="modal"
-          (click)="edit(item.id)"
-          data-target="#edit"
-          class="btn btn-warning btn-sm"
-        >
-          <i class="fas fa-edit"></i>
-        </button>-->
-        <button
-          *ngIf="item?.status === defautstatus"
-          type="button"
-          class="btn btn-danger btn-sm"
-          (click)="delete(item.id)"
-        >
-          <i class="fas fa-trash-alt"></i>
-        </button>
-        <button
-          *ngIf="item?.status === defautstatus"
-          type="button"
-          class="btn btn-success btn-sm"
-          (click)="resolve(item.id)"
-        >
-          <i class="fa fa-check" aria-hidden="true"></i>
-        </button>
-        <button
-          *ngIf="item?.status === defautstatus"
-          type="button"
-          class="btn btn-warning btn-sm"
-          (click)="reject(item.id)"
-        >
-          <i class="fa fa-ban" aria-hidden="true"></i>
-        </button>
-      </td>
-    </tr>
+    @for (item of requiredBook; track item) {
+      <tr>
+        <td>{{ item?.book?.title }}</td>
+        <td>{{ item?.writer?.name }}</td>
+        <td>{{ item?.ctagory?.category_name }}</td>
+        <td>{{ item?.member?.name }}</td>
+        <td>
+          <span class="badge badge-info">{{ item?.status }}</span>
+        </td>
+        <td>
+          <button
+            (click)="view(item.id)"
+            href="#view"
+            role="button"
+            data-toggle="modal"
+            class="btn btn-primary btn-sm"
+            >
+            <i class="fas fa-eye"></i>
+          </button>
+          <!--
+          <button
+            type="button"
+            data-toggle="modal"
+            (click)="edit(item.id)"
+            data-target="#edit"
+            class="btn btn-warning btn-sm"
+            >
+            <i class="fas fa-edit"></i>
+          </button>-->
+          @if (item?.status === defautstatus) {
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              (click)="delete(item.id)"
+              >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          }
+          @if (item?.status === defautstatus) {
+            <button
+              type="button"
+              class="btn btn-success btn-sm"
+              (click)="resolve(item.id)"
+              >
+              <i class="fa fa-check" aria-hidden="true"></i>
+            </button>
+          }
+          @if (item?.status === defautstatus) {
+            <button
+              type="button"
+              class="btn btn-warning btn-sm"
+              (click)="reject(item.id)"
+              >
+              <i class="fa fa-ban" aria-hidden="true"></i>
+            </button>
+          }
+        </td>
+      </tr>
+    }
   </tbody>
 </table>

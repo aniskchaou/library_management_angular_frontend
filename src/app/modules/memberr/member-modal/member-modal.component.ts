@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-member-modal',
-  templateUrl: './member-modal.component.html',
-  styleUrls: ['./member-modal.component.css'],
+    selector: 'app-member-modal',
+    templateUrl: './member-modal.component.html',
+    styleUrls: ['./member-modal.component.css'],
+    standalone: false
 })
 export class MemberModalComponent implements OnInit {
   constructor() {}

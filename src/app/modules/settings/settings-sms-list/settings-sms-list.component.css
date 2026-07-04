@@ -1,0 +1,30 @@
+:host { display: block; }
+
+.ll-sms-list { display: flex; flex-direction: column; gap: 16px; }
+.ll-sms-list__search { width: 100%; max-width: 420px; }
+
+/* ── Cards grid ──────────────────────────────────────────────────────────── */
+.ll-sms-cards { display: flex; flex-direction: column; gap: 12px; }
+.ll-sms-card { transition: box-shadow .15s; }
+.ll-sms-card:hover { box-shadow: 0 4px 16px rgba(26,35,126,.12) !important; }
+.ll-sms-card__body {
+  display: flex !important; align-items: center; gap: 20px; padding: 16px !important;
+}
+
+/* Icon */
+.ll-sms-card__icon-wrap {
+  flex-shrink: 0; width: 48px; height: 48px;
+  border-radius: 12px; background: #e8eaf6;
+  display: flex; align-items: center; justify-content: center;
+}
+.ll-sms-card__icon { color: #3949ab; font-size: 26px; width: 26px; height: 26px; }
+
+/* Details */
+.ll-sms-card__details { flex: 1; min-width: 0; }
+.ll-sms-card__name { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: rgba(0,0,0,.85); }
+.ll-sms-card__meta { display: flex; flex-wrap: wrap; gap: 14px; }
+.ll-sms-card__meta span { display: flex; align-items: center; gap: 4px; font-size: 13px; color: rgba(0,0,0,.55); }
+.ll-sms-card__meta mat-icon { font-size: 15px; width: 15px; height: 15px; }
+
+/* Actions */
+.ll-sms-card__actions { flex-shrink: 0; }

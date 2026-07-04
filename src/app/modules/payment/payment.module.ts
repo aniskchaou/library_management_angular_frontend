@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { SharedModule } from '../shared/shared.module';
@@ -10,21 +10,15 @@ import { ModalPaymentComponent } from './modal-payment/modal-payment.component';
 import { AddPaymentComponent } from './add-payment/add-payment.component';
 import { PaymentListComponent } from './payment-list/payment-list.component';
 
-@NgModule({
-  declarations: [
-    PaymentComponent,
-    MemberShipPlanComponent,
-    ModalPaymentComponent,
-    AddPaymentComponent,
-    PaymentListComponent,
-  ],
-  imports: [
-    SharedModule,
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    CommonModule,
-  ],
-})
+@NgModule({ declarations: [
+        PaymentComponent,
+        MemberShipPlanComponent,
+        ModalPaymentComponent,
+        AddPaymentComponent,
+        PaymentListComponent,
+    ], imports: [SharedModule,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class PaymentModule {}

@@ -8,9 +8,10 @@ import { EditPasswordComponent } from 'src/app/modules/shared/edit-password/edit
 import { UploadProfilePhotoComponent } from '../upload-profile-photo/upload-profile-photo.component';
 
 @Component({
-  selector: 'app-view-user-profile',
-  templateUrl: './view-user-profile.component.html',
-  styleUrls: ['./view-user-profile.component.css']
+    selector: 'app-view-user-profile',
+    templateUrl: './view-user-profile.component.html',
+    styleUrls: ['./view-user-profile.component.css'],
+    standalone: false
 })
 export class ViewUserProfileComponent implements OnInit {
   user;
@@ -33,7 +34,6 @@ export class ViewUserProfileComponent implements OnInit {
         this.user = data;
       },
       (err: HttpErrorResponse) => {
-        console.log(err)
       }
     );
   }
@@ -48,7 +48,7 @@ export class ViewUserProfileComponent implements OnInit {
           this.loadDepartments();
         }); */
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   onChangeProfilePhoto(){
@@ -61,7 +61,7 @@ export class ViewUserProfileComponent implements OnInit {
           this.loadDepartments();
         }); */
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
  

@@ -1,316 +1,134 @@
-<!-- Topbar Navbar -->
-<ul class="navbar-nav ml-auto">
-  <li class="nav-item no-arrow mx-1">
-    <a href="#" class="nav-link" (click)="toggleFullScreen()">
-      <i class="fas fa-expand"></i>
-    </a>
-  </li>
-  <li class="nav-item no-arrow mx-1"><a routerLink="/help" class="nav-link"><i class="fas fa-question-circle"></i></a></li>
-  <li class="nav-item dropdown no-arrow mx-1">
-    <a
-      class="nav-link dropdown-toggle"
-      href="#"
-      id="alertsDropdown"
-      role="button"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
-    >
-      <span *ngIf="sysLang == 'EN'" class="flag-icon flag-icon-us"></span>
-      <span *ngIf="sysLang == 'AR'" class="flag-icon flag-icon-ae"></span>
-      <span *ngIf="sysLang == 'HN'" class="flag-icon flag-icon-in"></span>
-      <span *ngIf="sysLang == 'BN'" class="flag-icon flag-icon-bd"></span>
+<!-- Topbar — Angular Material -->
+<div class="ll-topbar">
 
-      <span class="badge badge-danger badge-counter">4</span>
-    </a>
+  <button mat-icon-button (click)="toggleFullScreen()" matTooltip="Fullscreen">
+    <mat-icon>fullscreen</mat-icon>
+  </button>
 
-    <div
-      class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-      aria-labelledby="alertsDropdown"
-    >
-    <h6 class="dropdown-header">Languages</h6>
-      <a
-  (click)="changeLang('EN')"
-  class="dropdown-item d-flex align-items-center"
-   style="cursor: pointer;"
->
-  <div class="mr-3"><span class="flag-icon flag-icon-us"></span></div>
-  <div>
-    <span class="font-weight-bold">English</span>
-  </div>
-</a>
-
-<a
-  (click)="changeLang('AR')"
-  class="dropdown-item d-flex align-items-center"
-  [class.disabled]="currentLang === 'EN'"
-  [attr.title]="currentLang === 'EN' ? 'This feature is inactive temporarily.' : null"
->
-  <div class="mr-3"><span class="flag-icon flag-icon-ae"></span></div>
-  <div>
-    <span class="font-weight-bold">عربى</span>
-  </div>
-</a>
-
-<a
-  (click)="changeLang('HN')"
-  class="dropdown-item d-flex align-items-center"
-  [class.disabled]="currentLang === 'EN'"
-  [attr.title]="currentLang === 'EN' ? 'This feature is inactive temporarily.' : null"
->
-  <div class="mr-3"><span class="flag-icon flag-icon-in"></span></div>
-  <div>
-    <span class="font-weight-bold">हिन्दी</span>
-  </div>
-</a>
-
-<a
-  (click)="changeLang('BN')"
-  class="dropdown-item d-flex align-items-center"
-  [class.disabled]="currentLang === 'EN'"
-  [attr.title]="currentLang === 'EN' ? 'This feature is inactive temporarily.' : null"
->
-  <div class="mr-3"><span class="flag-icon flag-icon-bd"></span></div>
-  <div>
-    <span class="font-weight-bold">বাংলা</span>
-  </div>
-</a>
-    </div>
-  </li>
-
-  <li class="nav-item dropdown no-arrow mx-1">
-    <a (click)="onNotificationClick()" class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-bell fa-fw"></i>
-        <span class="badge badge-danger badge-counter">{{ notifications.length }}+</span>
-    </a>
-    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-        <h6 class="dropdown-header">
-            notifications
-        </h6>
-        <div class="notification-scroll">
-        <ng-container *ngFor="let notification of notifications">
-            <a class="dropdown-item d-flex align-items-center">
-                <div class="mr-3">
-                    <div class="icon-circle" [ngClass]="{
-                        'bg-primary': notification.type === 'info',
-                        'bg-success': notification.type === 'success',
-                        'bg-warning': notification.type === 'warning',
-                        'bg-danger': notification.type === 'error'
-                    }">
-                        <i [ngClass]="{
-                          'fa fa-info-circle text-white': notification.type === 'info',
-                          'fas fa-check-circle text-white': notification.type === 'success',
-                          'fa fa-exclamation-circle text-white': notification.type === 'warning',
-                          'fa fa-times text-white': notification.type === 'error'
-                        }"></i>
-                    </div>
-                </div>
-                <div>
-                    <div class="small text-gray-500">{{ notification.date | date: 'short' }}</div>
-                    <span class="font-weight-bold">{{ notification.content }}</span>
-                </div>
-            </a>
-        </ng-container>
-      </div>
-
-        <a class="dropdown-item text-center small text-gray-500" >Show All Alerts</a>
-    </div>
-</li>
-
-
-  <!-- <li class="nav-item dropdown no-arrow mx-1">
-    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-bell fa-fw"></i>
-        <span class="badge badge-danger badge-counter">3+</span>
-    </a>
-    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-        <h6 class="dropdown-header">
-            Alerts Center
-        </h6>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-            <div class="mr-3">
-                <div class="icon-circle bg-primary">
-                    <i class="fas fa-file-alt text-white"></i>
-                </div>
-            </div>
-            <div>
-                <div class="small text-gray-500">December 12, 2019</div>
-                <span class="font-weight-bold">A new monthly report is ready to download!</span>
-            </div>
-        </a>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-            <div class="mr-3">
-                <div class="icon-circle bg-success">
-                    <i class="fas fa-donate text-white"></i>
-                </div>
-            </div>
-            <div>
-                <div class="small text-gray-500">December 7, 2019</div>
-                $290.29 has been deposited into your account!
-            </div>
-        </a>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-            <div class="mr-3">
-                <div class="icon-circle bg-warning">
-                    <i class="fas fa-exclamation-triangle text-white"></i>
-                </div>
-            </div>
-            <div>
-                <div class="small text-gray-500">December 2, 2019</div>
-                Spending Alert: We've noticed unusually high spending for your account.
-            </div>
-        </a>
-        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-    </div>
-</li> -->
-
-<!-- <li class="nav-item dropdown no-arrow mx-1">
-  <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <i class="fas fa-plus fa-fw"></i>
-      
+  <a mat-icon-button routerLink="/help" matTooltip="Help">
+    <mat-icon>help_outline</mat-icon>
   </a>
-  <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-      <h6 class="dropdown-header">
-          Alerts Center
-      </h6>
-      <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="mr-3">
-              <div class="icon-circle bg-primary">
-                  <i class="fas fa-file-alt text-white"></i>
-              </div>
-          </div>
-          <div>
-              <div class="small text-gray-500">December 12, 2019</div>
-              <span class="font-weight-bold">A new monthly report is ready to download!</span>
-          </div>
-      </a>
-      <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="mr-3">
-              <div class="icon-circle bg-success">
-                  <i class="fas fa-donate text-white"></i>
-              </div>
-          </div>
-          <div>
-              <div class="small text-gray-500">December 7, 2019</div>
-              $290.29 has been deposited into your account!
-          </div>
-      </a>
-      <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="mr-3">
-              <div class="icon-circle bg-warning">
-                  <i class="fas fa-exclamation-triangle text-white"></i>
-              </div>
-          </div>
-          <div>
-              <div class="small text-gray-500">December 2, 2019</div>
-              Spending Alert: We've noticed unusually high spending for your account.
-          </div>
-      </a>
-      <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-  </div>
-</li> -->
 
-  <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-  <li class="nav-item dropdown no-arrow d-sm-none">
-    <a
-      class="nav-link dropdown-toggle"
-      href="#"
-      id="searchDropdown"
-      role="button"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
-    >
-      <i class="fas fa-search fa-fw"></i>
-    </a>
-    <!-- Dropdown - Messages -->
-    <div
-      class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-      aria-labelledby="searchDropdown"
-    >
-      <form class="form-inline mr-auto w-100 navbar-search">
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control bg-light border-0 small"
-            placeholder="Search for Books, Authors, Categories, Publishers"
-            aria-label="Search"
-            aria-describedby="basic-addon2"
-          />
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
-              <i class="fas fa-search fa-sm"></i>
-            </button>
-          </div>
-        </div>
-      </form>
+  <!-- Languages -->
+  <button mat-icon-button [matMenuTriggerFor]="langMenu" matTooltip="Language">
+    @if (sysLang == 'EN') {
+      <span class="flag-icon flag-icon-us"></span>
+    }
+    @if (sysLang == 'VI') {
+      <span class="flag-icon flag-icon-vn"></span>
+    }
+    @if (sysLang == 'AR') {
+      <span class="flag-icon flag-icon-ae"></span>
+    }
+    @if (sysLang == 'HN') {
+      <span class="flag-icon flag-icon-in"></span>
+    }
+    @if (sysLang == 'BN') {
+      <span class="flag-icon flag-icon-bd"></span>
+    }
+  </button>
+  <mat-menu #langMenu="matMenu" xPosition="before">
+    <button mat-menu-item (click)="changeLang('EN')">
+      <span class="flag-icon flag-icon-us"></span>
+      <span class="ll-menu-label">English</span>
+    </button>
+    <button mat-menu-item (click)="changeLang('VI')">
+      <span class="flag-icon flag-icon-vn"></span>
+      <span class="ll-menu-label">Tiếng Việt</span>
+    </button>
+    <button mat-menu-item (click)="changeLang($any('AR'))" disabled
+      matTooltip="Coming soon">
+      <span class="flag-icon flag-icon-ae"></span>
+      <span class="ll-menu-label">عربى</span>
+    </button>
+    <button mat-menu-item (click)="changeLang($any('HN'))" disabled
+      matTooltip="Coming soon">
+      <span class="flag-icon flag-icon-in"></span>
+      <span class="ll-menu-label">हिन्दी</span>
+    </button>
+    <button mat-menu-item (click)="changeLang($any('BN'))" disabled
+      matTooltip="Coming soon">
+      <span class="flag-icon flag-icon-bd"></span>
+      <span class="ll-menu-label">বাংলা</span>
+    </button>
+  </mat-menu>
+
+  <!-- Notifications -->
+  <button mat-icon-button (click)="onNotificationClick()"
+    [matMenuTriggerFor]="notifMenu"
+    matTooltip="Notifications"
+    class="ll-notif-btn">
+    <mat-icon
+      [matBadge]="notifications?.length || 0"
+      [matBadgeHidden]="!notifications?.length"
+      matBadgeColor="warn"
+      matBadgeSize="small">notifications</mat-icon>
+  </button>
+  <mat-menu #notifMenu="matMenu" xPosition="before" class="ll-notif-menu">
+    <div class="ll-menu-header">Notifications</div>
+    @for (notification of notifications; track notification) {
+      <button mat-menu-item class="ll-notif-item">
+        <span class="ll-notif-icon"
+          [class.ll-notif-icon--info]="notification.type === 'info'"
+          [class.ll-notif-icon--success]="notification.type === 'success'"
+          [class.ll-notif-icon--warning]="notification.type === 'warning'"
+          [class.ll-notif-icon--danger]="notification.type === 'error'">
+          <mat-icon>
+            {{ notification.type === 'info' ? 'info'
+            : notification.type === 'success' ? 'check_circle'
+            : notification.type === 'warning' ? 'warning'
+            : 'error' }}
+          </mat-icon>
+        </span>
+        <span class="ll-notif-body">
+          <small class="ll-notif-date">{{ notification.date | date: 'short' }}</small>
+          <span class="ll-notif-text">{{ notification.content }}</span>
+        </span>
+      </button>
+    }
+    <button mat-menu-item class="ll-notif-footer">Show All Alerts</button>
+  </mat-menu>
+
+  <span class="ll-topbar__divider"></span>
+
+  <!-- User menu -->
+  <button mat-icon-button [matMenuTriggerFor]="userMenu" class="ll-user-trigger" matTooltip="My Account">
+    <img class="ll-user-avatar" [src]="retrievedImage" alt="profile" />
+  </button>
+
+  <mat-menu #userMenu="matMenu" xPosition="before">
+    <div class="ll-user-menu-header" (click)="$event.stopPropagation()">
+      <img class="ll-user-menu-avatar" [src]="retrievedImage" alt="profile" />
+      <div class="ll-user-menu-info">
+        <div class="ll-user-menu-name">{{ (userObject?.firstName | titlecase) + ' ' + (userObject?.lastName | titlecase) }}</div>
+        <div class="ll-user-menu-role">{{ user }}</div>
+      </div>
     </div>
-  </li>
-
-  <div class="topbar-divider d-none d-sm-block"></div>
-
-  <!-- Nav Item - User Information -->
-  <li class="nav-item dropdown no-arrow">
-    <a
-      class="nav-link dropdown-toggle"
-      href="#"
-      id="userDropdown"
-      role="button"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
-    >
-      <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ 
-        (userObject?.firstName ? userObject.firstName.charAt(0).toUpperCase() + userObject.firstName.slice(1).toLowerCase() : '') + 
-        ' ' + 
-        (userObject?.lastName ? userObject.lastName.charAt(0).toUpperCase() + userObject.lastName.slice(1).toLowerCase() : '') 
-      }}
-      </span>
-      <img
-        class="img-profile rounded-circle"
-        [src]="retrievedImage"
-      />
+    <mat-divider></mat-divider>
+    <a mat-menu-item routerLink="/profile">
+      <mat-icon>person</mat-icon>
+      <span>My Profile</span>
     </a>
-    <!-- Dropdown - User Information -->
-    <div
-      class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-      aria-labelledby="userDropdown"
-    >
-        <!-- My Profile -->
-      <a routerLink="/profile" class="dropdown-item" href="#">
-        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-        My Profile
-      </a>
-
-      <!-- Change Profile Photo -->
-      <a (click)="openProfilePhotoDialog()" class="dropdown-item" >
-        <i class="fas fa-camera fa-sm fa-fw mr-2 text-gray-400"></i>
-        Change Profile Photo
-      </a>
-
-      <a (click)="openLogoDialog()" class="dropdown-item" >
-        <i class="fas fa-id-card fa-sm fa-fw mr-2 text-gray-400"></i>
-        Change Logo
-      </a>
-
-      <!-- Change Password -->
-      <a (click)="openPasswordDialog()" class="dropdown-item">
-        <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
-        Change Password
-      </a>
-      <a routerLink="/settings" class="dropdown-item" href="#">
-        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-        {{ menuI18n.settingsI18n }}
-      </a>
-      <!--  <a class="dropdown-item" href="#">
-                              <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                              Activity Log
-                          </a>-->
-      <div class="dropdown-divider"></div>
-      <a routerLink="/" (click)="logout()" class="dropdown-item">
-        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-        {{ menuI18n.logOutI18n }}
-      </a>
-    </div>
-  </li>
-</ul>
+    <button mat-menu-item (click)="openProfilePhotoDialog()">
+      <mat-icon>photo_camera</mat-icon>
+      <span>Change Profile Photo</span>
+    </button>
+    <button mat-menu-item (click)="openLogoDialog()">
+      <mat-icon>badge</mat-icon>
+      <span>Change Logo</span>
+    </button>
+    <button mat-menu-item (click)="openPasswordDialog()">
+      <mat-icon>vpn_key</mat-icon>
+      <span>Change Password</span>
+    </button>
+    <a mat-menu-item routerLink="/settings">
+      <mat-icon>settings</mat-icon>
+      <span>{{ 'nav.settings' | translate }}</span>
+    </a>
+    <mat-divider></mat-divider>
+    <a mat-menu-item routerLink="/" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>{{ 'nav.logout' | translate }}</span>
+    </a>
+  </mat-menu>
+</div>

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -13,12 +13,13 @@ import CONFIG from 'src/app/main/urls/urls';
 import CategoryValidation from 'src/app/main/validations/CategoryValidation';
 
 @Component({
-  selector: 'app-add-category',
-  templateUrl: './add-category.component.html',
-  styleUrls: ['./add-category.component.css'],
+    selector: 'app-add-category',
+    templateUrl: './add-category.component.html',
+    styleUrls: ['./add-category.component.css'],
+    standalone: false
 })
 export class AddCategoryComponent extends URLLoader implements OnInit {
-  categoryForm: FormGroup;
+  categoryForm: UntypedFormGroup;
   msg: CategoryMessage;
   submitted = false;
   @Output() closeModalEvent = new EventEmitter<string>();
@@ -142,16 +143,8 @@ export class AddCategoryComponent extends URLLoader implements OnInit {
   }
 
   openAddDialog(): void {
-    const modalRef = this.modalService.open(AddCategoryComponent);
-    //modalRef.componentInstance.category = { ...category }; // Ensure category is passed properly
-  
-    //console.log(category); // Ensure category is not undefined here
-
-    modalRef.result.then(result => {
-      console.log(result)
-       //this.getAll()
-      
-    }).catch(error => console.log(error));
+    const modalRef = this.modalService.open(AddCategoryComponent, { size: 'xl', centered: true });
+    modalRef.result.then(() => {}).catch(() => {});
   }
 
   getCategoryByLang(lang) {

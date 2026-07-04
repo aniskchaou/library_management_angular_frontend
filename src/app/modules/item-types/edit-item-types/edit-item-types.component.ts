@@ -5,9 +5,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-edit-item-types',
-  templateUrl: './edit-item-types.component.html',
-  styleUrls: ['./edit-item-types.component.css']
+    selector: 'app-edit-item-types',
+    templateUrl: './edit-item-types.component.html',
+    styleUrls: ['./edit-item-types.component.css'],
+    standalone: false
 })
 export class EditItemTypesComponent implements OnInit {
 

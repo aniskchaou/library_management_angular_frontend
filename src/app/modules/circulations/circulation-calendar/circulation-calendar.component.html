@@ -1,20 +1,22 @@
-<!-- Page Heading -->
-
-<div style="margin-left: 5px; height: 80%; width: 96%" class="disabled-scroll">
-  <h1 class="h3 mb-2 text-gray-800">
-    <i class="fas fa-calendar-alt mr-2"></i>{{ menu?.calendarI18n }}
-  </h1>
-  
-  <!-- Description Below Title -->
-  <p class="lead mb-4">
-    View and manage events on your calendar. Use the calendar interface to select dates, add new events, and view scheduled activities. Customize your calendar view as needed.
-  </p>
-  <ngx-event-calendar
-    [showAddButton]="false"
-    [language]="'en'"
-    [dataSource]="dataArray"
-    (dayEvents)="selectDay($event)"
-    (newEvent)="addEvent($event)"
-  >
-  </ngx-event-calendar>
+<div class="ll-page">
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <mat-icon class="ll-page__icon">calendar_month</mat-icon>
+      <div class="ll-page__title">
+        <h1>{{ 'circulation.calendarTitle' | translate }}</h1>
+        <p>View and manage circulation events on your calendar.</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="ll-page__body" appearance="outlined">
+    <mat-card-content style="min-height: 600px;">
+      <ngx-event-calendar
+        [showAddButton]="false"
+        [language]="'en'"
+        [dataSource]="dataArray"
+        (dayEvents)="selectDay($event)"
+        (newEvent)="addEvent($event)"
+      ></ngx-event-calendar>
+    </mat-card-content>
+  </mat-card>
 </div>

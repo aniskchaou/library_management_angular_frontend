@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -12,12 +12,13 @@ import CONFIG from 'src/app/main/urls/urls';
 import TypeMemberValidation from 'src/app/main/validations/TypeMemberValidation';
 
 @Component({
-  selector: 'app-add-type-member',
-  templateUrl: './add-type-member.component.html',
-  styleUrls: ['./add-type-member.component.css'],
+    selector: 'app-add-type-member',
+    templateUrl: './add-type-member.component.html',
+    styleUrls: ['./add-type-member.component.css'],
+    standalone: false
 })
 export class AddTypeMemberComponent extends URLLoader implements OnInit {
-  typeMemberForm: FormGroup;
+  typeMemberForm: UntypedFormGroup;
   msg: TypeMemberMessage;
   submitted = false;
   @Output() closeModalEvent = new EventEmitter<string>();

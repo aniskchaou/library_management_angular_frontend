@@ -6,9 +6,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-book-result-list',
-  templateUrl: './book-result-list.component.html',
-  styleUrls: ['./book-result-list.component.css'],
+    selector: 'app-book-result-list',
+    templateUrl: './book-result-list.component.html',
+    styleUrls: ['./book-result-list.component.css'],
+    standalone: false
 })
 export class BookResultListComponent extends URLLoader implements OnInit {
   @Input() word;
@@ -24,13 +25,11 @@ export class BookResultListComponent extends URLLoader implements OnInit {
     //this.loadScripts();
     this.getBookByLang(CONFIG.getInstance().getLang());
     this.getBooks(this.word);
-    console.log(this.word);
   }
 
   ngOnChanges() {
     this.getBookByLang(CONFIG.getInstance().getLang());
     this.getBooks(this.word);
-    console.log(this.word);
   }
   getBookByLang(lang) {
      lang='EN'

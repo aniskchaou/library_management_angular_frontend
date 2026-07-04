@@ -82,15 +82,21 @@ export class FileUploadService {
   }
 
   uploadImageCover(bookId,imageName,formData): Observable<HttpEvent<any>> {
-    //const formData: FormData = new FormData();
-    //formData.append('file', file);
-    console.log(CONFIG.URL_BASE+'/book/upload/'+bookId+'/'+imageName)
     const req = new HttpRequest('POST', CONFIG.URL_BASE+'/book/upload/'+bookId+'/'+imageName, formData, {
       reportProgress: true,
       responseType: 'text',
       headers:this.header
     });
 
+    return this.http.request(req);
+  }
+
+  uploadEbook(bookId: number, formData: FormData): Observable<HttpEvent<any>> {
+    const req = new HttpRequest('POST', CONFIG.URL_BASE + '/book/upload/pdf/' + bookId, formData, {
+      reportProgress: true,
+      responseType: 'text',
+      headers: this.header,
+    });
     return this.http.request(req);
   }
 }

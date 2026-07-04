@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-settings-modal',
-  templateUrl: './settings-modal.component.html',
-  styleUrls: ['./settings-modal.component.css'],
+    selector: 'app-settings-modal',
+    templateUrl: './settings-modal.component.html',
+    styleUrls: ['./settings-modal.component.css'],
+    standalone: false
 })
 export class SettingsModalComponent implements OnInit {
   constructor() {}
@@ -12,7 +13,6 @@ export class SettingsModalComponent implements OnInit {
   @Input() settingsI18n;
 
   ngOnInit(): void {
-    console.log(this.id);
   }
 
   closeModalEdit() {

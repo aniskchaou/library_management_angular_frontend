@@ -1,7 +1,7 @@
       <!-- Modal Header -->
       <div class="modal-header">
         <h5 class="modal-title" id="editCategoryModalLabel">
-          {{ circulationStatusI18n?.titleI18n }}
+          {{ 'circulationstatus.addTitle' | translate }}
         </h5>
         <button type="button" class="close" (click)="closeModal()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -13,7 +13,7 @@
         <form class="form-group odd" id="category_name_field_box">
           <label class="col-sm-3 control-label" for="name" id="category_name_display_as_box">
             <font style="vertical-align: inherit">
-              {{ circulationStatusI18n?.nameI18n }}
+              {{ 'circulationstatus.colName' | translate }}
             </font>
             <span class="required">
               <font style="vertical-align: inherit">*</font>
@@ -38,6 +38,6 @@
         <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
         <button (click)="edit()" type="button" class="btn btn-outline-info">
           <i class="fas fa-save"></i> 
-          {{ circulationStatusI18n?.addButtonI18n }}
+          {{ 'ui.save' | translate }}
         </button>
       </div>

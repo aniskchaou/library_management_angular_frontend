@@ -1,0 +1,93 @@
+:host { display: block; }
+
+.ll-page {
+  padding: 24px 28px 48px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.ll-page__header {
+  margin: 8px 0 20px;
+}
+
+.ll-page__header h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 6px;
+  font-size: 26px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.ll-page__header mat-icon {
+  color: #3f51b5;
+  font-size: 28px;
+  height: 28px;
+  width: 28px;
+}
+
+.ll-page__lede {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 900px;
+}
+
+.ll-page__card {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.ll-tab__icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.ll-tab__content {
+  padding: 24px;
+}
+
+.ll-loading {
+  display: flex;
+  justify-content: center;
+  padding: 64px 0;
+}
+
+.ll-section-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
+  margin: 0 0 16px;
+}
+
+.ll-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 16px;
+}
+
+.ll-chart mat-card-content {
+  display: flex;
+  justify-content: center;
+}
+
+.ll-import-form {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ll-import-form__field {
+  min-width: 280px;
+  flex: 1;
+}
+
+.ll-import-form button {
+  margin-top: 6px;
+}

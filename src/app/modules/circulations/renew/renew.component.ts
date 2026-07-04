@@ -1,26 +1,27 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-renew',
-  templateUrl: './renew.component.html',
-  styleUrls: ['./renew.component.css']
+    selector: 'app-renew',
+    templateUrl: './renew.component.html',
+    styleUrls: ['./renew.component.css'],
+    standalone: false
 })
 export class RenewComponent implements OnInit {
 
   
-  renewalForm: FormGroup;
+  renewalForm: UntypedFormGroup;
   members$: any[] = [];
   books$: any[] = [];
   loading = false;
   submitted = false;
 
-  constructor(private toastr: ToastrService,private fb: FormBuilder, private httpService: HTTPService,private activeModal: NgbActiveModal) {}
+  constructor(private toastr: ToastrService,private fb: UntypedFormBuilder, private httpService: HTTPService,private activeModal: NgbActiveModal) {}
 
   
 closeModal(): void {
@@ -88,7 +89,6 @@ closeModal(): void {
       renewalDueDate: formValue.renewalDueDate,
       forgiveFines: formValue.forgiveFines === 'yes',
     };
-    console.log(payload)
     this.catalogItemId=formValue.itemBarcode
     this.memberId=formValue.member
     this.statusName="Renew"
@@ -101,7 +101,6 @@ closeModal(): void {
    /*  // Submit the renewal data to the backend
     this.httpService.create('/renewal/create', payload).then(
       () => {
-        console.log('Renewal successfully processed.');
         // Optionally reset form or provide feedback to the user
       },
       (err: HttpErrorResponse) => {

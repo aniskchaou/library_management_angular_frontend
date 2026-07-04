@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output, Optional } from '@angular/core';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookMessage from 'src/app/main/messages/BookMessage';
 import CirculationMessage from 'src/app/main/messages/CirculationMessage';
@@ -14,12 +15,13 @@ import CirculationValidation from 'src/app/main/validations/CirculationValidatio
 import { URL } from 'url';
 
 @Component({
-  selector: 'app-add-circulation',
-  templateUrl: './add-circulation.component.html',
-  styleUrls: ['./add-circulation.component.css'],
+    selector: 'app-add-circulation',
+    templateUrl: './add-circulation.component.html',
+    styleUrls: ['./add-circulation.component.css'],
+    standalone: false
 })
 export class AddCirculationComponent extends URLLoader implements OnInit {
-  circulationForm: FormGroup;
+  circulationForm: UntypedFormGroup;
   msg: CirculationMessage;
   submitted = false;
   memberNames$ = [];
@@ -32,6 +34,7 @@ export class AddCirculationComponent extends URLLoader implements OnInit {
 
   closeModal() {
     this.closeModalEvent.emit();
+    if (this.activeModal) { this.activeModal.dismiss(); }
   }
 
   goBack() {
@@ -50,7 +53,8 @@ export class AddCirculationComponent extends URLLoader implements OnInit {
     private validation: CirculationValidation,
     private message: CirculationMessage,
     private httpService: HTTPService,
-    private router: Router
+    private router: Router,
+    @Optional() private activeModal: NgbActiveModal
   ) {
     super();
     this.circulationForm = this.validation.formGroupInstance;
@@ -98,14 +102,12 @@ export class AddCirculationComponent extends URLLoader implements OnInit {
       (x) => x.id == parseInt(this.circulationForm.value.writer)
     )[0];
     if (this.validation.checkValidation()) {
-      console.log(this.circulationForm.value);
       this.httpService
         .create(
           CONFIG.URL_BASE + '/circulation/create',
           this.circulationForm.value
         )
         .then(() => {
-          console.log(this.circulationForm.value);
           this.closeModal();
           this.goBack();
         });
@@ -117,7 +119,6 @@ export class AddCirculationComponent extends URLLoader implements OnInit {
     this.httpService.getAll(CONFIG.URL_BASE + '/member/all').subscribe(
       (data: Member[]) => {
         this.memberNames$ = data;
-        console.log(this.memberNames$);
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'error');
@@ -129,7 +130,6 @@ export class AddCirculationComponent extends URLLoader implements OnInit {
     this.httpService.getAll(CONFIG.URL_BASE + '/book/all').subscribe(
       (data: CatalogItem[]) => {
         this.bookNames$ = data;
-        console.log(this.bookNames$);
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'error');

@@ -1,343 +1,162 @@
-<div class="card mb-4">
-  <div class="card-body">
-    <!-- create button  -->
-    <button
-      (click)="openAddDialog()"
-      class="btn btn-outline-success btn-icon-split"
-    >
-      <span class="icon text-white-50">
-        <i class="fas fa-plus"></i>
-      </span>
-      <span class="text">{{ bookI18n?.addButtonI18n }}</span>
-    </button>
-    <!-- filter button  -->
-    <button
-      href="#"
-      role="button"
-      class="btn btn-outline-info btn-icon-split"
-      (click)="showfilter = !showfilter"
-    >
-      <span class="icon text-white-50">
-        <i class="fas fa-search"></i>
-      </span>
-      <span class="text">{{ bookI18n?.filterI18n }}</span>
-    </button>
-    <!-- summary button-->
- <!--    <button
-      href="#"
-      role="button"
-      class="btn btn-secondary btn-icon-split"
-      (click)="showsummary = !showsummary"
-    >
-      <span class="icon text-white-50">
-        <i class="fas fa-chart-line"></i>
-      </span>
-      <span class="text">{{ bookI18n?.summaryButtonI18n }}</span>
-    </button> -->
-    <!-- refresh button -->
-    <button
-      href="#"
-      role="button"
-      class="btn btn-outline-warning btn-icon-split"
-      (click)="reloadPage()"
-    >
-      <span class="icon text-white-50">
-        <i class="fas fa-redo"></i>
-      </span>
-      <span class="text">{{ bookI18n?.refreshButtonI18n }}</span>
+<section class="ll-stats">
+  <!-- Toolbar -->
+  <div class="ll-stats__toolbar">
+    <button mat-flat-button color="primary" (click)="openAddDialog()">
+      <mat-icon>add</mat-icon>
+      {{ 'ui.add' | translate }}
     </button>
 
-    <!-- show button -->
-  <!--   <span style="margin: 3px" class="dropdown">
-      <button
-        class="btn btn-danger dropdown-toggle btn-icon-split"
-        type="button"
-        id="dropdownMenuButton"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        <span class="icon text-white-50">
-          <i class="fas fa-eye"></i>
-        </span>
-        <span class="text">{{ bookI18n?.showButtonI18n }}</span>
+    <button mat-stroked-button color="primary" (click)="showfilter = !showfilter">
+      <mat-icon>filter_list</mat-icon>
+      {{ 'ui.filter' | translate }}
+    </button>
+
+    <button mat-stroked-button (click)="reloadPage()">
+      <mat-icon>refresh</mat-icon>
+      {{ 'ui.reload' | translate }}
+    </button>
+
+    <button mat-stroked-button [matMenuTriggerFor]="groupByMenu">
+      <mat-icon>workspaces</mat-icon>
+      {{ 'ui.groupBy' | translate }}
+      <mat-icon iconPositionEnd>expand_more</mat-icon>
+    </button>
+    <mat-menu #groupByMenu="matMenu">
+      <button mat-menu-item (click)="getBooks()">
+        <mat-icon>list</mat-icon>
+        <span>{{ 'ui.all' | translate }}</span>
       </button>
-
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item toggle-vis" href="" data-column="0">{{
-          bookI18n?.isbnI18n
-        }}</a>
-        <a class="dropdown-item toggle-vis" href="" data-column="1">{{
-          bookI18n?.titleI18n
-        }}</a>
-        <a class="dropdown-item toggle-vis" href="" data-column="2">{{
-          bookI18n?.authorI18n
-        }}</a>
-        <a class="dropdown-item toggle-vis" href="" data-column="3">{{
-          bookI18n?.categoryI18n
-        }}</a>
-        <a class="dropdown-item toggle-vis" href="" data-column="4">{{
-          bookI18n?.publisherI18n
-        }}</a>
-        <a class="dropdown-item toggle-vis" href="" data-column="5">{{
-          bookI18n?.StatusI18n
-        }}</a>
-      </div>
-    </span> -->
-
-<!--     <span style="margin: 3px" class="dropdown">
-      <button
-        class="btn btn-outline-secondary dropdown-toggle btn-icon-split"
-        type="button"
-        id="dropdownMenuButton"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        <span class="icon text-white-50">
-          <i class="fas fa-filter"></i>
-        </span>
-        <span class="text">{{ bookI18n?.filtersI18n }}</span>
+      <button mat-menu-item (click)="groupByAuthor()">
+        <mat-icon>person</mat-icon>
+        <span>{{ 'nav.authors' | translate }}</span>
       </button>
-
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="navbar-collapse text-center" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                {{ bookI18n?.authorI18n }}
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a
-                  class="dropdown-item"
-                  (click)="filterByWriter(w)"
-                  *ngFor="let w of writers"
-                  href="#"
-                  >{{ w.name }}</a
-                >
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                {{ bookI18n?.edition_yearI18n }}
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-                *ngFor="let y of years"
-              >
-                <a class="dropdown-item" (click)="filterByYear(y)">{{ y }}</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                {{ bookI18n?.categoryI18n }}
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a
-                  class="dropdown-item"
-                  *ngFor="let c of categories"
-                  (click)="filterByCategory(c.id)"
-                  >{{ c.category_name }}</a
-                >
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </span> -->
-
-    <span style="margin: 3px" class="dropdown">
-      <button
-        class="btn btn-outline-danger dropdown-toggle btn-icon-split"
-        type="button"
-        id="dropdownMenuButton"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        <span class="icon text-white-50">
-          <i class="fas fa-bars"></i>
-        </span>
-        <span class="text">{{ bookI18n?.groupByI18n }}</span>
+      <button mat-menu-item (click)="groupByCategory()">
+        <mat-icon>category</mat-icon>
+        <span>{{ 'nav.categories' | translate }}</span>
       </button>
+      <button mat-menu-item (click)="groupByPublisher()">
+        <mat-icon>newspaper</mat-icon>
+        <span>{{ 'nav.publishers' | translate }}</span>
+      </button>
+      <button mat-menu-item (click)="groupByEditionYear()">
+        <mat-icon>event</mat-icon>
+        <span>{{ 'book.colEdition' | translate }}</span>
+      </button>
+    </mat-menu>
+  </div>
 
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item toggle-vis" (click)="getBooks()" data-column="2"
-          >All</a
-        >
-        <a
-          class="dropdown-item toggle-vis"
-          (click)="groupByAuthor()"
-          data-column="2"
-          >{{ bookI18n?.authorI18n }}</a
-        >
-        <a
-          class="dropdown-item toggle-vis"
-          (click)="groupByCategory()"
-          data-column="3"
-          >{{ bookI18n?.categoryI18n }}</a
-        >
-        <a
-          class="dropdown-item toggle-vis"
-          (click)="groupByPublisher()"
-          data-column="4"
-          >{{ bookI18n?.publisherI18n }}</a
-        >
-        <a
-          class="dropdown-item toggle-vis"
-          (click)="groupByEditionYear()"
-          data-column="5"
-          >{{ bookI18n?.edition_yearI18n }}</a
-        >
-      </div>
-    </span>
-
-    <br /><br />
-
-    <div *ngIf="showfilter">
-      <form [formGroup]="filterForm">
-        <div class="form-group row">
-          <label for="text1" class="col-3 col-form-label">{{
-            bookI18n?.publishing_yearI18n
-          }}</label>
-          <div class="col-9">
-            <input
-              formControlName="publishing_year"
-              id="text1"
-              name="publishing_year"
-              type="text"
-              class="form-control"
-            />
+  <!-- KPI widgets -->
+  <div class="ll-stats__kpis">
+    <mat-card appearance="outlined" class="ll-kpi ll-kpi--total">
+      <mat-card-content class="ll-kpi__content">
+        <div class="ll-kpi__icon">
+          <mat-icon>menu_book</mat-icon>
+        </div>
+        <div class="ll-kpi__body">
+          <div class="ll-kpi__label">{{ 'book.kpiTotal' | translate }}</div>
+          <div class="ll-kpi__value">
+            @if (totalCount) {
+              <span>{{ totalCount }}</span>
+            } @else {
+              <mat-progress-spinner mode="indeterminate" diameter="24"></mat-progress-spinner>
+            }
           </div>
         </div>
-        <div class="form-group row">
-          <label for="text" class="col-3 col-form-label">{{
-            bookI18n?.number_of_pagesI18n
-          }}</label>
-          <div class="col-9">
-            <input
-              formControlName="number_of_pages"
-              id="text"
-              name="number_of_pages"
-              type="text"
-              class="form-control"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="text2" class="col-3 col-form-label">{{
-            bookI18n?.publication_placeI18n
-          }}</label>
-          <div class="col-9">
-            <input
-              formControlName="publishing_place"
-              id="text2"
-              name="publishing_place"
-              type="text"
-              class="form-control"
-            />
-          </div>
-        </div>
+        <mat-chip-set class="ll-kpi__chip">
+          <mat-chip disableRipple>{{ 'book.kpiAllItems' | translate }}</mat-chip>
+        </mat-chip-set>
+      </mat-card-content>
+      <mat-progress-bar mode="determinate" value="100" class="ll-kpi__bar"></mat-progress-bar>
+    </mat-card>
 
-        <div class="form-group row">
-          <label for="text2" class="col-3 col-form-label">{{
-            bookI18n?.edition_yearI18n
-          }}</label>
-          <div class="col-9">
-            <input
-              formControlName="edition_year"
-              id="text2"
-              name="edition_year"
-              type="text"
-              class="form-control"
-            />
+    <mat-card appearance="outlined" class="ll-kpi ll-kpi--archived">
+      <mat-card-content class="ll-kpi__content">
+        <div class="ll-kpi__icon">
+          <mat-icon>archive</mat-icon>
+        </div>
+        <div class="ll-kpi__body">
+          <div class="ll-kpi__label">{{ 'book.kpiArchived' | translate }}</div>
+          <div class="ll-kpi__value">
+            @if (archived || archived === 0) {
+              <span>{{ archived }}</span>
+            } @else {
+              <mat-progress-spinner mode="indeterminate" diameter="24"></mat-progress-spinner>
+            }
           </div>
         </div>
+        <mat-chip-set class="ll-kpi__chip">
+          <mat-chip disableRipple>
+            <mat-icon matChipAvatar>inventory_2</mat-icon>
+            {{ 'book.kpiShelved' | translate }}
+          </mat-chip>
+        </mat-chip-set>
+      </mat-card-content>
+      <mat-progress-bar mode="determinate"
+        [value]="totalCount ? (archived / totalCount) * 100 : 0"
+        class="ll-kpi__bar"></mat-progress-bar>
+    </mat-card>
 
-        <div class="form-group row">
-          <div class="offset-3 col-9">
-            <button name="submit" (click)="add()" class="btn btn-primary">
-              {{ bookI18n?.filterI18n }}
+    <mat-card appearance="outlined" class="ll-kpi ll-kpi--destroyed">
+      <mat-card-content class="ll-kpi__content">
+        <div class="ll-kpi__icon">
+          <mat-icon>delete_sweep</mat-icon>
+        </div>
+        <div class="ll-kpi__body">
+          <div class="ll-kpi__label">{{ 'book.kpiDestroyed' | translate }}</div>
+          <div class="ll-kpi__value">
+            @if (destroyed || destroyed === 0) {
+              <span>{{ destroyed }}</span>
+            } @else {
+              <mat-progress-spinner mode="indeterminate" diameter="24"></mat-progress-spinner>
+            }
+          </div>
+        </div>
+        <mat-chip-set class="ll-kpi__chip">
+          <mat-chip disableRipple>
+            <mat-icon matChipAvatar>report_problem</mat-icon>
+            {{ 'book.kpiWastage' | translate }}
+          </mat-chip>
+        </mat-chip-set>
+      </mat-card-content>
+      <mat-progress-bar mode="determinate"
+        [value]="totalCount ? (destroyed / totalCount) * 100 : 0"
+        class="ll-kpi__bar"></mat-progress-bar>
+    </mat-card>
+  </div>
+
+  <!-- Filter form -->
+  @if (showfilter) {
+    <mat-card appearance="outlined" class="ll-stats__filter">
+      <mat-card-content>
+        <form [formGroup]="filterForm" class="ll-stats__filter-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'book.colPublishingYear' | translate }}</mat-label>
+            <input matInput formControlName="publishing_year" name="publishing_year">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'book.colPages' | translate }}</mat-label>
+            <input matInput formControlName="number_of_pages" name="number_of_pages">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'book.colPublicationPlace' | translate }}</mat-label>
+            <input matInput formControlName="publishing_place" name="publishing_place">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'book.colEditionYear' | translate }}</mat-label>
+            <input matInput formControlName="edition_year" name="edition_year">
+          </mat-form-field>
+
+          <div class="ll-stats__filter-actions">
+            <button mat-flat-button color="primary" type="button" (click)="add()">
+              <mat-icon>search</mat-icon>
+              {{ 'ui.filter' | translate }}
             </button>
           </div>
-        </div>
-      </form>
-    </div>
-
-    <!-- <div *ngIf="showsummary">
-      <app-book-number></app-book-number>
-    </div> -->
-
-    <div class="container mt-5">
-
-      <div class="row">
-          <div class="col-md-4 mb-4">
-              <div class="card text-center border">
-                  <div class="card-body">
-                      <h5 class="card-title text-dark">Total</h5>
-                      <p class="card-text h4">
-                          <span *ngIf="totalCount">{{ totalCount }}</span>
-                          <span *ngIf="!totalCount">Loading...</span>
-                      </p>
-                  </div>
-              </div>
-          </div>
-    
-          <div class="col-md-4 mb-4">
-              <div class="card text-center border">
-                  <div class="card-body">
-                      <h5 class="card-title text-primary">Archived</h5>
-                      <p class="card-text h4">
-                          <span *ngIf="archived">{{ archived }}</span>
-                          <span *ngIf="!archived">Loading...</span>
-                      </p>
-                  </div>
-              </div>
-          </div>
-    
-          <div class="col-md-4 mb-4">
-              <div class="card text-center border">
-                  <div class="card-body">
-                      <h5 class="card-title text-danger">Destroyed</h5>
-                      <p class="card-text h4">
-                          <span *ngIf="destroyed">{{ destroyed }}</span>
-                          <span *ngIf="!destroyed">Loading...</span>
-                      </p>
-                  </div>
-              </div>
-          </div>
-      </div>
-    </div>
-  </div>
-</div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  }
+</section>

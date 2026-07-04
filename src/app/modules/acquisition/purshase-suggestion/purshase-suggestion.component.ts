@@ -9,9 +9,10 @@ import { finalize } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-purshase-suggestion',
-  templateUrl: './purshase-suggestion.component.html',
-  styleUrls: ['./purshase-suggestion.component.css']
+    selector: 'app-purshase-suggestion',
+    templateUrl: './purshase-suggestion.component.html',
+    styleUrls: ['./purshase-suggestion.component.css'],
+    standalone: false
 })
 export class PurshaseSuggestionComponent implements OnInit {
 
@@ -93,7 +94,7 @@ export class PurshaseSuggestionComponent implements OnInit {
           this.loadPurchaseSuggestions();
  
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(purchaseSuggestion: PurchaseSuggestion): void {
@@ -106,7 +107,7 @@ export class PurshaseSuggestionComponent implements OnInit {
           this.loadPurchaseSuggestions();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   deletePurchaseSuggestion(id: number): void {
@@ -125,7 +126,6 @@ export class PurshaseSuggestionComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         //super.show('Error', err.message, 'warning');
-        console.log(err)
       }
     );
   }
@@ -140,7 +140,6 @@ export class PurshaseSuggestionComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         //super.show('Error', err.message, 'warning');
-        console.log(err)
       }
     );
   }
@@ -148,7 +147,6 @@ export class PurshaseSuggestionComponent implements OnInit {
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/purshase-suggestion.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }

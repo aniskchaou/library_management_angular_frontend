@@ -11,9 +11,11 @@ import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-shelf',
-  templateUrl: './shelf.component.html',
-  styleUrls: ['./shelf.component.css'] // Adjust path as necessary
+    selector: 'app-shelf',
+    templateUrl: './shelf.component.html',
+    styleUrls: ['./shelf.component.css'] // Adjust path as necessary
+    ,
+    standalone: false
 })
 export class ShelfComponent implements OnInit {
 
@@ -93,21 +95,17 @@ export class ShelfComponent implements OnInit {
   }
 
   onSelect({ selected }: any) {
-    console.log('Selected row:', selected);
     this.selected = [...selected];
   }
 
   onActivate(event: any) {
-    console.log('Activate Event:', event);
   }
 
   editRow(row: Shelf): void {
-    console.log('Edit row:', row);
     this.openEditDialog(row);
   }
 
   deleteRow(row: Shelf): void {
-    console.log('Delete row:', row);
     this.shelves = this.shelves.filter(r => r !== row);
     this.shelves$.next(this.shelves);
     this.deleteShelf(row.id);
@@ -137,7 +135,7 @@ export class ShelfComponent implements OnInit {
           this.loadShelves();
         //});
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(shelf: Shelf): void {
@@ -150,7 +148,7 @@ export class ShelfComponent implements OnInit {
           this.loadShelves();
         //});
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   deleteShelf(id: number): void {
@@ -169,7 +167,6 @@ export class ShelfComponent implements OnInit {
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/shelf.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }

@@ -6,9 +6,10 @@ import CONFIG from 'src/app/main/urls/urls';
 import { finalize } from 'rxjs/operators';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
-  selector: 'app-view-book',
-  templateUrl: './view-book.component.html',
-  styleUrls: ['./view-book.component.css'],
+    selector: 'app-view-book',
+    templateUrl: './view-book.component.html',
+    styleUrls: ['./view-book.component.css'],
+    standalone: false
 })
 export class ViewBookComponent extends URLLoader implements OnInit {
   @Input() id;
@@ -31,7 +32,6 @@ export class ViewBookComponent extends URLLoader implements OnInit {
 
   getImage(image) {
     this.loadingImage = true;
-    console.log('${CONFIG.URL_BASE}/book/get/' + image);
     if (image) {
       
       this.httpService

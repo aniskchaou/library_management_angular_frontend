@@ -1,22 +1,23 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-edit-password',
-  templateUrl: './edit-password.component.html',
-  styleUrls: ['./edit-password.component.css']
+    selector: 'app-edit-password',
+    templateUrl: './edit-password.component.html',
+    styleUrls: ['./edit-password.component.css'],
+    standalone: false
 })
 export class EditPasswordComponent implements OnInit {
    @Input()
    user
-  changePasswordForm: FormGroup;
+  changePasswordForm: UntypedFormGroup;
   passwordChangedSuccess = false;
 
-  constructor(private fb: FormBuilder,private httpService:HTTPService,private activeModal: NgbActiveModal,private toastr: ToastrService) {
+  constructor(private fb: UntypedFormBuilder,private httpService:HTTPService,private activeModal: NgbActiveModal,private toastr: ToastrService) {
     this.changePasswordForm = this.fb.group({
       currentPassword: ['', Validators.required],
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
@@ -34,7 +35,7 @@ closeModal(): void {
   }
 
   // Validator to ensure new password and confirm new password match
-  passwordsMatch(group: FormGroup) {
+  passwordsMatch(group: UntypedFormGroup) {
     const newPassword = group.get('newPassword')?.value;
     const confirmNewPassword = group.get('confirmNewPassword')?.value;
     return newPassword === confirmNewPassword ? null : { notMatching: true };
@@ -44,8 +45,6 @@ closeModal(): void {
   onSubmit() {
     if (this.changePasswordForm.valid) {
       const { currentPassword, newPassword } = this.changePasswordForm.value;
-      console.log('Current Password:', currentPassword);
-      console.log('New Password:', newPassword);
 
       const requestBody = {
         currentPassword,
@@ -62,7 +61,7 @@ closeModal(): void {
       // this.authService.changePassword(currentPassword, newPassword).subscribe(response => {
       //   this.passwordChangedSuccess = true;
       // }, error => {
-      //   console.log('Error changing password', error);
+      //
       // });
 
       // Simulate successful password change

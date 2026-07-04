@@ -5,9 +5,10 @@ import { NoticeTemplate } from 'src/app/main/models/NoticeTemplate';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
 @Component({
-  selector: 'app-notice-template-modal',
-  templateUrl: './notice-template-modal.component.html',
-  styleUrls: ['./notice-template-modal.component.css']
+    selector: 'app-notice-template-modal',
+    templateUrl: './notice-template-modal.component.html',
+    styleUrls: ['./notice-template-modal.component.css'],
+    standalone: false
 })
 export class NoticeTemplateModalComponent implements OnInit {
 
@@ -16,7 +17,6 @@ export class NoticeTemplateModalComponent implements OnInit {
   constructor(private toastr: ToastrService,public activeModal: NgbActiveModal, private noticeTemplateService: HTTPService) {}
 
   ngOnInit(): void {
-    console.log(this.noticeTemplate);
   }
 
   saveNoticeTemplate(): void {

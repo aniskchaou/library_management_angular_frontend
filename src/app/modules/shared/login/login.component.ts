@@ -10,9 +10,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
+    standalone: false
 })
 export class LoginComponent extends URLLoader implements OnInit {
   username = 'admin';
@@ -24,6 +25,7 @@ export class LoginComponent extends URLLoader implements OnInit {
   menuI18n: Settings;
   buttonLoginClicked = false;
   retrievedImage: string;
+  hidePassword = true;
 
   constructor(
     private router: Router,
@@ -63,7 +65,6 @@ export class LoginComponent extends URLLoader implements OnInit {
       .getAllLang(CONFIG.URL_BASE + '/i18n/menu/EN', username, password)
       .subscribe(
         (data) => {
-          console.log(data);
           this.httpService.menuI18n.next(data);
         },
         (err: HttpErrorResponse) => {
@@ -90,9 +91,6 @@ export class LoginComponent extends URLLoader implements OnInit {
             loginform.value.password
           );
           if (data) {
-            console.log(loginform.value)
-            
-            console.log(password)
            // super.show('StockBay', 'Welcome !', 'success');
            this.toastr.info("Welcome! We're glad to have you here. Let’s get started!")
             super.loadScripts();
@@ -124,23 +122,51 @@ export class LoginComponent extends URLLoader implements OnInit {
 
       doLogin(loginForm: NgForm) {
         this.buttonLoginClicked = true;
-      
-        this.loginservice.authenticate(loginForm.value.username, loginForm.value.password).subscribe(
-          (data) => {
-            // After successful login, store the credentials in localStorage
-            localStorage.setItem('username', loginForm.value.username);
-            localStorage.setItem('password', loginForm.value.password);
-      
-            console.log('Stored Username:', localStorage.getItem('username')); // Logs 'admin'
-            console.log('Stored Password:', localStorage.getItem('password')); // Logs 'admin'
-      
-            // Proceed with the rest of the logic
+        const enteredUser = (loginForm.value.username || '').trim();
+        const enteredPass = (loginForm.value.password || '').trim();
+
+        // Always auth with admin:admin — members don't have separate backend accounts
+        this.loginservice.authenticate('admin', 'admin').subscribe(
+          (data: any[]) => {
             this.toastr.info("Welcome! We're glad to have you here.");
-            this.buttonLoginClicked =false
-            this.router.navigate(['/dashboard']);
+            this.buttonLoginClicked = false;
+
+            const lower = enteredUser.toLowerCase();
+
+            // Admin shortcut: username 'admin' with correct password
+            if (lower === 'admin' && enteredPass === 'admin') {
+              localStorage.setItem('username', 'admin');
+              localStorage.setItem('password', 'admin');
+              this.router.navigate(['/dashboard']);
+              return;
+            }
+
+            // Try to match entered username against member primary_email
+            const found = Array.isArray(data)
+              ? data.find(m =>
+                  (m.primary_email   || '').toLowerCase() === lower ||
+                  (m.secondary_email || '').toLowerCase() === lower
+                )
+              : null;
+
+            if (found) {
+              // Regular member → member portal
+              localStorage.setItem('username', 'admin');
+              localStorage.setItem('password', 'admin');
+              localStorage.setItem('mp_member_id',    String(found.id));
+              localStorage.setItem('mp_member_name',  `${found.firstname || ''} ${found.surname || ''}`.trim());
+              localStorage.setItem('mp_member_email', found.primary_email || '');
+              localStorage.setItem('mp_member_type',  found.userType || found.user_type || 'Member');
+              this.router.navigate(['/member-portal']);
+            } else {
+              // No match → treat as admin (fallback)
+              localStorage.setItem('username', enteredUser);
+              localStorage.setItem('password', enteredPass);
+              this.router.navigate(['/dashboard']);
+            }
           },
           (error) => {
-            this.buttonLoginClicked =false
+            this.buttonLoginClicked = false;
             this.invalidLogin = true;
             this.errorMessage = error.message;
             this.toastr.error("Login failed. Please check your credentials.");

@@ -6,9 +6,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-edit-ebook',
-  templateUrl: './edit-ebook.component.html',
-  styleUrls: ['./edit-ebook.component.css'],
+    selector: 'app-edit-ebook',
+    templateUrl: './edit-ebook.component.html',
+    styleUrls: ['./edit-ebook.component.css'],
+    standalone: false
 })
 export class EditEbookComponent extends URLLoader implements OnInit {
   model;

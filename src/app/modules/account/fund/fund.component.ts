@@ -7,9 +7,10 @@ import { BehaviorSubject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-fund',
-  templateUrl: './fund.component.html',
-  styleUrls: ['./fund.component.css']
+    selector: 'app-fund',
+    templateUrl: './fund.component.html',
+    styleUrls: ['./fund.component.css'],
+    standalone: false
 })
 export class FundComponent implements OnInit {
 
@@ -68,7 +69,7 @@ export class FundComponent implements OnInit {
           this.loadFunds();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(fund: Fund): void {
@@ -81,7 +82,7 @@ export class FundComponent implements OnInit {
           this.loadFunds();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   deleteFund(id: number): void {
@@ -93,11 +94,9 @@ export class FundComponent implements OnInit {
   }
 
   onSelect({ selected }): void {
-    console.log('Selected row:', selected);
     this.selected = [...selected];
   }
 
   onActivate(event): void {
-    console.log('Activate Event:', event);
   }
 }

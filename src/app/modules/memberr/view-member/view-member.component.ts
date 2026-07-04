@@ -7,14 +7,15 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 import { EditMemberComponent } from '../edit-member/edit-member.component';
 import { FileUploadService } from 'src/app/main/services/FileUploadService ';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import html2canvas from 'html2canvas';
 import { ToastrService } from 'ngx-toastr';
 declare var paypal: any;
 @Component({
-  selector: 'app-view-member',
-  templateUrl: './view-member.component.html',
-  styleUrls: ['./view-member.component.css'],
+    selector: 'app-view-member',
+    templateUrl: './view-member.component.html',
+    styleUrls: ['./view-member.component.css'],
+    standalone: false
 })
 export class ViewMemberComponent implements OnInit, OnChanges {
   @Input() id: any; // Member ID passed from the parent
@@ -24,7 +25,7 @@ export class ViewMemberComponent implements OnInit, OnChanges {
   circulations;
   loadingIndicator = true;
   reorderable = true;
-  files: Object;
+  files: any[] = [];
   paymentLink: any;
 
  
@@ -37,7 +38,7 @@ export class ViewMemberComponent implements OnInit, OnChanges {
     private dataService: DataService,
     private httpService: HTTPService,
     private fileUploadService: FileUploadService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private http:HttpClient
   ) {
     this.uploadForm = this.fb.group({
@@ -77,7 +78,7 @@ export class ViewMemberComponent implements OnInit, OnChanges {
     .getAll(CONFIG.URL_BASE + '/member/files/'+this.member.id)
     .subscribe(
       (data) => {
-        this.files = data;
+        this.files = data as any;
       },
       (err: HttpErrorResponse) => {}
     );
@@ -101,7 +102,6 @@ export class ViewMemberComponent implements OnInit, OnChanges {
       },
       onApprove: (data, actions) => {
         return actions.order.capture().then((details) => {
-          console.log('Transaction completed by ' + details.payer.name.given_name);
           // Here you can send the response to the backend for further processing
           this.handlePaymentSuccess(details);
         });
@@ -167,7 +167,6 @@ export class ViewMemberComponent implements OnInit, OnChanges {
         customerName: this.member?.firstname,
         email:this.member?.primary_email // Replace with actual customer name
       };
-      console.log(paymentData)
 
       const header = new HttpHeaders({
         Authorization: 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('password')),
@@ -176,7 +175,6 @@ export class ViewMemberComponent implements OnInit, OnChanges {
 
       this.http.post(CONFIG.URL_BASE+'/api/paypal/send-payment-link', paymentData, { headers: header})
         .subscribe(() => {
-          console.log('Payment link sent successfully!');
         }, error => {
           console.error('Error sending payment link:', error);
         });
@@ -188,7 +186,6 @@ export class ViewMemberComponent implements OnInit, OnChanges {
   handlePaymentSuccess(details: any) {
     this.httpService.create(CONFIG.URL_BASE+'/api/paypal/complete', details)
       .then(response => {
-        console.log('Payment success', response);
       }, error => {
         console.error('Payment failed', error);
       });
@@ -216,7 +213,6 @@ export class ViewMemberComponent implements OnInit, OnChanges {
     this.httpService.getAll(`${CONFIG.URL_BASE}/i18n/member/${lang}`).subscribe(
       (data) => {
         this.memberI18n = data;
-        console.log(this.memberI18n);
       },
       (err: HttpErrorResponse) => {
         console.error('Error fetching member internationalization data:', err.message);
@@ -225,13 +221,11 @@ export class ViewMemberComponent implements OnInit, OnChanges {
   }
 
   deleteRow(row: any): void {
-    console.log('Delete row:', row);
     // Implement delete functionality here, e.g., call a delete service
   }
 
   editRow(row: any): void {
     this.openEditDialog(row);
-    console.log('Edit row:', row);
   }
 
   closeModal(): void {
@@ -243,15 +237,14 @@ export class ViewMemberComponent implements OnInit, OnChanges {
     modalRef.componentInstance.member = { ...member }; // Pass the member data
     this.closeModal()
     modalRef.result.then(result => {
-      console.log(result);
       this.dataService.triggerRefresh(); // Trigger refresh in other components
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
 
 
   
-  uploadForm: FormGroup;
+  uploadForm: UntypedFormGroup;
   fileToUpload: File = null;
 
   
@@ -271,8 +264,6 @@ export class ViewMemberComponent implements OnInit, OnChanges {
 
     this.fileUploadService.upload(formData)
       .subscribe(response => {
-       
-        console.log(response);
       });
       this.toastr.success("Your file has been uploaded successfully.", 'Success');
   }

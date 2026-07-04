@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
@@ -10,13 +10,14 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-check-in',
-  templateUrl: './check-in.component.html',
-  styleUrls: ['./check-in.component.css']
+    selector: 'app-check-in',
+    templateUrl: './check-in.component.html',
+    styleUrls: ['./check-in.component.css'],
+    standalone: false
 })
 export class CheckInComponent  implements OnInit {
 
-  circulationForm: FormGroup;
+  circulationForm: UntypedFormGroup;
   loading = false;
   submitted = false;
   members$;
@@ -24,7 +25,7 @@ export class CheckInComponent  implements OnInit {
   returnStatus$;
   writers$;
 
-  constructor(private toastr: ToastrService,private dataService:DataService,private fb: FormBuilder, private httpService: HTTPService,private activeModal: NgbActiveModal) {}
+  constructor(private toastr: ToastrService,private dataService:DataService,private fb: UntypedFormBuilder, private httpService: HTTPService,private activeModal: NgbActiveModal) {}
 
   ngOnInit() {
     this.circulationForm = this.fb.group({
@@ -74,8 +75,6 @@ export class CheckInComponent  implements OnInit {
     const selectedBook = this.books$.find(x => x.id == parseInt(this.circulationForm.value.catalogItemName));
     const selectedReturnStatus = this.returnStatus$.find(x => x.name==='CheckIn');
     const selectedWriter = this.writers$.find(x => x.id == parseInt(this.circulationForm.value.writer));
-
-    console.log(selectedBook)
     let body={
       memberName: selectedMember,
       catalogItemName: selectedBook,
@@ -87,13 +86,11 @@ export class CheckInComponent  implements OnInit {
     };
 
     if (this.validateCirculationForm()) {
-      console.log(this.circulationForm.value);
  
       this.httpService
         .create(CONFIG.URL_BASE + '/circulation/create', body)
         .then(() => {
           this.dataService.triggerRefresh()
-          console.log(this.circulationForm.value);
           this.toastr.success('Circulation status updated successfully.')
           this.addNotification(selectedMember.firstname,selectedBook.title)
           this.closeModal()
@@ -112,7 +109,6 @@ export class CheckInComponent  implements OnInit {
 
     this.httpService.create(CONFIG.URL_BASE+'/notification/',newNotification).then(
       (notification) => {
-        console.log('Notification created:', notification);
         // Optionally reset the form
         // this.content = '';
         // this.type = 'info';

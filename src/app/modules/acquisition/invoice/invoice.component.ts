@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Invoice } from 'src/app/main/models/Invoice';
 import { InvoiceModalComponent } from '../invoice-modal/invoice-modal.component';
+import { PaymentModalComponent, getInvoicePaymentStatus } from '../payment-modal/payment-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-invoice',
-  templateUrl: './invoice.component.html',
-  styleUrls: ['./invoice.component.css']
+    selector: 'app-invoice',
+    templateUrl: './invoice.component.html',
+    styleUrls: ['./invoice.component.css'],
+    standalone: false
 })
 export class InvoiceComponent implements OnInit {
 
@@ -87,7 +89,7 @@ export class InvoiceComponent implements OnInit {
           this.loadInvoices();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(invoice: Invoice): void {
@@ -100,7 +102,7 @@ export class InvoiceComponent implements OnInit {
           this.loadInvoices();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   deleteInvoice(id: number): void {
@@ -111,13 +113,22 @@ export class InvoiceComponent implements OnInit {
 
   download(){}
 
-  pay(){}
+  pay(invoice: Invoice): void {
+    const modalRef = this.modalService.open(PaymentModalComponent, { size: 'lg' });
+    modalRef.componentInstance.invoice = invoice;
+    modalRef.result.then(() => {
+      // Payment recorded — trigger change detection so badges refresh
+      this.invoices = [...this.invoices];
+    }).catch(() => { /* dismissed */ });
+  }
 
-  
- fetchMarkdownFile(): void {
+  paymentStatus(invoice: Invoice): { label: string; cssClass: string; paidAmount: number } {
+    return getInvoicePaymentStatus(invoice.id!, invoice.totalAmount);
+  }
+
+  fetchMarkdownFile(): void {
   this.http.get('assets/documentation/modules/invoice.html', { responseType: 'text' })
     .subscribe(data => {
-      console.log(data)
       this.markdownContent = data;
     });
 }

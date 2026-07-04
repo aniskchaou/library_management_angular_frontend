@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import { HTTPService } from 'src/app/main/services/HTTPService';
@@ -11,11 +11,12 @@ import { DataService } from 'src/app/main/services/data.service';
 import { EditItemTypesComponent } from '../edit-item-types/edit-item-types.component';
 
 @Component({
-  selector: 'app-item-types',
-  templateUrl: './item-types.component.html',
-  styleUrls: ['./item-types.component.css']
+    selector: 'app-item-types',
+    templateUrl: './item-types.component.html',
+    styleUrls: ['./item-types.component.css'],
+    standalone: false
 })
-export class ItemTypesComponent extends URLLoader implements OnInit,AfterViewInit {
+export class ItemTypesComponent extends URLLoader implements OnInit {
 
   itemList: any[]; // Define itemList to hold your data
   publishers = [
@@ -42,7 +43,7 @@ export class ItemTypesComponent extends URLLoader implements OnInit,AfterViewIni
 
   // Define color scheme
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    domain: ['#3f51b5', '#e91e63', '#009688', '#ff9800', '#2196f3', '#4caf50', '#9c27b0', '#ff5722', '#795548', '#607d8b']
   };
 
   mediaItemsByTypeData: any[];
@@ -72,29 +73,23 @@ export class ItemTypesComponent extends URLLoader implements OnInit,AfterViewIni
   reorderable = true;
 
   onActivate(event): void {
-    console.log('Row activated:', event);
     if (event.type === 'click') {
       const writer = event.row;
       // Open the edit dialog or perform another action
-      console.log('Row clicked:', writer);
     }
   }
 
   // Event triggered when a row is selected
   onSelect(event): void {
-    console.log('Row selected:', event);
     const selectedWriter = event.selected;
     // Perform actions with the selected row
-    console.log('Selected writer:', selectedWriter);
   }
 
   editRow(writer): void {
-    console.log('Editing writer:', writer);
     // Logic to edit writer
   }
 
   deleteRow(writer): void {
-    console.log('Deleting writer:', writer);
     // Logic to delete writer
   }
 
@@ -185,10 +180,6 @@ export class ItemTypesComponent extends URLLoader implements OnInit,AfterViewIni
 
     this.fetchMarkdownFile();
   }
-  ngAfterViewInit(): void {
-    super.enableDataTable()
-  }
-
   ngOnInit(): void {
 
     this.httpService
@@ -399,7 +390,6 @@ export class ItemTypesComponent extends URLLoader implements OnInit,AfterViewIni
 
   submitForm() {
     // Handle form submission here
-    console.log('Form Data:', this.formData);
     // After form submission, close the modal
     this.closeModal();
   }
@@ -409,13 +399,12 @@ export class ItemTypesComponent extends URLLoader implements OnInit,AfterViewIni
       centered: true,});
     modalRef.componentInstance.category = { }; // Ensure category is passed properly
   
-    //console.log(category); // Ensure category is not undefined here
+    //
 
     modalRef.result.then(result => {
-      console.log(result)
        this.fetchItemList()
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openViewDialog(item): void {
@@ -423,19 +412,17 @@ export class ItemTypesComponent extends URLLoader implements OnInit,AfterViewIni
       centered: true,});
     modalRef.componentInstance.selectedItem = item; // Ensure category is passed properly
   
-    console.log(item); // Ensure category is not undefined here
+
 
     modalRef.result.then(result => {
-      console.log(result)
        this.fetchItemList()
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/media-type.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }
@@ -456,7 +443,19 @@ export class ItemTypesComponent extends URLLoader implements OnInit,AfterViewIni
       if (result) {
      
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
+  }
+
+  getPercent(value: number, data: any[]): number {
+    if (!data?.length) return 0;
+    const max = Math.max(...data.map(d => d.value || 0));
+    return max > 0 ? Math.round((value / max) * 100) : 0;
+  }
+
+  getSeriesPercent(value: number, series: any[]): number {
+    if (!series?.length) return 0;
+    const max = Math.max(...series.map(p => p.value || 0));
+    return max > 0 ? Math.round((value / max) * 100) : 0;
   }
 
 }

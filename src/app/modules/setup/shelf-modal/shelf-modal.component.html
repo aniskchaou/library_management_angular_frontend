@@ -24,156 +24,158 @@
         type="text"
         placeholder="e.g., Main Shelf"
         [(ngModel)]="shelf.shelfName"
-      />
-    </div>
-  
-    <!-- Shelf Code Field with Tooltip -->
-    <div class="form-group">
-      <label for="shelfCode" id="shelfCode_display_as_box">
-        Shelf Code
-        <i
-          class="fas fa-info-circle"
-          data-toggle="tooltip"
-          data-html="true"
-          title="<b>Description:</b> Enter the code for the shelf."
-        ></i>
-      </label>
-      <input
-        id="shelfCode"
-        name="shelfCode"
-        class="form-control"
-        type="text"
-        placeholder="e.g., SH001"
-        [(ngModel)]="shelf.shelfCode"
-      />
-    </div>
-  
-    <!-- Location Field with Tooltip -->
-    <div class="form-group">
-      <label for="location" id="location_display_as_box">
-        Location
-        <i
-          class="fas fa-info-circle"
-          data-toggle="tooltip"
-          data-html="true"
-          title="<b>Description:</b> Enter the location of the shelf."
-        ></i>
-      </label>
-      <input
-        id="location"
-        name="location"
-        class="form-control"
-        type="text"
-        placeholder="e.g., Floor 2, Section B"
-        [(ngModel)]="shelf.location"
-      />
-    </div>
-  
-    <!-- Capacity Field with Tooltip -->
-    <div class="form-group">
-      <label for="capacity" id="capacity_display_as_box">
-        Capacity
-        <i
-          class="fas fa-info-circle"
-          data-toggle="tooltip"
-          data-html="true"
-          title="<b>Description:</b> Enter the capacity of the shelf in terms of number of books it can hold."
-        ></i>
-      </label>
-      <input
-        id="capacity"
-        name="capacity"
-        class="form-control"
-        type="number"
-        placeholder="e.g., 50"
-        [(ngModel)]="shelf.capacity"
-      />
-    </div>
-  
-    <!-- Material Field with Tooltip -->
-    <div class="form-group">
-      <label for="material" id="material_display_as_box">
-        Material
-        <i
-          class="fas fa-info-circle"
-          data-toggle="tooltip"
-          data-html="true"
-          title="<b>Description:</b> Select the material of the shelf."
-        ></i>
-      </label>
-      <ng-select
-        id="material"
-        name="material"
-        [items]="materials"
-        bindLabel="name"
-        bindValue="value"
-        placeholder="Select a material"
-        [(ngModel)]="shelf.material"
-      >
-      </ng-select>
-    </div>
-  
-    <!-- Color Field with Tooltip -->
-    <div class="form-group">
-      <label for="color" id="color_display_as_box">
-        Color
-        <i
-          class="fas fa-info-circle"
-          data-toggle="tooltip"
-          data-html="true"
-          title="<b>Description:</b> Select the color of the shelf."
-        ></i>
-      </label>
-      <ng-select
-        id="color"
-        name="color"
-        [items]="colors"
-        bindLabel="name"
-        bindValue="value"
-        placeholder="Select a color"
-        [(ngModel)]="shelf.color"
-      >
-      </ng-select>
-    </div>
-  
-    <!-- Department Field with Tooltip -->
-    <div class="form-group">
-      <label for="department" id="department_display_as_box">
-        Department
-        <i
-          class="fas fa-info-circle"
-          data-toggle="tooltip"
-          data-html="true"
-          title="<b>Description:</b> Select the department associated with this shelf."
-        ></i>
-      </label>
-      <!--  <ng-select
-        id="department"
-        name="department"
-        [items]="departments"
-        bindLabel="departmentName"
-        bindValue="departmentName"
-        placeholder="Select a department"
-        [(ngModel)]="shelf.department"
-      >
-      </ng-select>  -->
-      <select
-  id="department"
-  name="department"
-  class="form-control"
-  [(ngModel)]="shelf.department"
->
-  <option value="" disabled>Select a department</option>
-  <option *ngFor="let department of departments" [ngValue]="department">
-    {{ department.departmentName }}
-  </option>
-</select>
+        />
+      </div>
 
-    </div>
-  </form>
-   
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
-  <button type="button" class="btn btn-outline-primary" (click)="saveShelf()">Save</button>
-</div>
+      <!-- Shelf Code Field with Tooltip -->
+      <div class="form-group">
+        <label for="shelfCode" id="shelfCode_display_as_box">
+          Shelf Code
+          <i
+            class="fas fa-info-circle"
+            data-toggle="tooltip"
+            data-html="true"
+            title="<b>Description:</b> Enter the code for the shelf."
+          ></i>
+        </label>
+        <input
+          id="shelfCode"
+          name="shelfCode"
+          class="form-control"
+          type="text"
+          placeholder="e.g., SH001"
+          [(ngModel)]="shelf.shelfCode"
+          />
+        </div>
+
+        <!-- Location Field with Tooltip -->
+        <div class="form-group">
+          <label for="location" id="location_display_as_box">
+            Location
+            <i
+              class="fas fa-info-circle"
+              data-toggle="tooltip"
+              data-html="true"
+              title="<b>Description:</b> Enter the location of the shelf."
+            ></i>
+          </label>
+          <input
+            id="location"
+            name="location"
+            class="form-control"
+            type="text"
+            placeholder="e.g., Floor 2, Section B"
+            [(ngModel)]="shelf.location"
+            />
+          </div>
+
+          <!-- Capacity Field with Tooltip -->
+          <div class="form-group">
+            <label for="capacity" id="capacity_display_as_box">
+              Capacity
+              <i
+                class="fas fa-info-circle"
+                data-toggle="tooltip"
+                data-html="true"
+                title="<b>Description:</b> Enter the capacity of the shelf in terms of number of books it can hold."
+              ></i>
+            </label>
+            <input
+              id="capacity"
+              name="capacity"
+              class="form-control"
+              type="number"
+              placeholder="e.g., 50"
+              [(ngModel)]="shelf.capacity"
+              />
+            </div>
+
+            <!-- Material Field with Tooltip -->
+            <div class="form-group">
+              <label for="material" id="material_display_as_box">
+                Material
+                <i
+                  class="fas fa-info-circle"
+                  data-toggle="tooltip"
+                  data-html="true"
+                  title="<b>Description:</b> Select the material of the shelf."
+                ></i>
+              </label>
+              <ng-select
+                id="material"
+                name="material"
+                [items]="materials"
+                bindLabel="name"
+                bindValue="value"
+                placeholder="Select a material"
+                [(ngModel)]="shelf.material"
+                >
+              </ng-select>
+            </div>
+
+            <!-- Color Field with Tooltip -->
+            <div class="form-group">
+              <label for="color" id="color_display_as_box">
+                Color
+                <i
+                  class="fas fa-info-circle"
+                  data-toggle="tooltip"
+                  data-html="true"
+                  title="<b>Description:</b> Select the color of the shelf."
+                ></i>
+              </label>
+              <ng-select
+                id="color"
+                name="color"
+                [items]="colors"
+                bindLabel="name"
+                bindValue="value"
+                placeholder="Select a color"
+                [(ngModel)]="shelf.color"
+                >
+              </ng-select>
+            </div>
+
+            <!-- Department Field with Tooltip -->
+            <div class="form-group">
+              <label for="department" id="department_display_as_box">
+                Department
+                <i
+                  class="fas fa-info-circle"
+                  data-toggle="tooltip"
+                  data-html="true"
+                  title="<b>Description:</b> Select the department associated with this shelf."
+                ></i>
+              </label>
+              <!--  <ng-select
+              id="department"
+              name="department"
+              [items]="departments"
+              bindLabel="departmentName"
+              bindValue="departmentName"
+              placeholder="Select a department"
+              [(ngModel)]="shelf.department"
+              >
+            </ng-select>  -->
+            <select
+              id="department"
+              name="department"
+              class="form-control"
+              [(ngModel)]="shelf.department"
+              >
+              <option value="" disabled>Select a department</option>
+              @for (department of departments; track department) {
+                <option [ngValue]="department">
+                  {{ department.departmentName }}
+                </option>
+              }
+            </select>
+
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
+        <button type="button" class="btn btn-outline-primary" (click)="saveShelf()">Save</button>
+      </div>

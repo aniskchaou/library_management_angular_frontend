@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import PaymentMessage from 'src/app/main/messages/paymentMessage';
@@ -10,12 +10,13 @@ import CONFIG from 'src/app/main/urls/urls';
 import PaymentValidation from 'src/app/main/validations/PaymentValidation';
 
 @Component({
-  selector: 'app-add-payment',
-  templateUrl: './add-payment.component.html',
-  styleUrls: ['./add-payment.component.css'],
+    selector: 'app-add-payment',
+    templateUrl: './add-payment.component.html',
+    styleUrls: ['./add-payment.component.css'],
+    standalone: false
 })
 export class AddPaymentComponent extends URLLoader implements OnInit {
-  paymentForm: FormGroup;
+  paymentForm: UntypedFormGroup;
   msg: PaymentMessage;
   submitted = false;
   @Output() closeModalEvent = new EventEmitter<string>();
@@ -82,7 +83,6 @@ export class AddPaymentComponent extends URLLoader implements OnInit {
         CONFIG.URL_BASE + '/payment/create',
         this.paymentForm.value
       );
-      console.log(this.paymentForm.value);
       this.paymentForm.reset();
       this.closeModal();
       this.goBack();

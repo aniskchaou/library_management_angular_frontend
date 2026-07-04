@@ -1,0 +1,419 @@
+<div class="opac-det">
+
+  <!-- ── Modal header ──────────────────────────────────────────────────────── -->
+  <div class="opac-det__header">
+    <h2 class="opac-det__title">
+      {{ item.title }}
+      @if (item.subtitle) { <span class="opac-det__subtitle">: {{ item.subtitle }}</span> }
+    </h2>
+    <button mat-icon-button class="opac-det__close" (click)="activeModal.dismiss()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- ── Body ──────────────────────────────────────────────────────────────── -->
+  <div class="opac-det__body">
+
+    <!-- Left: cover + availability + actions -->
+    <aside class="opac-det__aside">
+      <img class="opac-det__cover"
+           [src]="coverUrl()"
+           [alt]="item.title"
+           onerror="this.src='assets/images/no-cover.png'">
+
+      <!-- Availability -->
+      <div class="opac-det-avail" [ngClass]="availabilityClass()">
+        <mat-icon>{{ availabilityClass() === 'opac-det-avail--ok' ? 'check_circle' : (availabilityClass() === 'opac-det-avail--low' ? 'schedule' : 'cancel') }}</mat-icon>
+        {{ availabilityLabel() }}
+      </div>
+
+      <!-- Location -->
+      @if (item.departement?.departmentName || item.shelf?.shelfName || item.call_no) {
+        <div class="opac-det-location">
+          <div class="opac-det-location__title"><mat-icon>place</mat-icon> {{ 'opac.location' | translate }}</div>
+          @if (item.departement?.departmentName) { <div>{{ item.departement.departmentName }}</div> }
+          @if (item.shelf?.shelfName)            { <div>{{ 'opac.shelf' | translate }}: {{ item.shelf.shelfName }}</div> }
+          @if (item.call_no)                     { <code class="opac-det-location__callno">{{ item.call_no }}</code> }
+        </div>
+      }
+
+      <!-- Actions -->
+      <div class="opac-det-actions">
+        @if (hasDigital()) {
+          @if (pdfUrl()) {
+            <a mat-flat-button color="accent" [href]="pdfUrl()" target="_blank">
+              <mat-icon>picture_as_pdf</mat-icon> {{ 'opac.readPDF' | translate }}
+            </a>
+          }
+          @if (digitalUrl()) {
+            <a mat-flat-button color="primary" [href]="digitalUrl()" target="_blank" rel="noopener">
+              <mat-icon>open_in_new</mat-icon> {{ 'opac.accessOnline' | translate }}
+            </a>
+          }
+        }
+
+        @if (!holdSent) {
+          @if (auth?.isLoggedIn) {
+            <button mat-stroked-button color="primary" [disabled]="holdSending"
+                    (click)="requestHold()">
+              @if (holdSending) { <mat-spinner diameter="18"></mat-spinner> }
+              @else { <mat-icon>bookmark_add</mat-icon> {{ 'opac.placeHold' | translate }} }
+            </button>
+          } @else {
+            <button mat-stroked-button disabled matTooltip="{{ 'opac.loginToHold' | translate }}">
+              <mat-icon>bookmark_add</mat-icon> {{ 'opac.placeHold' | translate }}
+            </button>
+            <p class="opac-det-actions__hint">
+              <a routerLink="/opac-account" (click)="activeModal.dismiss()">{{ 'opac.signIn' | translate }}</a> {{ 'opac.loginToHoldHint' | translate }}
+            </p>
+          }
+        } @else {
+          <div class="opac-det-actions__success">
+            <mat-icon>check_circle</mat-icon> {{ 'opac.holdPlaced' | translate }}
+          </div>
+        }
+
+        @if (holdError) {
+          <p class="opac-det-actions__error">{{ holdError }}</p>
+        }
+      </div>
+    </aside>
+
+    <!-- Right: tabbed record info -->
+    <div class="opac-det__main">
+
+      <!-- Custom tab bar -->
+      <div class="opac-det-tabs">
+        <button class="opac-det-tab" [class.opac-det-tab--active]="activeTab === 'details'"
+                (click)="activeTab = 'details'">
+          <mat-icon>info</mat-icon> {{ 'opac.tabDetails' | translate }}
+        </button>
+        <button class="opac-det-tab" [class.opac-det-tab--active]="activeTab === 'marc'"
+                (click)="activeTab = 'marc'">
+          <mat-icon>list_alt</mat-icon> {{ 'opac.tabMARC' | translate }}
+        </button>
+        <button class="opac-det-tab" [class.opac-det-tab--active]="activeTab === 'dc'"
+                (click)="activeTab = 'dc'">
+          <mat-icon>share</mat-icon> {{ 'opac.tabDC' | translate }}
+        </button>
+      </div>
+
+      <!-- ── Tab: Details ───────────────────────────────────────────────── -->
+      @if (activeTab === 'details') {
+        <div class="opac-det-content">
+
+          <!-- Author / Responsibility -->
+          <div class="opac-det-row">
+            <span class="opac-det-row__label">{{ 'opac.fieldAuthor' | translate }}</span>
+            <span class="opac-det-row__val">{{ item.writer?.name || '—' }}</span>
+          </div>
+          @if (item.marc_245_c) {
+            <div class="opac-det-row">
+              <span class="opac-det-row__label">{{ 'opac.fieldResponsibility' | translate }}</span>
+              <span class="opac-det-row__val">{{ item.marc_245_c }}</span>
+            </div>
+          }
+          @if (item.marc_700) {
+            <div class="opac-det-row">
+              <span class="opac-det-row__label">{{ 'opac.fieldAddedAuthors' | translate }}</span>
+              <span class="opac-det-row__val">{{ item.marc_700 }}</span>
+            </div>
+          }
+          <div class="opac-det-row">
+            <span class="opac-det-row__label">{{ 'opac.fieldPublisher' | translate }}</span>
+            <span class="opac-det-row__val">{{ item.publisher?.publisherName || '—' }}</span>
+          </div>
+          @if (item.publication_place) {
+            <div class="opac-det-row">
+              <span class="opac-det-row__label">{{ 'opac.fieldPubPlace' | translate }}</span>
+              <span class="opac-det-row__val">{{ item.publication_place }}</span>
+            </div>
+          }
+          <div class="opac-det-row">
+            <span class="opac-det-row__label">{{ 'opac.fieldYear' | translate }}</span>
+            <span class="opac-det-row__val">{{ item.publishing_year || '—' }}</span>
+          </div>
+          @if (item.edition) {
+            <div class="opac-det-row">
+              <span class="opac-det-row__label">{{ 'opac.fieldEdition' | translate }}</span>
+              <span class="opac-det-row__val">{{ item.edition }}</span>
+            </div>
+          }
+          <div class="opac-det-row">
+            <span class="opac-det-row__label">{{ 'opac.fieldISBN' | translate }}</span>
+            <span class="opac-det-row__val"><code>{{ item.isbn || '—' }}</code></span>
+          </div>
+          <div class="opac-det-row">
+            <span class="opac-det-row__label">{{ 'opac.fieldPages' | translate }}</span>
+            <span class="opac-det-row__val">{{ item.number_of_pages || '—' }}</span>
+          </div>
+          @if (item.size) {
+            <div class="opac-det-row">
+              <span class="opac-det-row__label">{{ 'opac.fieldSize' | translate }}</span>
+              <span class="opac-det-row__val">{{ item.size }}</span>
+            </div>
+          }
+          @if (item.category?.category_name) {
+            <div class="opac-det-row">
+              <span class="opac-det-row__label">{{ 'opac.fieldCategory' | translate }}</span>
+              <span class="opac-det-row__val">{{ item.category.category_name }}</span>
+            </div>
+          }
+          @if (item.mediaType?.type) {
+            <div class="opac-det-row">
+              <span class="opac-det-row__label">{{ 'opac.fieldMediaType' | translate }}</span>
+              <span class="opac-det-row__val">{{ item.mediaType.type }}</span>
+            </div>
+          }
+          @if (item.marc_041) {
+            <div class="opac-det-row">
+              <span class="opac-det-row__label">{{ 'opac.fieldLanguage' | translate }}</span>
+              <span class="opac-det-row__val"><code>{{ item.marc_041 }}</code></span>
+            </div>
+          }
+          @if (item.marc_490) {
+            <div class="opac-det-row">
+              <span class="opac-det-row__label">{{ 'opac.fieldSeries' | translate }}</span>
+              <span class="opac-det-row__val">{{ item.marc_490 }}</span>
+            </div>
+          }
+
+          <!-- Abstract -->
+          @if (item.marc_520 || item.notes) {
+            <div class="opac-det-abstract">
+              <div class="opac-det-abstract__label">{{ 'opac.fieldSummary' | translate }}</div>
+              <p>{{ item.marc_520 || item.notes }}</p>
+            </div>
+          }
+
+          <!-- Subject chips -->
+          @if (subjectChips().length > 0) {
+            <div class="opac-det-subjects">
+              <div class="opac-det-subjects__label">{{ 'opac.fieldSubjects' | translate }}</div>
+              <div class="opac-det-subjects__chips">
+                @for (s of subjectChips(); track s) {
+                  <span class="opac-det-subject-chip">{{ s }}</span>
+                }
+                @if (item.marc_651) {
+                  <span class="opac-det-subject-chip opac-det-subject-chip--geo">{{ item.marc_651 }}</span>
+                }
+              </div>
+            </div>
+          }
+
+        </div>
+      }
+
+      <!-- ── Tab: MARC 21 ───────────────────────────────────────────────── -->
+      @if (activeTab === 'marc') {
+        <div class="opac-det-content">
+          <p class="opac-det-marc__note">
+            {{ 'opac.marcNote' | translate }}
+          </p>
+          <div class="opac-marc-grid">
+            @if (item.marc_leader) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">LDR</code>
+                <span class="opac-marc-row__label">Leader</span>
+                <code class="opac-marc-row__val">{{ item.marc_leader }}</code>
+              </div>
+            }
+            @if (item.marc_001) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">001</code>
+                <span class="opac-marc-row__label">Control Number</span>
+                <code class="opac-marc-row__val">{{ item.marc_001 }}</code>
+              </div>
+            }
+            @if (item.isbn) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">020</code>
+                <span class="opac-marc-row__label">ISBN</span>
+                <code class="opac-marc-row__val">$a {{ item.isbn }}</code>
+              </div>
+            }
+            @if (item.marc_041) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">041</code>
+                <span class="opac-marc-row__label">Language</span>
+                <code class="opac-marc-row__val">$a {{ item.marc_041 }}</code>
+              </div>
+            }
+            @if (item.marc_082) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">082</code>
+                <span class="opac-marc-row__label">DDC Number</span>
+                <code class="opac-marc-row__val">$a {{ item.marc_082 }} @if(item.marc_082_ed){<span> $2 {{ item.marc_082_ed }}</span>}</code>
+              </div>
+            }
+            @if (item.writer?.name) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">100</code>
+                <span class="opac-marc-row__label">Main Entry – Author</span>
+                <code class="opac-marc-row__val">$a {{ item.writer.name }}</code>
+              </div>
+            }
+            @if (item.title) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">245</code>
+                <span class="opac-marc-row__label">Title Statement</span>
+                <code class="opac-marc-row__val">$a {{ item.title }}@if(item.subtitle){ <span>$b {{ item.subtitle }}</span>}@if(item.marc_245_c){ <span> / $c {{ item.marc_245_c }}</span>}</code>
+              </div>
+            }
+            @if (item.marc_246) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">246</code>
+                <span class="opac-marc-row__label">Varying Title</span>
+                <code class="opac-marc-row__val">$a {{ item.marc_246 }}</code>
+              </div>
+            }
+            @if (item.edition) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">250</code>
+                <span class="opac-marc-row__label">Edition</span>
+                <code class="opac-marc-row__val">$a {{ item.edition }}</code>
+              </div>
+            }
+            @if (item.publisher?.publisherName || item.publishing_year) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">264</code>
+                <span class="opac-marc-row__label">{{ 'opac.marcPubInfo' | translate }}</span>
+                <code class="opac-marc-row__val">
+                  @if(item.publication_place){$a {{ item.publication_place }} : }
+                  @if(item.publisher?.publisherName){$b {{ item.publisher.publisherName }}, }
+                  @if(item.publishing_year){$c {{ item.publishing_year }}}
+                </code>
+              </div>
+            }
+            @if (item.number_of_pages) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">300</code>
+                <span class="opac-marc-row__label">{{ 'opac.marcPhysDesc' | translate }}</span>
+                <code class="opac-marc-row__val">$a {{ item.number_of_pages }} p. @if(item.size){ ; $c {{ item.size }} cm}</code>
+              </div>
+            }
+            @if (item.marc_490) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">490</code>
+                <span class="opac-marc-row__label">{{ 'opac.fieldSeries' | translate }}</span>
+                <code class="opac-marc-row__val">$a {{ item.marc_490 }}</code>
+              </div>
+            }
+            @if (item.marc_520) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">520</code>
+                <span class="opac-marc-row__label">{{ 'opac.fieldSummary' | translate }}</span>
+                <span class="opac-marc-row__val">{{ item.marc_520 }}</span>
+              </div>
+            }
+            @if (item.marc_650) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">650</code>
+                <span class="opac-marc-row__label">{{ 'opac.marcTopicalSubject' | translate }}</span>
+                <span class="opac-marc-row__val">{{ item.marc_650 }}</span>
+              </div>
+            }
+            @if (item.marc_651) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">651</code>
+                <span class="opac-marc-row__label">{{ 'opac.marcGeoSubject' | translate }}</span>
+                <span class="opac-marc-row__val">{{ item.marc_651 }}</span>
+              </div>
+            }
+            @if (item.marc_700) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">700</code>
+                <span class="opac-marc-row__label">{{ 'opac.marcAddedEntry' | translate }}</span>
+                <code class="opac-marc-row__val">$a {{ item.marc_700 }}</code>
+              </div>
+            }
+            @if (item.marc_856) {
+              <div class="opac-marc-row">
+                <code class="opac-marc-row__tag">856</code>
+                <span class="opac-marc-row__label">{{ 'opac.marcElectronicAccess' | translate }}</span>
+                <a class="opac-marc-row__val opac-marc-row__link" [href]="item.marc_856" target="_blank" rel="noopener">
+                  $u {{ item.marc_856 }}
+                </a>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- ── Tab: Dublin Core ───────────────────────────────────────────── -->
+      @if (activeTab === 'dc') {
+        <div class="opac-det-content">
+          <p class="opac-det-marc__note">
+            {{ 'opac.dcNote' | translate }}
+          </p>
+          <div class="opac-marc-grid">
+            <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:title</code>
+              <span class="opac-marc-row__label">Title</span>
+              <span class="opac-marc-row__val">{{ item.title }}{{ item.subtitle ? ' : ' + item.subtitle : '' }}</span></div>
+            <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:creator</code>
+              <span class="opac-marc-row__label">Creator</span>
+              <span class="opac-marc-row__val">{{ item.writer?.name || '—' }}</span></div>
+            @if (item.marc_650 || item.marc_651) {
+              <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:subject</code>
+                <span class="opac-marc-row__label">Subject</span>
+                <span class="opac-marc-row__val">{{ [item.marc_650, item.marc_651].filter(Boolean).join('; ') }}</span></div>
+            }
+            @if (item.marc_520) {
+              <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:description</code>
+                <span class="opac-marc-row__label">Description</span>
+                <span class="opac-marc-row__val">{{ item.marc_520 }}</span></div>
+            }
+            <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:publisher</code>
+              <span class="opac-marc-row__label">Publisher</span>
+              <span class="opac-marc-row__val">{{ item.publisher?.publisherName || '—' }}</span></div>
+            @if (item.marc_700) {
+              <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:contributor</code>
+                <span class="opac-marc-row__label">Contributor</span>
+                <span class="opac-marc-row__val">{{ item.marc_700 }}</span></div>
+            }
+            <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:date</code>
+              <span class="opac-marc-row__label">Date</span>
+              <span class="opac-marc-row__val">{{ item.publishing_year || '—' }}</span></div>
+            <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:type</code>
+              <span class="opac-marc-row__label">Type</span>
+              <span class="opac-marc-row__val">{{ item.mediaType?.type || 'Text' }}</span></div>
+            <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:format</code>
+              <span class="opac-marc-row__label">Format</span>
+              <span class="opac-marc-row__val">{{ item.physical_form || item.physical_description || 'Print' }}</span></div>
+            <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:identifier</code>
+              <span class="opac-marc-row__label">Identifier</span>
+              <span class="opac-marc-row__val">
+                @if (item.isbn) { ISBN: {{ item.isbn }}&nbsp; }
+                @if (item.marc_001) { <code>{{ item.marc_001 }}</code> }
+              </span></div>
+            <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:language</code>
+              <span class="opac-marc-row__label">Language</span>
+              <span class="opac-marc-row__val"><code>{{ item.marc_041 || 'und' }}</code></span></div>
+            @if (item.dc_rights) {
+              <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:rights</code>
+                <span class="opac-marc-row__label">Rights</span>
+                <span class="opac-marc-row__val">{{ item.dc_rights }}</span></div>
+            }
+            @if (item.dc_coverage) {
+              <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:coverage</code>
+                <span class="opac-marc-row__label">Coverage</span>
+                <span class="opac-marc-row__val">{{ item.dc_coverage }}</span></div>
+            }
+            @if (item.dc_relation) {
+              <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:relation</code>
+                <span class="opac-marc-row__label">Relation</span>
+                <span class="opac-marc-row__val">{{ item.dc_relation }}</span></div>
+            }
+            @if (item.dc_source) {
+              <div class="opac-marc-row"><code class="opac-marc-row__tag">dc:source</code>
+                <span class="opac-marc-row__label">Source</span>
+                <span class="opac-marc-row__val">{{ item.dc_source }}</span></div>
+            }
+          </div>
+        </div>
+      }
+
+    </div>
+  </div>
+
+</div>

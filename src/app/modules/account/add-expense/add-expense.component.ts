@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import ExpenseMessage from 'src/app/main/messages/expenseMessage';
@@ -9,12 +9,13 @@ import CONFIG from 'src/app/main/urls/urls';
 import ExpenseValidation from 'src/app/main/validations/ExpenseValidation';
 
 @Component({
-  selector: 'app-add-expense',
-  templateUrl: './add-expense.component.html',
-  styleUrls: ['./add-expense.component.css'],
+    selector: 'app-add-expense',
+    templateUrl: './add-expense.component.html',
+    styleUrls: ['./add-expense.component.css'],
+    standalone: false
 })
 export class AddExpenseComponent extends URLLoader implements OnInit {
-  expenseForm: FormGroup;
+  expenseForm: UntypedFormGroup;
   msg: ExpenseMessage;
   submitted = false;
   @Output() closeModalEvent = new EventEmitter<string>();
@@ -51,7 +52,6 @@ export class AddExpenseComponent extends URLLoader implements OnInit {
 
   ngOnInit(): void {
     this.getExpenseByLang(CONFIG.getInstance().getLang());
-    console.log(this.expenseI18n);
   }
 
   reset() {

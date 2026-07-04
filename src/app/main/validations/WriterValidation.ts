@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 @Injectable({
   providedIn: 'root',
 })
 export default class WriterValidation {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  public get formGroupInstance(): FormGroup {
+  public get formGroupInstance(): UntypedFormGroup {
     return this.formGroup;
   }
 
@@ -22,16 +22,16 @@ export default class WriterValidation {
   }
 
   createFormGroup() {
-    return new FormGroup({
-      name: new FormControl('', Validators.required),
-      note: new FormControl('', Validators.required),
-      dob: new FormControl('', Validators.required),
-      died: new FormControl('', Validators.required),
-      dod: new FormControl('', Validators.nullValidator), // Optional field, can be validated only if died is true
-      bio: new FormControl('', Validators.required),
-      publications: new FormControl('', Validators.required),
-      awards: new FormControl('', Validators.required),
-      refrences: new FormControl('', Validators.required)
+    return new UntypedFormGroup({
+      name: new UntypedFormControl('', Validators.required),
+      note: new UntypedFormControl('', Validators.required),
+      dob: new UntypedFormControl('', Validators.required),
+      died: new UntypedFormControl('', Validators.required),
+      dod: new UntypedFormControl('', Validators.nullValidator), // Optional field, can be validated only if died is true
+      bio: new UntypedFormControl('', Validators.required),
+      publications: new UntypedFormControl('', Validators.required),
+      awards: new UntypedFormControl('', Validators.required),
+      refrences: new UntypedFormControl('', Validators.required)
     });
   }
 }

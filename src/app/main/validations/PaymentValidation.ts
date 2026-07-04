@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 @Injectable({
   providedIn: 'root',
 })
 export default class PaymentValidation {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  public get formGroupInstance(): FormGroup {
+  public get formGroupInstance(): UntypedFormGroup {
     return this.formGroup;
   }
 
@@ -21,11 +21,12 @@ export default class PaymentValidation {
     return true;
   }
   createFormGroup() {
-    return new FormGroup({
-      memberName: new FormControl('', Validators.required),
-      amount: new FormControl('', Validators.required),
-      date: new FormControl('', Validators.required),
-      note: new FormControl(''),
+    return new UntypedFormGroup({
+      memberName: new UntypedFormControl('', Validators.required),
+      amount: new UntypedFormControl('', Validators.required),
+      date: new UntypedFormControl('', Validators.required),
+      note: new UntypedFormControl(''),
+      paymentMethod: new UntypedFormControl('cash', Validators.required),
     });
   }
 }

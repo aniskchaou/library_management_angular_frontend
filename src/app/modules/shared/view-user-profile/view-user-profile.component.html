@@ -1,59 +1,156 @@
+<div class="ll-page">
 
-    <div class="container mt-6">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <!-- Profile Card -->
-                <div class="card">
-                    <div class="card-body text-center">
-                        <!-- Profile Image -->
-                        <div class="mb-4">
-                            <img [src]="retrievedImage" class="rounded-circle img-thumbnail" alt="Profile Image">
-                        </div>
-                        
-                        <!-- Name and Basic Info -->
-                        <h3 class="card-title">{{ user?.firstName }} {{ user?.lastName }}</h3>
-                        <p class="card-text text-muted">{{ getFormattedRoles() }}</p>
-
-
-
-
-                        <!-- Social Links -->
-                        <div class="mb-4">
-                            <button class="btn btn-outline-primary btn-sm mx-1" (click)="onChangePassword()">
-                                <i class="fas fa-key me-2"></i> Change Password
-                            </button>
-                            <button class="btn btn-outline-secondary btn-sm mx-1" (click)="onChangeProfilePhoto()">
-                                <i class="fas fa-image me-2"></i> Change Profile Photo
-                            </button>
-                        </div>
-
-                        <!-- Bio Section -->
-                        <div class="mb-4">
-                            <h5 class="card-subtitle mb-2 text-muted">About Me</h5>
-                            <p class="card-text">{{user?.about}}
-                            </p>
-                        </div>
-
-                        <div class="row text-start">
-                            <div class="col-md-6">
-                                <h6>Location:</h6>
-                                <p class="text-muted">{{user?.address}}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <h6>Email:</h6>
-                                <p class="text-muted">{{ user?.email }}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <h6>Phone:</h6>
-                                <p class="text-muted">{{ user?.phoneNumber || 'N/A' }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End of Profile Card -->
-            </div>
+  <!-- ── Profile Hero ─────────────────────────────────────────────────────── -->
+  <mat-card class="ll-page__header ll-profile-hero" appearance="outlined">
+    <div class="ll-profile-hero__banner"></div>
+    <mat-card-content class="ll-profile-hero__content">
+      <div class="ll-profile-hero__left">
+        <div class="ll-profile-avatar-ring">
+          <img [src]="retrievedImage" class="ll-profile-avatar" alt="Profile Image"
+               onerror="this.src='assets/images/default-avatar.png'">
         </div>
+        <div class="ll-profile-hero__info">
+          <h1 class="ll-profile-name">
+            {{ (user?.firstName | titlecase) || '—' }} {{ (user?.lastName | titlecase) || '' }}
+          </h1>
+          <p class="ll-profile-username">
+            <mat-icon style="font-size:15px;width:15px;height:15px;vertical-align:middle">alternate_email</mat-icon>
+            {{ user?.username }}
+          </p>
+          <div class="ll-profile-roles-row">
+            @for (role of user?.roles; track role) {
+              <mat-chip color="primary" selected style="font-size:11px;height:22px">
+                {{ role.replace('ROLE_', '') }}
+              </mat-chip>
+            }
+          </div>
+          @if (user?.about) {
+            <p class="ll-profile-about">{{ user.about }}</p>
+          }
+        </div>
+      </div>
+      <div class="ll-profile-hero__actions">
+        <button mat-stroked-button (click)="onChangePassword()">
+          <mat-icon>key</mat-icon> Change Password
+        </button>
+        <button mat-flat-button color="primary" (click)="onChangeProfilePhoto()">
+          <mat-icon>photo_camera</mat-icon> Change Photo
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- ── Two-column body ──────────────────────────────────────────────────── -->
+  <div class="ll-profile-cols">
+
+    <!-- Left: contact details -->
+    <mat-card class="ll-page__body" appearance="outlined">
+      <mat-card-content>
+        <h3 class="ll-settings-section-title">
+          <mat-icon>badge</mat-icon> Account Details
+        </h3>
+        <mat-divider></mat-divider>
+
+        <div class="ll-profile-field-grid">
+
+          <div class="ll-profile-field">
+            <span class="ll-profile-field__label"><mat-icon>person</mat-icon> First Name</span>
+            <span class="ll-profile-field__val">{{ (user?.firstName | titlecase) || '—' }}</span>
+          </div>
+
+          <div class="ll-profile-field">
+            <span class="ll-profile-field__label"><mat-icon>person_outline</mat-icon> Last Name</span>
+            <span class="ll-profile-field__val">{{ (user?.lastName | titlecase) || '—' }}</span>
+          </div>
+
+          <div class="ll-profile-field">
+            <span class="ll-profile-field__label"><mat-icon>alternate_email</mat-icon> Username</span>
+            <span class="ll-profile-field__val">{{ user?.username || '—' }}</span>
+          </div>
+
+          <div class="ll-profile-field">
+            <span class="ll-profile-field__label"><mat-icon>email</mat-icon> Email</span>
+            <span class="ll-profile-field__val">{{ user?.email || '—' }}</span>
+          </div>
+
+          <div class="ll-profile-field">
+            <span class="ll-profile-field__label"><mat-icon>phone</mat-icon> Phone</span>
+            <span class="ll-profile-field__val">{{ user?.phoneNumber || 'N/A' }}</span>
+          </div>
+
+          <div class="ll-profile-field">
+            <span class="ll-profile-field__label"><mat-icon>location_on</mat-icon> Address</span>
+            <span class="ll-profile-field__val">{{ user?.address || '—' }}</span>
+          </div>
+
+          <div class="ll-profile-field">
+            <span class="ll-profile-field__label"><mat-icon>toggle_on</mat-icon> Status</span>
+            <span class="ll-profile-field__val">
+              <mat-chip [color]="user?.isActive ? 'primary' : 'warn'" selected style="font-size:11px;height:22px">
+                {{ user?.isActive ? 'Active' : 'Inactive' }}
+              </mat-chip>
+            </span>
+          </div>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Right: quick actions + security -->
+    <div class="ll-profile-right-col">
+
+      <!-- Quick Actions -->
+      <mat-card class="ll-page__body" appearance="outlined">
+        <mat-card-content>
+          <h3 class="ll-settings-section-title">
+            <mat-icon>bolt</mat-icon> Quick Actions
+          </h3>
+          <mat-divider></mat-divider>
+          <div class="ll-profile-actions-grid">
+            <button mat-stroked-button (click)="onChangePassword()" class="ll-profile-action-btn">
+              <mat-icon>key</mat-icon>
+              <span>Change Password</span>
+            </button>
+            <button mat-stroked-button (click)="onChangeProfilePhoto()" class="ll-profile-action-btn">
+              <mat-icon>photo_camera</mat-icon>
+              <span>Update Photo</span>
+            </button>
+            <a mat-stroked-button routerLink="/settings" class="ll-profile-action-btn">
+              <mat-icon>settings</mat-icon>
+              <span>Settings</span>
+            </a>
+            <a mat-stroked-button routerLink="/dashboard" class="ll-profile-action-btn">
+              <mat-icon>dashboard</mat-icon>
+              <span>Dashboard</span>
+            </a>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Security Info -->
+      <mat-card class="ll-page__body" appearance="outlined" style="margin-top:16px">
+        <mat-card-content>
+          <h3 class="ll-settings-section-title">
+            <mat-icon>security</mat-icon> Security
+          </h3>
+          <mat-divider></mat-divider>
+          <mat-list class="ll-profile-list">
+            <mat-list-item>
+              <mat-icon matListItemIcon color="primary">verified_user</mat-icon>
+              <div matListItemTitle>Password</div>
+              <div matListItemLine>Protected — click "Change Password" to update</div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListItemIcon color="primary">manage_accounts</mat-icon>
+              <div matListItemTitle>Roles</div>
+              <div matListItemLine>{{ getFormattedRoles() }}</div>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+
     </div>
+  </div>
 
-
-
+</div>

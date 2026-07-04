@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 @Injectable({
   providedIn: 'root',
 })
 export default class BookValidation {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  public get formGroupInstance(): FormGroup {
+  public get formGroupInstance(): UntypedFormGroup {
     return this.formGroup;
   }
 
@@ -21,18 +21,18 @@ export default class BookValidation {
     return true;
   }
   createFormGroup() {
-    return new FormGroup({
-      isbn: new FormControl('', Validators.required),
-      title: new FormControl('', Validators.required),
-      writer: new FormControl('', Validators.required),
-      edition: new FormControl('', Validators.required),
-      edition_year: new FormControl('', Validators.required),
-      publisher: new FormControl('', Validators.required),
-      publishing_year: new FormControl('', Validators.required),
-      publication_place: new FormControl('', Validators.required),
-      number_of_pages: new FormControl('', Validators.required),
-      notes: new FormControl('', Validators.required),
-      category: new FormControl('', Validators.required),
+    return new UntypedFormGroup({
+      isbn: new UntypedFormControl('', Validators.required),
+      title: new UntypedFormControl('', Validators.required),
+      writer: new UntypedFormControl('', Validators.required),
+      edition: new UntypedFormControl('', Validators.required),
+      edition_year: new UntypedFormControl('', Validators.required),
+      publisher: new UntypedFormControl('', Validators.required),
+      publishing_year: new UntypedFormControl('', Validators.required),
+      publication_place: new UntypedFormControl('', Validators.required),
+      number_of_pages: new UntypedFormControl('', Validators.required),
+      notes: new UntypedFormControl('', Validators.required),
+      category: new UntypedFormControl('', Validators.required),
       //pdf: new FormControl('', Validators.required),
       // link: new FormControl('', Validators.required),
     });

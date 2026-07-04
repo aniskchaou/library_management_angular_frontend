@@ -1,31 +1,28 @@
-<div class="container-fluid">
-  <div *ngIf="loading; else loaded">
-    <app-loading></app-loading>
-  </div>
-
-  <ng-template #loaded>
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">{{ circulationI18n?.allTitleI18n }}</h1>
-
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-      <div class="card-body">
-        <div class="table-responsive">
-          <app-add-button [itemI18n]="circulationI18n"></app-add-button>
-          <app-circulation-list
-            (editEvent)="edit($event)"
-            (viewEvent)="view($event)"
-            (deleteEvent)="delete($event)"
-            [circulations]="circulations$"
-            [circulationI18n]="circulationI18n"
-          ></app-circulation-list>
-          <app-circulation-modal
-            [circulationI18n]="circulationI18n"
-            [circulations]="circulations$"
-            [id]="id"
-          ></app-circulation-modal>
-        </div>
+<div class="ll-page">
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <mat-icon class="ll-page__icon">assignment_return</mat-icon>
+      <div class="ll-page__title">
+        <h1>{{ 'circulation.returnedTitle' | translate }}</h1>
+        <p>{{ 'circulation.returnedDesc' | translate }}</p>
       </div>
-    </div>
-  </ng-template>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="ll-page__body" appearance="outlined">
+    <mat-card-content>
+      @if (loading) {
+        <div class="ll-loading">
+          <mat-progress-spinner diameter="48" mode="indeterminate"></mat-progress-spinner>
+        </div>
+      } @else {
+        <app-circulation-list
+          (editEvent)="edit($event)"
+          (viewEvent)="view($event)"
+          (deleteEvent)="delete($event)"
+          [circulations]="circulations$"
+          [circulationI18n]="circulationI18n"
+        ></app-circulation-list>
+      }
+    </mat-card-content>
+  </mat-card>
 </div>

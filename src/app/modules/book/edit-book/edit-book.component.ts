@@ -12,9 +12,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-edit-book',
-  templateUrl: './edit-book.component.html',
-  styleUrls: ['./edit-book.component.css'],
+    selector: 'app-edit-book',
+    templateUrl: './edit-book.component.html',
+    styleUrls: ['./edit-book.component.css'],
+    standalone: false
 })
 export class EditBookComponent extends URLLoader implements OnInit {
   ngOnInit(): void {

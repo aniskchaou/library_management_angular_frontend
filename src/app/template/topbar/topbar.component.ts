@@ -13,10 +13,12 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UploadProfilePhotoComponent } from 'src/app/modules/shared/upload-profile-photo/upload-profile-photo.component';
 import { ToastrService } from 'ngx-toastr';
 import { EditPasswordComponent } from 'src/app/modules/shared/edit-password/edit-password.component';
+import { TranslationService, AppLang } from 'src/app/main/services/translation.service';
 @Component({
-  selector: 'app-topbar',
-  templateUrl: './topbar.component.html',
-  styleUrls: ['./topbar.component.css'],
+    selector: 'app-topbar',
+    templateUrl: './topbar.component.html',
+    styleUrls: ['./topbar.component.css'],
+    standalone: false
 })
 export class TopbarComponent extends URLLoader implements OnInit {
   currentLang='EN'
@@ -36,7 +38,8 @@ export class TopbarComponent extends URLLoader implements OnInit {
     private settingsMessage: SettingsMessage,
     //private activeModal: NgbActiveModal,
     private modalService: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private translationService: TranslationService
   ) {
     super();
     //this.getDashboardByLang(CONFIG.getInstance().getLang());
@@ -52,7 +55,10 @@ export class TopbarComponent extends URLLoader implements OnInit {
   ngOnInit(): void {
     
     this.retrievedImage=CONFIG.URL_BASE+'/users/get/' +localStorage.getItem('username') +'/'+localStorage.getItem('username')+'_profile.png';
-    this.sysLang = CONFIG.getInstance().getLang();
+    this.sysLang = this.translationService.currentLang;
+    this.translationService.currentLang$.subscribe(lang => {
+      this.sysLang = lang;
+    });
     this.httpService.menuI18n$.subscribe((data) => {
       this.menuI18n = data;
     });
@@ -64,14 +70,13 @@ export class TopbarComponent extends URLLoader implements OnInit {
         this.userObject = data;
       },
       (err: HttpErrorResponse) => {
-        console.log(err)
       }
     );
     this.generateDummyNotifications()
   }
 
-  changeLang(lang) {
-   this.toastr.info("The current version supports only the English language. Other languages will be added in the next versions.")
+  changeLang(lang: AppLang) {
+    this.translationService.setLang(lang);
    /*  this.httpService
       .getAllLang(
         CONFIG.URL_BASE + '/settings/updatelang/' + lang,
@@ -118,7 +123,6 @@ export class TopbarComponent extends URLLoader implements OnInit {
       )
       .subscribe(
         (data) => {
-          console.log(data);
           this.httpService.dashboardI18n.next(data);
         },
         (err: HttpErrorResponse) => {
@@ -133,7 +137,6 @@ export class TopbarComponent extends URLLoader implements OnInit {
       .getAllLang(CONFIG.URL_BASE + '/i18n/menu/EN', username, password)
       .subscribe(
         (data) => {
-          console.log(data);
           this.httpService.menuI18n.next(data);
         },
         (err: HttpErrorResponse) => {
@@ -204,7 +207,7 @@ export class TopbarComponent extends URLLoader implements OnInit {
       if (result) {
      
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   } 
 
   openPasswordDialog(): void {
@@ -215,7 +218,7 @@ export class TopbarComponent extends URLLoader implements OnInit {
       if (result) {
      
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   } 
   
   openProfilePhotoDialog(): void {
@@ -226,7 +229,7 @@ export class TopbarComponent extends URLLoader implements OnInit {
       if (result) {
      
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   } 
 
 

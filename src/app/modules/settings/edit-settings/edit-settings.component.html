@@ -1,136 +1,48 @@
-<form class="form-group odd" id="name_field_box">
-  <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ settingsI18n?.nameI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-  <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
-    <input
-      [(ngModel)]="model.name"
-      id="field-name"
-      value="{{ model.name }}"
-      name="name"
-      class="form-control"
-      type="text"
-      maxlength="99"
-    />
-    <br />
-  </div>
+<div class="modal-header">
+  <h5 class="modal-title">
+    <mat-icon class="ll-section-icon" style="vertical-align:middle;">settings</mat-icon>
+    {{ 'settings.editTitle' | translate }}
+  </h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+</div>
+<div class="modal-body">
+  <form #form="ngForm" class="ll-form ll-form--grid">
+    <mat-form-field appearance="outline" class="ll-form__field">
+      <mat-label>{{ 'ui.name' | translate }}</mat-label>
+      <input matInput name="name" [(ngModel)]="model.name" maxlength="99" required />
+    </mat-form-field>
 
-  <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ settingsI18n?.telephoneI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-  <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
-    <input
-      [(ngModel)]="model.telephone"
-      id="field-name"
-      value="{{ model.telephone }}"
-      name="telephone"
-      class="form-control"
-      type="text"
-      maxlength="99"
-    />
-    <br />
-  </div>
+    <mat-form-field appearance="outline" class="ll-form__field">
+      <mat-label>{{ 'settings.colTelephone' | translate }}</mat-label>
+      <input matInput name="telephone" [(ngModel)]="model.telephone" maxlength="99" />
+    </mat-form-field>
 
-  <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ settingsI18n?.addressI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-  <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
-    <input
-      [(ngModel)]="model.address"
-      id="field-name"
-      value="{{ model.address }}"
-      name="address"
-      class="form-control"
-      type="text"
-      maxlength="99"
-    />
-    <br />
-  </div>
+    <mat-form-field appearance="outline" class="ll-form__field">
+      <mat-label>{{ 'ui.address' | translate }}</mat-label>
+      <input matInput name="address" [(ngModel)]="model.address" maxlength="99" />
+    </mat-form-field>
 
-  <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ settingsI18n?.faxI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-  <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
-    <input
-      [(ngModel)]="model.fax"
-      id="field-name"
-      value="{{ model.fax }}"
-      name="fax"
-      class="form-control"
-      type="text"
-      maxlength="99"
-    />
-    <br />
-  </div>
+    <mat-form-field appearance="outline" class="ll-form__field">
+      <mat-label>{{ 'settings.colFax' | translate }}</mat-label>
+      <input matInput name="fax" [(ngModel)]="model.fax" maxlength="99" />
+    </mat-form-field>
 
-  <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ settingsI18n?.languageI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-  <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
-    <select
-      [(ngModel)]="model.lang"
-      id="field-name"
-      name="lang"
-      class="form-control"
-      maxlength="99"
-    >
-      <option value="EN">
-        <span class="flag-icon flag-icon-us"></span>ENGLISH
-      </option>
-      <option value="AR">
-        <span class="flag-icon flag-icon-ae"></span>عربى
-      </option>
-      <option value="HN">
-        <span class="flag-icon flag-icon-in"></span>हिन्दी
-      </option>
-      <option value="BN">
-        <span class="flag-icon flag-icon-bd"></span>বাংলা
-      </option>
-    </select>
-    <br />
-  </div>
-  <button (click)="edit()" type="button" class="btn btn-info">
-    <i class="fas fa-save"></i>
-    {{ settingsI18n?.editButtonI18n }}
+    <mat-form-field appearance="outline" class="ll-form__field ll-form__field--full">
+      <mat-label>{{ 'settings.colLanguage' | translate }}</mat-label>
+      <mat-select name="lang" [(ngModel)]="model.lang">
+        <mat-option value="EN">English</mat-option>
+        <mat-option value="AR">عربى</mat-option>
+        <mat-option value="HN">हिन्दी</mat-option>
+        <mat-option value="BN">বাংলা</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+<div class="modal-footer">
+  <button mat-stroked-button type="button" (click)="closeModal()">
+    <mat-icon>close</mat-icon> Cancel
   </button>
-</form>
+  <button mat-flat-button color="primary" type="button" (click)="edit()" [disabled]="!form?.valid">
+    <mat-icon>save</mat-icon> {{ 'ui.save' | translate }}
+  </button>
+</div>

@@ -1,9 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import * as Chart from 'chart.js';
-import { EventData } from 'ngx-event-calendar/lib/interface/event-data';
-import { BehaviorSubject } from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { finalize } from 'rxjs/operators';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookAnalytics from 'src/app/main/models/BookAnalytics';
@@ -14,9 +12,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.css'],
+    standalone: false
 })
 export class DashboardComponent extends URLLoader implements OnInit {
   dashboardI18n;
@@ -26,6 +25,55 @@ export class DashboardComponent extends URLLoader implements OnInit {
   expenses: Object;
   incomes: Object;
   loading = false;
+
+  /** Angular Material palette-based color scheme for all ngx-charts */
+  readonly materialColorScheme = {
+    domain: ['#3f51b5', '#e91e63', '#009688', '#ff9800', '#2196f3', '#4caf50', '#9c27b0', '#ff5722', '#795548', '#607d8b']
+  };
+
+  /** Dashboard widgets — order and visibility persisted in localStorage */
+  readonly WIDGET_STORAGE_KEY = 'll-dashboard-widgets';
+  chartWidgets: { id: string; label: string; visible: boolean }[] = [
+    { id: 'by-category',   label: 'Books by Category',              visible: true },
+    { id: 'by-media',      label: 'Media Type Distribution',        visible: true },
+    { id: 'members-city',  label: 'Members by City',                visible: true },
+    { id: 'gender',        label: 'Gender Distribution',            visible: true },
+    { id: 'media-items',   label: 'Media Items by Type',            visible: true },
+    { id: 'media-genre',   label: 'Media by Genre',                 visible: true },
+    { id: 'publications',  label: 'Publications by Authors',        visible: true },
+    { id: 'member-type',   label: 'Circulations by Member Type',    visible: true },
+  ];
+
+  showDashboardSettings = false;
+
+  private loadWidgetSettings(): void {
+    try {
+      const saved = localStorage.getItem(this.WIDGET_STORAGE_KEY);
+      if (!saved) return;
+      const parsed: { id: string; visible: boolean }[] = JSON.parse(saved);
+      // Apply saved order and visibility
+      const ordered: typeof this.chartWidgets = [];
+      for (const s of parsed) {
+        const w = this.chartWidgets.find(x => x.id === s.id);
+        if (w) { w.visible = s.visible; ordered.push(w); }
+      }
+      // Append any new widgets not yet saved
+      for (const w of this.chartWidgets) {
+        if (!ordered.find(x => x.id === w.id)) ordered.push(w);
+      }
+      this.chartWidgets = ordered;
+    } catch {}
+  }
+
+  saveWidgetSettings(): void {
+    localStorage.setItem(this.WIDGET_STORAGE_KEY,
+      JSON.stringify(this.chartWidgets.map(w => ({ id: w.id, visible: w.visible }))));
+  }
+
+  dropWidget(event: CdkDragDrop<typeof this.chartWidgets>): void {
+    moveItemInArray(this.chartWidgets, event.previousIndex, event.currentIndex);
+    this.saveWidgetSettings();
+  }
 
   view1: any[] = [500, 380];
   view3: any[] = [500, 320];
@@ -85,6 +133,7 @@ export class DashboardComponent extends URLLoader implements OnInit {
     viewTrends: any[] = [500, 380];
     viewBorrowed: any[] = [500, 380];
     viewGauge: any[] = [500, 380]; // New gauge chart size
+    viewSize: any[] = [500, 380];  // Gender distribution chart
   
    
     itemsByCategoryData: any[];
@@ -155,6 +204,7 @@ export class DashboardComponent extends URLLoader implements OnInit {
 
   ngOnInit(): void {
     super.loadScripts();
+    this.loadWidgetSettings();
     this.httpService.dashboardI18n$.subscribe((data) => {
       this.dashboardI18n = data;
     });
@@ -398,19 +448,18 @@ export class DashboardComponent extends URLLoader implements OnInit {
   }
 
   onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+
   }
 
   onActivate(data): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
+
   }
 
   onDeactivate(data): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+
   }
 
   selectDay(event) {
-    console.log(event);
   }
   addEvent(event) {}
 
@@ -424,7 +473,6 @@ export class DashboardComponent extends URLLoader implements OnInit {
       )
       .subscribe(
         (data) => {
-          console.log(data);
           this.httpService.dashboardI18n.next(data);
         },
         (err: HttpErrorResponse) => {
@@ -440,7 +488,6 @@ export class DashboardComponent extends URLLoader implements OnInit {
       .getAllLang(CONFIG.URL_BASE + '/i18n/menu/EN' , username, password)
       .subscribe(
         (data) => {
-          console.log(data);
           this.httpService.menuI18n.next(data);
         },
         (err: HttpErrorResponse) => {
@@ -457,7 +504,6 @@ export class DashboardComponent extends URLLoader implements OnInit {
       .subscribe(
         (data: Category[]) => {
           this.categories = data;  // Assign to this.categories which should be of type Category[]
-          console.log(data);
           // Number of Items by Category
       this.itemsByCategoryData = this.categories.map(category => ({
         name: category.category,
@@ -466,7 +512,6 @@ export class DashboardComponent extends URLLoader implements OnInit {
           this.loading = false;
         },
         (err: HttpErrorResponse) => {
-          console.log(err);
           this.loading = false;
         }
       );
@@ -479,7 +524,6 @@ export class DashboardComponent extends URLLoader implements OnInit {
       .subscribe(
         (data: MediaType[]) => {
           this.mediaTypes = data;  // Assign to this.mediaTypes which should be of type MediaType[]
-          console.log(data);
           this.itemsByMediaTypeData = this.mediaTypes.map(type => ({
             name: type.type,
             value: type.count
@@ -487,7 +531,6 @@ export class DashboardComponent extends URLLoader implements OnInit {
           this.loading = false;
         },
         (err: HttpErrorResponse) => {
-          console.log(err);
           this.loading = false;
         }
       );

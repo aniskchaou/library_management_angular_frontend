@@ -8,9 +8,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-settings-sms',
-  templateUrl: './settings-sms.component.html',
-  styleUrls: ['./settings-sms.component.css'],
+    selector: 'app-settings-sms',
+    templateUrl: './settings-sms.component.html',
+    styleUrls: ['./settings-sms.component.css'],
+    standalone: false
 })
 export class SettingsSmsComponent extends URLLoader implements OnInit {
   settings$ = [{}];
@@ -27,7 +28,6 @@ export class SettingsSmsComponent extends URLLoader implements OnInit {
 
   edit(id) {
     this.id = id;
-    console.log(id);
   }
   ngOnInit(): void {
     this.getAll();

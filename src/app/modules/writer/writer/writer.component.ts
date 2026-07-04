@@ -12,9 +12,10 @@ import { AddWriterComponent } from '../add-writer/add-writer.component';
 import { DataService } from 'src/app/main/services/data.service';
 
 @Component({
-  selector: 'app-writer',
-  templateUrl: './writer.component.html',
-  styleUrls: ['./writer.component.css'],
+    selector: 'app-writer',
+    templateUrl: './writer.component.html',
+    styleUrls: ['./writer.component.css'],
+    standalone: false
 })
 export class WriterComponent extends URLLoader implements OnInit {
   writers$ = [{}];
@@ -44,7 +45,7 @@ export class WriterComponent extends URLLoader implements OnInit {
   isDoughnut = false;
 
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    domain: ['#3f51b5', '#e91e63', '#009688', '#ff9800', '#2196f3', '#4caf50', '#9c27b0', '#ff5722', '#795548', '#607d8b']
   };
 
 
@@ -71,7 +72,7 @@ export class WriterComponent extends URLLoader implements OnInit {
     { author: 'Author 2', count: 30 },
     { author: 'Author 3', count: 40 }
   ]; */
-  markdownContent: Object;
+  markdownContent: any;
 
   constructor(
     private httpService: HTTPService,
@@ -233,7 +234,6 @@ export class WriterComponent extends URLLoader implements OnInit {
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/author.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }
@@ -261,7 +261,7 @@ export class WriterComponent extends URLLoader implements OnInit {
           this.getAll()
       
       //}
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
 
@@ -313,7 +313,17 @@ export class WriterComponent extends URLLoader implements OnInit {
       });
   }
 
+  getPercent(value: number, data: any[]): number {
+    if (!data?.length) return 0;
+    const max = Math.max(...data.map(d => d.value || 0));
+    return max > 0 ? Math.round((value / max) * 100) : 0;
+  }
 
+  getSeriesPercent(value: number, series: any[]): number {
+    if (!series?.length) return 0;
+    const max = Math.max(...series.map(p => p.value || 0));
+    return max > 0 ? Math.round((value / max) * 100) : 0;
+  }
 
 
 }

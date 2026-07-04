@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-ebook-modal',
-  templateUrl: './ebook-modal.component.html',
-  styleUrls: ['./ebook-modal.component.css'],
+    selector: 'app-ebook-modal',
+    templateUrl: './ebook-modal.component.html',
+    styleUrls: ['./ebook-modal.component.css'],
+    standalone: false
 })
 export class EbookModalComponent implements OnInit {
   constructor() {}

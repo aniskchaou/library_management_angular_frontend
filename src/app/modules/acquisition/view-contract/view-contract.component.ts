@@ -6,14 +6,15 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-view-contract',
-  templateUrl: './view-contract.component.html',
-  styleUrls: ['./view-contract.component.css']
+    selector: 'app-view-contract',
+    templateUrl: './view-contract.component.html',
+    styleUrls: ['./view-contract.component.css'],
+    standalone: false
 })
 export class ViewContractComponent implements OnInit {
   
   contract:Contract
-  files: Object;
+  files: any[] = [];
   constructor(private httpService:HTTPService,private activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
@@ -21,7 +22,7 @@ export class ViewContractComponent implements OnInit {
     .getAll(CONFIG.URL_BASE + '/contract/files/'+this.contract.vendor.id)
     .subscribe(
       (data) => {
-        this.files = data;
+        this.files = data as any;
       },
       (err: HttpErrorResponse) => {}
     );

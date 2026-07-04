@@ -1,37 +1,39 @@
- <div class="modal-header">
-    <h5 class="modal-title">{{ contract.id ? 'Edit' : 'Add' }} Contract</h5>
-    <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-      <form>
-      <div class="form-group">
-        <label for="contractNumber">Contract Number</label>
-        <input type="text" class="form-control" id="contractNumber" [(ngModel)]="contract.contractNumber" name="contractNumber" required>
-      </div>
-      <div class="form-group">
-        <label for="startDate">Start Date</label>
-        <input type="date" class="form-control" id="startDate" [(ngModel)]="contract.startDate" name="startDate" required>
-      </div>
-      <div class="form-group">
-        <label for="endDate">End Date</label>
-        <input type="date" class="form-control" id="endDate" [(ngModel)]="contract.endDate" name="endDate" required>
-      </div>
-       <div class="form-group">
-        <label for="vendor">Vendor</label>
-        <select class="form-control" id="vendor" [(ngModel)]="contract.vendor" name="vendor" required>
-          <option *ngFor="let vendor of vendors" [ngValue]="vendor">{{ vendor.name }}</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="terms">Terms</label>
-        <textarea class="form-control" id="terms" [(ngModel)]="contract.terms" name="terms"></textarea>
-      </div> 
-    </form> 
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
-    <button type="button" class="btn btn-outline-primary" (click)="onSaveClick()">Save</button>
-  </div>
-  
+<div class="modal-header">
+  <h5 class="modal-title">{{ contract.id ? 'Edit' : 'Add' }} Contract</h5>
+  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <label for="contractNumber">Contract Number</label>
+      <input type="text" class="form-control" id="contractNumber" [(ngModel)]="contract.contractNumber" name="contractNumber" required>
+    </div>
+    <div class="form-group">
+      <label for="startDate">Start Date</label>
+      <input type="date" class="form-control" id="startDate" [(ngModel)]="contract.startDate" name="startDate" required>
+    </div>
+    <div class="form-group">
+      <label for="endDate">End Date</label>
+      <input type="date" class="form-control" id="endDate" [(ngModel)]="contract.endDate" name="endDate" required>
+    </div>
+    <div class="form-group">
+      <label for="vendor">Vendor</label>
+      <select class="form-control" id="vendor" [(ngModel)]="contract.vendor" name="vendor" required>
+        @for (vendor of vendors; track vendor) {
+          <option [ngValue]="vendor">{{ vendor.name }}</option>
+        }
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="terms">Terms</label>
+      <textarea class="form-control" id="terms" [(ngModel)]="contract.terms" name="terms"></textarea>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
+  <button type="button" class="btn btn-outline-primary" (click)="onSaveClick()">Save</button>
+</div>
+

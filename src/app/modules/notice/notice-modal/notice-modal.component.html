@@ -1,57 +1,61 @@
 <div class="modal-header">
-    <h5 class="modal-title">{{ notice.id ? 'Edit' : 'Add' }} Notice</h5>
-    <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form>
-      <div class="form-group">
-        <label for="notificationMethod">Notification Method</label>
-        <select class="form-control" id="notificationMethod"  [(ngModel)]="notice.notificationMethod" name="notificationMethod">
-          <option value="sms">SMS</option>
-          <option value="email">Email</option>
-        </select>
-      </div>
-    
-      <div class="form-group">
-        <label for="receiver">Receiver</label>
-        <select class="form-control" id="receiver"  [(ngModel)]="notice.receiver" name="receiver">
-          <option *ngFor="let receiver of members" [value]="receiver.primary_email">{{ receiver.firstname+' '+receiver.surname }}</option>
-        </select>
-      </div>
-    
-      <div class="form-group">
-        <label for="subject">Subject</label>
-        <!-- <input type="text" class="form-control" id="subject" [(ngModel)]="notice.subject" name="subject"> -->
-        <select class="form-control" id="subject"  [(ngModel)]="notice.subject" name="subject">
-          <option *ngFor="let n of noticeTemplates" [value]="n.contentTemplate">{{ n.title }}</option>
-        </select>     
-      </div>
-    
-      <div class="form-group">
-        <label for="type">Type</label>
-        <select class="form-control" id="type"  [(ngModel)]="notice.type" name="type">
-          <option value="notification">Notification</option>
-          <option value="alert">Alert</option>
-          <option value="reminder">Reminder</option>
-          <!-- Add more types if needed -->
-        </select>
-      </div>
-    
-      <div class="form-group">
-        <label for="importance">Importance</label>
-        <select class="form-control" id="importance"  [(ngModel)]="notice.importance" name="importance">
-          <option value="high">High</option>
-          <option value="medium">Medium</option>
-          <option value="low">Low</option>
-        </select>
-      </div>
-      <!-- Assuming noticeTemplate and member fields will be managed separately -->
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
-    <button type="button" class="btn btn-outline-primary" (click)="saveNotice()">Save</button>
-  </div>
-  
+  <h5 class="modal-title">{{ notice.id ? 'Edit' : 'Add' }} Notice</h5>
+  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <label for="notificationMethod">Notification Method</label>
+      <select class="form-control" id="notificationMethod"  [(ngModel)]="notice.notificationMethod" name="notificationMethod">
+        <option value="sms">SMS</option>
+        <option value="email">Email</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="receiver">Receiver</label>
+      <select class="form-control" id="receiver"  [(ngModel)]="notice.receiver" name="receiver">
+        @for (receiver of members; track receiver) {
+          <option [value]="receiver.primary_email">{{ receiver.firstname+' '+receiver.surname }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="subject">Subject</label>
+      <!-- <input type="text" class="form-control" id="subject" [(ngModel)]="notice.subject" name="subject"> -->
+      <select class="form-control" id="subject"  [(ngModel)]="notice.subject" name="subject">
+        @for (n of noticeTemplates; track n) {
+          <option [value]="n.contentTemplate">{{ n.title }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="type">Type</label>
+      <select class="form-control" id="type"  [(ngModel)]="notice.type" name="type">
+        <option value="notification">Notification</option>
+        <option value="alert">Alert</option>
+        <option value="reminder">Reminder</option>
+        <!-- Add more types if needed -->
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="importance">Importance</label>
+      <select class="form-control" id="importance"  [(ngModel)]="notice.importance" name="importance">
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+    </div>
+    <!-- Assuming noticeTemplate and member fields will be managed separately -->
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Cancel</button>
+  <button type="button" class="btn btn-outline-primary" (click)="saveNotice()">Save</button>
+</div>
+

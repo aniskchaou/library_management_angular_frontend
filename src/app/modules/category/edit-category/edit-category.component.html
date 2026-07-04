@@ -1,124 +1,44 @@
-<!-- <form class="form-group odd" id="category_name_field_box">
-  <label
-    class="col-sm-3 control-label"
-    for="name"
-    id="category_name_display_as_box"
-  >
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ categoryI18n?.category_nameI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
-
-    <input
-      [(ngModel)]="model.category_name"
-      id="field-category_name"
-      value="{{ model.category_name }}"
-      name="category_name"
-      class="form-control"
-      type="text"
-      maxlength="99"
-    />
-    <br />
-
-    <button (click)="edit()" type="button" class="btn btn-info">
-      <i class="fas fa-save"></i>
-      {{ categoryI18n?.editButtonI18n }}
+<div class="ll-modal">
+  <div class="ll-modal__header">
+    <mat-icon class="ll-modal__icon">edit</mat-icon>
+    <h2 class="ll-modal__title">{{ category?.id ? 'Edit' : 'Add' }} Category</h2>
+    <button mat-icon-button class="ll-modal__close" (click)="onCancelClick()" aria-label="Close">
+      <mat-icon>close</mat-icon>
     </button>
   </div>
-</form>
- -->
 
-<!-- Category Edit Modal -->
-<div class="modal-header">
-  <h5 class="modal-title">{{ category?.id ? 'Edit' : 'Add' }} Category</h5>
-  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-  <form #categoryForm="ngForm">
-    <!-- Category Name Field -->
-    <div class="form-group row odd" id="category_name_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="categoryName"
-        id="category_name_display_as_box"
-      >
-        <span>
-          Category Name
-        </span>
-        <span class="required">*</span>
-        <i
-          class="fas fa-info-circle ml-2"
-          data-toggle="tooltip"
-          data-html="true"
-          title="<b>Description:</b> Enter the name of the category.<br><b>Example:</b> Electronics, Apparel"
-          aria-label="Category Name Information"
-        ></i>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
-        <!-- Input with Suggestions Button -->
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            id="categoryName"
-            [(ngModel)]="category.category_name"
-            name="categoryName"
-            placeholder="e.g., Electronics, Apparel"
-            maxlength="99"
-            required
-            #categoryName="ngModel"
-          />
-         <!--  <div class="input-group-append">
-            <button
-              type="button"
-              class="btn btn-link btn-sm"
-              (click)="toggleSuggestions()"
-              aria-label="Toggle Category Suggestions"
-            >
-              <i class="fas fa-magic"></i>
-            </button>
-          </div> -->
+  <div class="ll-modal__content">
+    @if (category) {
+      <form #categoryForm="ngForm" novalidate class="ll-form">
+        <div class="ll-form__grid">
+          <mat-form-field appearance="outline" class="ll-form__full">
+            <mat-label>Category Name</mat-label>
+            <input matInput type="text" [(ngModel)]="category.category_name" name="categoryName"
+                   placeholder="e.g. Electronics, Apparel" maxlength="99" required #categoryName="ngModel" />
+            @if (categoryName.invalid && (categoryName.dirty || categoryName.touched)) {
+              <mat-error>Category Name is required.</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="ll-form__full">
+            <mat-label>Slug</mat-label>
+            <input matInput type="text" [(ngModel)]="category.slug" name="slug" maxlength="99" placeholder="e.g. fiction-category" />
+          </mat-form-field>
+
+          <mat-checkbox [(ngModel)]="category.published" name="published" class="ll-form__full">Published</mat-checkbox>
         </div>
-        <!-- Validation Message -->
-        <div *ngIf="categoryName.invalid && (categoryName.dirty || categoryName.touched)" class="text-danger mt-1">
-          Category Name is required.
+
+        <div class="ll-modal__actions">
+          <button mat-stroked-button type="button" (click)="onCancelClick()">Cancel</button>
+          <button mat-flat-button color="primary" type="button" (click)="saveCategory()" [disabled]="categoryForm.invalid">
+            <mat-icon>save</mat-icon> Save Changes
+          </button>
         </div>
-        <!-- Suggestions List -->
-        <div *ngIf="showSuggestions" class="suggestions-container mt-2">
-          <div *ngFor="let suggestion of filteredCategories" class="suggestion-button mb-1">
-            <button
-              type="button"
-              class="btn btn-secondary btn-sm"
-              (click)="onSuggestionClick(suggestion)"
-            >
-              {{ suggestion.categoryName }}
-            </button>
-          </div>
-        </div>
+      </form>
+    } @else {
+      <div class="ll-modal__loading">
+        <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
       </div>
-    </div>
-  </form>
-</div>
-<div class="modal-footer">
-  <div class="col-sm-12 text-right">
-    <button type="button" class="btn btn-outline-secondary mr-2" (click)="onCancelClick()">Cancel</button>
-    <button
-      type="button"
-      class="btn btn-outline-primary"
-      (click)="saveCategory()"
-      [disabled]="categoryForm.invalid"
-    >
-      <i class="fas fa-save"></i> Save
-    </button>
+    }
   </div>
 </div>
-

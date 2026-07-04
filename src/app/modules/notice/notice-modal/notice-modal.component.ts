@@ -9,9 +9,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-notice-modal',
-  templateUrl: './notice-modal.component.html',
-  styleUrls: ['./notice-modal.component.css']
+    selector: 'app-notice-modal',
+    templateUrl: './notice-modal.component.html',
+    styleUrls: ['./notice-modal.component.css'],
+    standalone: false
 })
 export class NoticeModalComponent implements OnInit {
 
@@ -22,13 +23,11 @@ export class NoticeModalComponent implements OnInit {
   constructor(private toastr: ToastrService,private noticeTemplateService:HTTPService,public activeModal: NgbActiveModal, private noticeService: HTTPService,private httpService:HTTPService) {}
 
   ngOnInit(): void {
-    console.log(this.notice);
     this.loadNoticeTemplates()
     this.getAllMembers()
   }
 
   saveNotice(): void {
-    console.log(this.notice)
     if(this.validateNoticeForm(this.notice,true)){
        this.noticeService.createNotice(this.notice).subscribe(() => {
         this.activeModal.close(this.notice);
@@ -44,7 +43,6 @@ export class NoticeModalComponent implements OnInit {
     this.httpService.getAll(CONFIG.URL_BASE + '/member/all').subscribe(
       (data: Member[]) => {
         this.members = data;
-        console.log(data)
         //this.loading = false;
       },
       (err: HttpErrorResponse) => {

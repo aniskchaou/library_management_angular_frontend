@@ -1,118 +1,130 @@
-<div class="container-fluid">
-  <!-- Title with Icon -->
-  <h1 class="h3 mb-2 text-gray-800">
-    <i class="fas fa-book mr-2"></i>{{ menu.bookReportI18n }}
-  </h1>
+<div class="ll-page">
 
-  <!-- Description -->
-  <p class="lead mb-4">
-    This report provides detailed information on books, including their ISBN, titles, authors, categories, and publishers. Use the filters below to narrow down the report based on publisher, category, writer, or year. Click "Search" to view the filtered data.
-  </p>
-
-  <!-- Filters and Search Button -->
-  <div class="card shadow mb-4">
-    <div class="card-body">
-      <select
-        class="col-sm-2 custom-select"
-        id="inputGroupSelect04"
-        (change)="selectPublisher($event.target.value)"
-      >
-        <option selected>Select Publisher</option>
-        <option value="{{ c.id }}" *ngFor="let c of publishers$">
-          {{ c.name }}
-        </option>
-      </select>
-
-      <select
-        class="col-sm-2 custom-select"
-        id="inputGroupSelect04"
-        (change)="selectCategory($event.target.value)"
-      >
-        <option selected>Select Category</option>
-        <option value="{{ c.id }}" *ngFor="let c of categories$">
-          {{ c.category_name }}
-        </option>
-      </select>
-
-      <select
-        class="col-sm-2 custom-select"
-        id="inputGroupSelect04"
-        (change)="selectWriter($event.target.value)"
-      >
-        <option selected>Select Writer</option>
-        <option value="{{ c.id }}" *ngFor="let c of writers$">
-          {{ c.name }}
-        </option>
-      </select>
-
-      <select
-        class="col-sm-2 custom-select"
-        id="inputGroupSelect04"
-        (change)="selectYear($event.target.value)"
-      >
-        <option selected>Select Year</option>
-        <option value="{{ y.year }}" *ngFor="let y of years">
-          {{ y.year}}
-        </option>
-      </select>
-
-      <button
-        (click)="search()"
-        href="#"
-        role="button"
-        class="btn btn-info btn-icon-split"
-      >
-        <span class="icon text-white-50">
-          <i class="fas fa-filter"></i>
-        </span>
-        <span class="text">Filter</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- Data Table -->
-  <div class="card shadow mb-4" *ngIf="searchButtonClicked">
-    <div class="card-body">
-      <div class="table-responsive">
-        <div class="export-buttons">
-          <button class="btn btn-outline-primary" (click)="exportToCSV()">Export to CSV</button>
-          <button class="btn btn-outline-secondary" (click)="exportToPDF()">Export to PDF</button>
+  <!-- Page Header -->
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <div class="ll-page__title">
+        <mat-icon class="ll-page__icon">menu_book</mat-icon>
+        <div>
+          <h2>{{ menu?.bookReportI18n || ('report.bookTitle' | translate) }}</h2>
+          <p class="ll-page__subtitle">{{ 'report.bookDesc' | translate }}</p>
         </div>
-        <table
-          id="table"
-          class="table table-bordered"
-          width="100%"
-          cellspacing="0"
-        >
-          <thead>
-            <tr>
-              <th>{{ bookI18n?.isbnI18n }}</th>
-              <th>{{ bookI18n?.titleI18n }}</th>
-              <th>{{ bookI18n?.authorI18n }}</th>
-              <th>{{ bookI18n?.categoryI18n }}</th>
-              <th>{{ bookI18n?.publisherI18n }}</th>
-            </tr>
-          </thead>
-          <tfoot>
-            <tr>
-              <th>{{ bookI18n?.isbnI18n }}</th>
-              <th>{{ bookI18n?.titleI18n }}</th>
-              <th>{{ bookI18n?.authorI18n }}</th>
-              <th>{{ bookI18n?.categoryI18n }}</th>
-              <th>{{ bookI18n?.publisherI18n }}</th>
-            </tr>
-          </tfoot>
-          <tbody>
-            <tr *ngFor="let b of books$">
-              <td>{{ b.isbn }}</td>
-              <td>{{ b.title }}</td>
-              <td>{{ b.writer?.name }}</td>
-              <td>{{ b.category?.category_name }}</td>
-              <td>{{ b.publisher?.name }}</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
-    </div>
-  </div>
+      <div class="ll-page__actions">
+        @if (searchButtonClicked && books$?.length) {
+          <button mat-stroked-button (click)="exportToCSV()">
+            <mat-icon>table_view</mat-icon> CSV
+          </button>
+          <button mat-flat-button color="primary" (click)="exportToPDF()">
+            <mat-icon>picture_as_pdf</mat-icon> PDF
+          </button>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Filters -->
+  <mat-card class="ll-page__body" appearance="outlined">
+    <mat-card-content>
+      <div class="ll-report-filters">
+        <mat-form-field appearance="outline" class="ll-report-filter">
+          <mat-label>{{ 'report.selectPublisher' | translate }}</mat-label>
+          <mat-icon matPrefix>business</mat-icon>
+          <mat-select (selectionChange)="selectPublisher($event.value)">
+            <mat-option [value]="undefined">{{ 'report.selectPublisher' | translate }}</mat-option>
+            @for (p of publishers$; track p) {
+              <mat-option [value]="p.id">{{ p.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="ll-report-filter">
+          <mat-label>{{ 'report.selectCategory' | translate }}</mat-label>
+          <mat-icon matPrefix>category</mat-icon>
+          <mat-select (selectionChange)="selectCategory($event.value)">
+            <mat-option [value]="undefined">{{ 'report.selectCategory' | translate }}</mat-option>
+            @for (c of categories$; track c) {
+              <mat-option [value]="c.id">{{ c.category_name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="ll-report-filter">
+          <mat-label>{{ 'report.selectWriter' | translate }}</mat-label>
+          <mat-icon matPrefix>edit</mat-icon>
+          <mat-select (selectionChange)="selectWriter($event.value)">
+            <mat-option [value]="undefined">{{ 'report.selectWriter' | translate }}</mat-option>
+            @for (w of writers$; track w) {
+              <mat-option [value]="w.id">{{ w.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="ll-report-filter">
+          <mat-label>{{ 'report.selectYear' | translate }}</mat-label>
+          <mat-icon matPrefix>calendar_today</mat-icon>
+          <mat-select (selectionChange)="selectYear($event.value)">
+            <mat-option [value]="undefined">{{ 'report.selectYear' | translate }}</mat-option>
+            @for (y of years; track y) {
+              <mat-option [value]="y.year">{{ y.year }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" (click)="search()" class="ll-report-search-btn">
+          <mat-icon>search</mat-icon> {{ 'ui.filter' | translate }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Results -->
+  @if (loading) {
+    <div class="ll-loading"><mat-progress-spinner mode="indeterminate" diameter="48"></mat-progress-spinner></div>
+  } @else if (searchButtonClicked) {
+    @if (books$?.length) {
+      <mat-card class="ll-page__body" appearance="outlined">
+        <mat-card-content>
+          <div class="ll-report-count">
+            <mat-chip color="primary" selected>
+              <mat-icon matChipAvatar>format_list_numbered</mat-icon>
+              {{ books$.length }} results
+            </mat-chip>
+          </div>
+          <div class="ll-report-table-wrap">
+            <table class="ll-report-table mat-elevation-z1">
+              <thead>
+                <tr>
+                  <th>{{ 'book.colISBN' | translate }}</th>
+                  <th>{{ 'book.colTitle' | translate }}</th>
+                  <th>{{ 'book.colWriter' | translate }}</th>
+                  <th>{{ 'book.colCategory' | translate }}</th>
+                  <th>{{ 'book.colPublisher' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (b of books$; track b) {
+                  <tr>
+                    <td><code>{{ b.isbn }}</code></td>
+                    <td class="ll-report-title">{{ b.title }}</td>
+                    <td>{{ b.writer?.name }}</td>
+                    <td>{{ b.category?.category_name }}</td>
+                    <td>{{ b.publisher?.name }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    } @else {
+      <mat-card class="ll-page__body" appearance="outlined">
+        <mat-card-content class="ll-empty-state">
+          <mat-icon class="ll-empty-icon">find_in_page</mat-icon>
+          <h3>No results found</h3>
+          <p>Try changing your filter criteria and searching again.</p>
+        </mat-card-content>
+      </mat-card>
+    }
+  }
 </div>

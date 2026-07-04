@@ -6,9 +6,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 
 
 @Component({
-  selector: 'app-vendor-modal',
-  templateUrl: './vendor-modal.component.html',
-  styleUrls: ['./vendor-modal.component.css']
+    selector: 'app-vendor-modal',
+    templateUrl: './vendor-modal.component.html',
+    styleUrls: ['./vendor-modal.component.css'],
+    standalone: false
 })
 export class VendorModalComponent implements OnInit {
   @Input() vendor: Vendor = {} as Vendor;

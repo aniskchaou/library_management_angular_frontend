@@ -7,11 +7,11 @@ import CONFIG from 'src/app/main/urls/urls';
 import * as pdfjsLib from 'pdfjs-dist';
 import pdf2json from 'pdf2json';
 import * as html2canvas from 'html2canvas';
-declare const $: any;
 @Component({
-  selector: 'app-ebook',
-  templateUrl: './ebook.component.html',
-  styleUrls: ['./ebook.component.css'],
+    selector: 'app-ebook',
+    templateUrl: './ebook.component.html',
+    styleUrls: ['./ebook.component.css'],
+    standalone: false
 })
 export class EbookComponent extends URLLoader implements OnInit {
   ebooks$ = [{}];
@@ -26,11 +26,7 @@ export class EbookComponent extends URLLoader implements OnInit {
 
 
   ngAfterViewInit() {
-    $('#book').turn({
-      width: 800,
-      height: 600,
-      autoCenter: true
-    });
+    // turn.js (jQuery-based book flip) removed. Re-implement with a Material/CSS solution if needed.
   }
 
   @ViewChild('book') bookElement: ElementRef;
@@ -93,7 +89,7 @@ export class EbookComponent extends URLLoader implements OnInit {
     this.httpService.getAll(CONFIG.URL_BASE + '/book/all').subscribe(
       (data: EBook[]) => {
         this.ebooks$ = data;
-        // console.log(this.books$);
+        //
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'error');

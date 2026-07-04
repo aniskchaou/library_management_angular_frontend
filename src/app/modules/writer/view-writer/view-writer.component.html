@@ -1,35 +1,69 @@
-<div class="modal-header">
-    <h5 class="modal-title">Writer Details</h5>
-    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-      <span aria-hidden="true">&times;</span>
+<div class="ll-modal ll-modal--wide">
+  <div class="ll-modal__header">
+    <mat-icon class="ll-modal__icon">person</mat-icon>
+    <h2 class="ll-modal__title">Writer Details</h2>
+    <button mat-icon-button class="ll-modal__close" (click)="closeModal()" aria-label="Close">
+      <mat-icon>close</mat-icon>
     </button>
-</div>
+  </div>
 
-<div class="modal-body">
-    <h2>{{ writer?.name }}</h2>
-    <p><strong>Note:</strong> {{ writer?.note || 'No notes available' }}</p>
-    <p><strong>Date of Birth:</strong> {{ writer?.dateOfBirth || 'Unknown' }}</p>
-    <p><strong>Died:</strong> {{ writer?.died === 'yes' ? 'Yes' : 'No' }}</p>
-    <p *ngIf="writer?.died === 'yes'"><strong>Date of Death:</strong> {{ writer?.dateOfDeath || 'Unknown' }}</p>
-    <p><strong>Publications:</strong> {{ writer?.publications || 'No publications listed' }}</p>
-    <p><strong>Bio:</strong> {{ writer?.bio || 'No biography available' }}</p>
-    <p><strong>Awards:</strong> {{ writer?.award || 'No awards listed' }}</p>
-    <p><strong>References:</strong> {{ writer?.refrences || 'No references available' }}</p>
-</div>
+  <div class="ll-modal__content">
+    <div class="ll-view">
+      <mat-card appearance="outlined">
+        <mat-card-content class="ll-view__card-content">
+          <div class="ll-view__avatar">
+            {{ writer?.name ? writer.name.charAt(0).toUpperCase() : '?' }}
+          </div>
+          <div class="ll-view__id">
+            <h3>{{ writer?.name }}</h3>
+            <p class="ll-view__sub">{{ writer?.note || '—' }}</p>
+            @if (writer?.died) {
+              <mat-chip class="ll-chip--off">
+                <mat-icon matChipAvatar>history_toggle_off</mat-icon> Deceased
+              </mat-chip>
+            } @else {
+              <mat-chip class="ll-chip--ok">
+                <mat-icon matChipAvatar>check_circle</mat-icon> Living
+              </mat-chip>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
 
-<div class="modal-footer">
-    <div class="button-group">
-        <button type="button" class="btn btn-outline-primary" (click)="openEditDialog(writer)">
-          <i class="fas fa-edit"></i> Edit
-        </button>
-        
-        <button type="button" class="btn btn-outline-danger" (click)="deleteRow(writer)">
-          <i class="fas fa-trash-alt"></i> Delete
-        </button>
-        
-        <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">
-          <i class="fas fa-times"></i> Close
-        </button>
+      <mat-card appearance="outlined">
+        <mat-card-content>
+          <dl class="ll-view__details">
+            <div class="ll-view__row">
+              <dt>Date of Birth</dt><dd>{{ writer?.dob || '—' }}</dd>
+            </div>
+            <div class="ll-view__row">
+              <dt>Date of Death</dt><dd>{{ writer?.dod || '—' }}</dd>
+            </div>
+            <div class="ll-view__row">
+              <dt>Biography</dt><dd>{{ writer?.bio || '—' }}</dd>
+            </div>
+            <div class="ll-view__row">
+              <dt>Publications</dt><dd>{{ writer?.publications || '—' }}</dd>
+            </div>
+            <div class="ll-view__row">
+              <dt>Awards</dt><dd>{{ writer?.awards || '—' }}</dd>
+            </div>
+            <div class="ll-view__row">
+              <dt>References</dt><dd>{{ writer?.refrences || '—' }}</dd>
+            </div>
+          </dl>
+        </mat-card-content>
+      </mat-card>
     </div>
-</div>
+  </div>
 
+  <div class="ll-modal__actions">
+    <button mat-stroked-button (click)="openEditDialog(writer)">
+      <mat-icon>edit</mat-icon> Edit
+    </button>
+    <button mat-stroked-button class="ll-btn--danger" (click)="deleteRow(writer)">
+      <mat-icon>delete</mat-icon> Delete
+    </button>
+    <button mat-stroked-button (click)="closeModal()">Close</button>
+  </div>
+</div>

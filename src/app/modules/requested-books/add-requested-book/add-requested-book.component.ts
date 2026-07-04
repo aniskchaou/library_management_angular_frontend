@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookMessage from 'src/app/main/messages/BookMessage';
@@ -11,12 +11,13 @@ import CONFIG from 'src/app/main/urls/urls';
 import RequestedBookValidation from 'src/app/main/validations/RequestedBookValidation';
 
 @Component({
-  selector: 'app-add-requested-book',
-  templateUrl: './add-requested-book.component.html',
-  styleUrls: ['./add-requested-book.component.css'],
+    selector: 'app-add-requested-book',
+    templateUrl: './add-requested-book.component.html',
+    styleUrls: ['./add-requested-book.component.css'],
+    standalone: false
 })
 export class AddRequestedBookComponent extends URLLoader implements OnInit {
-  requestedBookForm: FormGroup;
+  requestedBookForm: UntypedFormGroup;
   msg: RequestedBookMessage;
   submitted = false;
   categories$;
@@ -87,7 +88,6 @@ export class AddRequestedBookComponent extends URLLoader implements OnInit {
     this.requestedBookForm.value.writer = this.writers$.filter(
       (x) => x.id == parseInt(this.requestedBookForm.value.writer)
     )[0];
-    console.log(this.requestedBookForm.value);
     if (this.validation.checkValidation()) {
       this.httpService
         .create(

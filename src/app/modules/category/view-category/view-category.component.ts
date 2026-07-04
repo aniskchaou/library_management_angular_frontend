@@ -12,9 +12,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-view-category',
-  templateUrl: './view-category.component.html',
-  styleUrls: ['./view-category.component.css']
+    selector: 'app-view-category',
+    templateUrl: './view-category.component.html',
+    styleUrls: ['./view-category.component.css'],
+    standalone: false
 })
 export class ViewCategoryComponent implements OnInit {
 
@@ -39,7 +40,6 @@ export class ViewCategoryComponent implements OnInit {
         (data) => {
           
           this.toastr.success("Category published status updated successfully!")
-        console.log(data)
         },
         (err: HttpErrorResponse) => {
           //super.show('Error', err.message, 'warning');
@@ -49,19 +49,16 @@ export class ViewCategoryComponent implements OnInit {
 
 
   deleteRow(row): void {
-    console.log('Delete row:', row);
     this.delete(row.id)
   }
 
   // Trigger edit event
   editCategory(value): void {
-    console.log(value)
     
   }
 
   editRow(row): void {
     this.openEditDialog(row)
-    console.log('Edit row:', row);
   }
 
   closeModal(): void {
@@ -69,18 +66,10 @@ export class ViewCategoryComponent implements OnInit {
   }
 
   openEditDialog(category: Category): void {
-    
-    const modalRef = this.modalService.open(EditCategoryComponent);
-    modalRef.componentInstance.category = { ...category }; // Ensure category is passed properly
-    this.closeModal()
-    console.log(category); // Ensure category is not undefined here
-
-    modalRef.result.then(result => {
-      console.log(result)
-       
-      this.dataService.triggerRefresh();
-      
-    }).catch(error => console.log(error));
+    const modalRef = this.modalService.open(EditCategoryComponent, { size: 'xl', centered: true });
+    modalRef.componentInstance.category = { ...category };
+    this.closeModal();
+    modalRef.result.then(() => this.dataService.triggerRefresh()).catch(() => {});
   }
 
   reloadPage(): void {
@@ -90,7 +79,6 @@ export class ViewCategoryComponent implements OnInit {
   }
 
   delete(id) {
-    console.log(id)
     var r = confirm('Do you want to delete this recording ?');
     if (r) {
       this.httpService.remove(CONFIG.URL_BASE + '/category/delete/' + id);

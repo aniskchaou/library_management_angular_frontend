@@ -8,9 +8,11 @@ import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-vendor',
-  templateUrl: './vendor.component.html',
-  styleUrls: ['./vendor.component.css'] // Update with the correct path
+    selector: 'app-vendor',
+    templateUrl: './vendor.component.html',
+    styleUrls: ['./vendor.component.css'] // Update with the correct path
+    ,
+    standalone: false
 })
 export class VendorComponent implements OnInit {
 
@@ -96,7 +98,7 @@ export class VendorComponent implements OnInit {
       
           this.loadVendors();
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(vendor: Vendor): void {
@@ -108,7 +110,7 @@ export class VendorComponent implements OnInit {
           this.loadVendors();
 
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   deleteVendor(id: number): void {
@@ -130,7 +132,6 @@ export class VendorComponent implements OnInit {
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/vendor.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }

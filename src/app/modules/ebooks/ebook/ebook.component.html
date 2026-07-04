@@ -1,56 +1,36 @@
-<!-- <div class="container-fluid">
-  <h1 class="h3 mb-2 text-gray-800">Type de membre</h1>
-
-
-  <div class="card shadow mb-4">
-    <div class="card-body">
-      <div class="table-responsive">
-        <table
-          class="table table-bordered"
-          id="table"
-          width="100%"
-          cellspacing="0"
-        >
-          <thead>
-            <tr>
-              <th>Type de membre</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tfoot>
-            <tr>
-              <th>Type de membre</th>
-              <th>Actions</th>
-            </tr>
-          </tfoot>
-          <tbody>
-            <tr *ngFor="let t of ebooks$">
-              <td>{{ t.name }}</td>
-              <td>
-                {{ t.edition }}
-                <button
-                  type="button"
-                  data-toggle="modal"
-                  (click)="edit(t.id)"
-                  data-target="#edit"
-                  class="btn btn-warning btn-sm"
-                >
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-danger btn-sm"
-                  (click)="delete(t.id)"
-                >
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+<div class="ll-page">
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <div class="ll-page__title">
+        <mat-icon class="ll-page__icon">menu_book</mat-icon>
+        <div>
+          <h1>{{ 'ebook.pageTitle' | translate }}</h1>
+          <p class="ll-page__subtitle">{{ 'ebook.pageDesc' | translate }}</p>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
- -->
+      <div class="ll-page__actions">
+        <button mat-stroked-button (click)="loadPdf()" matTooltip="Reload PDF">
+          <mat-icon>refresh</mat-icon> {{ 'ui.reload' | translate }}
+        </button>
+        <a mat-flat-button color="primary" [href]="pdfUrl" target="_blank" rel="noopener">
+          <mat-icon>open_in_new</mat-icon> Open in new tab
+        </a>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
+  <mat-card class="ll-page__body" appearance="outlined">
+    <mat-card-content class="ll-viewer">
+      <ngx-extended-pdf-viewer
+        [src]="pdfUrl"
+        [textLayer]="true"
+        [showHandToolButton]="true"
+        [showPresentationModeButton]="true"
+        [showOpenFileButton]="false"
+        [showDownloadButton]="true"
+        [showPrintButton]="true"
+        height="80vh">
+      </ngx-extended-pdf-viewer>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -11,12 +11,14 @@ import { ViewPublisherComponent } from '../view-publisher/view-publisher.compone
 import { DataService } from 'src/app/main/services/data.service';
 import { Observable } from 'rxjs';
 import { EditPublisherComponent } from '../edit-publisher/edit-publisher.component';
+import { AddPublisherComponent } from '../add-publisher/add-publisher.component';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-publisher',
-  templateUrl: './publisher.component.html',
-  styleUrls: ['./publisher.component.css'],
+    selector: 'app-publisher',
+    templateUrl: './publisher.component.html',
+    styleUrls: ['./publisher.component.css'],
+    standalone: false
 })
 export class PublisherComponent extends URLLoader implements OnInit,AfterViewInit {
   publishers$ = [{}];
@@ -56,7 +58,7 @@ export class PublisherComponent extends URLLoader implements OnInit,AfterViewIni
   isDoughnut = false;
 
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    domain: ['#3f51b5', '#e91e63', '#009688', '#ff9800', '#2196f3', '#4caf50', '#9c27b0', '#ff5722', '#795548', '#607d8b']
   };
 
  /*  publishers = [
@@ -179,7 +181,6 @@ export class PublisherComponent extends URLLoader implements OnInit,AfterViewIni
             }))
           }
         ];
-        console.log(this.areaChartData)
       },
       (err: HttpErrorResponse) => {
         console.error('Error fetching publication trends by publisher', err.message);
@@ -351,41 +352,50 @@ export class PublisherComponent extends URLLoader implements OnInit,AfterViewIni
       centered: true,});
     modalRef.componentInstance.selectedPublisher = item; // Ensure category is passed properly
   
-    //console.log(category); // Ensure category is not undefined here
+    //
 
     modalRef.result.then(result => {
-      console.log(result)
        //this.fetchItemList()
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
 
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/publisher.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }
 
   onSelect(selected) {
-    console.log('Selected row:', selected);
   }
 
   onActivate(event) {
-    console.log('Activate Event:', event);
   }
 
 
   openEditDialog(row): void {
-    const modalRef = this.modalService.open(EditPublisherComponent);
-    modalRef.componentInstance.publisher = row;
+    const modalRef = this.modalService.open(EditPublisherComponent, { size: 'xl', centered: true });
+    modalRef.componentInstance.publisher = { ...row };
+    modalRef.result.then(() => this.getAll()).catch(() => {});
+  }
 
-    modalRef.result.then(result => {
-      if (result) {
-      
-      }
-    }).catch(error => console.log(error));
+  openAddDialog(): void {
+    const modalRef = this.modalService.open(AddPublisherComponent, { size: 'xl', centered: true });
+    modalRef.componentInstance.closeModalEvent?.subscribe?.(() => modalRef.dismiss());
+    modalRef.result.then(() => this.getAll()).catch(() => {});
+  }
+
+  getPercent(value: number, data: any[]): number {
+    if (!data?.length) return 0;
+    const max = Math.max(...data.map(d => d.value || 0));
+    return max > 0 ? Math.round((value / max) * 100) : 0;
+  }
+
+  getSeriesPercent(value: number, series: any[]): number {
+    if (!series?.length) return 0;
+    const max = Math.max(...series.map(p => p.value || 0));
+    return max > 0 ? Math.round((value / max) * 100) : 0;
   }
 }

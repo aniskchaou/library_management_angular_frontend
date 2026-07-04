@@ -9,9 +9,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-edit-circulation-status',
-  templateUrl: './edit-circulation-status.component.html',
-  styleUrls: ['./edit-circulation-status.component.css'],
+    selector: 'app-edit-circulation-status',
+    templateUrl: './edit-circulation-status.component.html',
+    styleUrls: ['./edit-circulation-status.component.css'],
+    standalone: false
 })
 export class EditCirculationStatusComponent
   extends URLLoader
@@ -54,12 +55,10 @@ export class EditCirculationStatusComponent
   }
 
   ngOnChanges(changes: any) {
-    console.log('jkv');
     this.httpService
       .get(CONFIG.URL_BASE + '/circulationstatus/' + this.id)
       .subscribe((data: CirculationStatus) => {
         this.model = data;
-        console.log(this.model);
       });
   }
 
@@ -70,7 +69,6 @@ export class EditCirculationStatusComponent
       .subscribe(
         (data) => {
           this.circulationStatusI18n = data;
-          console.log(this.circulationStatusI18n);
           //document.getElementById('table').DataTable().ajax.reload();
         },
         (err: HttpErrorResponse) => {

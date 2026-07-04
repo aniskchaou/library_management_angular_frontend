@@ -8,9 +8,10 @@ import CONFIG from 'src/app/main/urls/urls';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css']
+    selector: 'app-order',
+    templateUrl: './order.component.html',
+    styleUrls: ['./order.component.css'],
+    standalone: false
 })
 export class OrderComponent implements OnInit {
 
@@ -70,7 +71,7 @@ export class OrderComponent implements OnInit {
     modalRef.result.then(result => {
         this.loadOrders()
       
-    }).catch(error => console.log('Modal closed with error:', error));
+    }).catch(() => {});
   }
 
   openEditDialog(order: Order): void {
@@ -84,7 +85,7 @@ export class OrderComponent implements OnInit {
           error: (err) => console.error('Failed to update order', err)
         });
       }
-    }).catch(error => console.log('Modal closed with error:', error));
+    }).catch(() => {});
   }
 
   deleteOrder(id: number): void {

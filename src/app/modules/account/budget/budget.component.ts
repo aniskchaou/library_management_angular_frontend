@@ -9,9 +9,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-budget',
-  templateUrl: './budget.component.html',
-  styleUrls: ['./budget.component.css']
+    selector: 'app-budget',
+    templateUrl: './budget.component.html',
+    styleUrls: ['./budget.component.css'],
+    standalone: false
 })
 export class BudgetComponent implements OnInit {
  // budgets$: BehaviorSubject<Budget[]> = new BehaviorSubject<Budget[]>([]);
@@ -47,7 +48,7 @@ export class BudgetComponent implements OnInit {
           this.loadBudgets();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(budget: Budget): void {
@@ -60,7 +61,7 @@ export class BudgetComponent implements OnInit {
           this.loadBudgets();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   deleteBudget(id: number): void {
@@ -71,12 +72,10 @@ export class BudgetComponent implements OnInit {
   }
 
   onSelect({ selected }) {
-    console.log('Selected row:', selected);
     this.selected = [...selected];
   }
 
   onActivate(event) {
-    console.log('Activate Event:', event);
   }
 
   updateFilter(event) {

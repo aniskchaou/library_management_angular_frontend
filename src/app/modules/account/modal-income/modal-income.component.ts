@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-modal-income',
-  templateUrl: './modal-income.component.html',
-  styleUrls: ['./modal-income.component.css'],
+    selector: 'app-modal-income',
+    templateUrl: './modal-income.component.html',
+    styleUrls: ['./modal-income.component.css'],
+    standalone: false
 })
 export class ModalIncomeComponent implements OnInit {
   @Input() id: string;

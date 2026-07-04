@@ -7,9 +7,10 @@ import { UploadDocumentComponent } from '../upload-document/upload-document.comp
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-contract-modal',
-  templateUrl: './contract-modal.component.html',
-  styleUrls: ['./contract-modal.component.css']
+    selector: 'app-contract-modal',
+    templateUrl: './contract-modal.component.html',
+    styleUrls: ['./contract-modal.component.css'],
+    standalone: false
 })
 export class ContractModalComponent implements OnInit {
 
@@ -36,7 +37,6 @@ export class ContractModalComponent implements OnInit {
   }
 
   onSaveClick(): void {
-      console.log(this.contract)
       if(this.validateContractForm(this.contract)){
         this.contractService.createContract(this.contract).subscribe((newContract) => {
           this.activeModal.close(newContract);

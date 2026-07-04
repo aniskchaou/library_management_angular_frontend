@@ -4,9 +4,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-view-requested-book',
-  templateUrl: './view-requested-book.component.html',
-  styleUrls: ['./view-requested-book.component.css'],
+    selector: 'app-view-requested-book',
+    templateUrl: './view-requested-book.component.html',
+    styleUrls: ['./view-requested-book.component.css'],
+    standalone: false
 })
 export class ViewRequestedBookComponent implements OnInit {
   @Input() id;

@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-paypal-settings',
-  templateUrl: './paypal-settings.component.html',
-  styleUrls: ['./paypal-settings.component.css']
+    selector: 'app-paypal-settings',
+    templateUrl: './paypal-settings.component.html',
+    styleUrls: ['./paypal-settings.component.css'],
+    standalone: false
 })
 export class PaypalSettingsComponent implements OnInit {
 
-  paypalForm: FormGroup;
+  paypalForm: UntypedFormGroup;
   successMessage: string = '';
   errorMessage: string = '';
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private paypalService: HTTPService
   ) {
     this.paypalForm = this.fb.group({

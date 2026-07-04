@@ -1,0 +1,272 @@
+<div class="ll-modal ll-modal--wide">
+  <!-- Header -->
+  <div class="ll-modal__header">
+    <mat-icon>library_books</mat-icon>
+    <span>MARC 21 Catalog Record — <em>{{ item?.title }}</em></span>
+    <button mat-icon-button class="ll-modal__close" type="button" (click)="dismiss()" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Tab bar -->
+  <div class="marc-tabs">
+    <button class="marc-tab" [class.marc-tab--active]="activeTab === 'marc'" (click)="activeTab = 'marc'; refreshPreviews()">
+      <mat-icon>list_alt</mat-icon> MARC 21
+    </button>
+    <button class="marc-tab" [class.marc-tab--active]="activeTab === 'ddc'" (click)="activeTab = 'ddc'">
+      <mat-icon>account_tree</mat-icon> DDC Classification
+    </button>
+    <button class="marc-tab" [class.marc-tab--active]="activeTab === 'dc'" (click)="activeTab = 'dc'; refreshPreviews()">
+      <mat-icon>share</mat-icon> Dublin Core
+    </button>
+  </div>
+
+  <div class="ll-modal__content marc-body">
+
+    <!-- ═══ MARC 21 FIELDS ══════════════════════════════════════════════════ -->
+    @if (activeTab === 'marc') {
+      <div class="marc-grid">
+
+        <!-- Left: editable fields -->
+        <div class="marc-fields">
+          <p class="marc-section-label">Fixed & Control Fields</p>
+
+          <mat-form-field appearance="outline" class="marc-field">
+            <mat-label>LDR – Leader</mat-label>
+            <input matInput [(ngModel)]="item.marc_leader" name="ldr"
+                   placeholder="e.g. 00000nam a2200000 i 4500" maxlength="24">
+            <mat-hint>24-char fixed MARC leader (auto-filled by ILS if blank)</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="marc-field">
+            <mat-label>001 – Control Number</mat-label>
+            <input matInput [(ngModel)]="item.marc_001" name="marc001">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="marc-field">
+            <mat-label>020 – ISBN (read-only, edit in main form)</mat-label>
+            <input matInput [value]="item.isbn" readonly>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="marc-field">
+            <mat-label>041 – Language Code (ISO 639-2)</mat-label>
+            <mat-select [(ngModel)]="item.marc_041" name="marc041">
+              @for (lang of langCodes; track lang.code) {
+                <mat-option [value]="lang.code">{{ lang.code }} – {{ lang.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <p class="marc-section-label">Bibliographic Description (ISBD)</p>
+
+          <mat-form-field appearance="outline" class="marc-field">
+            <mat-label>100 – Main Entry – Author (read-only)</mat-label>
+            <input matInput [value]="item.writer?.name" readonly>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="marc-field">
+            <mat-label>245$c – Statement of Responsibility</mat-label>
+            <input matInput [(ngModel)]="item.marc_245_c" name="marc245c"
+                   placeholder="e.g. written by John Doe ; translated by Jane Smith">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="marc-field">
+            <mat-label>246 – Varying / Parallel Title</mat-label>
+            <input matInput [(ngModel)]="item.marc_246" name="marc246"
+                   placeholder="Parallel title in another language">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="marc-field">
+            <mat-label>490 – Series Statement</mat-label>
+            <input matInput [(ngModel)]="item.marc_490" name="marc490"
+                   placeholder="e.g. Oxford studies in comparative education ; v. 5">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="marc-field">
+            <mat-label>520 – Summary / Abstract</mat-label>
+            <textarea matInput [(ngModel)]="item.marc_520" name="marc520" rows="3"
+                      placeholder="Brief summary or abstract of the item's content"></textarea>
+          </mat-form-field>
+
+          <p class="marc-section-label">Subject Analysis (MARC 21VN / LCSH)</p>
+
+          <mat-form-field appearance="outline" class="marc-field">
+            <mat-label>650 – Topical Subject Terms</mat-label>
+            <input matInput [(ngModel)]="item.marc_650" name="marc650"
+                   placeholder="e.g. Machine learning -- Applications, Artificial intelligence">
+            <mat-hint>Separate multiple terms with commas</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="marc-field">
+            <mat-label>651 – Geographic Subject Term</mat-label>
+            <input matInput [(ngModel)]="item.marc_651" name="marc651"
+                   placeholder="e.g. Vietnam -- History -- 20th century">
+          </mat-form-field>
+
+          <p class="marc-section-label">Added Entries &amp; Electronic Access</p>
+
+          <mat-form-field appearance="outline" class="marc-field">
+            <mat-label>700 – Added Entry (co-author / editor / translator)</mat-label>
+            <input matInput [(ngModel)]="item.marc_700" name="marc700"
+                   placeholder="e.g. Smith, Jane, editor">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="marc-field">
+            <mat-label>856 – Electronic Location / URL</mat-label>
+            <input matInput [(ngModel)]="item.marc_856" name="marc856"
+                   placeholder="https://...">
+          </mat-form-field>
+        </div>
+
+        <!-- Right: live MARC preview -->
+        <div class="marc-preview-panel">
+          <p class="marc-section-label">Live MARC Record Preview</p>
+          <div class="marc-preview">
+            @for (line of marcPreview; track line) {
+              <div class="marc-preview__line">
+                <span class="marc-preview__tag">{{ line.substring(0, 3) }}</span>
+                <span class="marc-preview__data">{{ line.substring(3) }}</span>
+              </div>
+            }
+            @if (!marcPreview.length) {
+              <p class="marc-preview__empty">Fill in fields to see the MARC record preview.</p>
+            }
+          </div>
+          <button mat-stroked-button (click)="refreshPreviews()" class="marc-refresh-btn">
+            <mat-icon>refresh</mat-icon> Refresh Preview
+          </button>
+        </div>
+      </div>
+    }
+
+    <!-- ═══ DDC CLASSIFICATION ══════════════════════════════════════════════ -->
+    @if (activeTab === 'ddc') {
+      <div class="ddc-panel">
+        <p class="marc-section-label">Dewey Decimal Classification (DDC)</p>
+
+        <div class="ddc-form">
+          <mat-form-field appearance="outline">
+            <mat-label>082$a – DDC Number</mat-label>
+            <input matInput [(ngModel)]="item.marc_082" name="marc082"
+                   placeholder="e.g. 025.431">
+            <mat-hint>Enter the full DDC notation. Use the class shortcuts below for quick selection.</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>082$2 – DDC Edition</mat-label>
+            <mat-select [(ngModel)]="item.marc_082_ed" name="marc082ed">
+              <mat-option value="23">23rd Edition (current)</mat-option>
+              <mat-option value="22">22nd Edition</mat-option>
+              <mat-option value="21">21st Edition</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>050 / Call Number (existing)</mat-label>
+            <input matInput [(ngModel)]="item.call_no" name="callNo"
+                   placeholder="e.g. 025.431 DOE">
+            <mat-hint>Combined shelf mark: DDC + Cutter number</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <p class="marc-section-label" style="margin-top: 1.5rem">Quick-Select DDC Main Class</p>
+        <div class="ddc-classes">
+          @for (cls of ddcClasses; track cls.number) {
+            <button class="ddc-class-btn"
+                    [class.ddc-class-btn--active]="item.marc_082?.startsWith(cls.number.charAt(0))"
+                    (click)="onDdcClassSelect(cls)">
+              <span class="ddc-class-btn__number">{{ cls.number }}</span>
+              <span class="ddc-class-btn__caption">{{ cls.caption }}</span>
+            </button>
+          }
+        </div>
+
+        <div class="ddc-guide">
+          <mat-icon>info</mat-icon>
+          <span>
+            The DDC number is built by combining the schedule number with the table-derived
+            notation. For MARC 21VN, follow the Vietnamese National Library adaptation of DDC 23.
+            The full number (e.g. <code>025.431</code>) goes in <strong>082$a</strong>;
+            add the Cutter number in <strong>call_no</strong> to form the complete shelf mark.
+          </span>
+        </div>
+      </div>
+    }
+
+    <!-- ═══ DUBLIN CORE ══════════════════════════════════════════════════════ -->
+    @if (activeTab === 'dc') {
+      <div class="dc-panel">
+        <p class="marc-section-label">Dublin Core Metadata (DCMI)</p>
+
+        <div class="dc-form">
+          <mat-form-field appearance="outline">
+            <mat-label>dc:rights – Rights / Copyright Statement</mat-label>
+            <input matInput [(ngModel)]="item.dc_rights" name="dcRights"
+                   placeholder="e.g. All rights reserved © 2024, Creative Commons BY 4.0">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>dc:coverage – Temporal or Geographic Coverage</mat-label>
+            <input matInput [(ngModel)]="item.dc_coverage" name="dcCoverage"
+                   placeholder="e.g. Vietnam, 1945–2000">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>dc:relation – Related Resource</mat-label>
+            <input matInput [(ngModel)]="item.dc_relation" name="dcRelation"
+                   placeholder="Title or URI of related work">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>dc:source – Derived From</mat-label>
+            <input matInput [(ngModel)]="item.dc_source" name="dcSource"
+                   placeholder="e.g. ISBN of the printed original">
+          </mat-form-field>
+        </div>
+
+        <!-- Dublin Core XML preview -->
+        <div class="dc-preview-header">
+          <p class="marc-section-label" style="margin:0">OAI-PMH Dublin Core XML Preview</p>
+          <div class="dc-preview-actions">
+            <button mat-stroked-button (click)="refreshPreviews()">
+              <mat-icon>refresh</mat-icon> Refresh
+            </button>
+            <button mat-flat-button color="primary" (click)="exportXml()">
+              <mat-icon>download</mat-icon> Export XML
+            </button>
+            <button mat-flat-button color="accent" (click)="exportJson()">
+              <mat-icon>data_object</mat-icon> Export JSON-LD
+            </button>
+          </div>
+        </div>
+        <pre class="dc-xml-preview"><code>{{ dcPreviewXml }}</code></pre>
+
+        <div class="dc-guide">
+          <mat-icon>info</mat-icon>
+          <span>
+            The XML output conforms to <strong>OAI-PMH Dublin Core</strong>
+            (<code>oai_dc:dc</code>) and is ready for submission to institutional
+            repositories or union catalogues. The JSON-LD export uses
+            <code>http://purl.org/dc/terms/</code> as the vocabulary context.
+          </span>
+        </div>
+      </div>
+    }
+
+  </div><!-- /.marc-body -->
+
+  <!-- Footer actions -->
+  <div class="ll-modal__actions">
+    <button mat-stroked-button type="button" (click)="dismiss()">
+      <mat-icon>close</mat-icon> Cancel
+    </button>
+    <button mat-flat-button color="primary" type="button" (click)="save()" [disabled]="saving">
+      @if (saving) {
+        <span class="spinner-border spinner-border-sm"></span>
+      } @else {
+        <mat-icon>save</mat-icon>
+      }
+      Save MARC Record
+    </button>
+  </div>
+</div>

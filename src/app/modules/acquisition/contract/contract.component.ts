@@ -10,9 +10,10 @@ import { ViewContractComponent } from '../view-contract/view-contract.component'
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-contract',
-  templateUrl: './contract.component.html',
-  styleUrls: ['./contract.component.css']
+    selector: 'app-contract',
+    templateUrl: './contract.component.html',
+    styleUrls: ['./contract.component.css'],
+    standalone: false
 })
 export class ContractComponent implements OnInit {
 
@@ -93,7 +94,7 @@ export class ContractComponent implements OnInit {
           this.loadContracts();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(contract: Contract): void {
@@ -106,7 +107,7 @@ export class ContractComponent implements OnInit {
           this.loadContracts();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openViewDialog(contract: Contract): void {
@@ -120,7 +121,7 @@ export class ContractComponent implements OnInit {
           this.loadContracts();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   deleteContract(id: number): void {
@@ -139,7 +140,7 @@ export class ContractComponent implements OnInit {
           this.loadDepartments();
         }); */
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
   
 
@@ -178,8 +179,7 @@ emailMessage = emailMessage
       .replace("[Name]", userName)  // Replace [Name] with the username
       .replace("[All]", "Members")  // Replace [ALL] with "Members"
       .replace("[Date]", today).replace("[Library Name]", "");; 
-     //console.log(notice.subject)
-
+     //
      const body = {
       toEmail: 'kchaouanis20@gmail.com',
       subject: "Reminder: Upcoming Contract Renewal/Expiration",
@@ -195,7 +195,6 @@ this.toastr.success("Your email was sent successfully! ")
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/contract.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }

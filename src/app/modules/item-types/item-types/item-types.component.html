@@ -1,241 +1,194 @@
-<div class="container-fluid">
-  <!-- Page Heading -->
-  <div class="page-heading mb-4">
-    <h1 class="h3 mb-2 text-gray-800">
-      <i class="fas fa-photo-video"></i> Media Types
-    </h1>
-    <p class="mb-4">This module provides an overview and management of various media types in the library, including statistics and detailed listings.</p>
-  </div>
-
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#dashboard">
-        <i class="fas fa-tachometer-alt"></i> Dashboard
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#list">
-        <i class="fas fa-list"></i> List
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#UserManual">
-        <i class="fas fa-book mr-2"></i> User Manual
-      </a>
-    </li>
-  </ul>
-
-  <!-- Tab panes -->
-  <div class="tab-content">
-    <div id="dashboard" class="container tab-pane active bg-white p-3 mt-3 rounded">
-      <div class="container bg-white p-3 mt-3 rounded">
-        <!-- Content for the Dashboard tab -->
-        <div class="row">
-          <div class="col-md-6">
-            <h4>Number of Media Items by Type</h4>
-            <ngx-charts-bar-vertical
-              [view]="view"
-              [scheme]="'cool'"
-              [results]="mediaItemsByTypeData"
-              [gradient]="gradient"
-              [xAxis]="true"
-              [yAxis]="true"
-              [legend]="showLegend"
-              [showXAxisLabel]="true"
-              [showYAxisLabel]="true"
-              [xAxisLabel]="'Media Type'"
-              [yAxisLabel]="'Items'">
-            </ngx-charts-bar-vertical>
-          </div>
-          <div class="col-md-6">
-            <h4>Media Distribution by Genre</h4>
-            <ngx-charts-pie-chart
-              [view]="view"
-              [scheme]="'cool'"
-              [results]="mediaByGenreData"
-              [legend]="showLegend"
-              [labels]="showLabels"
-              [doughnut]="isDoughnut"
-              [gradient]="gradient">
-            </ngx-charts-pie-chart>
-          </div>
-          <div class="col-md-6">
-            <h4>Media Acquisition Trends Over Time</h4>
-            <ngx-charts-line-chart
-              [view]="view"
-              [scheme]="'cool'"
-              [results]="mediaAcquisitionTrendsData"
-              [gradient]="gradient"
-              [xAxis]="true"
-              [yAxis]="true"
-              [legend]="showLegend"
-              [showXAxisLabel]="true"
-              [showYAxisLabel]="true"
-              [xAxisLabel]="'Year'"
-              [yAxisLabel]="'Items'">
-            </ngx-charts-line-chart>
-          </div>
-          <div class="col-md-6">
-            <h4>Top Media Types by Borrow Count</h4>
-            <ngx-charts-bar-horizontal
-              [view]="view"
-              [scheme]="'cool'"
-              [results]="topMediaTypesByBorrowCountData"
-              [gradient]="gradient"
-              [xAxis]="true"
-              [yAxis]="true"
-              [legend]="showLegend"
-              [showXAxisLabel]="true"
-              [showYAxisLabel]="true"
-              [xAxisLabel]="'Borrow Count'"
-              [yAxisLabel]="'Media Type'">
-            </ngx-charts-bar-horizontal>
-          </div>
-        </div>
-        <!-- Add your dashboard content here -->
+<div class="ll-page">
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <mat-icon class="ll-page__icon">photo_library</mat-icon>
+      <div class="ll-page__title">
+        <h1>Media Types</h1>
+        <p>{{ 'itemtypes.pageDesc' | translate }}</p>
       </div>
+      <div class="ll-page__actions">
+        <button mat-stroked-button color="primary" (click)="reloadPage()">
+          <mat-icon>refresh</mat-icon> {{ 'ui.reload' | translate }}
+        </button>
+        <button mat-flat-button color="primary" (click)="openAddDialog()">
+          <mat-icon>add</mat-icon> Add Media Type
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  @if (loading) {
+    <div class="ll-page__loading">
+      <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
     </div>
-    <div id="list" class="container tab-pane fade bg-white p-3 mt-3 rounded">
+  }
 
-      <div class="card mb-4">
-        <div class="card-body">
-          <button type="button" class="btn btn-outline-primary" (click)="openAddDialog()">
-            <i class="fas fa-plus"></i> Add Media Types
-          </button>
-          <button
-            href="#"
-            role="button"
-            class="btn btn-outline-warning btn-icon-split"
-            (click)="reloadPage()"
-          >
-            <span class="icon text-warning">
-              <i class="fas fa-redo"></i>
-            </span>
-            <span class="text">Reload</span>
-          </button>
-        </div>
-      </div>  
-      
+  <mat-card class="ll-page__body" appearance="outlined">
+    <mat-card-content>
+      <mat-tab-group animationDuration="200ms" mat-stretch-tabs="false" class="ll-tabs">
 
+        <!-- Overview tab -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="ll-tab__icon">insights</mat-icon> {{ 'ui.overview' | translate }}
+          </ng-template>
+          <div class="ll-tab__content">
+            <div class="ll-stat-charts">
+              <mat-card appearance="outlined">
+                <mat-card-header><mat-card-title>Items by Type</mat-card-title></mat-card-header>
+                <mat-card-content>
+                  <ngx-charts-bar-vertical
+                    [view]="view"
+                    [scheme]="colorScheme"
+                    [results]="mediaItemsByTypeData"
+                    [gradient]="gradient"
+                    [xAxis]="true"
+                    [yAxis]="true"
+                    [legend]="showLegend"
+                    [showXAxisLabel]="true"
+                    [showYAxisLabel]="true"
+                    xAxisLabel="Media Type"
+                    yAxisLabel="Items">
+                  </ngx-charts-bar-vertical>
+                </mat-card-content>
+              </mat-card>
 
+              <mat-card appearance="outlined">
+                <mat-card-header><mat-card-title>Distribution by Genre</mat-card-title></mat-card-header>
+                <mat-card-content>
+                  <ngx-charts-pie-chart
+                    [view]="view"
+                    [scheme]="colorScheme"
+                    [results]="mediaByGenreData"
+                    [legend]="showLegend"
+                    [labels]="showLabels"
+                    [doughnut]="isDoughnut"
+                    [gradient]="gradient">
+                  </ngx-charts-pie-chart>
+                </mat-card-content>
+              </mat-card>
 
-      <div *ngIf="loading; else loaded">
-        <div class="d-flex justify-content-center">
-          <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-        </div>
-      </div>
+              <mat-card appearance="outlined">
+                <mat-card-header><mat-card-title>Acquisition Trends</mat-card-title></mat-card-header>
+                <mat-card-content>
+                  <ngx-charts-line-chart
+                    [view]="view"
+                    [scheme]="colorScheme"
+                    [results]="mediaAcquisitionTrendsData"
+                    [gradient]="gradient"
+                    [xAxis]="true"
+                    [yAxis]="true"
+                    [legend]="showLegend"
+                    [showXAxisLabel]="true"
+                    [showYAxisLabel]="true"
+                    xAxisLabel="Year"
+                    yAxisLabel="Items Acquired">
+                  </ngx-charts-line-chart>
+                </mat-card-content>
+              </mat-card>
 
-      <ng-template #loaded>
-        
-      <div class="table-responsive">
-        <div class="card mb-4">
-          <div class="card-body">
-            <ngx-datatable 
-            class="bootstrap"
-            [rows]="itemTypes"
-            [columnMode]="'force'"
-            [headerHeight]="50"
-            [footerHeight]="50"
-            [rowHeight]="'auto'"
-            [limit]="10"
-            [loadingIndicator]="loading"
-            [reorderable]="reorderable"
-            (select)="onSelect($event)"
-            (activate)="onActivate($event)"
-          >
-          <ngx-datatable-column name="Name" [prop]="'name'">
-            <ng-template ngx-datatable-cell-template let-row="row">
-              <span class="blue-text">
-                {{ row.name }}
-              </span>
-            </ng-template>
-          </ngx-datatable-column>
-    
-            <!-- Rental Charge Column (in USD) -->
-            <ngx-datatable-column name="Rental Charge ($)">
-              <ng-template ngx-datatable-cell-template let-row="row">
-                {{ convertToDollar(row.rentalCharge) | number:'1.2-2' }} $
-              </ng-template>
-            </ngx-datatable-column>
-          
-            <!-- Daily Rental Charge Column (in USD) -->
-            <ngx-datatable-column name="Daily Rental Charge ($)">
-              <ng-template ngx-datatable-cell-template let-row="row">
-                {{ convertToDollar(row.dailyRentalCharge) | number:'1.2-2' }} $/day
-              </ng-template>
-            </ngx-datatable-column>
-          
-            <!-- Hourly Rental Charge Column (in USD) -->
-            <ngx-datatable-column name="Hourly Rental Charge ($)">
-              <ng-template ngx-datatable-cell-template let-row="row">
-                {{ convertToDollar(row.hourlyRentalCharge) | number:'1.2-2' }} $/hour
-              </ng-template>
-            </ngx-datatable-column>
-          
-            <!-- Default Replacement Cost Column (in USD) -->
-            <ngx-datatable-column name="Default Replacement Cost ($)">
-              <ng-template ngx-datatable-cell-template let-row="row">
-                {{ convertToDollar(row.defaultReplacementCost) | number:'1.2-2' }} $
-              </ng-template>
-            </ngx-datatable-column>
-          
-            <!-- Processing Fee Column (in USD) -->
-            <ngx-datatable-column name="Processing Fee ($)">
-              <ng-template ngx-datatable-cell-template let-row="row">
-                {{ convertToDollar(row.processingFee) | number:'1.2-2' }} $
-              </ng-template>
-            </ngx-datatable-column>
-    
-             <!-- Actions Column -->
-            <ngx-datatable-column name="Actions">
-              <ng-template ngx-datatable-cell-template let-row="row">
-              <!--   <button class="btn btn-sm btn-outline-primary mr-2" (click)="openViewDialog(row)">
-                  View
-                </button> -->
-              <!--  <button class="btn btn-sm btn-danger" (click)="deleteRow(row)">
-                  Delete
-                </button> -->
-                <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Actions
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item"  (click)="openViewDialog(row)">
-                    <i class="fas fa-eye mr-2"></i> View
-                  </a>
-                  <a class="dropdown-item"  (click)="openEditDialog(row)">
-                    <i class="fas fa-edit mr-2"></i> Edit
-                  </a>
-                  <!-- <a class="dropdown-item text-danger"  (click)="deleteRow(row)">
-                    <i class="fas fa-trash-alt mr-2"></i> Delete
-                  </a> -->
-                </div>
-              </ng-template>
-            </ngx-datatable-column>
-            
-          </ngx-datatable>
+              <mat-card appearance="outlined">
+                <mat-card-header><mat-card-title>Top by Borrow Count</mat-card-title></mat-card-header>
+                <mat-card-content>
+                  <ngx-charts-bar-horizontal
+                    [view]="view"
+                    [scheme]="colorScheme"
+                    [results]="topMediaTypesByBorrowCountData"
+                    [gradient]="gradient"
+                    [xAxis]="true"
+                    [yAxis]="true"
+                    [legend]="showLegend"
+                    [showXAxisLabel]="true"
+                    [showYAxisLabel]="true"
+                    xAxisLabel="Borrow Count"
+                    yAxisLabel="Media Type">
+                  </ngx-charts-bar-horizontal>
+                </mat-card-content>
+              </mat-card>
             </div>
-        </div>    
+          </div>
+        </mat-tab>
 
-       
-      
-      </div>
-    </ng-template>
-    </div>
+        <!-- List tab -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="ll-tab__icon">list</mat-icon> {{ 'ui.list' | translate }}
+          </ng-template>
+          <div class="ll-tab__content">
+            <div class="ll-table-container mat-elevation-z1">
+              <table mat-table [dataSource]="itemTypes || []" class="ll-mat-table">
 
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>Name</th>
+                  <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+                </ng-container>
 
-    <div id="UserManual" class="tab-pane custom-tab-pane">
-      <!-- User Manual content here -->
-      <div>
-         <!-- <markdown [src]="markdownContent" [data]="markdownContent"></markdown>  -->
-          <div  [innerHTML]="markdownContent"></div>
-      </div>
-    </div>
-    
-  </div>
+                <ng-container matColumnDef="rentalCharge">
+                  <th mat-header-cell *matHeaderCellDef>Rental Charge</th>
+                  <td mat-cell *matCellDef="let row">{{ convertToDollar(row.rentalCharge) | number:'1.2-2' }} $</td>
+                </ng-container>
+
+                <ng-container matColumnDef="dailyRentalCharge">
+                  <th mat-header-cell *matHeaderCellDef>Daily Rate</th>
+                  <td mat-cell *matCellDef="let row">{{ convertToDollar(row.dailyRentalCharge) | number:'1.2-2' }} $/day</td>
+                </ng-container>
+
+                <ng-container matColumnDef="hourlyRentalCharge">
+                  <th mat-header-cell *matHeaderCellDef>Hourly Rate</th>
+                  <td mat-cell *matCellDef="let row">{{ convertToDollar(row.hourlyRentalCharge) | number:'1.2-2' }} $/hr</td>
+                </ng-container>
+
+                <ng-container matColumnDef="defaultReplacementCost">
+                  <th mat-header-cell *matHeaderCellDef>Replacement Cost</th>
+                  <td mat-cell *matCellDef="let row">{{ convertToDollar(row.defaultReplacementCost) | number:'1.2-2' }} $</td>
+                </ng-container>
+
+                <ng-container matColumnDef="processingFee">
+                  <th mat-header-cell *matHeaderCellDef>Processing Fee</th>
+                  <td mat-cell *matCellDef="let row">{{ convertToDollar(row.processingFee) | number:'1.2-2' }} $</td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>Actions</th>
+                  <td mat-cell *matCellDef="let row">
+                    <button mat-icon-button [matMenuTriggerFor]="rowMenu" matTooltip="Actions">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #rowMenu="matMenu">
+                      <button mat-menu-item (click)="openViewDialog(row)">
+                        <mat-icon>visibility</mat-icon> View
+                      </button>
+                      <button mat-menu-item (click)="openEditDialog(row)">
+                        <mat-icon>edit</mat-icon> Edit
+                      </button>
+                    </mat-menu>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="['name','rentalCharge','dailyRentalCharge','hourlyRentalCharge','defaultReplacementCost','processingFee','actions']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['name','rentalCharge','dailyRentalCharge','hourlyRentalCharge','defaultReplacementCost','processingFee','actions'];"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="7" style="text-align:center; padding: 24px; color: var(--ll-text-muted);">
+                    No media types found.
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- User Manual tab -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="ll-tab__icon">menu_book</mat-icon> {{ 'ui.userManual' | translate }}
+          </ng-template>
+          <div class="ll-tab__content">
+            <div [innerHTML]="markdownContent"></div>
+          </div>
+        </mat-tab>
+
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
 </div>
-
-<!-- Modal -->
-<!-- Add/edit form -->

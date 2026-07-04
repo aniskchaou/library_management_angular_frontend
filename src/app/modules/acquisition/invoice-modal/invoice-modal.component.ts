@@ -6,9 +6,10 @@ import { Vendor } from 'src/app/main/models/Vendor';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
 @Component({
-  selector: 'app-invoice-modal',
-  templateUrl: './invoice-modal.component.html',
-  styleUrls: ['./invoice-modal.component.css']
+    selector: 'app-invoice-modal',
+    templateUrl: './invoice-modal.component.html',
+    styleUrls: ['./invoice-modal.component.css'],
+    standalone: false
 })
 export class InvoiceModalComponent implements OnInit {
 

@@ -9,9 +9,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-destroyed-books',
-  templateUrl: './destroyed-books.component.html',
-  styleUrls: ['./destroyed-books.component.css'],
+    selector: 'app-destroyed-books',
+    templateUrl: './destroyed-books.component.html',
+    styleUrls: ['./destroyed-books.component.css'],
+    standalone: false
 })
 export class DestroyedBooksComponent extends URLLoader implements OnInit {
   showsummary: boolean = false;
@@ -36,7 +37,6 @@ export class DestroyedBooksComponent extends URLLoader implements OnInit {
   }
 
   filter(data) {
-    console.log(data);
     if (data == null) {
       super.show('Search Result', 'No result !', 'info');
     } else {

@@ -5,9 +5,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-requested-book-list',
-  templateUrl: './requested-book-list.component.html',
-  styleUrls: ['./requested-book-list.component.css'],
+    selector: 'app-requested-book-list',
+    templateUrl: './requested-book-list.component.html',
+    styleUrls: ['./requested-book-list.component.css'],
+    standalone: false
 })
 export class RequestedBookListComponent extends URLLoader implements OnInit,AfterViewInit {
   @Input() requiredBook;
@@ -25,7 +26,6 @@ export class RequestedBookListComponent extends URLLoader implements OnInit,Afte
 
   ngOnInit(): void {
     this.loadScripts();
-    console.log(this.requiredBook);
   }
 
   edit(id) {

@@ -1,38 +1,33 @@
-<!-- twilio-settings.component.html -->
-<div class="container">
-  <br/>
-  <h5><i class="fas fa-phone"></i> Twilio Settings</h5>
+<div class="ll-form-wrap">
+  <h3 class="ll-section-title">
+    <mat-icon class="ll-section-icon">sms</mat-icon> Twilio Settings
+  </h3>
+  <p class="ll-section-sub">Configure your Twilio account credentials used for SMS notifications.</p>
 
-  
-    <form [formGroup]="twilioForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="accountSid">Account SID</label>
-        <input id="accountSid" formControlName="accountSid" class="form-control" />
-      </div>
-  
-      <div class="form-group">
-        <label for="authToken">Auth Token</label>
-        <input id="authToken" formControlName="authToken" class="form-control" />
-      </div>
-  
-      <div class="form-group">
-        <label for="phoneNumber">Phone Number</label>
-        <input id="phoneNumber" formControlName="phoneNumber" class="form-control" />
-      </div>
-  
-      <button type="submit" class="btn btn-outline-primary" [disabled]="!twilioForm.valid">
-        Update
+  <form [formGroup]="twilioForm" (ngSubmit)="onSubmit()" class="ll-form">
+    <mat-form-field appearance="outline" class="ll-form__field">
+      <mat-label>Account SID</mat-label>
+      <input matInput formControlName="accountSid" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="ll-form__field">
+      <mat-label>Auth Token</mat-label>
+      <input matInput formControlName="authToken" type="password" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="ll-form__field">
+      <mat-label>Phone Number</mat-label>
+      <input matInput formControlName="phoneNumber" />
+    </mat-form-field>
+
+    <div class="ll-form__actions">
+      <button mat-flat-button color="primary" type="submit" [disabled]="!twilioForm.valid">
+        <mat-icon>save</mat-icon> Update
       </button>
-    </form>
-  
-    <!-- Success Message -->
-    <div *ngIf="successMessage" class="alert alert-success mt-2">
-      {{ successMessage }}
     </div>
-  
-    <!-- Error Message -->
-   <!--  <div *ngIf="errorMessage" class="alert alert-danger mt-2">
-      {{ errorMessage }}
-    </div> -->
-  </div>
-  
+  </form>
+
+  @if (successMessage) {
+    <div class="ll-alert ll-alert--ok">{{ successMessage }}</div>
+  }
+</div>

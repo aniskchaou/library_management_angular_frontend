@@ -1,0 +1,64 @@
+
+<p>The Circulation Setting module allows library administrators to configure various settings related to fines, loan periods, and item handling. It includes fields for setting fine amounts, loan durations, and policies on renewals and holds.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">Fine per Day:</p>
+    <ul>
+        <li><strong>Description:</strong> The amount of fine charged per day for overdue items.</li>
+        <li><strong>Usage:</strong> Enter the fine amount in the applicable currency.</li>
+        <li><strong>Example:</strong> "1.00" (for $1.00 per day)</li>
+        <li><strong>Validation:</strong> Must be a positive monetary value.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Max Fine:</p>
+    <ul>
+        <li><strong>Description:</strong> The maximum fine that can be accrued for overdue items.</li>
+        <li><strong>Usage:</strong> Enter the maximum fine amount in the applicable currency.</li>
+        <li><strong>Example:</strong> "10.00" (for a maximum of $10.00)</li>
+        <li><strong>Validation:</strong> Must be a positive monetary value.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Item Type:</p>
+    <ul>
+        <li><strong>Description:</strong> The type of items that these circulation settings apply to.</li>
+        <li><strong>Usage:</strong> Select or enter the item type (e.g., books, DVDs).</li>
+        <li><strong>Example:</strong> "Books"</li>
+        <li><strong>Validation:</strong> Must be a valid item type from the predefined list.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Loan Period:</p>
+    <ul>
+        <li><strong>Description:</strong> The standard duration for which an item can be borrowed.</li>
+        <li><strong>Usage:</strong> Enter the loan period in days.</li>
+        <li><strong>Example:</strong> "14" (for a 14-day loan period)</li>
+        <li><strong>Validation:</strong> Must be a positive integer.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Renewals Allowed:</p>
+    <ul>
+        <li><strong>Description:</strong> The number of times an item can be renewed.</li>
+        <li><strong>Usage:</strong> Enter the maximum number of renewals allowed.</li>
+        <li><strong>Example:</strong> "3" (for up to 3 renewals)</li>
+        <li><strong>Validation:</strong> Must be a non-negative integer.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Holds Allowed:</p>
+    <ul>
+        <li><strong>Description:</strong> The number of holds that can be placed on an item.</li>
+        <li><strong>Usage:</strong> Enter the maximum number of holds allowed.</li>
+        <li><strong>Example:</strong> "5" (for up to 5 holds)</li>
+        <li><strong>Validation:</strong> Must be a non-negative integer.</li>
+    </ul>
+</div>

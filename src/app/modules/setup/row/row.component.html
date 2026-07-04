@@ -1,124 +1,54 @@
-<div class="container mt-4" >
-  <!-- Title with Icon -->
-  <h1 class="h3 mb-2 text-gray-800">
-    <i class="fas fa-th mr-2"></i> Rows
-  </h1>
-
-  <!-- Description Below Title -->
-  <p class="lead mb-4">
-    View and manage the rows within the system. Click on "Add Row" to include new rows in the list.
-  </p>
-
-  <!-- Navigation Tabs -->
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#List">
-        <i class="fas fa-list mr-2"></i> List
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#UserManual">
-        <i class="fas fa-book mr-2"></i> User Manual
-      </a>
-    </li>
-  </ul>
-
-  <!-- Tab Content -->
-  <div class="tab-content" style="background-color: white;">
-    <!-- List tab content -->
-    <div id="List" class="tab-pane fade show active">
-      <div class="container-fluid">
-        <!-- Buttons -->
-        <button class="btn btn-outline-primary btn-icon-split mb-3" (click)="openAddDialog()">
-          <span class="icon text-white-50">
-            <i class="fas fa-plus"></i>
-          </span>
-          <span class="text">Add Row</span>
-        </button>
-
-        <button class="btn btn-outline-secondary btn-icon-split mb-3 ml-2" (click)="refreshData()">
-          <span class="icon text-white-50">
-            <i class="fas fa-sync-alt"></i>
-          </span>
-          <span class="text">Refresh</span>
-        </button>
-
-        <div class="mb-3">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search by name..."
-            (input)="updateFilter($event)"
-          />
-        </div>
-
-        <!-- Loading Indicator -->
-        <div *ngIf="loadingIndicator; else loaded">
-          <app-loading></app-loading>
-        </div> 
-        
-        <ng-template #loaded>
-          <ngx-datatable
-            class="bootstrap"
-            [rows]="rows"
-            [columnMode]="'force'"
-            [headerHeight]="50"
-            [footerHeight]="50"
-            [rowHeight]="'auto'"
-            [limit]="10"
-            [reorderable]="reorderable"
-            (select)="onSelect($event)"
-            (activate)="onActivate($event)">
-             
-            <ngx-datatable-column name="Department Name" prop="department.departmentName">
-              <ng-template ngx-datatable-cell-template let-value="value">
-                <span style="color:red;">{{ value }}</span>
-              </ng-template>
-            </ngx-datatable-column>
-
-            <!-- Shelf Name Column -->
-            <ngx-datatable-column name="Shelf Name" prop="shelf.shelfName">
-              <ng-template ngx-datatable-cell-template let-value="value">
-                <span style="color:blue;">{{ value }}</span>
-              </ng-template>
-            </ngx-datatable-column>
-
-            <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [prop]="column.prop" [hidden]="!column.visible">
-              <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
-                <ng-container *ngIf="column.name === 'Actions'">
-                  <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Actions
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <a class="dropdown-item" (click)="openEditDialog(row)">
-                        <i class="fas fa-edit"></i> Edit
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item text-danger" (click)="deleteRow(row)">
-                        <i class="fas fa-trash"></i> Delete
-                      </a>
-                    </li>
-                  </ul>
-                </ng-container>
-                <ng-container *ngIf="column.name !== 'Actions'">
-                  {{ row[column.prop] }}
-                </ng-container>
-              </ng-template>
-            </ngx-datatable-column>
-
-          </ngx-datatable>
-        </ng-template>
+﻿<div class="ll-page">
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <mat-icon class="ll-page__icon">table_rows</mat-icon>
+      <div class="ll-page__title">
+        <h1>{{ 'row.pageTitle' | translate }}</h1>
+        <p>{{ 'row.pageDesc' | translate }}</p>
       </div>
-    </div>
-
-    <div id="UserManual" class="tab-pane custom-tab-pane">
-      <!-- User Manual content here -->
-      <div>
-         <!-- <markdown [src]="markdownContent" [data]="markdownContent"></markdown>  -->
-          <div  [innerHTML]="markdownContent"></div>
+      <div class="ll-page__actions">
+        <button mat-flat-button color="primary" (click)="openAddDialog()"><mat-icon>add</mat-icon> {{ 'ui.create' | translate }}</button>
+        <button mat-stroked-button (click)="refreshData()"><mat-icon>refresh</mat-icon> {{ 'ui.reload' | translate }}</button>
       </div>
-    </div>
-  </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="ll-page__body" appearance="outlined">
+    <mat-card-content>
+      @if (loadingIndicator) {
+        <div class="ll-loading"><mat-progress-spinner diameter="48" mode="indeterminate"></mat-progress-spinner></div>
+      } @else {
+        <mat-tab-group animationDuration="200ms" class="ll-tabs">
+          <mat-tab>
+            <ng-template mat-tab-label><mat-icon class="ll-tab__icon">list</mat-icon> {{ 'ui.list' | translate }}</ng-template>
+            <div class="ll-tab__content">
+              <ngx-datatable class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10">
+                <ngx-datatable-column name="Department">
+                  <ng-template ngx-datatable-cell-template let-row="row"><span style="color:red">{{ row.department?.departmentName }}</span></ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Shelf">
+                  <ng-template ngx-datatable-cell-template let-row="row"><span style="color:blue">{{ row.shelf?.shelfName }}</span></ng-template>
+                </ngx-datatable-column>
+                @for (column of columns; track column) {
+                  <ngx-datatable-column [name]="column.name" [prop]="column.prop"></ngx-datatable-column>
+                }
+                <ngx-datatable-column name="Actions">
+                  <ng-template ngx-datatable-cell-template let-row="row">
+                    <button mat-icon-button [matMenuTriggerFor]="rowMenu"><mat-icon>more_vert</mat-icon></button>
+                    <mat-menu #rowMenu="matMenu">
+                      <button mat-menu-item (click)="openEditDialog(row)"><mat-icon>edit</mat-icon> {{ 'ui.edit' | translate }}</button>
+                      <button mat-menu-item (click)="deleteRow(row)"><mat-icon>delete</mat-icon> {{ 'ui.delete' | translate }}</button>
+                    </mat-menu>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label><mat-icon class="ll-tab__icon">menu_book</mat-icon> {{ 'ui.userManual' | translate }}</ng-template>
+            <div class="ll-tab__content"><div [innerHTML]="markdownContent"></div></div>
+          </mat-tab>
+        </mat-tab-group>
+      }
+    </mat-card-content>
+  </mat-card>
 </div>

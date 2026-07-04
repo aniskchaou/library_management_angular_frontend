@@ -1,383 +1,60 @@
-<!-- Main Content -->
-<div class="container mt-4">
-    <!-- Title with Icon -->
-    <h1 class="h3 mb-2 text-gray-800">
-      <i class="fas fa-tags mr-2"></i> Purchase Suggestions
-    </h1>
-  
-    <!-- Description Below Title -->
-    <p class="lead mb-4">
-      View and manage purchase suggestions for books and other media. Use the tabs to explore an overview of suggestions, browse the list of suggestions, or consult the user manual for detailed instructions. Add new suggestions or modify existing ones using the options below.
-    </p>
-  
-    <!-- Navigation Tabs -->
-    <ul class="nav nav-tabs">
-     <!--  <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#Overview">
-          <i class="fas fa-chart-bar mr-2"></i> Overview
-        </a>
-      </li> -->
-      <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#List">
-          <i class="fas fa-list mr-2"></i> List
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#UserManual">
-          <i class="fas fa-book mr-2"></i> User Manual
-        </a>
-      </li>
-    </ul>
-  
-    <!-- Tab Content -->
-    <div class="tab-content">
-      <!-- Overview tab content -->
-    <!--   <div id="Overview" class="tab-pane fade show active">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-6">
-              <ngx-charts-bar-vertical
-                [results]="barChartData"
-                [view]="[400,300]"
-                [scheme]="'cool'"
-                [gradient]="true"
-                [xAxis]="true"
-                [yAxis]="true"
-                [legend]="true"
-                [showXAxisLabel]="true"
-                [showYAxisLabel]="true"
-                xAxisLabel="Category"
-                yAxisLabel="Number of Books">
-              </ngx-charts-bar-vertical>
-            </div>
-            <div class="col-md-6">
-              <ngx-charts-pie-chart
-                [results]="pieChartData"
-                [view]="[400,300]"
-                [scheme]="'cool'"
-                [legend]="true"
-                [explodeSlices]="false"
-                [labels]="true">
-              </ngx-charts-pie-chart>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <ngx-charts-line-chart
-                [results]="lineChartData"
-                [view]="[400,300]"
-                [scheme]="'cool'"
-                [legend]="true"
-                [xAxis]="true"
-                [yAxis]="true"
-                [autoScale]="true">
-              </ngx-charts-line-chart>
-            </div>
-            <div class="col-md-6">
-              <ngx-charts-pie-chart
-                [results]="doughnutChartData"
-                [view]="[400,300]"
-                [scheme]="'cool'"
-                [legend]="true"
-                [explodeSlices]="false"
-                [doughnut]="true"
-                [labels]="true">
-              </ngx-charts-pie-chart>
-            </div>
-          </div>
-        </div>
-      </div> -->
-  
-      <!-- List tab content -->
-      <div id="List" class="tab-pane fade show active">
-        <div class="container-fluid" style="background-color: white;">
-          <!-- Button trigger modal -->
-          <button class="btn btn-outline-primary mb-3" (click)="openAddDialog()">Add Purchase Suggestion</button>
-          <button
-            href="#"
-            role="button"
-            class="btn btn-outline-warning btn-icon-split"
-            (click)="loadPurchaseSuggestions()"
-          >
-            <span class="icon text-warning">
-              <i class="fas fa-redo"></i>
-            </span>
-            <span class="text">Reload</span>
-          </button>
-          <!-- Purchase Suggestion Table -->
-          <div class="card mb-4">
-            <div class="card-body">
-              <div class="table-responsive">
-              <!--   <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Title</th>
-                      <th>Author</th>
-                      <th>Copyright Date</th>
-                      <th>ISBN/ISSN/Other Standard Number</th>
-                      <th>Publisher</th>
-                      <th>Publication Place</th>
-                      <th>Media Type</th>
-                      <th>Reason for Suggestion</th>
-                      <th>Copies</th>
-                      <th>Price</th>
-                      <th>Total</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let suggestion of purchaseSuggestions">
-                      <td>{{ suggestion.title }}</td>
-                      <td>{{ suggestion.author.name }}</td>
-                      <td>{{ suggestion.copyrightDate | date }}</td>
-                      <td>{{ suggestion.isbnIssnOtherStandardNumber }}</td>
-                      <td>{{ suggestion.publisher.name }}</td>
-                      <td>{{ suggestion.publicationPlace }}</td>
-                      <td>{{ suggestion.mediaType.name }}</td>
-                      <td>{{ suggestion.reasonForSuggestion }}</td>
-                      <td>{{ suggestion.copies }}</td>
-                      <td>{{ suggestion.price | currency }}</td>
-                      <td>{{ suggestion.total | currency }}</td>
-                      <td>
-                        <button (click)="openEditDialog(suggestion)" class="btn btn-primary">Edit</button>
-                        <button (click)="deletePurchaseSuggestion(suggestion.id)" class="btn btn-danger">Delete</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> -->
-
-                <div *ngIf="loadingIndicator; else loaded">
-                  <div class="d-flex justify-content-center">
-                    <div class="spinner-border text-primary" role="status">
-                      <span class="sr-only">Loading...</span>
-                    </div>
-                  </div>
-                </div>
-        
-                <ng-template #loaded>
-                  <ngx-datatable
-                  class="bootstrap"
-                  [rows]="purchaseSuggestions"
-                  [columnMode]="'force'"
-                  [headerHeight]="50"
-                  [footerHeight]="50"
-                  [rowHeight]="'auto'"
-                  [limit]="10"
-                  [loadingIndicator]="loadingIndicator"
-                  [reorderable]="reorderable"
-                  (select)="onSelect($event)"
-                  (activate)="onActivate($event)">
-                
-                  <!-- Title -->
-                  <ngx-datatable-column name="Title" [prop]="'title'">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                      {{ row.title }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                
-                  <!-- Author -->
-                 <!--  <ngx-datatable-column name="Author" [prop]="'author.name'">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                      {{ row.author?.name }}
-                    </ng-template>
-                  </ngx-datatable-column> -->
-                
-                  <!-- Copyright Date -->
-                 <!--  <ngx-datatable-column name="Copyright Date" [prop]="'copyrightDate'">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                      {{ row.copyrightDate | date }}
-                    </ng-template>
-                  </ngx-datatable-column> -->
-                
-                  <!-- ISBN/ISSN/Other Standard Number -->
-                  <ngx-datatable-column name="ISBN" [prop]="'ISBN'">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                      <span style="color: red;">{{ row.isbnIssnOtherStandardNumber }}</span>
-                    </ng-template>
-                  </ngx-datatable-column>
-                
-                  <!-- Publisher -->
-                <!--   <ngx-datatable-column name="Publisher" [prop]="'publisher.name'">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                      {{ row.publisher?.name }}
-                    </ng-template>
-                  </ngx-datatable-column> -->
-                
-                  <!-- Publication Place -->
-                  <ngx-datatable-column name="Publication Place" [prop]="'publicationPlace'">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                      {{ row.publicationPlace }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                
-                  <!-- Media Type -->
-                 <!--  <ngx-datatable-column name="Media Type" [prop]="'mediaType.name'">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                      {{ row.mediaType?.name }}
-                    </ng-template>
-                  </ngx-datatable-column> -->
-                
-                  <!-- Reason for Suggestion -->
-                  <ngx-datatable-column name="Reason for Suggestion" [prop]="'reasonForSuggestion'">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                      {{ row.reasonForSuggestion }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                
-                  <!-- Copies -->
-                  <ngx-datatable-column name="Copies" [prop]="'copies'">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                      {{ row.copies }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                
-                  <!-- Price -->
-                  <ngx-datatable-column name="Price" [prop]="'price'">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                      {{ row.price | currency }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                
-                  <!-- Total -->
-                  <ngx-datatable-column name="Total" [prop]="'total'">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                      {{ row.total | currency }}
-                    </ng-template>
-                  </ngx-datatable-column>
-
-                  <ngx-datatable-column name="Status" [prop]="'status'">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                      <span style="color: green;">{{ row.status}}</span>
-                    </ng-template>
-                  </ngx-datatable-column>
-                
-                  <!-- Actions -->
-                  <ngx-datatable-column name="Actions">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                      <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Actions
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item"  (click)="openEditDialog(row)">
-                            <i class="fas fa-edit"></i> Edit
-                        </a>
-                        <a class="dropdown-item"  (click)="deletePurchaseSuggestion(row.id)">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
-                        <a class="dropdown-item" (click)="approve(row)">
-                            <i class="fas fa-thumbs-up"></i> Approve
-                        </a>
-                        <a class="dropdown-item" (click)="reject(row)">
-                            <i class="fas fa-thumbs-down"></i> Reject
-                        </a>
-                        <!-- <a class="dropdown-item" >
-                            <i class="fas fa-info-circle"></i> Track Status
-                        </a> -->
-                    </div>
-                    </ng-template>
-                  </ngx-datatable-column>
-                
-                </ngx-datatable>
-                </ng-template> 
-
-               
-
-              </div>
-            </div>
-          </div>
-        </div>
+﻿<div class="ll-page">
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <mat-icon class="ll-page__icon">lightbulb</mat-icon>
+      <div class="ll-page__title">
+        <h1>{{ 'acquisition.purchaseSuggestionTitle' | translate }}</h1>
+        <p>{{ 'acquisition.purchaseSuggestionDesc' | translate }}</p>
       </div>
-  
-      <!-- User Manual tab content -->
-      <div id="UserManual" class="tab-pane fade" style="background-color: white;" >
-        <div>
-          <!-- <markdown [src]="markdownContent" [data]="markdownContent"></markdown>  -->
-           <div  [innerHTML]="markdownContent"></div>
-       </div>
+      <div class="ll-page__actions">
+        <button mat-flat-button color="primary" (click)="openAddDialog()"><mat-icon>add</mat-icon> {{ 'ui.create' | translate }}</button>
+        <button mat-stroked-button (click)="loadPurchaseSuggestions()"><mat-icon>refresh</mat-icon> {{ 'ui.reload' | translate }}</button>
       </div>
-    </div>
-  </div>
-  
-  <!-- Modal for Purchase Suggestion Form -->
-  <div class="modal fade" id="bookFormModal" tabindex="-1" aria-labelledby="bookFormModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="bookFormModalLabel">Purchase Suggestion Form</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" class="form-control" id="title">
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="ll-page__body" appearance="outlined">
+    <mat-card-content>
+      @if (loadingIndicator) {
+        <div class="ll-loading"><mat-progress-spinner diameter="48" mode="indeterminate"></mat-progress-spinner></div>
+      } @else {
+        <mat-tab-group animationDuration="200ms" class="ll-tabs">
+          <mat-tab>
+            <ng-template mat-tab-label><mat-icon class="ll-tab__icon">list</mat-icon> {{ 'ui.list' | translate }}</ng-template>
+            <div class="ll-tab__content">
+              <ngx-datatable class="material" [rows]="purchaseSuggestions" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10">
+                <ngx-datatable-column name="Title" prop="title"></ngx-datatable-column>
+                <ngx-datatable-column name="ISBN" prop="isbnIssnOtherStandardNumber"></ngx-datatable-column>
+                <ngx-datatable-column name="Publication Place" prop="publicationPlace"></ngx-datatable-column>
+                <ngx-datatable-column name="Reason" prop="reasonForSuggestion"></ngx-datatable-column>
+                <ngx-datatable-column name="Copies" prop="copies"></ngx-datatable-column>
+                <ngx-datatable-column name="Price" prop="price">
+                  <ng-template ngx-datatable-cell-template let-row="row">{{ row.price | currency }}</ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Total" prop="total">
+                  <ng-template ngx-datatable-cell-template let-row="row">{{ row.total | currency }}</ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Status" prop="status"></ngx-datatable-column>
+                <ngx-datatable-column name="Actions">
+                  <ng-template ngx-datatable-cell-template let-row="row">
+                    <button mat-icon-button [matMenuTriggerFor]="psMenu"><mat-icon>more_vert</mat-icon></button>
+                    <mat-menu #psMenu="matMenu">
+                      <button mat-menu-item (click)="openEditDialog(row)"><mat-icon>edit</mat-icon> {{ 'ui.edit' | translate }}</button>
+                      <button mat-menu-item (click)="deletePurchaseSuggestion(row.id)"><mat-icon>delete</mat-icon> {{ 'ui.delete' | translate }}</button>
+                      <mat-divider></mat-divider>
+                      <button mat-menu-item (click)="approve(row)"><mat-icon>check_circle</mat-icon> Approve</button>
+                      <button mat-menu-item (click)="reject(row)"><mat-icon>cancel</mat-icon> Reject</button>
+                    </mat-menu>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
             </div>
-            <div class="form-group">
-              <label for="author">Author</label>
-              <input type="text" class="form-control" id="author">
-            </div>
-            <div class="form-group">
-              <label for="copyrightDate">Copyright Date</label>
-              <input type="date" class="form-control" id="copyrightDate">
-            </div>
-            <div class="form-group">
-              <label for="standardNumber">ISBN/ISSN/Other Standard Number</label>
-              <input type="text" class="form-control" id="standardNumber">
-            </div>
-            <div class="form-group">
-              <label for="publisher">Publisher</label>
-              <input type="text" class="form-control" id="publisher">
-            </div>
-            <div class="form-group">
-              <label for="publicationPlace">Publication Place</label>
-              <input type="text" class="form-control" id="publicationPlace">
-            </div>
-            <div class="form-group">
-              <label for="collectionTitle">Collection Title</label>
-              <input type="text" class="form-control" id="collectionTitle">
-            </div>
-            <div class="form-group">
-              <label for="documentType">Document Type</label>
-              <input type="text" class="form-control" id="documentType">
-            </div>
-            <div class="form-group">
-              <label for="reason">Reason for Suggestion</label>
-              <input type="text" class="form-control" id="reason">
-            </div>
-            <div class="form-group">
-              <label for="notes">Notes</label>
-              <textarea class="form-control" id="notes" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="fund">Fund</label>
-              <select class="form-control" id="fund">
-                <!-- Options for funds -->
-              </select>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="showInactive">
-              <label class="form-check-label" for="showInactive">Show Inactive</label>
-            </div>
-            <div class="form-group">
-              <label for="copies">Copies</label>
-              <input type="number" class="form-control" id="copies">
-            </div>
-            <div class="form-group">
-              <label for="currency">Currency</label>
-              <input type="text" class="form-control" id="currency">
-            </div>
-            <div class="form-group">
-              <label for="price">Price</label>
-              <input type="number" class="form-control" id="price">
-            </div>
-            <div class="form-group">
-              <label for="total">Total</label>
-              <input type="number" class="form-control" id="total" disabled>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label><mat-icon class="ll-tab__icon">menu_book</mat-icon> {{ 'ui.userManual' | translate }}</ng-template>
+            <div class="ll-tab__content"><div [innerHTML]="markdownContent"></div></div>
+          </mat-tab>
+        </mat-tab-group>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

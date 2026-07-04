@@ -20,9 +20,10 @@ import CONFIG from 'src/app/main/urls/urls';
 import BookValidation from 'src/app/main/validations/BookValidation';
 
 @Component({
-  selector: 'app-add-book',
-  templateUrl: './add-book.component.html',
-  styleUrls: ['./add-book.component.css'],
+    selector: 'app-add-book',
+    templateUrl: './add-book.component.html',
+    styleUrls: ['./add-book.component.css'],
+    standalone: false
 })
 export class AddBookComponent  implements OnInit {
   /* bookForm: FormGroup;
@@ -61,7 +62,7 @@ export class AddBookComponent  implements OnInit {
     super();
     this.bookForm = this.validation.formGroupInstance;
     this.msg = this.message;
-    //console.log(this.msg.validationMessage.isbn);
+    //
   }
 
   ngOnInit(): void {
@@ -90,7 +91,6 @@ export class AddBookComponent  implements OnInit {
     this.httpService.getAll(CONFIG.URL_BASE + '/writer/all').subscribe(
       (data: Writer[]) => {
         this.writers$ = data;
-        console.log(this.writers$);
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'error');
@@ -102,7 +102,7 @@ export class AddBookComponent  implements OnInit {
     this.httpService.getAll(CONFIG.URL_BASE + '/publisher/all').subscribe(
       (data: Publisher[]) => {
         this.publishers$ = data;
-        //console.log(this.publishers$);
+        //
       },
       (err: HttpErrorResponse) => {
         super.show('Error', err.message, 'error');
@@ -123,7 +123,6 @@ export class AddBookComponent  implements OnInit {
     )[0];
 
     if (this.validation.checkValidation()) {
-      console.log(this.bookForm.value);
       this.httpService
         .create(CONFIG.URL_BASE + '/book/create', this.bookForm.value)
         .then(() => {
@@ -167,7 +166,6 @@ export class AddBookComponent  implements OnInit {
   
     ngOnInit(): void {
       this.loadInitialData();
-      console.log(this.catalogItem)
     }
   
     loadInitialData(): void {
@@ -196,7 +194,6 @@ export class AddBookComponent  implements OnInit {
     this.catalogItemService.getDepartments().subscribe(
       (departments: Department[]) => {
         this.departments = departments; // Assign the data to the departments array
-        console.log(departments)
       },
       error => {
         console.error('Error fetching departments:', error); // Handle error
@@ -273,7 +270,6 @@ export class AddBookComponent  implements OnInit {
     }
   
     saveCatalogItem(): void {
-      console.log(this.catalogItem)
       if(this.validateCatalogForm(this.catalogItem))
         {
       this.catalogItem.mediaType = this.mediaTypes.find(x => x.id == this.catalogItem.mediaType?.id);

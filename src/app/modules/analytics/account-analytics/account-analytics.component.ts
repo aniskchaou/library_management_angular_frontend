@@ -4,9 +4,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-account-analytics',
-  templateUrl: './account-analytics.component.html',
-  styleUrls: ['./account-analytics.component.css'],
+    selector: 'app-account-analytics',
+    templateUrl: './account-analytics.component.html',
+    styleUrls: ['./account-analytics.component.css'],
+    standalone: false
 })
 export class AccountAnalyticsComponent implements OnInit {
   expenses;
@@ -35,7 +36,6 @@ export class AccountAnalyticsComponent implements OnInit {
   }
 
   onSelect(event) {
-    console.log(event);
   }
 
   constructor(private httpService: HTTPService) {

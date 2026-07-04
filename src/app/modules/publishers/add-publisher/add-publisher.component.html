@@ -1,90 +1,66 @@
-<form style="background-color: white; padding: 20px; border-radius: 5px;" class="row" [formGroup]="publisherForm">
-
-  <!-- Publisher Name -->
-  <div class="form-group col-md-6">
-    <label for="name">Publisher Name:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: Enter the publisher's name. Example: Penguin Publishing"></i>
-    <input [ngClass]="{ 'is-invalid': submitted && f.name.errors }" formControlName="name" id="field-category_name" 
-           name="name" class="form-control" type="text" maxlength="99" placeholder="e.g., Penguin Publishing" />
-    <!-- Publisher Name Validation -->
-    <!-- <div *ngIf="submitted && f.name.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.name.errors.required">
-        {{ msg.validationMessage.name }}
-      </div>
-    </div> -->
-  </div>
-
-  <!-- Address -->
-  <div class="form-group col-md-6">
-    <label for="address">Address:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: Enter the publisher's address. Example: 123 Publishing Street"></i>
-    <input
-       id="addressInput"
-       formControlName="address"
-       class="form-control"
-       type="text"
-       placeholder="e.g., 123 Publishing Street"
-     />
-    <!--  <div *ngIf="publisherForm.get('address').invalid && (publisherForm.get('address').dirty || publisherForm.get('address').touched)">
-       <small class="text-danger" *ngIf="publisherForm.get('address').errors.required">Address is required.</small>
-     </div> -->
-  </div>
-
-  <!-- Email -->
-  <div class="form-group col-md-6">
-    <label for="email">Email:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: Enter the publisher's email. Example: contact@publisher.com"></i>
-    <input formControlName="email" id="field-email" name="email" class="form-control" type="email" maxlength="99" placeholder="e.g., contact@publisher.com" />
-  </div>
-
-  <!-- Phone -->
-  <div class="form-group col-md-6">
-    <label for="phone">Phone:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: Enter the publisher's phone number. Example: +1-800-123-456"></i>
-    <input formControlName="phone" id="field-phone" name="phone" class="form-control" type="text" maxlength="99" placeholder="e.g., +1-800-123-456" />
-  </div>
-
-  <!-- Country -->
-  <div class="form-group col-md-6">
-    <label for="country">Country:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: Select the publisher's country."></i>
-    <ng-select
-      [items]="countries"
-      bindLabel="name"
-      bindValue="code"
-      placeholder="Start typing to search for a country..."
-      formControlName="country"
-      [ngClass]="{ 'is-invalid': submitted && f.country.errors }"
-    >
-    </ng-select>
-   <!--  <div *ngIf="submitted && f.country.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.country.errors.required">
-        {{ msg.validationMessage.country }}
-      </div>
-    </div> -->
-  </div>
-
-  <!-- Website -->
-  <div class="form-group col-md-6">
-    <label for="website">Website:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: Enter the publisher's website. Example: www.publisherwebsite.com"></i>
-    <input formControlName="website" id="field-website" name="website" class="form-control" type="text" maxlength="99" placeholder="e.g., www.publisherwebsite.com" />
-  </div>
-
-  <!-- Add Button -->
-  <div class="form-group col-md-12">
-    <button (click)="add()" type="button" class="btn btn-outline-primary">
-      <i class="fas fa-save"></i>
-      {{ publisherI18n?.addButtonI18n }}
+<div class="ll-modal ll-modal--wide">
+  <div class="ll-modal__header">
+    <mat-icon class="ll-modal__icon">add_business</mat-icon>
+    <h2 class="ll-modal__title">{{ 'publisher.addTitle' | translate }}</h2>
+    <button mat-icon-button class="ll-modal__close" (click)="closeModal()" aria-label="Close">
+      <mat-icon>close</mat-icon>
     </button>
   </div>
-</form>
 
+  <div class="ll-modal__content">
+    <form [formGroup]="publisherForm" novalidate class="ll-form">
+      <div class="ll-form__grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Publisher Name</mat-label>
+          <input matInput type="text" formControlName="name" maxlength="99" placeholder="e.g. Penguin Publishing" />
+          @if (submitted && f.name?.errors?.required) {
+            <mat-error>Publisher Name is required.</mat-error>
+          }
+        </mat-form-field>
 
-  
+        <mat-form-field appearance="outline">
+          <mat-label>Address</mat-label>
+          <input matInput id="addressInput" type="text" formControlName="address" placeholder="e.g. 123 Publishing Street" />
+          <mat-icon matSuffix>place</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="contact@publisher.com" />
+          <mat-icon matSuffix>mail</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Phone</mat-label>
+          <input matInput type="tel" formControlName="phone" placeholder="+1 555 123 4567" />
+          <mat-icon matSuffix>call</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Country</mat-label>
+          <mat-select formControlName="country">
+            @for (c of countries; track c.code) {
+              <mat-option [value]="c.code">{{ c.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Website</mat-label>
+          <input matInput type="url" formControlName="website" placeholder="https://example.com" />
+          <mat-icon matSuffix>language</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="ll-modal__actions">
+        <button mat-stroked-button type="button" (click)="closeModal()">Cancel</button>
+        <button mat-stroked-button type="button" (click)="reset()">
+          <mat-icon>restart_alt</mat-icon> Reset
+        </button>
+        <button mat-flat-button color="primary" type="button" (click)="add()">
+          <mat-icon>save</mat-icon> {{ 'ui.save' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

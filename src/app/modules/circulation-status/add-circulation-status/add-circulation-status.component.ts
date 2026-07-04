@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
@@ -10,12 +10,13 @@ import CONFIG from 'src/app/main/urls/urls';
 import CirculationStatusValidation from 'src/app/main/validations/CirculationStatusValidation';
 
 @Component({
-  selector: 'app-add-circulation-status',
-  templateUrl: './add-circulation-status.component.html',
-  styleUrls: ['./add-circulation-status.component.css'],
+    selector: 'app-add-circulation-status',
+    templateUrl: './add-circulation-status.component.html',
+    styleUrls: ['./add-circulation-status.component.css'],
+    standalone: false
 })
 export class AddCirculationStatusComponent extends URLLoader implements OnInit {
-  circulationStatusForm: FormGroup;
+  circulationStatusForm: UntypedFormGroup;
   msg: BookMessage;
   submitted = false;
   circulationStatusI18n;
@@ -83,7 +84,6 @@ export class AddCirculationStatusComponent extends URLLoader implements OnInit {
       .subscribe(
         (data) => {
           this.circulationStatusI18n = data;
-          console.log(this.circulationStatusI18n);
           //document.getElementById('table').DataTable().ajax.reload();
 
         },

@@ -1,14 +1,28 @@
-<div class="modal-header">
-  <h5 class="modal-title" id="emptyModalLabel">Empty Modal</h5>
-  <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close">x</button>
-</div>
-<div class="modal-body">
-  <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-      <input type="file" formControlName="file" (change)="onFileChange($event)" />
-      <button class="btn btn-outline-primary"  type="submit">Upload File</button>
+<div class="ll-modal">
+  <div class="ll-modal__header">
+    <mat-icon class="ll-modal__icon">upload_file</mat-icon>
+    <h2 class="ll-modal__title">Upload Document</h2>
+    <button mat-icon-button class="ll-modal__close" (click)="closeModal()" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="ll-modal__content">
+    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="ll-form">
+      <p class="ll-form__hint">Upload a document for <strong>{{ member?.firstname }} {{ member?.surname }}</strong></p>
+      <div class="ll-upload">
+        <input type="file" id="memberFile" formControlName="file" (change)="onFileChange($event)" class="ll-upload__input" />
+        <label for="memberFile" class="ll-upload__label">
+          <mat-icon>cloud_upload</mat-icon>
+          <span>{{ fileToUpload?.name || 'Choose a file...' }}</span>
+        </label>
+      </div>
+      <div class="ll-modal__actions">
+        <button mat-stroked-button type="button" (click)="closeModal()">Cancel</button>
+        <button mat-flat-button color="primary" type="submit" [disabled]="!fileToUpload">
+          <mat-icon>upload</mat-icon> Upload
+        </button>
+      </div>
     </form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
- <!--  <button type="button" class="btn btn-outline-primary">Save changes</button> -->
+  </div>
 </div>

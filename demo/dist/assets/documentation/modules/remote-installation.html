@@ -1,0 +1,72 @@
+<h2 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 5px;">Deploying LibraryLab on Heroku</h2>
+
+<h3 style="color: #34495e; margin-top: 20px;">Prerequisites</h3>
+<ul>
+    <li>Install <a href="https://devcenter.heroku.com/articles/heroku-cli" style="color: #3498db; text-decoration: none;">Heroku CLI</a></li>
+    <li>Install <a href="https://git-scm.com/downloads" style="color: #3498db; text-decoration: none;">Git</a></li>
+    <li>Sign up for a <a href="https://signup.heroku.com/" style="color: #3498db; text-decoration: none;">Heroku account</a></li>
+    <li>Ensure Java 17, Maven, Node.js, and Angular CLI are installed</li>
+</ul>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 1: Prepare the Spring Boot Backend</h3>
+<pre style="background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 5px; overflow-x: auto;">
+<code style="font-family: 'Courier New', Courier, monospace; font-size: 14px;">heroku login
+git init
+heroku create librarylab-app
+heroku addons:create heroku-postgresql:hobby-dev</code>
+</pre>
+
+<h4 style="color: #e74c3c;">Configure Database Settings</h4>
+<pre style="background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 5px; overflow-x: auto;">
+<code style="font-family: 'Courier New', Courier, monospace; font-size: 14px;">spring.datasource.url=${JDBC_DATABASE_URL}
+spring.datasource.username=${JDBC_DATABASE_USERNAME}
+spring.datasource.password=${JDBC_DATABASE_PASSWORD}</code>
+</pre>
+
+<pre style="background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 5px; overflow-x: auto;">
+<code style="font-family: 'Courier New', Courier, monospace; font-size: 14px;">mvn clean package
+git add .
+git commit -m "Deploy Spring Boot to Heroku"
+git push heroku main
+heroku ps:scale web=1
+heroku logs --tail</code>
+</pre>
+
+<h3 style="color: #34495e; margin-top: 20px;">Step 2: Deploy Angular Frontend to Heroku</h3>
+<pre style="background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 5px; overflow-x: auto;">
+<code style="font-family: 'Courier New', Courier, monospace; font-size: 14px;">cd frontend</code>
+</pre>
+
+<h4 style="color: #e74c3c;">Create a server.js file</h4>
+<pre style="background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 5px; overflow-x: auto;">
+<code style="font-family: 'Courier New', Courier, monospace; font-size: 14px;">const express = require("express");
+const path = require("path");
+const app = express();
+app.use(express.static(__dirname + "/dist/librarylab"));
+app.get("/*", function (req, res) {
+    res.sendFile(path.join(__dirname + "/dist/librarylab/index.html"));
+});
+app.listen(process.env.PORT || 8080);</code>
+</pre>
+
+<pre style="background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 5px; overflow-x: auto;">
+<code style="font-family: 'Courier New', Courier, monospace; font-size: 14px;">npm install express --save</code>
+</pre>
+
+<h4 style="color: #e74c3c;">Modify package.json</h4>
+<pre style="background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 5px; overflow-x: auto;">
+<code style="font-family: 'Courier New', Courier, monospace; font-size: 14px;">"scripts": {
+    "start": "node server.js",
+    "postinstall": "ng build --prod"
+}</code>
+</pre>
+
+<pre style="background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 5px; overflow-x: auto;">
+<code style="font-family: 'Courier New', Courier, monospace; font-size: 14px;">git add .
+git commit -m "Deploy Angular frontend to Heroku"
+git push heroku main
+heroku open</code>
+</pre>
+
+<p style="font-size: 18px; font-weight: bold; color: #2ecc71;">Your LibraryLab App is Now Live on Heroku! 🚀</p>
+<p>You can now access your Spring Boot backend and Angular frontend using the Heroku URLs provided.</p>

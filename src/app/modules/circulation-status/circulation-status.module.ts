@@ -5,7 +5,7 @@ import { CirculationStatusComponent } from './circulation-status/circulation-sta
 import { CirculationStatusListComponent } from './circulation-status-list/circulation-status-list.component';
 import { CirculationModalComponent } from '../circulations/circulation-modal/circulation-modal.component';
 import { EditCirculationStatusComponent } from './edit-circulation-status/edit-circulation-status.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { SharedModule } from '../shared/shared.module';
@@ -14,26 +14,21 @@ import { AddCirculationStatusComponent } from './add-circulation-status/add-circ
 import { CirculationStatusModalComponent } from './circulation-status-modal/circulation-status-modal.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { MaterialModule } from '../shared/material/material.module';
 
-@NgModule({
-  declarations: [
-    AddCirculationStatusComponent,
-    CirculationStatusComponent,
-    CirculationStatusListComponent,
-    CirculationStatusComponent,
-    EditCirculationStatusComponent,
-    CirculationStatusModalComponent,
-  ],
-  imports: [
-    SharedModule,
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    CommonModule,
-    NgxDatatableModule,
-    NgbModalModule
-  ],
-  providers: [CirculationStatusValidation],
-})
+@NgModule({ declarations: [
+        AddCirculationStatusComponent,
+        CirculationStatusComponent,
+        CirculationStatusListComponent,
+        CirculationStatusComponent,
+        EditCirculationStatusComponent,
+        CirculationStatusModalComponent,
+    ], imports: [SharedModule,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        NgxDatatableModule,
+        NgbModalModule,
+        MaterialModule], providers: [CirculationStatusValidation, provideHttpClient(withInterceptorsFromDi())] })
 export class CirculationStatusModule {}

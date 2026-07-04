@@ -3,9 +3,10 @@ import { URLLoader } from 'src/app/main/configs/URLLoader';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
 @Component({
-  selector: 'app-expense-list',
-  templateUrl: './expense-list.component.html',
-  styleUrls: ['./expense-list.component.css'],
+    selector: 'app-expense-list',
+    templateUrl: './expense-list.component.html',
+    styleUrls: ['./expense-list.component.css'],
+    standalone: false
 })
 export class ExpenseListComponent extends URLLoader implements OnInit {
   @Input() expenses;

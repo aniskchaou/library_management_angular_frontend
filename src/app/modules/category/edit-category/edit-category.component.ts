@@ -9,12 +9,12 @@ import CategoryTestService from 'src/app/main/mocks/CategoryTestService';
 import Category from 'src/app/main/models/Category';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
-declare var $: any; // If using Bootstrap/jQuery
 
 @Component({
-  selector: 'app-edit-category',
-  templateUrl: './edit-category.component.html',
-  styleUrls: ['./edit-category.component.css'],
+    selector: 'app-edit-category',
+    templateUrl: './edit-category.component.html',
+    styleUrls: ['./edit-category.component.css'],
+    standalone: false
 })
 export class EditCategoryComponent extends URLLoader implements OnInit {
   @Input() category: any; // Mark category as Input
@@ -32,7 +32,7 @@ export class EditCategoryComponent extends URLLoader implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Category:', this.category); // Now category should be available here
+
     this.getCategoryByLang(CONFIG.getInstance().getLang());
   }
 
@@ -63,7 +63,6 @@ export class EditCategoryComponent extends URLLoader implements OnInit {
       .subscribe(
         (data) => {
           this.categoryI18n = data;
-          console.log(data);
         },
         (err: HttpErrorResponse) => {
           super.show('Error', err.message, 'warning');

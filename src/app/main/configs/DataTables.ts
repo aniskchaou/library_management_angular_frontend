@@ -1,6 +1,5 @@
-import 'datatables.net';
-import 'datatables.net-dt/css/jquery.dataTables.css';
-
+// jQuery + datatables.net removed. This class is kept as a no-op base
+// so subclasses (URLLoader and derived components) still compile.
 
 export class DataTables {
     constructor() {
@@ -8,6 +7,9 @@ export class DataTables {
     }
 
    public enableDataTable(){
+        // No-op. Use <ngx-datatable> in component templates instead.
+        return;
+        /* legacy jQuery DataTables init:
         ($('#dataTabled','#dt-member') as any).DataTable({
             paging: true,
             lengthChange: true,
@@ -46,5 +48,6 @@ export class DataTables {
             stateSave: true,
             select: true
           });
+        */
     }
 }

@@ -9,9 +9,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-income',
-  templateUrl: './income.component.html',
-  styleUrls: ['./income.component.css'],
+    selector: 'app-income',
+    templateUrl: './income.component.html',
+    styleUrls: ['./income.component.css'],
+    standalone: false
 })
 export class IncomeComponent extends URLLoader implements OnInit {
   incomes$ = [];

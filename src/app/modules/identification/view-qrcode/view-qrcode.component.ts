@@ -6,9 +6,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-view-qrcode',
-  templateUrl: './view-qrcode.component.html',
-  styleUrls: ['./view-qrcode.component.css']
+    selector: 'app-view-qrcode',
+    templateUrl: './view-qrcode.component.html',
+    styleUrls: ['./view-qrcode.component.css'],
+    standalone: false
 })
 export class ViewQrcodeComponent implements OnInit {
 
@@ -24,7 +25,6 @@ export class ViewQrcodeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.qrCode)
     //this.getImage(this.qrCode?.isbn)
     this.retrievedImage=CONFIG.URL_BASE+'/qrcode/get/' + this.qrCode?.isbn+'.png';
   }
@@ -34,7 +34,6 @@ export class ViewQrcodeComponent implements OnInit {
 /* 
    getImage(image) {
     this.loadingImage = true;
-    console.log(CONFIG.URL_BASE+'/qrcode/get/' + image+".png");
     if (image) {
       
       this.httpService
@@ -50,7 +49,6 @@ export class ViewQrcodeComponent implements OnInit {
 
           this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
            this.retrievedImage=res
-         console.log(res)
         });
     } 
   } */

@@ -1,0 +1,146 @@
+package com.dev.delta.dto;
+
+import com.dev.delta.email.EmailSetting;
+import com.dev.delta.entities.*;
+import com.dev.delta.entities.CatalogItem;
+import com.dev.delta.entitiesi18n.BookI18n;
+import com.dev.delta.entitiesi18n.CategoryI18n;
+import com.dev.delta.entitiesi18n.CirculationI18n;
+import com.dev.delta.entitiesi18n.CirculationStatusI18n;
+import com.dev.delta.entitiesi18n.DashboardI18n;
+import com.dev.delta.entitiesi18n.EBookI18n;
+import com.dev.delta.entitiesi18n.ExpenseI18n;
+import com.dev.delta.entitiesi18n.IncomeI18n;
+import com.dev.delta.entitiesi18n.MemberI18n;
+import com.dev.delta.entitiesi18n.MenuI18n;
+import com.dev.delta.entitiesi18n.PaymentI18n;
+import com.dev.delta.entitiesi18n.PublisherI18n;
+import com.dev.delta.entitiesi18n.RequestedBookI18n;
+import com.dev.delta.entitiesi18n.SearchI18n;
+import com.dev.delta.entitiesi18n.SettingsI18n;
+import com.dev.delta.entitiesi18n.TypeMemberI18n;
+import com.dev.delta.entitiesi18n.WriterI18n;
+import com.github.javafaker.Faker;
+
+public interface DTO {
+
+	public Faker faker = new Faker();
+	public Archive archive = new Archive();
+	public CatalogItem CATALOG_ITEM = new CatalogItem();
+	public CatalogItem CATALOG_ITEM_1 = new CatalogItem();
+	public CatalogItem CATALOG_ITEM_2 = new CatalogItem();
+	public CatalogItem CATALOG_ITEM_3 = new CatalogItem();
+	public CatalogItem CATALOG_ITEM_4 = new CatalogItem();
+	public CatalogItem CATALOG_ITEM_5 = new CatalogItem();
+	public CatalogItem CATALOG_ITEM_6 = new CatalogItem();
+	public CatalogItem CATALOG_ITEM_7 = new CatalogItem();
+	//public Category category = new Category();
+	public Category category1 = new Category();
+	public Category category2 = new Category();
+	public Category category3 = new Category();
+	public Circulation circulation = new Circulation();
+	public Circulation circulation2 = new Circulation();
+	public Circulation circulation3 = new Circulation();
+	public Circulation circulation4 = new Circulation();
+	public Circulation circulation5 = new Circulation();
+	public Circulation circulation6 = new Circulation();
+	public CirculationStatus circulationStatus = new CirculationStatus();
+	public CirculationStatus circulationStatus2 = new CirculationStatus();
+	CirculationStatus circulationStatus4 = new CirculationStatus();
+	CirculationStatus circulationStatus5 = new CirculationStatus();
+	public EBook eBook = new EBook();
+	public Member member = new Member();
+	public Publisher publisher = new Publisher();
+	public RequestedBook requestedBook = new RequestedBook();
+	public Tag tag = new Tag();
+	public MemberType MEMBER_TYPE = new MemberType();
+	public Wastage wastage = new Wastage();
+	public Writer writer = new Writer();
+	public Settings settings = new Settings();
+	public BookStatus bookStatus = new BookStatus();
+	public BookStatus bookStatus2 = new BookStatus();
+	public BookStatus bookStatus3 = new BookStatus();
+	public Income income = new Income();
+	public Income income2 = new Income();
+	public Expense expense = new Expense();
+	public Expense expense2 = new Expense();
+	public Payment payment = new Payment();
+	public EmailSetting emailSetting = new EmailSetting();
+
+	// EN
+	public BookI18n bookI18n = new BookI18n();
+	public CategoryI18n categoryI18n = new CategoryI18n();
+	public CirculationI18n circulationI18n = new CirculationI18n();
+	public CirculationStatusI18n circulationStatusI18n = new CirculationStatusI18n();
+	public EBookI18n eBookI18n = new EBookI18n();
+	public MemberI18n memberI18n = new MemberI18n();
+	public PublisherI18n publisherI18n = new PublisherI18n();
+	public RequestedBookI18n requestedBookI18n = new RequestedBookI18n();
+	public TypeMemberI18n typeMemberI18n = new TypeMemberI18n();
+	public WriterI18n writerI18n = new WriterI18n();
+	public SettingsI18n settingsI18n = new SettingsI18n();
+	public MenuI18n menuI18n = new MenuI18n();
+	public DashboardI18n dashboardI18n = new DashboardI18n();
+	public IncomeI18n incomeI18n = new IncomeI18n();
+	public PaymentI18n paymentI18n = new PaymentI18n();
+	public ExpenseI18n expenseI18n = new ExpenseI18n();
+	// AR
+	public BookI18n bookI18n2 = new BookI18n();
+	public CategoryI18n categoryI18n2 = new CategoryI18n();
+	public CirculationI18n circulationI18n2 = new CirculationI18n();
+	public CirculationStatusI18n circulationStatusI18n2 = new CirculationStatusI18n();
+	public EBookI18n eBookI18n2 = new EBookI18n();
+	public MemberI18n memberI18n2 = new MemberI18n();
+	public PublisherI18n publisherI18n2 = new PublisherI18n();
+	public RequestedBookI18n requestBookI18n2 = new RequestedBookI18n();;
+	public TypeMemberI18n typeMemberI18n2 = new TypeMemberI18n();
+	public WriterI18n writerI18n2 = new WriterI18n();
+	public SettingsI18n settingsI18n2 = new SettingsI18n();
+	public MenuI18n menuI18n2 = new MenuI18n();
+	public DashboardI18n dashboardI18n2 = new DashboardI18n();
+	public SearchI18n searchI18n = new SearchI18n();
+	public SearchI18n searchI18n2 = new SearchI18n();
+	public IncomeI18n incomeI18n2 = new IncomeI18n();
+	public PaymentI18n paymentI18n2 = new PaymentI18n();
+	public ExpenseI18n expenseI18n2 = new ExpenseI18n();
+
+	// HN
+	public BookI18n bookI18n3 = new BookI18n();
+	public CategoryI18n categoryI18n3 = new CategoryI18n();
+	public CirculationI18n circulationI18n3 = new CirculationI18n();
+	public CirculationStatusI18n circulationStatusI18n3 = new CirculationStatusI18n();
+	public EBookI18n eBookI18n3 = new EBookI18n();
+	public MemberI18n memberI18n3 = new MemberI18n();
+	public PublisherI18n publisherI18n3 = new PublisherI18n();
+	public RequestedBookI18n requestedBookI18n3 = new RequestedBookI18n();
+	public TypeMemberI18n typeMemberI18n3 = new TypeMemberI18n();
+	public WriterI18n writerI18n3 = new WriterI18n();
+	public SettingsI18n settingsI18n3 = new SettingsI18n();
+	public MenuI18n menuI18n3 = new MenuI18n();
+	public DashboardI18n dashboardI18n3 = new DashboardI18n();
+	public SearchI18n searchI18n3 = new SearchI18n();
+	public IncomeI18n incomeI18n3 = new IncomeI18n();
+	public PaymentI18n paymentI18n3 = new PaymentI18n();
+	public ExpenseI18n expenseI18n3 = new ExpenseI18n();
+
+	// BN
+	public BookI18n bookI18n4 = new BookI18n();
+	public CategoryI18n categoryI18n4 = new CategoryI18n();
+	public CirculationI18n circulationI18n4 = new CirculationI18n();
+	public CirculationStatusI18n circulationStatusI18n4 = new CirculationStatusI18n();
+	public EBookI18n eBookI18n4 = new EBookI18n();
+	public MemberI18n memberI18n4 = new MemberI18n();
+	public PublisherI18n publisherI18n4 = new PublisherI18n();
+	public RequestedBookI18n requestBookI18n4 = new RequestedBookI18n();
+	public TypeMemberI18n typeMemberI18n4 = new TypeMemberI18n();
+	public WriterI18n writerI18n4 = new WriterI18n();
+	public SettingsI18n settingsI18n4 = new SettingsI18n();
+	public MenuI18n menuI18n4 = new MenuI18n();
+	public DashboardI18n dashboardI18n4 = new DashboardI18n();
+	public SearchI18n searchI18n4 = new SearchI18n();
+	public IncomeI18n incomeI18n4 = new IncomeI18n();
+	public PaymentI18n paymentI18n4 = new PaymentI18n();
+	public ExpenseI18n expenseI18n4 = new ExpenseI18n();
+
+	public void populate();
+}

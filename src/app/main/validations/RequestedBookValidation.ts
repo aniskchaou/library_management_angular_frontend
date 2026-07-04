@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 @Injectable({
   providedIn: 'root',
 })
 export default class RequestedBookValidation {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  public get formGroupInstance(): FormGroup {
+  public get formGroupInstance(): UntypedFormGroup {
     return this.formGroup;
   }
 
@@ -21,11 +21,11 @@ export default class RequestedBookValidation {
     return true;
   }
   createFormGroup() {
-    return new FormGroup({
-      book: new FormControl('', Validators.required),
-      writer: new FormControl('', Validators.required),
-      ctagory: new FormControl('', Validators.required),
-      member: new FormControl('', Validators.required),
+    return new UntypedFormGroup({
+      book: new UntypedFormControl('', Validators.required),
+      writer: new UntypedFormControl('', Validators.required),
+      ctagory: new UntypedFormControl('', Validators.required),
+      member: new UntypedFormControl('', Validators.required),
     });
   }
 }

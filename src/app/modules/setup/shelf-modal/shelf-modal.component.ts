@@ -8,9 +8,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import { ShelfService } from 'src/app/main/services/shelf.service';
 
 @Component({
-  selector: 'app-shelf-modal',
-  templateUrl: './shelf-modal.component.html',
-  styleUrls: ['./shelf-modal.component.css']
+    selector: 'app-shelf-modal',
+    templateUrl: './shelf-modal.component.html',
+    styleUrls: ['./shelf-modal.component.css'],
+    standalone: false
 })
 export class ShelfModalComponent implements OnInit {
 
@@ -24,7 +25,6 @@ export class ShelfModalComponent implements OnInit {
       this.loadDepartments()
     }
   ngOnInit(): void {
-    console.log(this.shelf)
     
     
   }
@@ -51,9 +51,6 @@ export class ShelfModalComponent implements OnInit {
   }
 
   saveShelf() {
-    
-    
-    console.log(this.shelf)
     if(this.validateShelfForm())
     {this.shelf.department = this.departments.find(item => item.id === this.shelf.department.id);
       this.shelfService.createShelf(this.shelf).subscribe(() => {

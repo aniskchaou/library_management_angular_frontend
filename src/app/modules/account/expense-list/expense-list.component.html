@@ -15,20 +15,24 @@
       <th></th>
     </tr>
   </tfoot>
-  <tbody *ngIf="expenses.length > 0">
-    <tr *ngFor="let c of expenses">
-      <td>{{ c.name }}</td>
-      <td>{{ c.date }}</td>
-      <td>{{ c.amount }}</td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-danger btn-sm"
-          (click)="delete(c.id)"
-        >
-          <i class="fas fa-trash-alt"></i>
-        </button>
-      </td>
-    </tr>
-  </tbody>
+  @if (expenses.length > 0) {
+    <tbody>
+      @for (c of expenses; track c) {
+        <tr>
+          <td>{{ c.name }}</td>
+          <td>{{ c.date }}</td>
+          <td>{{ c.amount }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              (click)="delete(c.id)"
+              >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  }
 </table>

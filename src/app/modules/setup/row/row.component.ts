@@ -12,9 +12,10 @@ import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-row',
-  templateUrl: './row.component.html',
-  styleUrls: ['./row.component.css']
+    selector: 'app-row',
+    templateUrl: './row.component.html',
+    styleUrls: ['./row.component.css'],
+    standalone: false
 })
 export class RowComponent implements OnInit {
 
@@ -98,7 +99,6 @@ export class RowComponent implements OnInit {
   loadRows(): void {
     this.loadingIndicator = true;
     this.rowService.getAllRows().subscribe(data => {
-      console.log(data)
       this.rows = data;
       this.temp = [...data];
       //this.rows$.next(this.rows);
@@ -124,11 +124,9 @@ export class RowComponent implements OnInit {
   }
 
   onSelect({ selected }: any): void {
-    console.log('Selected row:', selected);
   }
 
   onActivate(event: any): void {
-    console.log('Activate Event:', event);
   }
 
   openAddDialog(): void {
@@ -143,7 +141,7 @@ export class RowComponent implements OnInit {
           this.loadRows();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(row: Row): void {
@@ -159,7 +157,7 @@ export class RowComponent implements OnInit {
           this.loadRows();
         });
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   deleteRow(row: Row): void {
@@ -184,7 +182,6 @@ export class RowComponent implements OnInit {
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/row.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }

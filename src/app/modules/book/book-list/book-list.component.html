@@ -1,126 +1,95 @@
-<!-- <table id="dt_book" class="table table-bordered" width="100%" cellspacing="0">
-  <thead>
-    <tr>
-      <th>{{ bookI18n?.isbnI18n }}</th>
-      <th>{{ bookI18n?.titleI18n }}</th>
-      <th>{{ bookI18n?.authorI18n }}</th>
-      <th>{{ bookI18n?.categoryI18n }}</th>
-      <th>{{ bookI18n?.publisherI18n }}</th>
-      <th>Copies</th>
-      <th>Media Type</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tfoot>
-    <tr>
-      <th>
-        {{ bookI18n?.isbnI18n }}
-      </th>
-      <th>{{ bookI18n?.titleI18n }}</th>
-      <th>{{ bookI18n?.authorI18n }}</th>
-      <th>
-        {{ bookI18n?.categoryI18n }}
-      </th>
-      <th>{{ bookI18n?.publisherI18n }}</th>
-      <th>Copies</th>
-      <th>Media Type</th>
-      <th>Actions</th>
-    </tr>
-  </tfoot>
-  <tbody>
-    <tr>
-      <td>12526458</td>
-      <td>bo</td>
-      <td>qdfd</td>
-      <td>Comics</td>
-      <td>rzger</td>
-      <td>1</td>
-      <td>Books</td>
-      <th> 
+<div class="ll-book-list">
+  <div class="ll-book-list__toolbar">
+    <mat-form-field appearance="outline" class="ll-book-list__search">
+      <mat-label>{{ 'book.searchTitle' | translate }}</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput type="text" [placeholder]="'book.searchPlaceholder' | translate" (input)="updateFilter($event)" />
+    </mat-form-field>
+  </div>
 
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Actions
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#" onclick="handleAction('view')"><i class="fas fa-eye mr-2"></i> View</a>
-          <a class="dropdown-item" href="#" onclick="handleAction('edit')"><i class="fas fa-edit mr-2"></i> Edit</a>
-          <a class="dropdown-item" href="#" onclick="if(confirm('Êtes-vous sûr de vouloir supprimer cet employé ?')) handleAction('delete')"><i class="fas fa-trash-alt mr-2"></i> Delete</a>
-          <a class="dropdown-item" href="#" onclick="handleAction('archive')"><i class="fas fa-archive mr-2"></i> Archive</a>
-          <a class="dropdown-item" href="#" onclick="handleAction('minus')"><i class="fas fa-minus mr-2"></i> Minus</a>
-          <a class="dropdown-item" href="#" onclick="handleAction('addCopy')"><i class="fas fa-copy mr-2"></i> Add Copy</a>
-        </div>
-      </div>
-      
+  <div class="ll-book-list__table">
+    <ngx-datatable
+      class="bootstrap"
+      [rows]="books"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [limit]="10"
+      [loadingIndicator]="loadingIndicator"
+      [reorderable]="reorderable">
 
- </th>
-    </tr>
-   
-  </tbody>
-</table> -->
-<div>
-  <input
-    type="text"
-    class="form-control"
-    placeholder="Search by book title..."
-    (input)="updateFilter($event)"
-  />
+      <ngx-datatable-column [width]="70" [sortable]="false">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <div class="ll-avatar" [style.background-color]="getRandomColor()">
+            {{ row.title ? row.title.charAt(0).toUpperCase() : '?' }}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{ 'book.colTitle' | translate }}" prop="title">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <span class="ll-cell ll-cell--strong">{{ row.title }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{ 'book.colISBN' | translate }}" prop="isbn">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <span class="ll-cell ll-cell--muted">{{ row.isbn }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{ 'book.colWriter' | translate }}" prop="writer.name"></ngx-datatable-column>
+      <ngx-datatable-column name="{{ 'book.colPublisher' | translate }}" prop="publisher.name"></ngx-datatable-column>
+      <ngx-datatable-column name="{{ 'book.colEdition' | translate }}" prop="edition"></ngx-datatable-column>
+      <ngx-datatable-column name="{{ 'book.colCategory' | translate }}" prop="category.category_name"></ngx-datatable-column>
+
+      <ngx-datatable-column name="{{ 'book.colActions' | translate }}" [sortable]="false" [width]="120">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <button mat-stroked-button color="primary" [matMenuTriggerFor]="rowMenu" type="button">
+            <mat-icon>more_vert</mat-icon> {{ 'ui.actions' | translate }}
+          </button>
+          <mat-menu #rowMenu="matMenu">
+            <button mat-menu-item (click)="openViewDialog(row)">
+              <mat-icon>visibility</mat-icon><span>{{ 'book.actionView' | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="openCheckinDialog(row)">
+              <mat-icon>event_available</mat-icon><span>{{ 'book.actionCheckin' | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="openCheckoutDialog(row)">
+              <mat-icon>event_busy</mat-icon><span>{{ 'book.actionCheckout' | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="openEditDialog(row)">
+              <mat-icon>edit</mat-icon><span>{{ 'book.actionEdit' | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="openQRCodeViewDialog(row)">
+              <mat-icon>qr_code_2</mat-icon><span>{{ 'book.actionQR' | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="openBarCodeViewDialog(row)">
+              <mat-icon>barcode_reader</mat-icon><span>{{ 'book.actionBarcode' | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="duplicate(row)">
+              <mat-icon>content_copy</mat-icon><span>{{ 'book.actionDuplicate' | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="openChangeCoverDialog(row)">
+              <mat-icon>image</mat-icon><span>{{ 'book.actionChangeCover' | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="openOnHoldDialog(row)">
+              <mat-icon>bookmark</mat-icon><span>{{ 'book.actionPlaceHold' | translate }}</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="archiveBook(row.id)">
+              <mat-icon>archive</mat-icon><span>{{ 'book.actionArchive' | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="destroyBook(row.id)">
+              <mat-icon>delete_sweep</mat-icon><span>{{ 'book.actionDestroy' | translate }}</span>
+            </button>
+            <button mat-menu-item class="ll-menu__danger" (click)="delete(row.id)">
+              <mat-icon>delete</mat-icon><span>{{ 'book.actionDelete' | translate }}</span>
+            </button>
+          </mat-menu>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
 </div>
-<ngx-datatable
-class="bootstrap"
-[rows]="books"
-[columnMode]="'force'"
-[headerHeight]="50"
-[footerHeight]="50"
-[rowHeight]="'auto'"
-[limit]="10"
-[loadingIndicator]="loadingIndicator"
-[reorderable]="reorderable"
->
-<ngx-datatable-column>
-  <ng-template ngx-datatable-cell-template let-row="row">
-    <!-- Generate random background color -->
-    <div [style.background-color]="getRandomColor()" 
-         style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; font-weight: bold;">
-      {{ row.title ? row.title.charAt(0).toUpperCase() : '' }}
-    </div>
-  </ng-template>
-</ngx-datatable-column>
-<ngx-datatable-column name="Title" prop="title" ><ng-template ngx-datatable-cell-template let-row="row"><span style="color: blue;">{{row.title}}</span></ng-template></ngx-datatable-column>
-<ngx-datatable-column name="ISBN" prop="isbn" ><ng-template ngx-datatable-cell-template let-row="row"><span style="color: red;">{{row.isbn}}</span></ng-template></ngx-datatable-column>
-<ngx-datatable-column name="Writer" prop="writer.name"></ngx-datatable-column>
-<ngx-datatable-column name="Publisher" prop="publisher.name"></ngx-datatable-column>
-<ngx-datatable-column name="Edition" prop="edition"></ngx-datatable-column>
-<ngx-datatable-column name="Category" prop="category.category_name"></ngx-datatable-column>
-<ngx-datatable-column name="Actions">
-  <ng-template ngx-datatable-cell-template let-row="row">
-    <!-- <button class="btn btn-sm btn-outline-primary" (click)="openViewDialog(row)">View</button> -->
-    <!-- <button class="btn btn-sm btn-danger" (click)="delete(row)">Delete</button> -->
-    <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Actions
-    </button>
-    <div style="z-index: 99999999;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" (click)="openViewDialog(row)"><i class="fas fa-eye"></i> View</a>
-      <a class="dropdown-item" (click)="openCheckinDialog(row)"><i class="fas fa-calendar-check"></i> Check-in</a>
-      <a class="dropdown-item" (click)="openCheckoutDialog(row)"><i class="fas fa-calendar-times"></i> Check-out</a>
-      <a class="dropdown-item" (click)="openEditDialog(row)"><i class="fas fa-edit"></i> Edit</a>
-      <!-- <a class="dropdown-item" href="#"><i class="fas fa-history"></i> Circulation History</a> -->
-      <a class="dropdown-item" (click)="openQRCodeViewDialog(row)"><i class="fas fa-barcode"></i> Generate Bar code</a>
-      <a class="dropdown-item" (click)="openBarCodeViewDialog(row)"><i class="fas fa-qrcode"></i> Generate QR code</a>
-      <a class="dropdown-item" (click)="delete(row.id)"><i class="fas fa-trash"></i> Delete</a>
-      <a class="dropdown-item" (click)="duplicate(row)"><i class="fas fa-clone"></i> Duplicate</a>
-     <!--  <a class="dropdown-item" href="#"><i class="fas fa-brain"></i> Add Smart</a> -->
-      <!-- <a class="dropdown-item" href="#"><i class="fas fa-pencil-alt"></i> Edit Item</a> -->
-      <a class="dropdown-item" (click)="openChangeCoverDialog(row)"><i class="fas fa-image"></i> Change Cover Photo</a>
-      <!-- <a class="dropdown-item" href="#"><i class="fas fa-book"></i> Add Manual</a> -->
-      <a class="dropdown-item" (click)="archiveBook(row.id)"><i class="fas fa-archive"></i> Archive</a>
-      <a class="dropdown-item" (click)="destroyBook(row.id)"><i class="fas fa-trash-alt"></i> Destroy</a>
-      <!-- <a class="dropdown-item" href="#"><i class="fas fa-copy"></i> Add New Copy</a> -->
-      <!-- <a class="dropdown-item" href="#"><i class="fas fa-trash"></i> Delete this Item</a> -->
-      <a class="dropdown-item" (click)="openOnHoldDialog(row)"><i class="fas fa-bookmark"></i> Place Hold</a>
-      <!-- <a class="dropdown-item" href="#"><i class="fas fa-search"></i> Track Condition</a> -->
-      <!-- <a class="dropdown-item" href="#"><i class="fas fa-eye"></i> View Circulation</a> -->
-    </div>
-  </ng-template>
-</ngx-datatable-column>
-</ngx-datatable>

@@ -1,16 +1,19 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import BookMessage from 'src/app/main/messages/BookMessage';
 import CirculationStatus from 'src/app/main/models/CirculationStatus';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
+import { AddCirculationStatusComponent } from '../add-circulation-status/add-circulation-status.component';
 
 @Component({
-  selector: 'app-circulation-status',
-  templateUrl: './circulation-status.component.html',
-  styleUrls: ['./circulation-status.component.css'],
+    selector: 'app-circulation-status',
+    templateUrl: './circulation-status.component.html',
+    styleUrls: ['./circulation-status.component.css'],
+    standalone: false
 })
 export class CirculationStatusComponent extends URLLoader implements OnInit {
   circulationStatus$ = [{}];
@@ -20,7 +23,6 @@ export class CirculationStatusComponent extends URLLoader implements OnInit {
   circulation;
   edit(id) {
     this.id = id;
-    console.log(this.id);
   }
 
   
@@ -28,9 +30,17 @@ export class CirculationStatusComponent extends URLLoader implements OnInit {
   constructor(
     private httpService: HTTPService,
     private messageService: BookMessage,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
     super();
+  }
+
+  openAddDialog(): void {
+    const modalRef = this.modalService.open(AddCirculationStatusComponent, { size: 'xl', centered: true });
+    modalRef.result.then(result => {
+      if (result) { this.getAll(); }
+    }).catch(() => {});
   }
 
   delete(id) {
@@ -80,7 +90,6 @@ export class CirculationStatusComponent extends URLLoader implements OnInit {
       .subscribe(
         (data) => {
           this.circulationStatusI18n$ = data;
-          console.log(this.circulationStatusI18n$);
         },
         (err: HttpErrorResponse) => {
           super.show('Error', err.message, 'error');

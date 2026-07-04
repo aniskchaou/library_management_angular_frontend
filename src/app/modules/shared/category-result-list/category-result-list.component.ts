@@ -6,9 +6,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-category-result-list',
-  templateUrl: './category-result-list.component.html',
-  styleUrls: ['./category-result-list.component.css'],
+    selector: 'app-category-result-list',
+    templateUrl: './category-result-list.component.html',
+    styleUrls: ['./category-result-list.component.css'],
+    standalone: false
 })
 export class CategoryResultListComponent extends URLLoader implements OnInit {
   categories: Category[];

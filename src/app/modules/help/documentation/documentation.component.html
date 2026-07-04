@@ -1,123 +1,81 @@
-<div class="container mt-5">
-    <h1 class="text-center">Help & Documentation</h1>
-    <p class="lead text-center">Your go-to resource for understanding our application.</p>
-
-    <div class="row mt-4">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    Getting Started
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Learn how to set up and use the application with this comprehensive guide.</p>
-                    <a  (click)="openDialog('getting-started')" class="btn btn-primary">Read More</a>
-                </div>
-            </div>
+﻿<div class="ll-page">
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <mat-icon class="ll-page__icon">help</mat-icon>
+      <div class="ll-page__title">
+        <h1>{{ 'help.pageTitle' | translate }}</h1>
+        <p>{{ 'help.pageDesc' | translate }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="ll-page__body" appearance="outlined">
+    <mat-card-content>
+      <div class="ll-tab__content">
+        <h2 class="mat-h2" style="margin-bottom:16px">Documentation</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px">
+          <mat-card appearance="outlined" class="ll-doc-card" (click)="openDialog('getting-started')" style="cursor:pointer">
+            <mat-card-content>
+              <mat-icon style="font-size:36px;color:#3f51b5">rocket_launch</mat-icon>
+              <h3>Getting Started</h3>
+              <p>Quick start guide for new users.</p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card appearance="outlined" class="ll-doc-card" (click)="openDialog('faq')" style="cursor:pointer">
+            <mat-card-content>
+              <mat-icon style="font-size:36px;color:#e91e63">quiz</mat-icon>
+              <h3>FAQ</h3>
+              <p>Frequently asked questions.</p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card appearance="outlined" class="ll-doc-card" (click)="openDialog('contact-support')" style="cursor:pointer">
+            <mat-card-content>
+              <mat-icon style="font-size:36px;color:#009688">support_agent</mat-icon>
+              <h3>Contact Support</h3>
+              <p>Reach out to our support team.</p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card appearance="outlined" class="ll-doc-card" (click)="openDialog('local-installation')" style="cursor:pointer">
+            <mat-card-content>
+              <mat-icon style="font-size:36px;color:#ff9800">computer</mat-icon>
+              <h3>Local Installation</h3>
+              <p>Install the app on your machine.</p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card appearance="outlined" class="ll-doc-card" (click)="openDialog('remote-installation')" style="cursor:pointer">
+            <mat-card-content>
+              <mat-icon style="font-size:36px;color:#2196f3">cloud_upload</mat-icon>
+              <h3>Remote Installation</h3>
+              <p>Deploy on a remote server.</p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card appearance="outlined" class="ll-doc-card" (click)="openDialog('server-requirements')" style="cursor:pointer">
+            <mat-card-content>
+              <mat-icon style="font-size:36px;color:#9c27b0">dns</mat-icon>
+              <h3>Server Requirements</h3>
+              <p>Minimum requirements for running.</p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card appearance="outlined" class="ll-doc-card" (click)="openDialog('changelog')" style="cursor:pointer">
+            <mat-card-content>
+              <mat-icon style="font-size:36px;color:#4caf50">history</mat-icon>
+              <h3>Changelog</h3>
+              <p>See what has changed recently.</p>
+            </mat-card-content>
+          </mat-card>
         </div>
-
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header bg-success text-white">
-                    FAQ
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Find answers to the most frequently asked questions.</p>
-                    <a (click)="openDialog('faq')" class="btn btn-success">Read More</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header bg-warning text-white">
-                    Contact Support
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Need further assistance? Get in touch with our support team.</p>
-                    <a (click)="openDialog('contact')" class="btn btn-warning">Contact Us</a>
-                </div>
-            </div>
-        </div>
-    
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header bg-dark text-white">
-                    Local Installation
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Instructions for installing the application locally.</p>
-                    <a (click)="openDialog('local-installation')" class="btn btn-dark">Read More</a>
-                </div>
-            </div>
-        </div>
-    
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header bg-light text-dark">
-                    Remote Installation
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Guide for setting up the application on a remote server.</p>
-                    <a (click)="openDialog('remote-installation')" class="btn btn-light">Read More</a>
-                </div>
-            </div>
-        </div>
-    
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    Server Requirements
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Check the necessary server requirements before installation.</p>
-                    <a (click)="openDialog('server-requirements')" class="btn btn-primary">Read More</a>
-                </div>
-            </div>
-        </div>
-
-       
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header bg-danger text-white">
-                    Changelog
-                </div>
-                <div class="card-body">
-                    <p class="card-text">View the latest updates and changes in the application.</p>
-                    <a (click)="openDialog('changelog')" class="btn btn-danger">Read More</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-
-    <hr class="my-5">
-
-    <h2 class="mt-4">Module Sections</h2>
-    <ul class="list-group mt-3">
-        <li class="list-group-item"><a (click)="openDialog('catalog')">Catalogs</a></li>
-        <li class="list-group-item"><a (click)="openDialog('member')">Members</a></li>
-        <li class="list-group-item"><a (click)="openDialog('circulation')">Circulations</a></li>
-        <li class="list-group-item"><a (click)="openDialog('overdue')">Overdues</a></li>
-        <li class="list-group-item"><a (click)="openDialog('budget')">Budget</a></li>
-        <!-- <li class="list-group-item"><a (click)="openDialog('accounting')">Accounting</a></li> -->
-        <li class="list-group-item"><a (click)="openDialog('notice')">Notices</a></li>
-        <li class="list-group-item"><a (click)="openDialog('author')">Authors</a></li>
-        <li class="list-group-item"><a (click)="openDialog('media-type')">Media Type</a></li>
-        <li class="list-group-item"><a (click)="openDialog('member')">Members</a></li>
-        <li class="list-group-item"><a (click)="openDialog('purshase-suggestion')">Pursharse suggestion</a></li>
-      <!--   <li class="list-group-item"><a (click)="openDialog('changelog')">Changelog</a></li>
-        <li class="list-group-item"><a (click)="openDialog('user-setting')">Settings</a></li> -->
-    </ul>
-
-    <footer class="mt-5 text-center">
-        <p>&copy; 2024 Your Company. All rights reserved.</p>
-    </footer>
+        <mat-divider></mat-divider>
+        <h2 class="mat-h2" style="margin:24px 0 16px">Module Documentation</h2>
+        <mat-nav-list>
+          <mat-list-item (click)="openDialog('catalog')"><mat-icon matListItemIcon>menu_book</mat-icon><span matListItemTitle>Catalog</span></mat-list-item>
+          <mat-list-item (click)="openDialog('member')"><mat-icon matListItemIcon>person</mat-icon><span matListItemTitle>Member</span></mat-list-item>
+          <mat-list-item (click)="openDialog('circulation')"><mat-icon matListItemIcon>swap_horiz</mat-icon><span matListItemTitle>Circulation</span></mat-list-item>
+          <mat-list-item (click)="openDialog('overdue')"><mat-icon matListItemIcon>warning_amber</mat-icon><span matListItemTitle>Overdue</span></mat-list-item>
+          <mat-list-item (click)="openDialog('notice')"><mat-icon matListItemIcon>notifications</mat-icon><span matListItemTitle>Notice</span></mat-list-item>
+          <mat-list-item (click)="openDialog('author')"><mat-icon matListItemIcon>edit</mat-icon><span matListItemTitle>Author</span></mat-list-item>
+          <mat-list-item (click)="openDialog('media-type')"><mat-icon matListItemIcon>category</mat-icon><span matListItemTitle>Media Type</span></mat-list-item>
+          <mat-list-item (click)="openDialog('purshase-suggestion')"><mat-icon matListItemIcon>lightbulb</mat-icon><span matListItemTitle>Purchase Suggestion</span></mat-list-item>
+        </mat-nav-list>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
-
-

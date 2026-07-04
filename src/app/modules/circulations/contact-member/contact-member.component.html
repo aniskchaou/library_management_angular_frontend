@@ -1,23 +1,52 @@
-<div *ngIf="sending; else sent">
-  <app-loading></app-loading>
-</div>
-
-<ng-template #sent>
+@if (sending) {
+  <div>
+    <app-loading></app-loading>
+  </div>
+} @else {
   <form
     class="form-group odd"
     id="category_name_field_box"
     [formGroup]="contactForm"
-  >
+    >
+
+    <!-- Notification type toggle -->
+    <div class="mb-3">
+      <label class="d-block mb-1"><strong>Send via</strong></label>
+      <div class="btn-group" role="group">
+        <button type="button" class="btn"
+          [class.btn-primary]="notificationType === 'email'"
+          [class.btn-outline-primary]="notificationType !== 'email'"
+          (click)="notificationType = 'email'">
+          <i class="fas fa-envelope"></i> Email
+        </button>
+        <button type="button" class="btn"
+          [class.btn-warning]="notificationType === 'sms'"
+          [class.btn-outline-warning]="notificationType !== 'sms'"
+          (click)="notificationType = 'sms'">
+          <i class="fas fa-sms"></i> SMS
+        </button>
+      </div>
+      @if (notificationType === 'sms') {
+        <div class="mt-2">
+          <small class="text-muted">Sending to mobile: <strong>{{ mobile || '(not set)' }}</strong></small>
+        </div>
+      } @else {
+        <div class="mt-2">
+          <small class="text-muted">Sending to email: <strong>{{ email || '(not set)' }}</strong></small>
+        </div>
+      }
+    </div>
+
     <label
       class="col-sm-3 control-label"
       for="name"
       id="payment_name_display_as_box"
-    >
+      >
       <font style="vertical-align: inherit">
         <font style="vertical-align: inherit">
-          {{ circulationI18n.messageI18n }}
+          {{ 'circulation.colMessage' | translate }}
         </font> </font
-      ><span class="required">
+        ><span class="required">
         <font style="vertical-align: inherit">
           <font style="vertical-align: inherit">*</font>
         </font>
@@ -30,13 +59,18 @@
         name="body"
         class="form-control"
         type="text"
-        maxlength="99"
+        rows="5"
+        maxlength="500"
       ></textarea>
+      <small class="text-muted">{{ contactForm.get('body').value?.length || 0 }} / 500</small>
     </div>
     <br />
-    <button (click)="add()" type="button" class="btn btn-info">
-      <i class="fas fa-save"></i>
-      {{ circulationI18n?.sendEmailI18n }}
+    <button (click)="add()" type="button" class="btn"
+      [class.btn-info]="notificationType === 'email'"
+      [class.btn-warning]="notificationType === 'sms'">
+      <i class="fas" [class.fa-envelope]="notificationType === 'email'" [class.fa-sms]="notificationType === 'sms'"></i>
+      {{ notificationType === 'sms' ? 'Send SMS' : ('circulation.sendEmail' | translate) }}
     </button>
   </form>
-</ng-template>
+}
+

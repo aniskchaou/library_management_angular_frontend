@@ -9,7 +9,6 @@ export class AuthentificationService {
   constructor(private httpClient: HttpClient) {}
 
   authenticate(username, password) {
-    console.log(username);
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + btoa(username + ':' + password),
     });
@@ -18,14 +17,12 @@ export class AuthentificationService {
       .pipe((userData) => {
         // localStorage.setItem('username', username);
         //localStorage.setItem('password', password);
-        console.log(userData);
         return userData;
       });
   }
 
   isUserLoggedIn() {
     let user = localStorage.getItem('username');
-    console.log(user);
     if (user == null) {
       return false;
     } else {
@@ -34,7 +31,7 @@ export class AuthentificationService {
   }
 
   logOut() {
-    localStorage.removeItem(undefined);
-    localStorage.removeItem(undefined);
+    localStorage.removeItem('username');
+    localStorage.removeItem('password');
   }
 }

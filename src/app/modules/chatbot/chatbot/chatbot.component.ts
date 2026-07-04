@@ -3,9 +3,10 @@ import { Component } from '@angular/core';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-chatbot',
-  templateUrl: './chatbot.component.html',
-  styleUrls: ['./chatbot.component.css']
+    selector: 'app-chatbot',
+    templateUrl: './chatbot.component.html',
+    styleUrls: ['./chatbot.component.css'],
+    standalone: false
 })
 export class ChatbotComponent {
   isActive = false;

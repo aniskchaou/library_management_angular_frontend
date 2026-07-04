@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-modal-payment',
-  templateUrl: './modal-payment.component.html',
-  styleUrls: ['./modal-payment.component.css'],
+    selector: 'app-modal-payment',
+    templateUrl: './modal-payment.component.html',
+    styleUrls: ['./modal-payment.component.css'],
+    standalone: false
 })
 export class ModalPaymentComponent implements OnInit {
   @Input() id: string;

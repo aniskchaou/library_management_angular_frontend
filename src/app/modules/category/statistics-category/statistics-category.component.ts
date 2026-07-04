@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import CatalogItem from 'src/app/main/models/Book';
@@ -10,15 +10,16 @@ import BookFilterValidation from 'src/app/main/validations/BookFilterValidation'
 import { AddCategoryComponent } from '../add-category/add-category.component';
 
 @Component({
-  selector: 'app-statistics-category',
-  templateUrl: './statistics-category.component.html',
-  styleUrls: ['./statistics-category.component.css'],
+    selector: 'app-statistics-category',
+    templateUrl: './statistics-category.component.html',
+    styleUrls: ['./statistics-category.component.css'],
+    standalone: false
 })
 export class StatisticsCategoryComponent implements OnInit {
   showsummary: boolean = false;
   showgraphic: boolean = false;
   showfilter: boolean = false;
-  filterForm: FormGroup;
+  filterForm: UntypedFormGroup;
   submitted: boolean = false;
   @Output() result = new EventEmitter();
   @Input() categoryI18n;
@@ -40,11 +41,10 @@ export class StatisticsCategoryComponent implements OnInit {
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
   };
-  status: Object;
-  count: Object;
+  status: any;
+  count: any;
 
   onSelect(event) {
-    console.log(event);
   }
   constructor(
     private router: Router,
@@ -119,15 +119,7 @@ export class StatisticsCategoryComponent implements OnInit {
   }
 
   openAddDialog(): void {
-    const modalRef = this.modalService.open(AddCategoryComponent);
-    //modalRef.componentInstance.category = { ...category }; // Ensure category is passed properly
-  
-    //console.log(category); // Ensure category is not undefined here
-
-    modalRef.result.then(result => {
-      console.log(result)
-       //this.getAll()
-      
-    }).catch(error => console.log(error));
+    const modalRef = this.modalService.open(AddCategoryComponent, { size: 'xl', centered: true });
+    modalRef.result.then(() => {}).catch(() => {});
   }
 }

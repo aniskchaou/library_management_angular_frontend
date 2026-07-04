@@ -10,9 +10,10 @@ import { DataService } from 'src/app/main/services/data.service';
 import { EditWriterComponent } from '../edit-writer/edit-writer.component';
 
 @Component({
-  selector: 'app-writer-list',
-  templateUrl: './writer-list.component.html',
-  styleUrls: ['./writer-list.component.css'],
+    selector: 'app-writer-list',
+    templateUrl: './writer-list.component.html',
+    styleUrls: ['./writer-list.component.css'],
+    standalone: false
 })
 export class WriterListComponent extends URLLoader implements OnInit,AfterViewInit {
   @Input() writers;
@@ -43,29 +44,23 @@ export class WriterListComponent extends URLLoader implements OnInit,AfterViewIn
   reorderable = true;
 
   onActivate(event): void {
-    console.log('Row activated:', event);
     if (event.type === 'click') {
       const writer = event.row;
       // Open the edit dialog or perform another action
-      console.log('Row clicked:', writer);
     }
   }
 
   // Event triggered when a row is selected
   onSelect(event): void {
-    console.log('Row selected:', event);
     const selectedWriter = event.selected;
     // Perform actions with the selected row
-    console.log('Selected writer:', selectedWriter);
   }
 
   editRow(writer: Writer): void {
-    console.log('Editing writer:', writer);
     // Logic to edit writer
   }
 
   deleteRow(writer: Writer): void {
-    console.log('Deleting writer:', writer);
     // Logic to delete writer
   }
 
@@ -90,28 +85,22 @@ export class WriterListComponent extends URLLoader implements OnInit,AfterViewIn
     this.idEvent.emit(value);
   }
 
-  openViewDialog(writer: Writer): void {
-    const modalRef = this.modalService.open(ViewWriterComponent); // Open the CategoryViewComponent in modal
-    modalRef.componentInstance.writer = { ...writer }; // Pass category data
-
-    console.log(writer); // Ensure category is passed properly and logged
+  openViewDialog(writer: any): void {
+    const modalRef = this.modalService.open(ViewWriterComponent, { size: 'xl', centered: true });
+    modalRef.componentInstance.writer = { ...writer };
 
     modalRef.result.then(result => {
-      console.log(result); // Handle any result (if needed)
-      this.dataService.triggerRefresh()
-    }).catch(error => console.log(error)); // Handle any errors
+      this.dataService.triggerRefresh();
+    }).catch(() => {});
   }
 
   openEditDialog(writer): void {
-    console.log(writer);
-    const modalRef = this.modalService.open(EditWriterComponent); // Open the CategoryViewComponent in modal
-    modalRef.componentInstance.author = { ...writer }; // Pass category data
-   // this.closeModal()
-    // Ensure category is passed properly and logged
+    const modalRef = this.modalService.open(EditWriterComponent, { size: 'xl', centered: true });
+    modalRef.componentInstance.author = { ...writer };
 
     modalRef.result.then(result => {
-      console.log(result); // Handle any result (if needed)
-    }).catch(error => console.log(error)); // Handle any errors
+      this.dataService.triggerRefresh();
+    }).catch(() => {});
   }
 
   delete(writer) {

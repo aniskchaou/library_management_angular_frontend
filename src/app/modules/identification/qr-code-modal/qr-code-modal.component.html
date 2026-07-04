@@ -12,7 +12,9 @@
         <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the ISBN number for the QR code.<br><b>Example:</b> 978-3-16-148410-0"></i>
       </label>
       <input type="text" class="form-control" id="isbn" [(ngModel)]="qrCode.isbn" name="isbn" placeholder="e.g., 978-3-16-148410-0" required>
-      <div *ngIf="qrCodeForm.submitted && !qrCode.isbn" class="text-danger">ISBN is required.</div>
+      @if (qrCodeForm.submitted && !qrCode.isbn) {
+        <div class="text-danger">ISBN is required.</div>
+      }
     </div>
     <div class="form-group">
       <label for="width">
@@ -20,7 +22,9 @@
         <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the width of the QR code in pixels.<br><b>Example:</b> 200"></i>
       </label>
       <input type="number" class="form-control" id="width" [(ngModel)]="qrCode.width" name="width" placeholder="e.g., 200" required>
-      <div *ngIf="qrCodeForm.submitted && !qrCode.width" class="text-danger">Width is required.</div>
+      @if (qrCodeForm.submitted && !qrCode.width) {
+        <div class="text-danger">Width is required.</div>
+      }
     </div>
     <div class="form-group">
       <label for="height">
@@ -28,7 +32,9 @@
         <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the height of the QR code in pixels.<br><b>Example:</b> 200"></i>
       </label>
       <input type="number" class="form-control" id="height" [(ngModel)]="qrCode.height" name="height" placeholder="e.g., 200" required>
-      <div *ngIf="qrCodeForm.submitted && !qrCode.height" class="text-danger">Height is required.</div>
+      @if (qrCodeForm.submitted && !qrCode.height) {
+        <div class="text-danger">Height is required.</div>
+      }
     </div>
     <div class="form-group">
       <label for="margin">
@@ -36,7 +42,9 @@
         <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the margin around the QR code in pixels.<br><b>Example:</b> 10"></i>
       </label>
       <input type="number" class="form-control" id="margin" [(ngModel)]="qrCode.margin" name="margin" placeholder="e.g., 10" required>
-      <div *ngIf="qrCodeForm.submitted && !qrCode.margin" class="text-danger">Margin is required.</div>
+      @if (qrCodeForm.submitted && !qrCode.margin) {
+        <div class="text-danger">Margin is required.</div>
+      }
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Cancel</button>

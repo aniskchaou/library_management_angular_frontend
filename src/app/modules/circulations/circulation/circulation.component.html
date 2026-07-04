@@ -1,39 +1,38 @@
-<div class="container-fluid">
-  <div *ngIf="loading; else loaded">
-    <app-loading></app-loading>
-  </div>
-
-  <ng-template #loaded>
-    <!-- Page Heading with Icon -->
-    <h1 class="h3 mb-2 text-gray-800">
-      <i class="fas fa-exchange-alt"></i> {{ circulationI18n?.allTitleI18n }}
-    </h1>
-    
-    <!-- Description -->
-    <p class="lead">Manage and track the circulation of items efficiently. Use the tools provided to add, edit, view, contact, and delete circulation records seamlessly.</p>
-
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-      <div class="card-body">
-        <div class="table-responsive">
-          
-          <app-circulation-list
-            (editEvent)="edit($event)"
-            (viewEvent)="view($event)"
-            (contactEvent)="contact($event)"
-            (deleteEvent)="delete($event)"
-            [circulations]="circulations$"
-            [circulationI18n]="circulationI18n"
-          ></app-circulation-list>
-          <app-circulation-modal
-            [email]="email"
-            [circulationI18n]="circulationI18n"
-            [circulations]="circulations$"
-            [id]="id"
-          ></app-circulation-modal>
-        </div>
-      </div>
+<div class="ll-page">
+  @if (loading) {
+    <div class="ll-page__loading">
+      <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
     </div>
-  </ng-template>
-</div>
+  } @else {
+    <mat-card class="ll-page__header" appearance="outlined">
+      <mat-card-content class="ll-page__header-content">
+        <mat-icon class="ll-page__icon">swap_horiz</mat-icon>
+        <div class="ll-page__title">
+          <h1>{{ 'circulation.pageTitle' | translate }}</h1>
+          <p>{{ 'circulation.pageDesc' | translate }}</p>
+        </div>
+        <div class="ll-page__actions">
+          <button mat-flat-button color="primary" (click)="openAddDialog()">
+            <mat-icon>add</mat-icon> {{ 'ui.create' | translate }}
+          </button>
+          <button mat-stroked-button (click)="getAll()">
+            <mat-icon>refresh</mat-icon> {{ 'ui.reload' | translate }}
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
 
+    <mat-card class="ll-page__body" appearance="outlined">
+      <mat-card-content>
+        <app-circulation-list
+          (editEvent)="openEditFromList($event)"
+          (viewEvent)="view($event)"
+          (contactEvent)="contact($event)"
+          (deleteEvent)="delete($event)"
+          [circulations]="circulations$"
+          [circulationI18n]="circulationI18n"
+        ></app-circulation-list>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

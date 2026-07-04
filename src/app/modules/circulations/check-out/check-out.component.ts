@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
@@ -8,19 +8,20 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-check-out',
-  templateUrl: './check-out.component.html',
-  styleUrls: ['./check-out.component.css']
+    selector: 'app-check-out',
+    templateUrl: './check-out.component.html',
+    styleUrls: ['./check-out.component.css'],
+    standalone: false
 })
 export class CheckOutComponent  implements OnInit {
 
-  checkoutForm: FormGroup;
+  checkoutForm: UntypedFormGroup;
   members$: any[] = [];
   books$: any[] = [];
   loading = false;
   submitted = false;
 
-  constructor(private toastr: ToastrService,private fb: FormBuilder, private httpService: HTTPService,private activeModal: NgbActiveModal) {}
+  constructor(private toastr: ToastrService,private fb: UntypedFormBuilder, private httpService: HTTPService,private activeModal: NgbActiveModal) {}
 
   
 closeModal(): void {
@@ -46,7 +47,6 @@ closeModal(): void {
     this.httpService.getAll(CONFIG.URL_BASE +'/member/all').subscribe(
       (data: any[]) => {
         this.members$ = data;
-        console.log(data)
         this.loading = false;
       },
       (err: HttpErrorResponse) => {
@@ -62,7 +62,6 @@ closeModal(): void {
     this.httpService.getAll(CONFIG.URL_BASE +'/book/all').subscribe(
       (data: any[]) => {
         this.books$ = data;
-        console.log(data)
         this.loading = false;
       },
       (err: HttpErrorResponse) => {
@@ -92,8 +91,6 @@ closeModal(): void {
       dueDate: formValue.dueDate,
       automaticRenewal: formValue.automaticRenewal === 'yes',
     };
-
-    console.log(payload)
     this.catalogItemId=formValue.itemBarcode
     this.memberId=formValue.member
     this.statusName="CheckOut"
@@ -105,7 +102,6 @@ closeModal(): void {
     // Submit form data to backend
    /*  this.httpService.create('/checkout/create', payload).then(
       () => {
-        console.log('Checkout successfully completed.');
         // Optionally, you can reset the form or navigate back.
       },
       (err: HttpErrorResponse) => {

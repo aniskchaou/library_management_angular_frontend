@@ -1,0 +1,134 @@
+
+<p>The Media Types module is designed to manage different types of media available in the library. It allows librarians to define and organize various media types, including their descriptions, codes, rental charges, and other relevant information.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">Image:</p>
+    <ul>
+        <li><strong>Description:</strong> A field to upload or link to an image representing the media type.</li>
+        <li><strong>Usage:</strong> Enter the URL of an image that visually represents the media type.</li>
+        <li><strong>Example:</strong> "https://example.com/images/book.png"</li>
+        <li><strong>Validation:</strong> Must be a valid URL format.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Description:</p>
+    <ul>
+        <li><strong>Description:</strong> A detailed description of the media type.</li>
+        <li><strong>Usage:</strong> Enter a comprehensive description of the media type.</li>
+        <li><strong>Example:</strong> "This media type represents printed books available in the library."</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Code:</p>
+    <ul>
+        <li><strong>Description:</strong> A unique code to identify the media type.</li>
+        <li><strong>Usage:</strong> Enter a unique code for the media type.</li>
+        <li><strong>Example:</strong> "BK", "DVD"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string and unique.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Parent Code:</p>
+    <ul>
+        <li><strong>Description:</strong> A code indicating the parent media type, if applicable.</li>
+        <li><strong>Usage:</strong> Enter the parent code if this media type is a subset of another media type.</li>
+        <li><strong>Example:</strong> "PRNT" for printed materials.</li>
+        <li><strong>Validation:</strong> Must be a valid parent code if applicable.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Search Category:</p>
+    <ul>
+        <li><strong>Description:</strong> A category to help with searching and organizing media types.</li>
+        <li><strong>Usage:</strong> Enter a search category for the media type.</li>
+        <li><strong>Example:</strong> "Books", "Digital Media"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Not for Loan:</p>
+    <ul>
+        <li><strong>Description:</strong> Indicates whether the media type is available for loan.</li>
+        <li><strong>Usage:</strong> Enter the loan status (e.g., "Yes" or "No").</li>
+        <li><strong>Example:</strong> "No"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes or No).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Rental Charge:</p>
+    <ul>
+        <li><strong>Description:</strong> The general rental charge for this media type.</li>
+        <li><strong>Usage:</strong> Enter the rental charge amount.</li>
+        <li><strong>Example:</strong> "5.00"</li>
+        <li><strong>Validation:</strong> Must be a valid monetary value.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Daily Rental Charge:</p>
+    <ul>
+        <li><strong>Description:</strong> The daily rental charge for this media type.</li>
+        <li><strong>Usage:</strong> Enter the daily rental charge amount.</li>
+        <li><strong>Example:</strong> "0.50"</li>
+        <li><strong>Validation:</strong> Must be a valid monetary value.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Hourly Rental Charge:</p>
+    <ul>
+        <li><strong>Description:</strong> The hourly rental charge for this media type.</li>
+        <li><strong>Usage:</strong> Enter the hourly rental charge amount.</li>
+        <li><strong>Example:</strong> "0.10"</li>
+        <li><strong>Validation:</strong> Must be a valid monetary value.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Default Replacement Cost:</p>
+    <ul>
+        <li><strong>Description:</strong> The default cost to replace the media type if it is lost or damaged.</li>
+        <li><strong>Usage:</strong> Enter the default replacement cost amount.</li>
+        <li><strong>Example:</strong> "20.00"</li>
+        <li><strong>Validation:</strong> Must be a valid monetary value.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Processing Fee (when lost):</p>
+    <ul>
+        <li><strong>Description:</strong> The processing fee charged when the media type is lost.</li>
+        <li><strong>Usage:</strong> Enter the processing fee amount.</li>
+        <li><strong>Example:</strong> "5.00"</li>
+        <li><strong>Validation:</strong> Must be a valid monetary value.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Checkin Message:</p>
+    <ul>
+        <li><strong>Description:</strong> A message that appears when the media type is checked in.</li>
+        <li><strong>Usage:</strong> Enter the checkin message.</li>
+        <li><strong>Example:</strong> "Check for scratches on DVD surface."</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Library Limitations:</p>
+    <ul>
+        <li><strong>Description:</strong> Any limitations or restrictions imposed by the library on this media type.</li>
+        <li><strong>Usage:</strong> Enter any relevant limitations or restrictions.</li>
+        <li><strong>Example:</strong> "Not available for interlibrary loan"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string.</li>
+    </ul>
+</div>

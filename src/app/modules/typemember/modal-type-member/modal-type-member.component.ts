@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-modal-type-member',
-  templateUrl: './modal-type-member.component.html',
-  styleUrls: ['./modal-type-member.component.css'],
+    selector: 'app-modal-type-member',
+    templateUrl: './modal-type-member.component.html',
+    styleUrls: ['./modal-type-member.component.css'],
+    standalone: false
 })
 export class ModalTypeMemberComponent implements OnInit {
   constructor() {}

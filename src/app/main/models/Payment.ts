@@ -6,4 +6,5 @@ export default class Payment {
   amount: string;
   note: string;
   date: string;
+  paymentMethod: string;
 }

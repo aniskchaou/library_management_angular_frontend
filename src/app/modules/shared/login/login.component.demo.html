@@ -1,0 +1,65 @@
+<div class="auth-shell">
+
+  <!-- Demo mode banner -->
+  <div class="demo-banner">
+    <mat-icon>science</mat-icon>
+    <span>
+      <strong>DEMO MODE</strong> — No backend or database required.
+      All data is simulated. Click a profile below to explore.
+    </span>
+  </div>
+
+  <div class="auth-card">
+
+    <!-- Left panel — same branding as production -->
+    <aside class="auth-card__side">
+      <div class="auth-card__brand">
+        <mat-icon>menu_book</mat-icon>
+        <span>Library Lab</span>
+      </div>
+      <div>
+        <h2>Manage your library with ease</h2>
+        <p>A modern catalog, circulation and analytics platform — built for librarians and patrons alike.</p>
+        <ul class="auth-card__features">
+          <li><mat-icon>check_circle</mat-icon> Track books, members and circulations</li>
+          <li><mat-icon>check_circle</mat-icon> Real-time analytics and reports</li>
+          <li><mat-icon>check_circle</mat-icon> Secure role-based access</li>
+        </ul>
+      </div>
+      <div style="opacity:.7; font-size:12px;">&copy; Library Lab</div>
+    </aside>
+
+    <!-- Right panel — demo profile selector -->
+    <section class="auth-card__body">
+      <h1 class="auth-card__title">Try the Demo</h1>
+      <p class="auth-card__subtitle">
+        Select a profile to explore Library Lab instantly — no installation needed.
+      </p>
+
+      <div class="demo-profiles">
+        <button
+          *ngFor="let profile of demoProfiles"
+          class="demo-profile-card"
+          [style.border-left-color]="profile.color"
+          (click)="loginAs(profile)"
+          type="button">
+          <span class="demo-profile-icon" [style.background-color]="profile.color">
+            <mat-icon>{{ profile.icon }}</mat-icon>
+          </span>
+          <span class="demo-profile-info">
+            <span class="demo-profile-name">{{ profile.label }}</span>
+            <span class="demo-profile-role">{{ profile.role }}</span>
+            <span class="demo-profile-desc">{{ profile.description }}</span>
+          </span>
+          <mat-icon class="demo-profile-arrow">arrow_forward_ios</mat-icon>
+        </button>
+      </div>
+
+      <p class="demo-note">
+        <mat-icon style="font-size:14px; vertical-align:middle;">info_outline</mat-icon>
+        Changes made in demo mode are not persisted.
+      </p>
+    </section>
+
+  </div>
+</div>

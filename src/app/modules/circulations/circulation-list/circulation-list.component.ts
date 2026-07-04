@@ -14,11 +14,13 @@ import { CheckOutComponent } from '../check-out/check-out.component';
 import { DataService } from 'src/app/main/services/data.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ChartData } from '../../category/category/category.component';
+import { EditCirculationComponent } from '../edit-circulation/edit-circulation.component';
 
 @Component({
-  selector: 'app-circulation-list',
-  templateUrl: './circulation-list.component.html',
-  styleUrls: ['./circulation-list.component.css'],
+    selector: 'app-circulation-list',
+    templateUrl: './circulation-list.component.html',
+    styleUrls: ['./circulation-list.component.css'],
+    standalone: false
 })
 export class CirculationListComponent extends URLLoader implements OnInit, AfterViewInit {
   @Input() circulations;
@@ -46,8 +48,9 @@ export class CirculationListComponent extends URLLoader implements OnInit, After
 
   selected:any[] = [];
   
-  loadingIndicator = true;
+  loadingIndicator = false;
   reorderable = true;
+  materialColorScheme = { domain: ['#3f51b5','#e91e63','#009688','#ff9800','#2196f3','#4caf50','#9c27b0','#ff5722','#795548','#607d8b'] };
   markdownContent: string;
   renewals: Circulation[];
   onholds: Circulation[];
@@ -70,12 +73,10 @@ export class CirculationListComponent extends URLLoader implements OnInit, After
   }
 
   onSelect({ selected }) {
-    console.log('Selected row:', selected);
     this.selected = [...selected];
   }
 
   onActivate(event) {
-    console.log('Activate Event:', event);
   }
 
   constructor(private http:HttpClient,private dataService:DataService,private httpService: HTTPService, private router: Router,private modalService: NgbModal) {
@@ -87,7 +88,6 @@ export class CirculationListComponent extends URLLoader implements OnInit, After
 
   ngOnInit(): void {
     this.loadScripts();
-    console.log(this.circulations);
 // Load tomorrow circulations
 this.fetchMarkdownFile()
 this.loadMemberTypeData();
@@ -175,7 +175,6 @@ this.httpService.getAll(CONFIG.URL_BASE + '/circulation/checkout').subscribe(
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/circulation.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }
@@ -195,7 +194,6 @@ this.httpService.getAll(CONFIG.URL_BASE + '/circulation/checkout').subscribe(
     this.deleteEvent.emit(id);
   }
   contact(email) {
-    console.log(email);
     this.contactEvent.emit(email);
   }
 
@@ -222,14 +220,20 @@ this.httpService.getAll(CONFIG.URL_BASE + '/circulation/checkout').subscribe(
     );
     modalRef.componentInstance.circulation = { ...circulation }; // Ensure category is passed properly
   
-    console.log(circulation); // Ensure category is not undefined here
+
 
     modalRef.result.then(result => {
-      console.log(result)
        //this.getAll()
        this.ngOnInit()
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
+  }
+
+  openEditDialog(circulation: Circulation): void {
+    const modalRef = this.modalService.open(EditCirculationComponent, { size: 'xl', centered: true });
+    modalRef.componentInstance.id = circulation.id;
+    modalRef.componentInstance.ngOnChanges({});
+    modalRef.result.then(() => this.ngOnInit()).catch(() => {});
   }
 
   
@@ -240,14 +244,13 @@ this.httpService.getAll(CONFIG.URL_BASE + '/circulation/checkout').subscribe(
     );
    // modalRef.componentInstance.circulation = { ...circulation }; // Ensure category is passed properly
   
-    //console.log(circulation); // Ensure category is not undefined here
+    //
 
     modalRef.result.then(result => {
-      console.log(result)
        //this.getAll()
        this.ngOnInit()
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openCheckIn(): void {
@@ -257,15 +260,14 @@ this.httpService.getAll(CONFIG.URL_BASE + '/circulation/checkout').subscribe(
     );
     //modalRef.componentInstance.circulation = { ...circulation }; // Ensure category is passed properly
   
-    //console.log(circulation); // Ensure category is not undefined here
+    //
 
     modalRef.result.then(result => {
-      console.log(result)
        //this.getAll()
        this.ngOnInit()
        
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openPutOnHold(): void {
@@ -275,14 +277,13 @@ this.httpService.getAll(CONFIG.URL_BASE + '/circulation/checkout').subscribe(
     );
     //modalRef.componentInstance.circulation = { ...circulation }; // Ensure category is passed properly
   
-   // console.log(circulation); // Ensure category is not undefined here
+   //
 
     modalRef.result.then(result => {
-      console.log(result)
        //this.getAll()
        this.ngOnInit()
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openRenew(): void {
@@ -292,14 +293,13 @@ this.httpService.getAll(CONFIG.URL_BASE + '/circulation/checkout').subscribe(
     );
     //modalRef.componentInstance.circulation = { ...circulation }; // Ensure category is passed properly
   
-    //console.log(circulation); // Ensure category is not undefined here
+    //
 
     modalRef.result.then(result => {
-      console.log(result)
        //this.getAll()
        this.ngOnInit()
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
 

@@ -1,27 +1,47 @@
-<div class="container-fluid">
-  <div *ngIf="loading; else loaded">
-    <app-loading></app-loading>
-  </div>
-
-  <ng-template #loaded>
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">{{ settingsI18n?.allTitleI18n }}</h1>
-
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-      <div class="card-body">
-        <div class="table-responsive">
-          <app-settings-list
-            (idEvent)="edit($event)"
-            [settings]="settings$"
-            [settingsI18n]="settingsI18n"
-          ></app-settings-list>
-          <app-settings-modal
-            [settingsI18n]="settingsI18n"
-            [id]="id"
-          ></app-settings-modal>
+<div class="ll-page">
+  @if (loading) {
+    <div class="ll-loading"><mat-progress-spinner mode="indeterminate" diameter="48"></mat-progress-spinner></div>
+  } @else {
+    <mat-card class="ll-page__header" appearance="outlined">
+      <mat-card-content class="ll-page__header-content">
+        <mat-icon class="ll-page__icon">sms</mat-icon>
+        <div class="ll-page__title">
+          <h2>{{ 'settings.smsTitle' | translate }}</h2>
+          <p class="ll-page__subtitle">Configure SMS gateway — phone, address and language settings.</p>
         </div>
-      </div>
+        <div class="ll-page__actions">
+          <button mat-stroked-button (click)="getAll()">
+            <mat-icon>refresh</mat-icon> Reload
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- KPI row -->
+    <div class="ll-sms-kpi-row">
+      <mat-card class="ll-kpi ll-kpi--indigo" appearance="outlined">
+        <mat-card-content>
+          <div class="ll-kpi__label"><mat-icon>sms</mat-icon> Total Configs</div>
+          <div class="ll-kpi__value">{{ settings$?.length ?? 0 }}</div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="ll-kpi ll-kpi--ok" appearance="outlined">
+        <mat-card-content>
+          <div class="ll-kpi__label"><mat-icon>check_circle</mat-icon> Active</div>
+          <div class="ll-kpi__value">{{ settings$?.length ?? 0 }}</div>
+        </mat-card-content>
+      </mat-card>
     </div>
-  </ng-template>
+
+    <mat-card class="ll-page__body" appearance="outlined">
+      <mat-card-content>
+        <app-settings-sms-list
+          (idEvent)="edit($event)"
+          [settings]="settings$"
+          [settingsI18n]="settingsI18n">
+        </app-settings-sms-list>
+        <app-settings-modal [settingsI18n]="settingsI18n" [id]="id"></app-settings-modal>
+      </mat-card-content>
+    </mat-card>
+  }
 </div>

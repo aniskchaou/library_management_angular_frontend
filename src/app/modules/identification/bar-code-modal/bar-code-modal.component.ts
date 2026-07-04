@@ -5,9 +5,10 @@ import { BarCode } from 'src/app/main/models/BarCode';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
 @Component({
-  selector: 'app-bar-code-modal',
-  templateUrl: './bar-code-modal.component.html',
-  styleUrls: ['./bar-code-modal.component.css']
+    selector: 'app-bar-code-modal',
+    templateUrl: './bar-code-modal.component.html',
+    styleUrls: ['./bar-code-modal.component.css'],
+    standalone: false
 })
 export class BarCodeModalComponent implements OnInit {
 
@@ -20,7 +21,6 @@ export class BarCodeModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.barCode);
   }
 
   onSaveClick(): void {

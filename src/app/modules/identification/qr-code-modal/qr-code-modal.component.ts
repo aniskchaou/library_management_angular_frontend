@@ -5,9 +5,10 @@ import { QRCode } from 'src/app/main/models/QRcode';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
 @Component({
-  selector: 'app-qr-code-modal',
-  templateUrl: './qr-code-modal.component.html',
-  styleUrls: ['./qr-code-modal.component.css']
+    selector: 'app-qr-code-modal',
+    templateUrl: './qr-code-modal.component.html',
+    styleUrls: ['./qr-code-modal.component.css'],
+    standalone: false
 })
 export class QrCodeModalComponent implements OnInit {
 
@@ -19,7 +20,6 @@ export class QrCodeModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.qrCode);
   }
 
   validateFormData(data: any): boolean {

@@ -1,0 +1,11 @@
+:host { display: block; }
+.ll-form-wrap { display: flex; flex-direction: column; gap: 12px; max-width: 560px; }
+.ll-section-title { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 16px; font-weight: 500; }
+.ll-section-icon { color: #3f51b5; }
+.ll-section-sub { margin: 0 0 8px; color: rgba(0,0,0,.6); font-size: 13px; }
+.ll-form { display: flex; flex-direction: column; gap: 4px; }
+.ll-form__field { width: 100%; }
+.ll-form__actions { display: flex; gap: 8px; }
+.ll-form__actions mat-icon { margin-right: 4px; }
+.ll-alert { padding: 10px 12px; border-radius: 8px; font-size: 13px; }
+.ll-alert--ok { background: #e8f5e9; color: #2e7d32; }

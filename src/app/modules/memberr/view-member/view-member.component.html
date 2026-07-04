@@ -1,524 +1,88 @@
-<!-- <table class="center-table table">
-  <tr>
-    <td>
-      <b>{{ memberI18n?.nameI18n }} :</b>
-    </td>
-    <td>{{ member?.name }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ memberI18n?.user_typeI18n }} :</b>
-    </td>
-    <td>{{ member?.user_type }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ memberI18n?.emailI18n }} :</b>
-    </td>
-    <td>{{ member?.email }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ memberI18n?.mobileI18n }} :</b>
-    </td>
-    <td>{{ member?.mobile }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ memberI18n?.addressI18n }} :</b>
-    </td>
-    <td>{{ member?.address }}</td>
-  </tr>
-  <tr>
-    <td>
-      <b>{{ memberI18n?.statusI18n }} :</b>
-    </td>
-    <td>{{ member?.status }}</td>
-  </tr>
-</table>
-
-<table class="table">
-  <tr>
-      <th>Name</th>
-      <td>anis</td>
-  </tr>
-  <tr>
-      <th>Email</th>
-      <td></td> 
-  </tr>
-  <tr>
-      <th>Balance</th>
-      <td>$0.00 <a href="#">[ Statement ]</a></td>
-  </tr>
-  <tr>
-      <th>Login Access</th>
-      <td>No</td>
-  </tr>
-  <tr>
-      <th>Joined</th>
-      <td>No</td>
-  </tr>
-  <tr>
-      <th>Member User ID</th>
-      <td></td> 
-  </tr>
-  <tr>
-      <th>Joined At</th>
-      <td></td> 
-  </tr>
-  <tr>
-      <th>Address</th>
-      <td></td> 
-  </tr>
-  <tr>
-      <th>Phone</th>
-      <td></td> 
-  </tr>
-  <tr>
-      <th>Booking Quota</th>
-      <td>Default (10)</td>
-  </tr>
-  <tr>
-      <th>Type</th>
-      <td>Regular</td>
-  </tr>
-  <tr>
-      <th>Member Group</th>
-      <td></td> 
-  </tr>
-  <tr>
-      <th>Status</th>
-      <td>Active</td>
-  </tr>
-  <tr>
-      <th>Remarks</th>
-      <td></td> 
-  </tr>
-  <tr>
-      <th>Created</th>
-      <td>2024-06-04 20:20:55</td>
-  </tr>
-  <tr>
-      <th>Modified</th>
-      <td>2024-06-04 20:20:55</td>
-  </tr>
-</table>
-
-<table class="table">
-  <tbody>
-      <tr>
-          <th>Card number:</th>
-          <td>2604</td>
-      </tr>
-      <tr>
-          <th>Required</th>
-          <td>Card number must be between 1 and 32 characters. AutoMemberNum is set to enabled, but card number is marked as mandatory in BorrowerMandatoryField: auto calc has been disabled.</td>
-      </tr>
-      <tr>
-          <th>Library:</th>
-          <td>Centerville</td>
-      </tr>
-      <tr>
-          <th>RequiredCategory:</th>
-          <td>STUDENT</td>
-      </tr>
-      <tr>
-          <th>Sort 1:</th>
-          <td></td>
-      </tr>
-      <tr>
-          <th>Sort 2:</th>
-          <td></td>
-      </tr>
-      <tr>
-          <th>Allow auto-renewal of items:</th>
-          <td>Yes  No</td>
-      </tr>
-      <tr>
-          <th>Registration date:</th>
-          <td>06/04/2024 (MM/DD/YYYY)</td>
-      </tr>
-      <tr>
-          <th>Expiry date (leave blank for auto calc):</th>
-          <td>06/04/2026 (MM/DD/YYYY)</td>
-      </tr>
-      <tr>
-          <th>OPAC note:</th>
-          <td>This message appears on this patron's user page in the OPAC</td>
-      </tr>
-      <tr>
-          <th>Circulation note:</th>
-          <td>This message displays when checking out to this patron</td>
-      </tr>
-      <tr>
-          <th>Username:</th>
-          <td>aniket.pandit1</td>
-      </tr>
-      <tr>
-          <th>Password:</th>
-          <td>••••</td>
-      </tr>
-      <tr>
-          <th>Minimum password length:</th>
-          <td>3</td>
-      </tr>
-      <tr>
-          <th>Confirm password:</th>
-          <td>••••</td>
-      </tr>
-      <tr>
-          <th>Lost card:</th>
-          <td>Yes  No</td>
-      </tr>
-      <tr>
-          <th>Gone no address:</th>
-          <td>Yes  No</td>
-      </tr>
-      <tr>
-          <th>Patron restrictions</th>
-          <td>Patron is currently unrestricted.</td>
-      </tr>
-      <tr>
-          <th>Add manual restriction</th>
-          <td></td>
-      </tr>
-  </tbody>
-</table>
-
-<h2>Related Bookings</h2>
-<table class="table">
-  <thead>
-      <tr>
-          <th>Id</th>
-          <th>Date</th>
-          <th>To</th>
-          <th>ASN No</th>
-          <th>Title</th>
-          <th>Identifiers</th>
-          <th>Call No</th>
-          <th>Copy</th>
-          <th>Status</th>
-          <th>Actions</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>5201687</td>
-          <td>Jun 05, 2024</td>
-          <td>Jun 12, 2024</td>
-          <td>1</td>
-          <td>hello</td>
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td>Issued</td>
-          <td>
-              <button class="btn btn-primary">Check-In</button>
-          </td>
-      </tr>
-  </tbody>
-</table>
- -->
-
-  <div class="modal-header">
-    <h5 class="modal-title">Member Details</h5>
-    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-      <span aria-hidden="true">&times;</span>
+<div class="ll-modal ll-modal--wide">
+  <div class="ll-modal__header">
+    <mat-icon class="ll-modal__icon">badge</mat-icon>
+    <h2 class="ll-modal__title">Member Details</h2>
+    <button mat-icon-button class="ll-modal__close" (click)="closeModal()" aria-label="Close">
+      <mat-icon>close</mat-icon>
     </button>
   </div>
-  
-  <div class="modal-body">
-    <div class="container mt-4">
-        <ul class="nav nav-tabs" id="profileTabs" role="tablist">
-          <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">
-              <i class="fas fa-user"></i> Profile
-            </a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="account-summary-tab" data-bs-toggle="tab" href="#account-summary" role="tab" aria-controls="account-summary" aria-selected="false">
-              <i class="fas fa-list-alt"></i> Account Summary
-            </a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="fines-tab" data-bs-toggle="tab" href="#fines" role="tab" aria-controls="fines" aria-selected="false">
-              <i class="fas fa-money-bill-alt"></i> Fines
-            </a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="documents-tab" data-bs-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false">
-              <i class="fas fa-folder"></i> Documents
-            </a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="borrowing-history-tab" data-bs-toggle="tab" href="#borrowing-history" role="tab" aria-controls="borrowing-history" aria-selected="false">
-              <i class="fas fa-history"></i> Borrowing History
-            </a>
-          </li>
-         <!--  <li class="nav-item" role="presentation">
-            <a class="nav-link" id="notification-history-tab" data-bs-toggle="tab" href="#notification" role="tab" aria-controls="notification" aria-selected="false">
-              <i class="fas fa-bell"></i> Notifications
-            </a>
-          </li> -->
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="memebership-tab" data-bs-toggle="tab" href="#membership" role="tab" aria-controls="membership" aria-selected="false">
-              <i class="fas fa-credit-card"></i>  Membership Card
-            </a>
-          </li>
-        </ul>
-    
-        <div class="tab-content mt-3" id="profileTabsContent">
-          <!-- Profile Tab -->
-          <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="row">
-              <div class="col-md-6">
-                <h2>{{ member?.firstName }} {{ member?.surname }}</h2>
-                <p><strong>Date of Birth:</strong> {{ member?.dob || 'Not provided' }}</p>
-                <p><strong>Age:</strong> {{ member?.age || 'Not provided' }}</p>
-                <p><strong>Gender:</strong> {{ member?.gender || 'Not provided' }}</p>
-                
-                <h5>Contact Information:</h5>
-                <p><strong>Primary Phone:</strong> {{ member?.primaryPhone || 'Not provided' }}</p>
-                <p><strong>Secondary Phone:</strong> {{ member?.secondaryPhone || 'Not provided' }}</p>
-                <p><strong>Primary Email:</strong> {{ member?.primaryEmail || 'Not provided' }}</p>
-                <p><strong>Secondary Email:</strong> {{ member?.secondaryEmail || 'Not provided' }}</p>
-              </div>
-    
-              <div class="col-md-6">
-                <h5>Address:</h5>
-                <p>
-                  {{ member?.streetNumber }} {{ member?.address }},<br>
-                  {{ member?.city }}, {{ member?.state }}, {{ member?.zip }}, {{ member?.country }}
-                </p>
-    
-                <h5>Department Information:</h5>
-                <p><strong>Head of Department:</strong> {{ member?.headOfDepartment || 'Not provided' }}</p>
-                
-                <h5>Additional Information:</h5>
-                <p><strong>User Type:</strong> {{ member?.userType }}</p>
-                <p><strong>Type ID:</strong> {{ member?.typeId }}</p>
-                <p><strong>Status:</strong> {{ member?.status }}</p>
-              </div>
+
+  <div class="ll-modal__content">
+    <div class="ll-view">
+      <mat-card appearance="outlined" class="ll-view__card membership-card">
+        <mat-card-content class="ll-view__card-content">
+          <div class="ll-view__avatar">
+            <span>{{ member?.surname ? member.surname.charAt(0).toUpperCase() : '?' }}</span>
+          </div>
+          <div class="ll-view__id">
+            <h3>{{ member?.salutation }} {{ member?.firstname }} {{ member?.surname }}</h3>
+            <p class="ll-view__sub">Member ID: {{ member?.id }}</p>
+            <mat-chip-set>
+              <mat-chip [class.ll-chip--ok]="member?.status === 'Active'"
+                        [class.ll-chip--off]="member?.status !== 'Active'">
+                {{ member?.status || 'Inactive' }}
+              </mat-chip>
+            </mat-chip-set>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <dl class="ll-view__details">
+        <div class="ll-view__row"><dt>First Name</dt><dd>{{ member?.firstname }}</dd></div>
+        <div class="ll-view__row"><dt>Surname</dt><dd>{{ member?.surname }}</dd></div>
+        <div class="ll-view__row"><dt>Date of Birth</dt><dd>{{ member?.dob | date:'shortDate' }}</dd></div>
+        <div class="ll-view__row"><dt>Gender</dt><dd>{{ member?.gender }}</dd></div>
+        <div class="ll-view__row"><dt>Primary Email</dt><dd><a href="mailto:{{ member?.primary_email }}">{{ member?.primary_email }}</a></dd></div>
+        <div class="ll-view__row"><dt>Secondary Email</dt><dd>{{ member?.secondary_email || '\u2014' }}</dd></div>
+        <div class="ll-view__row"><dt>Primary Phone</dt><dd><a href="tel:{{ member?.primary_phone }}">{{ member?.primary_phone }}</a></dd></div>
+        <div class="ll-view__row"><dt>Secondary Phone</dt><dd>{{ member?.secondary_phone || '\u2014' }}</dd></div>
+        <div class="ll-view__row ll-view__row--block"><dt>Address</dt><dd>{{ member?.address }}, {{ member?.city }}, {{ member?.state }} {{ member?.zip }}, {{ member?.country }}</dd></div>
+        <div class="ll-view__row"><dt>Head of Department</dt><dd>{{ member?.headOfDepartment || '\u2014' }}</dd></div>
+        <div class="ll-view__row"><dt>Booking Quota</dt><dd>{{ member?.bookingQuota }}</dd></div>
+      </dl>
+
+      @if (statistics) {
+        <mat-card appearance="outlined" class="ll-view__section">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>insights</mat-icon>
+            <mat-card-title>Statistics</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <pre class="ll-view__pre">{{ statistics | json }}</pre>
+          </mat-card-content>
+        </mat-card>
+      }
+
+      @if (files && files.length) {
+        <mat-card appearance="outlined" class="ll-view__section">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>folder</mat-icon>
+            <mat-card-title>Documents</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="ll-view__files">
+              @for (f of files; track f) {
+                <button mat-stroked-button (click)="downloadFile(f)">
+                  <mat-icon>download</mat-icon> {{ f }}
+                </button>
+              }
             </div>
-          </div>
-
-          <div class="tab-pane fade" id="membership" role="tabpanel" aria-labelledby="membership-tab">
-            <div class="membership-container">
-                <div class="membership-card bg-white">
-                    <div class="membership-card-header d-flex align-items-center justify-content-between">
-                        <img height="50"  width="50" src="https://icons.veryicon.com/png/o/miscellaneous/user-avatar/user-avatar-male-5.png" alt="Member Image" class="img-fluid rounded-circle">
-                        <h5 class="text-primary">Membership Card</h5>
-                    </div>
-                    <div class="membership-details">
-                      <p><strong>Name:</strong> {{member.firstname}} {{member.surname}}</p>
-                      <p><strong>Date of Birth:</strong> {{member.dob}}</p>
-                      <p><strong>Age:</strong> {{member.age}}</p>
-                      <p><strong>Gender:</strong> {{member.gender}}</p>
-                      <p><strong>Address:</strong> {{member.street_number}} {{member.address}}, {{member.city}}, {{member.state}} {{member.zip}}, {{member.country}}</p>
-                      <p><strong>Primary Phone:</strong> {{member.primary_phone}}</p>
-                      <!-- <p><strong>Secondary Phone:</strong> {{member.secondary_phone}}</p> -->
-                      <p><strong>Email:</strong> {{member.primary_email}}</p>
-                      <!-- <p><strong>Secondary Email:</strong> {{member.secondary_email}}</p> -->
-                      <p><strong>Head of Department:</strong> {{member.headOfDepartment}}</p>
-                      <p><strong>User Type:</strong> {{member.userType}}</p>
-                  </div>
-                    <div class="membership-footer text-center text-muted">
-                        <p>Powered by Library Lab</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="text-center mt-3">
-                <button class="btn btn-outline-primary" (click)="downloadCard()">Download Card</button>
-                <button class="btn btn-outline-secondary" (click)="printCard()">Print Card</button>
-              </div>
-
-          </div>
-    
-          <!-- Account Summary Tab -->
-          <div class="tab-pane fade" id="account-summary" role="tabpanel" aria-labelledby="account-summary-tab">
-            <h3>Account Summary</h3>
-            <div class="container mt-5">
-                <div class="row">
-                  <div class="col-md-4 mb-4">
-                    <div class="card text-center border">
-                      <div class="card-body">
-                        <h5 class="card-title text-dark">Total Books Borrowed</h5>
-                        <p class="card-text h4">{{ statistics?.totalBooksBorrowed }}</p>
-                      </div>
-                    </div>
-                  </div>
-              
-                  <div class="col-md-4 mb-4">
-                    <div class="card text-center border">
-                      <div class="card-body">
-                        <h5 class="card-title text-primary">Currently Borrowed Books</h5>
-                        <p class="card-text h4">{{ statistics?.currentlyBorrowedBooks }}</p>
-                      </div>
-                    </div>
-                  </div>
-              
-                  <div class="col-md-4 mb-4">
-                    <div class="card text-center border">
-                      <div class="card-body">
-                        <h5 class="card-title text-warning">Overdue Books</h5>
-                        <p class="card-text h4">{{ statistics?.overdueBooks }}</p>
-                      </div>
-                    </div>
-                  </div>
-              
-                  <div class="col-md-4 mb-4">
-                    <div class="card text-center border">
-                      <div class="card-body">
-                        <h5 class="card-title text-info">Average Borrowing Rate</h5>
-                        <p class="card-text h4">{{ statistics?.averageBorrowingRate }}</p>
-                      </div>
-                    </div>
-                  </div>
-              
-                
-              
-                  <div class="col-md-4 mb-4">
-                    <div class="card text-center border">
-                      <div class="card-body">
-                        <h5 class="card-title text-dark">Most Borrowed Book</h5>
-                        <p class="card-text h4">{{ statistics?.mostBorrowedBook }}</p>
-                      </div>
-                    </div>
-                  </div>
-              
-                
-                </div>
-              </div>
-              
-          </div>
-    
-          <!-- Fines Tab -->
-          <div class="tab-pane fade" id="fines" role="tabpanel" aria-labelledby="fines-tab">
-            <h3>Fines</h3>
-            <div class="container mt-5">
-                <div class="row">
-                
-              
-                
-              
-                  <div class="col-md-4 mb-4">
-                    <div class="card text-center border">
-                      <div class="card-body">
-                        <h5 class="card-title text-danger">Total Fines Accrued</h5>
-                        <p class="card-text h4">${{ statistics?.totalFinesAccrued }}</p>
-                      </div>
-                    </div>
-                  </div>
-              
-                  <div class="col-md-4 mb-4">
-                    <div class="card text-center border">
-                      <div class="card-body">
-                        <h5 class="card-title text-success">Total Fines Paid</h5>
-                        <p class="card-text h4">${{ statistics?.totalFinesPaid }}</p>
-                      </div>
-                    </div>
-                  </div>
-              
-                  <div class="col-md-4 mb-4">
-                    <div class="card text-center border">
-                      <div class="card-body">
-                        <h5 class="card-title text-danger">Outstanding Fines</h5>
-                        <p class="card-text h4">${{ statistics?.outstandingFines }}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-             <!--  <div id="paypal-button-container"></div> -->
-
-             <div class="button-container">
-              <button (click)="generatePaymentLink('2.00','USD','paying fees')" class="btn btn-primary">
-                <i class="fas fa-link"></i> Generate Payment Link
-              </button>
-              <button (click)="sendPaymentLink()" class="btn btn-outline-success">
-                <i class="fas fa-paper-plane"></i> Send Payment Link
-              </button>
-            </div>
-            
-            <div *ngIf="paymentLink">
-              <p><strong>Generated Payment Link:</strong></p>
-              <a [href]="paymentLink" target="_blank">{{ paymentLink }}</a>
-              <button (click)="copyPaymentLink(paymentLink)" class="btn btn-outline-info">
-                <i class="fas fa-copy"></i> Copy Link
-              </button>
-            </div>
-            
-              
-          </div>
-
-
-          <!-- <div class="tab-pane fade" id="notification" role="tabpanel" aria-labelledby="notification-tab">
-            <h3>Notifications</h3>
-           
-          </div>   -->
-    
-          <!-- Documents Tab -->
-          <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
-            <!-- <h3>Documents</h3> -->
-           <!--  <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-                <input type="file" formControlName="file" (change)="onFileChange($event)" />
-                <button type="submit">Upload File</button>
-              </form> -->
-
-              <div class="container mt-5">
-                <h4 class="mb-4">Documents</h4>
-                <div class="list-group">
-                    <div class="list-group-item" *ngFor="let document of files">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span>{{ document.filename }}</span>
-                            <button 
-                                class="btn btn-outline-primary" 
-                                (click)="downloadFile(document.filename)">
-                                <i class="fas fa-download me-1"></i> Download
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-              
-          </div>
-    
-          <!-- Borrowing History Tab -->
-          <div class="tab-pane fade" id="borrowing-history" role="tabpanel" aria-labelledby="borrowing-history-tab">
-            <h3>Borrowing History</h3>
-            <ngx-datatable
-        class="bootstrap"
-        [rows]="circulations"
-        [columnMode]="'force'"
-        [headerHeight]="50"
-        [footerHeight]="50"
-        [rowHeight]="'auto'"
-        [loadingIndicator]="loadingIndicator"
-        [reorderable]="reorderable"
-      >
-        <!-- <ngx-datatable-column name="ID" prop="id"></ngx-datatable-column> -->
-        <!-- <ngx-datatable-column name="Member Name" prop="memberName.firstname"></ngx-datatable-column> -->
-      <ngx-datatable-column name="Book Name" prop="catalogItemName.title"></ngx-datatable-column>
-        <ngx-datatable-column name="Issue Date" prop="issueDate"></ngx-datatable-column>
-        <ngx-datatable-column name="Last Date" prop="lastDate"></ngx-datatable-column>
-        <ngx-datatable-column name="To Return" prop="toReturn"></ngx-datatable-column>
-        <ngx-datatable-column name="Return Date" prop="returnDate"></ngx-datatable-column>
-       <!--  <ngx-datatable-column name="Penalty" prop="penalty"></ngx-datatable-column> -->
-        <ngx-datatable-column name="Return Status" prop="returnStatus.name"></ngx-datatable-column>
-      </ngx-datatable>
-          </div>
-        </div>
-      </div>
-  </div>
-  
-  <div class="modal-footer">
-    <div class="button-group">      
-      <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">
-        <i class="fas fa-times"></i> Close
-      </button>
+          </mat-card-content>
+        </mat-card>
+      }
     </div>
   </div>
-  
 
+  <div class="ll-modal__actions">
+    <button mat-stroked-button (click)="downloadCard()">
+      <mat-icon>download</mat-icon> Download Card
+    </button>
+    <button mat-stroked-button (click)="printCard()">
+      <mat-icon>print</mat-icon> Print
+    </button>
+    <button mat-stroked-button color="primary" (click)="openEditDialog(member)">
+      <mat-icon>edit</mat-icon> Edit
+    </button>
+    <button mat-flat-button color="primary" (click)="closeModal()">Close</button>
+  </div>
+</div>

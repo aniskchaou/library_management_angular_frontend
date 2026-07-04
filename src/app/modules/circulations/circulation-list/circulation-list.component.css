@@ -1,0 +1,44 @@
+:host { display: block; }
+
+.ll-list { display: flex; flex-direction: column; gap: 16px; }
+.ll-stats__kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.ll-kpi mat-card-content { padding: 16px !important; }
+.ll-kpi__label { display: flex; align-items: center; gap: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: rgba(0,0,0,.6); }
+.ll-kpi__label mat-icon { font-size: 18px; width: 18px; height: 18px; }
+.ll-kpi__value { font-size: 28px; font-weight: 500; margin: 4px 0 8px; }
+
+.ll-kpi--indigo ::ng-deep .mdc-linear-progress__bar-inner { border-color: #3f51b5 !important; }
+.ll-kpi--indigo ::ng-deep .mdc-linear-progress__buffer-bar { background-color: rgba(63,81,181,.18) !important; }
+.ll-kpi--ok ::ng-deep .mdc-linear-progress__bar-inner { border-color: #2e7d32 !important; }
+.ll-kpi--ok ::ng-deep .mdc-linear-progress__buffer-bar { background-color: rgba(46,125,50,.18) !important; }
+.ll-kpi--danger ::ng-deep .mdc-linear-progress__bar-inner { border-color: #c62828 !important; }
+.ll-kpi--danger ::ng-deep .mdc-linear-progress__buffer-bar { background-color: rgba(198,40,40,.18) !important; }
+.ll-kpi--warning ::ng-deep .mdc-linear-progress__bar-inner { border-color: #f57c00 !important; }
+.ll-kpi--warning ::ng-deep .mdc-linear-progress__buffer-bar { background-color: rgba(245,124,0,.18) !important; }
+.ll-kpi--info ::ng-deep .mdc-linear-progress__bar-inner { border-color: #0288d1 !important; }
+.ll-kpi--info ::ng-deep .mdc-linear-progress__buffer-bar { background-color: rgba(2,136,209,.18) !important; }
+
+.ll-list__toolbar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+.ll-list__toolbar mat-icon { margin-right: 4px; }
+.ll-list__search { max-width: 360px; width: 100%; }
+
+.ll-tab__icon { font-size: 18px; width: 18px; height: 18px; margin-right: 4px; }
+.ll-tab__content { padding: 16px 0; display: flex; flex-direction: column; gap: 16px; }
+
+.ll-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 16px; }
+.ll-charts__title { display: flex; align-items: center; gap: 6px; margin: 0 0 12px; font-size: 14px; font-weight: 500; color: rgba(0,0,0,.7); }
+.ll-charts__title mat-icon { font-size: 18px; width: 18px; height: 18px; color: #3f51b5; }
+
+.ll-cell--strong { font-weight: 500; }
+.ll-chip--ok { --mdc-chip-elevated-container-color: rgba(46,125,50,.12); }
+.ll-chip--ok ::ng-deep .mdc-evolution-chip__text-label { color: #2e7d32; }
+.ll-chip--off { --mdc-chip-elevated-container-color: rgba(198,40,40,.12); }
+.ll-chip--off ::ng-deep .mdc-evolution-chip__text-label { color: #c62828; }
+
+.ll-menu--danger { color: #c62828; }
+.ll-menu--danger mat-icon { color: #c62828; }
+
+@media (max-width: 520px) {
+  .ll-stats__kpis { grid-template-columns: 1fr 1fr; }
+  .ll-list__toolbar { justify-content: stretch; }
+}

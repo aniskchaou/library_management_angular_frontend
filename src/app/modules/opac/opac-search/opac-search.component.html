@@ -1,0 +1,268 @@
+<div class="opac-root">
+
+  <!-- ── Top bar ──────────────────────────────────────────────────────────── -->
+  <header class="opac-topbar">
+    <div class="opac-topbar__brand">
+      <mat-icon>local_library</mat-icon>
+      <span>{{ 'opac.brand' | translate }}</span>
+      <span class="opac-topbar__tag">{{ 'opac.publicCatalog' | translate }}</span>
+    </div>
+
+    <div class="opac-topbar__right">
+      @if (auth.isLoggedIn) {
+        <span class="opac-topbar__user">
+          <mat-icon>account_circle</mat-icon>
+          {{ auth.member?.firstname }} {{ auth.member?.surname }}
+        </span>
+        <button mat-stroked-button color="primary" (click)="goToAccount()">
+          <mat-icon>manage_accounts</mat-icon> {{ 'opac.myAccount' | translate }}
+        </button>
+        <button mat-icon-button matTooltip="Log out" (click)="auth.logout()">
+          <mat-icon>logout</mat-icon>
+        </button>
+      } @else {
+        <button mat-flat-button color="primary" (click)="goToAccount()">
+          <mat-icon>login</mat-icon> {{ 'opac.readerLogin' | translate }}
+        </button>
+      }
+    </div>
+  </header>
+
+  <!-- ── Hero search ──────────────────────────────────────────────────────── -->
+  <section class="opac-hero">
+    <h1 class="opac-hero__title">{{ 'opac.searchTitle' | translate }}</h1>
+    <p class="opac-hero__sub">Search across {{ allItems.length | number }} items — books, e-books, journals and more</p>
+
+    <div class="opac-hero__search">
+      <mat-form-field appearance="outline" class="opac-hero__field">
+        <mat-label>{{ 'opac.searchLabel' | translate }}</mat-label>
+        <input matInput
+               [(ngModel)]="query"
+               (ngModelChange)="onSearch()"
+               (keydown.enter)="onSearch()"
+               name="q"
+               autocomplete="off">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <!-- Quick-filter chips -->
+    <div class="opac-hero__chips">
+      <button class="opac-chip" [class.opac-chip--active]="quickFilter === 'all'"
+              (click)="setQuickFilter('all')">All Materials</button>
+      <button class="opac-chip" [class.opac-chip--active]="quickFilter === 'new'"
+              (click)="setQuickFilter('new')">
+        <mat-icon>fiber_new</mat-icon> New Arrivals
+      </button>
+      <button class="opac-chip" [class.opac-chip--active]="quickFilter === 'ebook'"
+              (click)="setQuickFilter('ebook')">
+        <mat-icon>devices</mat-icon> E-Books / Digital
+      </button>
+      <button class="opac-chip" [class.opac-chip--active]="quickFilter === 'available'"
+              (click)="setQuickFilter('available')">
+        <mat-icon>check_circle</mat-icon> Available Now
+      </button>
+    </div>
+  </section>
+
+  <!-- ── Main content: filters + results ───────────────────────────────────── -->
+  <div class="opac-body">
+
+    <!-- Sidebar filters -->
+    <aside class="opac-sidebar">
+      <div class="opac-sidebar__header">
+        <mat-icon>filter_list</mat-icon> Refine
+        <button mat-icon-button matTooltip="Clear all filters" (click)="clearFilters()" class="opac-sidebar__clear">
+          <mat-icon>clear_all</mat-icon>
+        </button>
+      </div>
+
+      <!-- Category -->
+      <div class="opac-filter-group">
+        <label class="opac-filter-group__label">Category</label>
+        <mat-form-field appearance="outline" class="opac-filter-group__field">
+          <mat-select [(ngModel)]="filterCat" (ngModelChange)="onFilterChange()" name="cat">
+            <mat-option value="">All Categories</mat-option>
+            @for (cat of categories; track cat.id) {
+              <mat-option [value]="cat.id?.toString()">{{ cat.category_name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- DDC Class -->
+      <div class="opac-filter-group">
+        <label class="opac-filter-group__label">DDC Class</label>
+        <mat-form-field appearance="outline" class="opac-filter-group__field">
+          <mat-select [(ngModel)]="filterDdc" (ngModelChange)="onFilterChange()" name="ddc">
+            <mat-option value="">All Classes</mat-option>
+            @for (cls of ddcClasses; track cls.prefix) {
+              <mat-option [value]="cls.prefix">{{ cls.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Language -->
+      <div class="opac-filter-group">
+        <label class="opac-filter-group__label">Language</label>
+        <mat-form-field appearance="outline" class="opac-filter-group__field">
+          <mat-select [(ngModel)]="filterLang" (ngModelChange)="onFilterChange()" name="lang">
+            <mat-option value="">All Languages</mat-option>
+            @for (l of langOptions; track l.code) {
+              <mat-option [value]="l.code">{{ l.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Media Type -->
+      <div class="opac-filter-group">
+        <label class="opac-filter-group__label">Media Type</label>
+        <mat-form-field appearance="outline" class="opac-filter-group__field">
+          <mat-select [(ngModel)]="filterType" (ngModelChange)="onFilterChange()" name="mtype">
+            <mat-option value="">All Types</mat-option>
+            @for (mt of mediaTypes; track mt.id) {
+              <mat-option [value]="mt.id?.toString()">{{ mt.type }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </aside>
+
+    <!-- Results pane -->
+    <main class="opac-results">
+
+      <!-- Result stats + view toggle -->
+      <div class="opac-results__bar">
+        <span class="opac-results__count">
+          @if (loading) { Searching… }
+          @else { {{ filtered.length | number }} result{{ filtered.length !== 1 ? 's' : '' }} }
+        </span>
+        <div class="opac-results__views">
+          <button mat-icon-button [class.opac-view--active]="viewMode === 'grid'"
+                  matTooltip="Grid view" (click)="viewMode = 'grid'">
+            <mat-icon>grid_view</mat-icon>
+          </button>
+          <button mat-icon-button [class.opac-view--active]="viewMode === 'list'"
+                  matTooltip="List view" (click)="viewMode = 'list'">
+            <mat-icon>view_list</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      @if (loading) {
+        <mat-progress-bar mode="indeterminate" class="opac-progress"></mat-progress-bar>
+      }
+
+      @if (!loading && filtered.length === 0) {
+        <div class="opac-empty">
+          <mat-icon>search_off</mat-icon>
+          <p>No items found. Try broadening your search or clearing filters.</p>
+          <button mat-stroked-button (click)="clearFilters()">Clear All Filters</button>
+        </div>
+      }
+
+      <!-- Grid view -->
+      @if (viewMode === 'grid' && !loading) {
+        <div class="opac-grid">
+          @for (item of displayed; track item.id) {
+            <div class="opac-card" (click)="openDetail(item)" role="button" tabindex="0"
+                 (keydown.enter)="openDetail(item)">
+              <div class="opac-card__cover-wrap">
+                <img class="opac-card__cover"
+                     [src]="coverUrl(item)"
+                     [alt]="item.title"
+                     loading="lazy"
+                     onerror="this.src='assets/images/no-cover.png'">
+                @if (hasDigital(item)) {
+                  <span class="opac-card__digital-badge">
+                    <mat-icon>devices</mat-icon>
+                  </span>
+                }
+              </div>
+              <div class="opac-card__body">
+                <p class="opac-card__title" matTooltip="{{ item.title }}">{{ item.title }}</p>
+                @if (item.subtitle) {
+                  <p class="opac-card__subtitle">{{ item.subtitle }}</p>
+                }
+                <p class="opac-card__author">{{ item.writer?.name }}</p>
+                @if (item.marc_082) {
+                  <span class="opac-card__ddc">{{ item.marc_082 }}</span>
+                }
+                <div class="opac-card__footer">
+                  <span class="opac-avail" [ngClass]="availabilityClass(item)">
+                    {{ availabilityLabel(item) }}
+                  </span>
+                  <span class="opac-card__year">{{ item.publishing_year }}</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- List view -->
+      @if (viewMode === 'list' && !loading) {
+        <div class="opac-list">
+          @for (item of displayed; track item.id) {
+            <div class="opac-list-item" (click)="openDetail(item)" role="button" tabindex="0"
+                 (keydown.enter)="openDetail(item)">
+              <img class="opac-list-item__thumb"
+                   [src]="coverUrl(item)"
+                   [alt]="item.title"
+                   loading="lazy"
+                   onerror="this.src='assets/images/no-cover.png'">
+              <div class="opac-list-item__body">
+                <div class="opac-list-item__title">
+                  {{ item.title }}
+                  @if (item.subtitle) { <span class="opac-list-item__subtitle">: {{ item.subtitle }}</span> }
+                  @if (item.marc_246) { <span class="opac-list-item__parallel"> = {{ item.marc_246 }}</span> }
+                </div>
+                <div class="opac-list-item__meta">
+                  @if (item.writer?.name) { <span><mat-icon>person</mat-icon>{{ item.writer.name }}</span> }
+                  @if (item.publisher?.publisherName) { <span><mat-icon>business</mat-icon>{{ item.publisher.publisherName }}</span> }
+                  @if (item.publishing_year) { <span><mat-icon>event</mat-icon>{{ item.publishing_year }}</span> }
+                  @if (item.isbn) { <span><mat-icon>qr_code</mat-icon>{{ item.isbn }}</span> }
+                  @if (item.marc_082) { <span class="opac-card__ddc">DDC {{ item.marc_082 }}</span> }
+                </div>
+                @if (item.marc_520) {
+                  <p class="opac-list-item__abstract">{{ item.marc_520 | slice:0:200 }}…</p>
+                }
+              </div>
+              <div class="opac-list-item__right">
+                <span class="opac-avail" [ngClass]="availabilityClass(item)">{{ availabilityLabel(item) }}</span>
+                @if (hasDigital(item)) { <mat-icon class="opac-digital-icon" matTooltip="Digital resource available">devices</mat-icon> }
+                <button mat-stroked-button color="primary" class="opac-list-item__btn"
+                        (click)="$event.stopPropagation(); openDetail(item)">View</button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Pagination -->
+      @if (totalPages > 1) {
+        <div class="opac-pager">
+          <button mat-icon-button [disabled]="page <= 1" (click)="goPage(page - 1)">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          @for (p of pageNumbers(); track p) {
+            @if (p === -1) {
+              <span class="opac-pager__ellipsis">…</span>
+            } @else {
+              <button class="opac-pager__btn" [class.opac-pager__btn--active]="p === page"
+                      (click)="goPage(p)">{{ p }}</button>
+            }
+          }
+          <button mat-icon-button [disabled]="page >= totalPages" (click)="goPage(page + 1)">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+          <span class="opac-pager__info">Page {{ page }} / {{ totalPages }}</span>
+        </div>
+      }
+
+    </main>
+  </div>
+
+</div>

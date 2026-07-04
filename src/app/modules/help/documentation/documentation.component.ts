@@ -3,9 +3,10 @@ import { ShowContentDocPageComponent } from '../show-content-doc-page/show-conte
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-documentation',
-  templateUrl: './documentation.component.html',
-  styleUrls: ['./documentation.component.css']
+    selector: 'app-documentation',
+    templateUrl: './documentation.component.html',
+    styleUrls: ['./documentation.component.css'],
+    standalone: false
 })
 export class DocumentationComponent implements OnInit {
 
@@ -15,7 +16,6 @@ export class DocumentationComponent implements OnInit {
   }
 
   openDialog(file): void {
-    console.log(file)
     const modalRef = this.modalService.open(ShowContentDocPageComponent, {
       size: 'xl', // Set the modal size to extra-large
       backdrop: 'static', // Optional: prevent closing the modal by clicking outside
@@ -25,9 +25,8 @@ export class DocumentationComponent implements OnInit {
   
    
     modalRef.result.then(result => {
-      console.log(result)
       
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
 }

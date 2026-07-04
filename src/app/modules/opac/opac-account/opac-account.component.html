@@ -1,0 +1,280 @@
+<div class="opac-acc-root">
+
+  <!-- ── Top bar ─────────────────────────────────────────────────────────── -->
+  <header class="opac-topbar">
+    <div class="opac-topbar__brand">
+      <mat-icon>local_library</mat-icon>
+      <span>{{ 'opac.brand' | translate }}</span>
+      <span class="opac-topbar__tag">{{ 'opac.myAccount' | translate }}</span>
+    </div>
+    <button mat-stroked-button class="opac-topbar__back" (click)="goSearch()">
+      <mat-icon>arrow_back</mat-icon> {{ 'opac.backToSearch' | translate }}
+    </button>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- NOT LOGGED IN: show login form                                         -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  @if (!auth.isLoggedIn) {
+    <div class="opac-acc-login-wrap">
+      <mat-card class="opac-acc-login-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>account_circle</mat-icon>
+          <mat-card-title>{{ 'opac.readerLogin' | translate }}</mat-card-title>
+          <mat-card-subtitle>{{ 'opac.loginSubtitle' | translate }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+
+          @if (loginError) {
+            <div class="opac-acc-login__error">
+              <mat-icon>error_outline</mat-icon> {{ loginError }}
+            </div>
+          }
+
+          <mat-form-field appearance="outline" class="opac-acc-login__field">
+            <mat-label>{{ 'opac.labelEmail' | translate }}</mat-label>
+            <input matInput type="email" [(ngModel)]="loginEmail"
+                   (keydown.enter)="login()" name="email" autocomplete="email">
+            <mat-icon matSuffix>email</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="opac-acc-login__field">
+            <mat-label>{{ 'opac.labelPassword' | translate }}</mat-label>
+            <input matInput type="password" [(ngModel)]="loginPassword"
+                   (keydown.enter)="login()" name="pwd" autocomplete="current-password">
+            <mat-icon matSuffix>lock</mat-icon>
+          </mat-form-field>
+
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button color="primary" (click)="login()" [disabled]="loginBusy"
+                  class="opac-acc-login__btn">
+            @if (loginBusy) { <mat-spinner diameter="20"></mat-spinner> }
+            @else { <mat-icon>login</mat-icon> {{ 'opac.signIn' | translate }} }
+          </button>
+        </mat-card-actions>
+        <mat-card-footer>
+          <p class="opac-acc-login__note">
+            {{ 'opac.loginNote' | translate }}
+          </p>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  }
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- LOGGED IN: account dashboard                                           -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  @if (auth.isLoggedIn) {
+    <div class="opac-acc-body">
+
+      <!-- Profile header -->
+      <div class="opac-acc-profile">
+        <div class="opac-acc-profile__avatar">
+          {{ (member?.firstname || '?').charAt(0).toUpperCase() }}
+        </div>
+        <div>
+          <div class="opac-acc-profile__name">{{ member?.firstname }} {{ member?.surname }}</div>
+          <div class="opac-acc-profile__email">{{ member?.email }}</div>
+        </div>
+        <button mat-stroked-button (click)="logout()" class="opac-acc-profile__logout">
+          <mat-icon>logout</mat-icon> {{ 'opac.signOut' | translate }}
+        </button>
+      </div>
+
+      <!-- Stats row -->
+      <div class="opac-acc-stats">
+        <div class="opac-acc-stat">
+          <div class="opac-acc-stat__num">{{ loans.length }}</div>
+          <div class="opac-acc-stat__label">{{ 'opac.statActiveLoans' | translate }}</div>
+        </div>
+        <div class="opac-acc-stat">
+          <div class="opac-acc-stat__num opac-acc-stat__num--warn">
+            {{ overdueLoans }}
+          </div>
+          <div class="opac-acc-stat__label">{{ 'opac.statOverdue' | translate }}</div>
+        </div>
+        <div class="opac-acc-stat">
+          <div class="opac-acc-stat__num opac-acc-stat__num--accent">{{ holds.length }}</div>
+          <div class="opac-acc-stat__label">{{ 'opac.statPendingHolds' | translate }}</div>
+        </div>
+        <div class="opac-acc-stat">
+          <div class="opac-acc-stat__num opac-acc-stat__num--muted">{{ history.length }}</div>
+          <div class="opac-acc-stat__label">{{ 'opac.statTotalBorrows' | translate }}</div>
+        </div>
+      </div>
+
+      <!-- Tab navigation -->
+      <div class="opac-acc-tabs">
+        <button class="opac-acc-tab" [class.opac-acc-tab--active]="activeTab === 'loans'"
+                (click)="activeTab = 'loans'">
+          <mat-icon>book</mat-icon> {{ 'opac.tabLoans' | translate }}
+          @if (loans.length) { <span class="opac-acc-tab__count">{{ loans.length }}</span> }
+        </button>
+        <button class="opac-acc-tab" [class.opac-acc-tab--active]="activeTab === 'holds'"
+                (click)="activeTab = 'holds'">
+          <mat-icon>bookmark</mat-icon> {{ 'opac.tabHolds' | translate }}
+          @if (holds.length) { <span class="opac-acc-tab__count">{{ holds.length }}</span> }
+        </button>
+        <button class="opac-acc-tab" [class.opac-acc-tab--active]="activeTab === 'history'"
+                (click)="activeTab = 'history'">
+          <mat-icon>history</mat-icon> {{ 'opac.tabHistory' | translate }}
+        </button>
+        <button class="opac-acc-tab" [class.opac-acc-tab--active]="activeTab === 'profile'"
+                (click)="activeTab = 'profile'">
+          <mat-icon>manage_accounts</mat-icon> {{ 'opac.tabProfile' | translate }}
+        </button>
+      </div>
+
+      <!-- ── Tab: Current Loans ───────────────────────────────────────────── -->
+      @if (activeTab === 'loans') {
+        <div class="opac-acc-content">
+          @if (loadingLoans) { <mat-progress-bar mode="indeterminate"></mat-progress-bar> }
+
+          @if (!loadingLoans && loans.length === 0) {
+            <div class="opac-acc-empty">
+              <mat-icon>book</mat-icon>
+              <p>{{ 'opac.emptyLoans' | translate }}</p>
+              <button mat-stroked-button (click)="goSearch()">{{ 'opac.browseCatalog' | translate }}</button>
+            </div>
+          }
+
+          @for (circ of loans; track circ.id) {
+            <div class="opac-acc-loan-row" [class.opac-acc-loan-row--overdue]="isOverdue(circ)">
+              <img class="opac-acc-loan-row__thumb"
+                   [src]="coverUrl(circ)"
+                   [alt]="circ.catalogItemName?.title"
+                   onerror="this.src='assets/images/no-cover.png'">
+              <div class="opac-acc-loan-row__body">
+                <div class="opac-acc-loan-row__title">{{ circ.catalogItemName?.title }}</div>
+                <div class="opac-acc-loan-row__meta">
+                  @if (circ.catalogItemName?.writer?.name) {
+                    <span><mat-icon>person</mat-icon>{{ circ.catalogItemName.writer.name }}</span>
+                  }
+                  <span><mat-icon>calendar_today</mat-icon>Issued: {{ circ.issueDate | date:'dd/MM/yyyy' }}</span>
+                  <span><mat-icon>event</mat-icon>Due: {{ circ.toReturn | date:'dd/MM/yyyy' }}</span>
+                  @if (circ.penalty && circ.penalty !== '0') {
+                    <span class="opac-acc-fine"><mat-icon>attach_money</mat-icon>Fine: {{ circ.penalty }}</span>
+                  }
+                </div>
+              </div>
+              <div class="opac-acc-loan-row__right">
+                <span class="opac-acc-badge" [ngClass]="dueBadgeClass(circ)">
+                  {{ dueBadgeLabel(circ) }}
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- ── Tab: Holds ───────────────────────────────────────────────────── -->
+      @if (activeTab === 'holds') {
+        <div class="opac-acc-content">
+          @if (holds.length === 0) {
+            <div class="opac-acc-empty">
+              <mat-icon>bookmark_border</mat-icon>
+              <p>{{ 'opac.emptyHolds' | translate }}</p>
+              <button mat-stroked-button (click)="goSearch()">{{ 'opac.browseCatalog' | translate }}</button>
+            </div>
+          }
+          @for (circ of holds; track circ.id) {
+            <div class="opac-acc-loan-row">
+              <img class="opac-acc-loan-row__thumb"
+                   [src]="coverUrl(circ)"
+                   [alt]="circ.catalogItemName?.title"
+                   onerror="this.src='assets/images/no-cover.png'">
+              <div class="opac-acc-loan-row__body">
+                <div class="opac-acc-loan-row__title">{{ circ.catalogItemName?.title }}</div>
+                <div class="opac-acc-loan-row__meta">
+                  @if (circ.catalogItemName?.writer?.name) {
+                    <span><mat-icon>person</mat-icon>{{ circ.catalogItemName.writer.name }}</span>
+                  }
+                  <span><mat-icon>calendar_today</mat-icon>Requested: {{ circ.issueDate | date:'dd/MM/yyyy' }}</span>
+                </div>
+              </div>
+              <div class="opac-acc-loan-row__right">
+                <span class="opac-acc-badge opac-acc-badge--hold">{{ circ.returnStatus?.status || 'On Hold' }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- ── Tab: History ─────────────────────────────────────────────────── -->
+      @if (activeTab === 'history') {
+        <div class="opac-acc-content">
+          @if (history.length === 0) {
+            <div class="opac-acc-empty">
+              <mat-icon>history</mat-icon>
+              <p>{{ 'opac.emptyHistory' | translate }}</p>
+            </div>
+          }
+          @for (circ of history; track circ.id) {
+            <div class="opac-acc-loan-row">
+              <img class="opac-acc-loan-row__thumb"
+                   [src]="coverUrl(circ)"
+                   [alt]="circ.catalogItemName?.title"
+                   onerror="this.src='assets/images/no-cover.png'">
+              <div class="opac-acc-loan-row__body">
+                <div class="opac-acc-loan-row__title">{{ circ.catalogItemName?.title }}</div>
+                <div class="opac-acc-loan-row__meta">
+                  @if (circ.catalogItemName?.writer?.name) {
+                    <span><mat-icon>person</mat-icon>{{ circ.catalogItemName.writer.name }}</span>
+                  }
+                  <span><mat-icon>calendar_today</mat-icon>Issued: {{ circ.issueDate | date:'dd/MM/yyyy' }}</span>
+                  @if (circ.returnDate) {
+                    <span><mat-icon>assignment_return</mat-icon>Returned: {{ circ.returnDate | date:'dd/MM/yyyy' }}</span>
+                  }
+                </div>
+              </div>
+              <div class="opac-acc-loan-row__right">
+                <span class="opac-acc-badge" [ngClass]="dueBadgeClass(circ)">
+                  {{ dueBadgeLabel(circ) }}
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- ── Tab: Profile ─────────────────────────────────────────────────── -->
+      @if (activeTab === 'profile') {
+        <div class="opac-acc-content opac-acc-profile-tab">
+          <div class="opac-profile-card">
+            <div class="opac-profile-row">
+              <mat-icon>person</mat-icon>
+              <span class="opac-profile-row__label">{{ 'opac.profileName' | translate }}</span>
+              <span>{{ member?.firstname }} {{ member?.surname }}</span>
+            </div>
+            <div class="opac-profile-row">
+              <mat-icon>email</mat-icon>
+              <span class="opac-profile-row__label">{{ 'opac.profileEmail' | translate }}</span>
+              <span>{{ member?.email || '—' }}</span>
+            </div>
+            <div class="opac-profile-row">
+              <mat-icon>phone</mat-icon>
+              <span class="opac-profile-row__label">{{ 'opac.profileMobile' | translate }}</span>
+              <span>{{ member?.mobile || '—' }}</span>
+            </div>
+            <div class="opac-profile-row">
+              <mat-icon>badge</mat-icon>
+              <span class="opac-profile-row__label">{{ 'opac.profileMemberID' | translate }}</span>
+              <code>{{ member?.id }}</code>
+            </div>
+            <div class="opac-profile-row">
+              <mat-icon>circle</mat-icon>
+              <span class="opac-profile-row__label">{{ 'opac.profileStatus' | translate }}</span>
+              <span>{{ member?.status || 'Active' }}</span>
+            </div>
+          </div>
+          <p class="opac-profile-note">
+            {{ 'opac.profileNote' | translate }}
+          </p>
+        </div>
+      }
+
+    </div>
+  }
+
+</div>

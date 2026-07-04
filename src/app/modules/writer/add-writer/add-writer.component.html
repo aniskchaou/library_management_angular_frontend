@@ -1,170 +1,73 @@
-
-<div class="modal-header">
-  <h5 class="modal-title">Add Author</h5>
-  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-
-<div class="modal-body">
-<form style="background-color: white; padding: 20px; border-radius: 5px;" class="row" [formGroup]="writerForm">
-  
-  <!-- Name -->
-  <div class="form-group col-md-6">
-    <label for="name">{{ writerI18n?.nameI18n }}:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: Enter the writer's name. Example: John Doe"></i>
-    <input [ngClass]="{ 'is-invalid': submitted && f.name.errors }" 
-           formControlName="name" id="field-category_name" 
-           name="name" class="form-control" type="text" maxlength="99" />
-    <!-- Name validation -->
-    <div *ngIf="submitted && f.name.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.name.errors.required">
-        {{ msg.validationMessage.name }}
-      </div>
-    </div>
-  </div>
-
-  <!-- Note -->
-  <div class="form-group col-md-6">
-    <label for="note">{{ writerI18n?.noteI18n }}:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: Enter a note about the writer. Example: Renowned for historical fiction"></i>
-    <input [ngClass]="{ 'is-invalid': submitted && f.note.errors }" 
-           formControlName="note" id="field-note" 
-           name="note" class="form-control" type="text" maxlength="99" />
-    <!-- Note validation -->
-    <div *ngIf="submitted && f.note.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.note.errors.required">
-        {{ msg.validationMessage.note }}
-      </div>
-    </div>
-  </div>
-
-  <!-- Date of Birth -->
-  <div class="form-group col-md-6">
-    <label for="dob">Date of Birth:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: Enter the writer's date of birth."></i>
-    <input [ngClass]="{ 'is-invalid': submitted && f.dob.errors }" 
-           formControlName="dob" id="field-dob" 
-           name="dob" class="form-control" type="date" />
-    <!-- Date of Birth validation -->
-    <div *ngIf="submitted && f.dob.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.dob.errors.required">
-        {{ msg.validationMessage.dob }}
-      </div>
-    </div>
-  </div>
-
-  <!-- Died -->
-  <div class="form-group col-md-6">
-    <label for="died">Died:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: Select if the writer has passed away."></i>
-    <div>
-      <input type="radio" formControlName="died" id="died_yes" name="died" value="yes" />
-      <label for="died_yes">Yes</label>
-      <input type="radio" formControlName="died" id="died_no" name="died" value="no" />
-      <label for="died_no">No</label>
-    </div>
-    <!-- Died validation -->
-    <div *ngIf="submitted && f.died.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.died.errors.required">
-        {{ msg.validationMessage.died }}
-      </div>
-    </div>
-  </div>
-
-  <!-- Date of Death -->
-  <div class="form-group col-md-6">
-    <label for="dod">Date of Death:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: Enter the date of death, if applicable."></i>
-    <input [ngClass]="{ 'is-invalid': submitted && f.dod.errors }" 
-           formControlName="dod" id="field-dod" 
-           name="dod" class="form-control" type="date" />
-    <!-- Date of Death validation -->
-    <div *ngIf="submitted && f.dod.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.dod.errors.required">
-        {{ msg.validationMessage.dod }}
-      </div>
-    </div>
-  </div>
-
-  <!-- Bio -->
-  <div class="form-group col-md-6">
-    <label for="bio">Bio:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: Enter a short biography of the writer."></i>
-    <textarea [ngClass]="{ 'is-invalid': submitted && f.bio.errors }" 
-              formControlName="bio" id="field-bio" 
-              name="bio" class="form-control" rows="3"></textarea>
-    <!-- Bio validation -->
-    <div *ngIf="submitted && f.bio.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.bio.errors.required">
-        {{ msg.validationMessage.bio }}
-      </div>
-    </div>
-  </div>
-
-  <!-- Publications -->
-  <div class="form-group col-md-6">
-    <label for="publications">Publications:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: List the writer's major publications."></i>
-    <textarea [ngClass]="{ 'is-invalid': submitted && f.publications.errors }" 
-              formControlName="publications" id="field-publications" 
-              name="publications" class="form-control" rows="3"></textarea>
-    <!-- Publications validation -->
-    <div *ngIf="submitted && f.publications.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.publications.errors.required">
-        {{ msg.validationMessage.publications }}
-      </div>
-    </div>
-  </div>
-
-  <!-- Awards -->
-  <div class="form-group col-md-6">
-    <label for="awards">Awards:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: List any awards the writer has won."></i>
-    <textarea [ngClass]="{ 'is-invalid': submitted && f.awards.errors }" 
-              formControlName="awards" id="field-awards" 
-              name="awards" class="form-control" rows="3"></textarea>
-    <!-- Awards validation -->
-    <div *ngIf="submitted && f.awards.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.awards.errors.required">
-        {{ msg.validationMessage.awards }}
-      </div>
-    </div>
-  </div>
-
-  <!-- refrences -->
-  <div class="form-group col-md-6">
-    <label for="refrences">refrences:</label>
-    <i class="fas fa-info-circle" data-toggle="tooltip" 
-       title="Description: Provide any refrences for the writer."></i>
-    <textarea [ngClass]="{ 'is-invalid': submitted && f.refrences.errors }" 
-              formControlName="refrences" id="field-refrences" 
-              name="refrences" class="form-control" rows="3"></textarea>
-    <!-- refrences validation -->
-    <div *ngIf="submitted && f.refrences.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.refrences.errors.required">
-        {{ msg.validationMessage.refrences }}
-      </div>
-    </div>
-  </div>
-
-  <!-- Add Button -->
-  <div class="col-md-12">
-    <button (click)="add()" type="button" class="btn btn-outline-primary">
-      <i class="fas fa-save"></i>
-      {{ writerI18n?.addButtonI18n }}
+<div class="ll-modal ll-modal--wide">
+  <div class="ll-modal__header">
+    <mat-icon class="ll-modal__icon">person_add</mat-icon>
+    <h2 class="ll-modal__title">{{ 'writer.addTitle' | translate }}</h2>
+    <button mat-icon-button class="ll-modal__close" (click)="closeModal()" aria-label="Close">
+      <mat-icon>close</mat-icon>
     </button>
   </div>
-</form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+
+  <div class="ll-modal__content">
+    <form [formGroup]="writerForm" novalidate class="ll-form">
+      <div class="ll-form__grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" formControlName="name" maxlength="99" placeholder="e.g. Jane Austen" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Note / Nickname</mat-label>
+          <input matInput type="text" formControlName="note" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput type="date" formControlName="dob" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="ll-form__col-span">
+          <mat-label>Deceased?</mat-label>
+          <mat-select formControlName="died">
+            <mat-option value="no">Living</mat-option>
+            <mat-option value="yes">Deceased</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Death</mat-label>
+          <input matInput type="date" formControlName="dod" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="ll-form__col-full">
+          <mat-label>Biography</mat-label>
+          <textarea matInput rows="3" formControlName="bio" placeholder="Short biography…"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="ll-form__col-full">
+          <mat-label>Publications</mat-label>
+          <textarea matInput rows="2" formControlName="publications" placeholder="Comma-separated list of major works"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Awards</mat-label>
+          <input matInput type="text" formControlName="awards" placeholder="Nobel Prize, Booker…" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>References</mat-label>
+          <input matInput type="text" formControlName="refrences" placeholder="External references / URLs" />
+        </mat-form-field>
+      </div>
+
+      <div class="ll-modal__actions">
+        <button mat-stroked-button type="button" (click)="closeModal()">Cancel</button>
+        <button mat-stroked-button type="button" (click)="reset()">
+          <mat-icon>restart_alt</mat-icon> Reset
+        </button>
+        <button mat-flat-button color="primary" type="button" (click)="add()">
+          <mat-icon>save</mat-icon> {{ 'ui.save' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

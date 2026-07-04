@@ -1,54 +1,59 @@
 
 <!-- <div class="chatbot-icon" (click)="toggleChatbot()">
-    <i class="fas fa-comments"></i>
-  </div>
-  
-  <div class="chatbot-container" *ngIf="isActive">
-    <div class="chatbot-header" (click)="toggleChatbot()">
-      <h5>Chatbot</h5>
-      <span (click)="closeChatbot()">Close</span>
-    </div>
-  
-    <div class="chatbot-body">
-      <div class="messages-container">
-        <div *ngFor="let message of messages" class="message" [ngClass]="{'user': message.user}">
-          <span>{{ message.text }}</span>
-        </div>
-      </div>
-      <div class="chatbot-input">
-        <input [(ngModel)]="userMessage" type="text" placeholder="Type a message..." (keyup.enter)="sendMessage()"/>
-        <button (click)="sendMessage()">Send</button>
-      </div>
-    </div>
-  </div> -->
+<i class="fas fa-comments"></i>
+</div>
 
-  <div class="chatbot-icon" (click)="toggleChatbot()">
-    <i class="fas fa-robot"></i>
-  
-    <!-- Notification Badge -->
-    <div *ngIf="showNotification" class="notification-badge">
+<div class="chatbot-container" *ngIf="isActive">
+  <div class="chatbot-header" (click)="toggleChatbot()">
+    <h5>Chatbot</h5>
+    <span (click)="closeChatbot()">Close</span>
+  </div>
+
+  <div class="chatbot-body">
+    <div class="messages-container">
+      <div *ngFor="let message of messages" class="message" [ngClass]="{'user': message.user}">
+        <span>{{ message.text }}</span>
+      </div>
+    </div>
+    <div class="chatbot-input">
+      <input [(ngModel)]="userMessage" type="text" placeholder="Type a message..." (keyup.enter)="sendMessage()"/>
+      <button (click)="sendMessage()">Send</button>
+    </div>
+  </div>
+</div> -->
+
+<div class="chatbot-icon" (click)="toggleChatbot()">
+  <mat-icon>smart_toy</mat-icon>
+
+  <!-- Notification Badge -->
+  @if (showNotification) {
+    <div class="notification-badge">
       1
     </div>
-  </div>
-  
-  <!-- Chatbot Container -->
-  <div class="chatbot-container" *ngIf="isActive">
+  }
+</div>
+
+<!-- Chatbot Container -->
+@if (isActive) {
+  <div class="chatbot-container">
     <div class="chatbot-header" (click)="toggleChatbot()">
-      <h5>Chatbot</h5>
-      <span (click)="closeChatbot()"> <i class="fas fa-times close-icon"></i></span>
+      <h5>{{ 'chatbot.title' | translate }}</h5>
+      <span (click)="closeChatbot()"> <mat-icon class="close-icon">close</mat-icon></span>
     </div>
-  
     <div class="chatbot-body">
       <div class="messages-container">
-        <div *ngFor="let message of messages" class="message" [ngClass]="{'user': message.user}">
-          <span>{{ message.text }}</span>
-        </div>
+        @for (message of messages; track message) {
+          <div class="message" [ngClass]="{'user': message.user}">
+            <span>{{ message.text }}</span>
+          </div>
+        }
       </div>
       <div class="chatbot-input">
-        <input [(ngModel)]="userMessage" type="text" placeholder="Type a message..." (keyup.enter)="sendMessage()" />
-        <button (click)="sendMessage()"><i class="fas fa-paper-plane icon send-icon" title="Send"></i></button>
+        <input [(ngModel)]="userMessage" type="text" [placeholder]="'chatbot.inputPlaceholder' | translate" (keyup.enter)="sendMessage()" />
+        <button (click)="sendMessage()"><mat-icon class="send-icon">send</mat-icon></button>
       </div>
     </div>
   </div>
-  
-  
+}
+
+

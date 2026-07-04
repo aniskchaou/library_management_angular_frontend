@@ -1,115 +1,50 @@
-
-<div class="modal-header">
-  <h5 class="modal-title">Create Category</h5>
-  <button type="button" class="close" aria-label="Close" (click)="onCancelClick()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-<form class="form-group" id="category_name_field_box" [formGroup]="categoryForm">
-  
-  <!-- Category Name -->
-  <div class="form-group">
-    <label for="name" id="category_name_display_as_box">
-      {{ categoryI18n?.category_nameI18n }}
-      <span class="required">*</span>
-      <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter the name of the category."></i>
-    </label>
-    <input
-      [ngClass]="{ 'is-invalid': submitted && f.category_name.errors }"
-      formControlName="category_name"
-      id="field-category_name"
-      name="category_name"
-      class="form-control"
-      type="text"
-      maxlength="99"
-      placeholder="e.g., Fiction, Non-Fiction"
-    />
-    <div *ngIf="submitted && f.category_name.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.category_name.errors.required">
-        {{ msg.validationMessage.category_name }}
-      </div>
-    </div>
-  </div>
-
-  <!-- Slug -->
-  <div class="form-group">
-    <label for="slug" id="slug_display_as_box">
-      Slug
-      <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Enter a slug for the category."></i>
-    </label>
-    <input
-      [ngClass]="{ 'is-invalid': submitted && f.slug.errors }"
-      formControlName="slug"
-      id="field-slug"
-      name="slug"
-      class="form-control"
-      type="text"
-      maxlength="99"
-      placeholder="e.g., fiction-category"
-    />
-    <div *ngIf="submitted && f.slug.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.slug.errors.required">
-        Slug is required.
-      </div>
-    </div>
-  </div>
-
-  <!-- Published -->
-  <div class="form-group">
-    <label for="published" id="published_display_as_box">
-      Published
-      <i class="fas fa-info-circle" data-toggle="tooltip" data-html="true" title="<b>Description:</b> Check if the category should be published."></i>
-    </label>
-    <input
-      [ngClass]="{ 'is-invalid': submitted && f.published.errors }"
-      formControlName="published"
-      id="field-published"
-      name="published"
-      class="form-control"
-      type="checkbox"
-    />
-    <div *ngIf="submitted && f.published.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.published.errors.required">
-        {{ msg.validationMessage.published }}
-      </div>
-    </div>
-  </div>
-
-  <div *ngIf="suggestions" class="alert alert-info" role="alert">
-    <h4 class="alert-heading">Suggestions Response:</h4>
-    <p>{{ suggestions }}</p>
-  </div>
-
-  <!-- Submit Button -->
-  <div class="button-group">
-  <!--   <button class="btn btn-outline-primary btn-icon-split" (click)="suggest()">
-        <span class="icon text-primary">
-            <i class="fas fa-lightbulb"></i>
-        </span>
-        <span class="text">Get AI Suggestions</span>
-    </button> -->
-
-    <button (click)="add()" type="button" class="btn btn-outline-primary btn-icon-split">
-        <span class="icon text-primary">
-            <i class="fas fa-plus-circle"></i> <!-- Different icon for this button -->
-        </span>
-        <span class="text">{{ categoryI18n?.addButtonI18n }}</span>
+<div class="ll-modal">
+  <div class="ll-modal__header">
+    <mat-icon class="ll-modal__icon">add_circle</mat-icon>
+    <h2 class="ll-modal__title">{{ 'category.addTitle' | translate }}</h2>
+    <button mat-icon-button class="ll-modal__close" (click)="onCancelClick()" aria-label="Close">
+      <mat-icon>close</mat-icon>
     </button>
+  </div>
 
-  <!--   <button (click)="addMore()" type="button" class="btn btn-outline-secondary btn-icon-split">
-        <span class="icon text-secondary">
-            <i class="fas fa-plus-square"></i> 
-        </span>
-        <span class="text">Create More</span>
-    </button> -->
+  <div class="ll-modal__content">
+    <form [formGroup]="categoryForm" novalidate class="ll-form">
+      <div class="ll-form__grid">
+        <mat-form-field appearance="outline" class="ll-form__full">
+          <mat-label>{{ 'category.colName' | translate }}</mat-label>
+          <input matInput type="text" formControlName="category_name" maxlength="99" placeholder="e.g. Fiction, Non-Fiction" />
+          @if (submitted && f.category_name.errors?.required) {
+            <mat-error>{{ msg.validationMessage.category_name }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="ll-form__full">
+          <mat-label>Slug</mat-label>
+          <input matInput type="text" formControlName="slug" maxlength="99" placeholder="e.g. fiction-category" />
+          <mat-hint>Lowercase letters, numbers and hyphens.</mat-hint>
+          @if (submitted && f.slug.errors?.required) {
+            <mat-error>Slug is required.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-checkbox formControlName="published" class="ll-form__full">Published</mat-checkbox>
+      </div>
+
+      @if (suggestions) {
+        <mat-card appearance="outlined" class="ll-form__suggestions">
+          <mat-card-content>
+            <div class="ll-charts__title"><mat-icon>auto_awesome</mat-icon> AI Suggestions</div>
+            <p>{{ suggestions }}</p>
+          </mat-card-content>
+        </mat-card>
+      }
+
+      <div class="ll-modal__actions">
+        <button mat-stroked-button type="button" (click)="onCancelClick()">Cancel</button>
+        <button mat-flat-button color="primary" type="button" (click)="add()">
+          <mat-icon>save</mat-icon> {{ 'ui.save' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
-
-</form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" (click)="onCancelClick()">Close</button>
-</div>
-
-
-

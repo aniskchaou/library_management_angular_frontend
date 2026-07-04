@@ -1,35 +1,21 @@
-.tooltip {
-    opacity: 1 !important; /* Ensure tooltip is fully visible */
-    font-size: 14px; /* Adjust font size */
-    background-color: #333; /* Tooltip background color */
-    color: #fff; /* Tooltip text color */
-    border-radius: 4px; /* Rounded corners */
-  }
-  
-  .tooltip-inner {
-    padding: 8px 12px; /* Padding inside the tooltip */
-  }
-  
-  .tooltip.bs-tooltip-auto[x-placement^="top"],
-  .tooltip.bs-tooltip-top {
-    margin-top: -5px; /* Adjust top placement */
-  }
-  
-  .tooltip.bs-tooltip-auto[x-placement^="bottom"],
-  .tooltip.bs-tooltip-bottom {
-    margin-top: 5px; /* Adjust bottom placement */
-  }
-  
-  .tooltip.bs-tooltip-auto[x-placement^="left"],
-  .tooltip.bs-tooltip-left {
-    margin-left: -5px; /* Adjust left placement */
-  }
-  
-  .tooltip.bs-tooltip-auto[x-placement^="right"],
-  .tooltip.bs-tooltip-right {
-    margin-left: 5px; /* Adjust right placement */
-  }
-  
-  .arrow::before {
-    border-color: #333; /* Tooltip arrow color */
-  }
+:host { display: block; }
+
+.ll-modal { display: flex; flex-direction: column; min-width: 520px; max-height: 90vh; }
+.ll-modal__header { display: flex; align-items: center; gap: 8px; padding: 14px 20px; border-bottom: 1px solid rgba(0,0,0,.08); }
+.ll-modal__icon { color: #3f51b5; }
+.ll-modal__title { margin: 0; font-size: 18px; font-weight: 500; flex: 1; }
+.ll-modal__close { margin-left: auto; }
+.ll-modal__content { padding: 20px; overflow: auto; flex: 1; }
+.ll-modal__actions { display: flex; justify-content: flex-end; gap: 8px; padding-top: 12px; margin-top: 16px; border-top: 1px solid rgba(0,0,0,.08); }
+.ll-modal__actions mat-icon { margin-right: 4px; }
+
+.ll-form__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px 16px; }
+.ll-form__full { grid-column: 1 / -1; }
+.ll-form__suggestions { margin-top: 8px; }
+
+.ll-charts__title { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+.ll-charts__title mat-icon { color: #3f51b5; font-size: 18px; width: 18px; height: 18px; }
+
+@media (max-width: 720px) {
+  .ll-modal { min-width: 0; }
+}

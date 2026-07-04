@@ -12,6 +12,14 @@ export default class Member {
   gender: string;        // Member's gender (e.g., Male, Female, Other)
   status: string;        // Current status of the member (e.g., Active, Inactive)
 
+  // Fields as returned by the actual API
+  primary_email?: string;
+  secondary_email?: string;
+  primary_phone?: string;
+  secondary_phone?: string;
+  userType?: string;
+  typeId?: string;
+
   constructor(
     id: number,
     surname: string,

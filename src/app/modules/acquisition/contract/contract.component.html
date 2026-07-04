@@ -1,279 +1,59 @@
-<!-- Main Content -->
-<div class="container mt-4">
-    <!-- Title with Icon -->
-    <h1 class="h3 mb-2 text-gray-800">
-      <i class="fas fa-file-contract mr-2"></i>Contracts
-    </h1>
-  
-    <!-- Description Below Title -->
-    <p class="lead mb-4">
-      Manage and review all contracts within the system. Use the tabs to navigate through various sections including the overview of contract data, detailed list of contracts, and the user manual for further instructions. Click "Add Contract" to create new entries.
-    </p>
-  
-    <!-- Navigation Tabs -->
-    <ul class="nav nav-tabs">
-      <!-- <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#Overview">
-          <i class="fas fa-chart-bar mr-2"></i> Overview
-        </a>
-      </li> -->
-      <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#List">
-          <i class="fas fa-list mr-2"></i> List
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#UserManual">
-          <i class="fas fa-book mr-2"></i> User Manual
-        </a>
-      </li>
-    </ul>
-  
-    <!-- Tab Content -->
-    <div class="tab-content">
-      <!-- Overview tab content -->
-      <!-- <div id="Overview" class="tab-pane fade show active">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-6">
-              <ngx-charts-bar-vertical
-                [results]="barChartData"
-                [view]="[400,300]"
-                [scheme]="'cool'"
-                [gradient]="true"
-                [xAxis]="true"
-                [yAxis]="true"
-                [legend]="true"
-                [showXAxisLabel]="true"
-                [showYAxisLabel]="true"
-                xAxisLabel="Category"
-                yAxisLabel="Number of Books">
-              </ngx-charts-bar-vertical>
-            </div>
-            <div class="col-md-6">
-              <ngx-charts-pie-chart
-                [results]="pieChartData"
-                [view]="[400,300]"
-                [scheme]="'cool'"
-                [legend]="true"
-                [explodeSlices]="false"
-                [labels]="true">
-              </ngx-charts-pie-chart>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <ngx-charts-line-chart
-                [results]="lineChartData"
-                [view]="[400,300]"
-                [scheme]="'cool'"
-                [legend]="true"
-                [xAxis]="true"
-                [yAxis]="true"
-                [autoScale]="true">
-              </ngx-charts-line-chart>
-            </div>
-            <div class="col-md-6">
-              <ngx-charts-pie-chart
-                [results]="doughnutChartData"
-                [view]="[400,300]"
-                [scheme]="'cool'"
-                [legend]="true"
-                [explodeSlices]="false"
-                [doughnut]="true"
-                [labels]="true">
-              </ngx-charts-pie-chart>
-            </div>
-          </div>
-        </div>
-      </div> -->
-  
-      <!-- List tab content -->
-      <div id="List" class="tab-pane fade show active">
-        <div class="container-fluid">
-          <button class="btn btn-outline-primary mb-3" (click)="openAddDialog()">Add Contract</button>
-          <button
-          href="#"
-          role="button"
-          class="btn btn-outline-warning btn-icon-split"
-          (click)="loadContracts()"
-        >
-          <span class="icon text-warning">
-            <i class="fas fa-redo"></i>
-          </span>
-          <span class="text">Reload</span>
-        </button>
-
-          <div class="card mb-4">
-            <div class="card-body">
-              <div class="table-responsive">
-           <!--      <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Contract Number</th>
-                      <th>Start Date</th>
-                      <th>End Date</th>
-                      <th>Vendor</th>
-                      <th>Terms</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let contract of contracts">
-                      <td>{{ contract.contractNumber }}</td>
-                      <td>{{ contract.startDate | date }}</td>
-                      <td>{{ contract.endDate | date }}</td>
-                      <td>{{ contract.vendor.name }}</td>
-                      <td>{{ contract.terms }}</td>
-                      <td>
-                        <button (click)="openEditDialog(contract)" class="btn btn-primary">Edit</button>
-                        <button (click)="deleteContract(contract.id)" class="btn btn-danger">Delete</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> -->
-
-                <div *ngIf="loadingIndicator; else loaded">
-                  <div class="d-flex justify-content-center">
-                    <div class="spinner-border text-primary" role="status">
-                      <span class="sr-only">Loading...</span>
-                    </div>
-                  </div>
-                </div>
-        
-                <ng-template #loaded>
-
-                 
-
-                <ngx-datatable
-  class="bootstrap"
-  [rows]="contracts"
-  [columnMode]="'force'"
-  [headerHeight]="50"
-  [footerHeight]="50"
-  [rowHeight]="'auto'"
-  [limit]="10"
-  [loadingIndicator]="loadingIndicator"
-  [reorderable]="reorderable"
-  (select)="onSelect($event)"
-  (activate)="onActivate($event)">
-
-  <!-- Contract Number -->
-  <ngx-datatable-column name="Contract Number" [prop]="'contractNumber'">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row.contractNumber }}
-    </ng-template>
-  </ngx-datatable-column>
-
-  <!-- Start Date -->
-  <ngx-datatable-column name="Start Date" [prop]="'startDate'">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      <span style="color: red;">{{ row.startDate | date }}</span>
-    </ng-template>
-  </ngx-datatable-column>
-
-  <!-- End Date -->
-  <ngx-datatable-column name="End Date" [prop]="'endDate'">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      <span style="color: blue;">{{ row.endDate | date }}</span>
-    </ng-template>
-  </ngx-datatable-column>
-
-  <!-- Vendor -->
-  <ngx-datatable-column name="Vendor" [prop]="'vendor.name'">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row.vendor?.name }}
-    </ng-template>
-  </ngx-datatable-column>
-
-  <!-- Terms -->
-  <ngx-datatable-column name="Terms" [prop]="'terms'">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row.terms }}
-    </ng-template>
-  </ngx-datatable-column>
-
-  <!-- Actions -->
-  <ngx-datatable-column name="Actions">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      
-        <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Actions
-        </button>
-        <div class="dropdown-menu">
-            <a class="dropdown-item"  (click)="openEditDialog(row)">
-                <i class="fas fa-edit"></i> Edit
-            </a>
-            <a class="dropdown-item"  (click)="deleteContract(row.id)">
-                <i class="fas fa-trash-alt"></i> Delete
-            </a>
-            <a class="dropdown-item" (click)="openUploadDialog(row)">
-                <i class="fas fa-upload"></i> Upload Document
-            </a>
-            <a class="dropdown-item" (click)="openViewDialog(row)">
-                <i class="fas fa-eye"></i> View
-            </a>
-            <a class="dropdown-item" (click)="sendReminder(row)">
-                <i class="fas fa-clock"></i> Send Reminder
-            </a>
-            <!-- <a class="dropdown-item" href="#">
-                <i class="fas fa-bell"></i> Notify Vendor
-            </a> -->
-        </div>
-    
-    
-      
-    </ng-template>
-  </ngx-datatable-column>
-
-</ngx-datatable>
-</ng-template> 
-              </div>
-            </div>
-          </div>
-        </div>
+﻿<div class="ll-page">
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <mat-icon class="ll-page__icon">description</mat-icon>
+      <div class="ll-page__title">
+        <h1>{{ 'acquisition.contractTitle' | translate }}</h1>
+        <p>{{ 'acquisition.contractDesc' | translate }}</p>
       </div>
-  
-      <!-- User Manual tab content -->
-      <div id="UserManual" class="tab-pane fade" style="background-color: white;">
-        <div>
-          <!-- <markdown [src]="markdownContent" [data]="markdownContent"></markdown>  -->
-           <div  [innerHTML]="markdownContent"></div>
-       </div>
+      <div class="ll-page__actions">
+        <button mat-flat-button color="primary" (click)="openAddDialog()"><mat-icon>add</mat-icon> {{ 'ui.create' | translate }}</button>
+        <button mat-stroked-button (click)="loadContracts()"><mat-icon>refresh</mat-icon> {{ 'ui.reload' | translate }}</button>
       </div>
-    </div>
-  </div>
-  
-  <!-- Modal for Contract Information Form -->
-  <div class="modal fade" id="orderFormModal" tabindex="-1" aria-labelledby="orderFormModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="orderFormModalLabel">Contract Information Form</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form action="#" method="post">
-            <div class="form-group">
-              <label for="contractName">Contract Name:</label>
-              <input type="text" class="form-control" id="contractName" name="contractName" required>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="ll-page__body" appearance="outlined">
+    <mat-card-content>
+      @if (loadingIndicator) {
+        <div class="ll-loading"><mat-progress-spinner diameter="48" mode="indeterminate"></mat-progress-spinner></div>
+      } @else {
+        <mat-tab-group animationDuration="200ms" class="ll-tabs">
+          <mat-tab>
+            <ng-template mat-tab-label><mat-icon class="ll-tab__icon">list</mat-icon> {{ 'ui.list' | translate }}</ng-template>
+            <div class="ll-tab__content">
+              <ngx-datatable class="material" [rows]="contracts" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10">
+                <ngx-datatable-column name="Contract Number" prop="contractNumber"></ngx-datatable-column>
+                <ngx-datatable-column name="Start Date" prop="startDate">
+                  <ng-template ngx-datatable-cell-template let-row="row">{{ row.startDate | date }}</ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="End Date" prop="endDate">
+                  <ng-template ngx-datatable-cell-template let-row="row">{{ row.endDate | date }}</ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Vendor" prop="vendor.name">
+                  <ng-template ngx-datatable-cell-template let-row="row">{{ row.vendor?.name }}</ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Terms" prop="terms"></ngx-datatable-column>
+                <ngx-datatable-column name="Actions">
+                  <ng-template ngx-datatable-cell-template let-row="row">
+                    <button mat-icon-button [matMenuTriggerFor]="contractMenu"><mat-icon>more_vert</mat-icon></button>
+                    <mat-menu #contractMenu="matMenu">
+                      <button mat-menu-item (click)="openEditDialog(row)"><mat-icon>edit</mat-icon> {{ 'ui.edit' | translate }}</button>
+                      <button mat-menu-item (click)="deleteContract(row.id)"><mat-icon>delete</mat-icon> {{ 'ui.delete' | translate }}</button>
+                      <button mat-menu-item (click)="openUploadDialog(row)"><mat-icon>upload_file</mat-icon> Upload Document</button>
+                      <button mat-menu-item (click)="openViewDialog(row)"><mat-icon>visibility</mat-icon> View</button>
+                      <button mat-menu-item (click)="sendReminder(row)"><mat-icon>notifications</mat-icon> Send Reminder</button>
+                    </mat-menu>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
             </div>
-            <div class="form-group">
-              <label for="contractDescription">Description:</label>
-              <textarea class="form-control" id="contractDescription" name="contractDescription" required></textarea>
-            </div>
-            <div class="form-group">
-              <label for="startDate">Start Date:</label>
-              <input type="date" class="form-control" id="startDate" name="startDate" required>
-            </div>
-            <div class="form-group">
-              <label for="endDate">End Date:</label>
-              <input type="date" class="form-control" id="endDate" name="endDate" required>
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">Submit</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label><mat-icon class="ll-tab__icon">menu_book</mat-icon> {{ 'ui.userManual' | translate }}</ng-template>
+            <div class="ll-tab__content"><div [innerHTML]="markdownContent"></div></div>
+          </mat-tab>
+        </mat-tab-group>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

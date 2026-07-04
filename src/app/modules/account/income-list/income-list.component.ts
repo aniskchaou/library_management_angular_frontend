@@ -3,9 +3,10 @@ import { URLLoader } from 'src/app/main/configs/URLLoader';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
 @Component({
-  selector: 'app-income-list',
-  templateUrl: './income-list.component.html',
-  styleUrls: ['./income-list.component.css'],
+    selector: 'app-income-list',
+    templateUrl: './income-list.component.html',
+    styleUrls: ['./income-list.component.css'],
+    standalone: false
 })
 export class IncomeListComponent extends URLLoader implements OnInit {
   @Input() incomes;

@@ -1,329 +1,110 @@
-<form
-  class="form-group odd"
-  id="category_name_field_box"
-  [formGroup]="circulationForm"
->
-  <!-- membre name-->
-  <label
-    class="col-sm-3 control-label"
-    for="name"
-    id="category_name_display_as_box"
-  >
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ circulationI18n?.memberNameI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-
-  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
-    <select
-      [ngClass]="{ 'is-invalid': submitted && f.memberName.errors }"
-      formControlName="memberName"
-      id="field-category_name"
-      name="memberName"
-      class="form-control"
-    >
-      <option *ngFor="let c of memberNames$" value="{{ c.id }}">
-        {{ c.name }}
-      </option>
-    </select>
-
-    <div *ngIf="submitted && f.memberName.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.memberName.errors.required">
-        {{ msg.validationMessage.memberName }}
-      </div>
-    </div>
-  </div>
-  <!-- book name-->
-  <label
-    class="col-sm-3 control-label"
-    for="name"
-    id="category_name_display_as_box"
-  >
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ circulationI18n?.bookNameI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-
-  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
-    <select
-      [ngClass]="{ 'is-invalid': submitted && f.bookName.errors }"
-      formControlName="bookName"
-      id="field-category_name"
-      name="bookName"
-      class="form-control"
-      type="text"
-      maxlength="99"
-    >
-      <option *ngFor="let c of bookNames$" value="{{ c.id }}">
-        {{ c.title }}
-      </option>
-    </select>
-
-    <div *ngIf="submitted && f.bookName.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.bookName.errors.required">
-        {{ msg.validationMessage.bookName }}
-      </div>
-    </div>
-  </div>
-  <!-- writer -->
-  <label
-    class="col-sm-3 control-label"
-    for="name"
-    id="category_name_display_as_box"
-  >
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ circulationI18n?.writerI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-
-  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
-    <select
-      [ngClass]="{ 'is-invalid': submitted && f.writer.errors }"
-      formControlName="writer"
-      id="field-category_name"
-      name="writer"
-      class="form-control"
-    >
-      <option *ngFor="let c of writers$" value="{{ c.id }}">
-        {{ c.name }}
-      </option>
-    </select>
-
-    <div *ngIf="submitted && f.writer.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.writer.errors.required">
-        {{ msg.validationMessage.writer }}
-      </div>
-    </div>
-  </div>
-  <!-- issue date -->
-  <label
-    class="col-sm-3 control-label"
-    for="name"
-    id="category_name_display_as_box"
-  >
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ circulationI18n?.issueDateI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-
-  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
-    <input
-      [ngClass]="{ 'is-invalid': submitted && f.issueDate.errors }"
-      formControlName="issueDate"
-      id="field-category_name"
-      name="issueDate"
-      class="form-control"
-      type="date"
-      maxlength="99"
-    />
-
-    <div *ngIf="submitted && f.issueDate.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.issueDate.errors.required">
-        {{ msg.validationMessage.issueDate }}
-      </div>
-    </div>
-  </div>
-  <!-- last date -->
-  <label
-    class="col-sm-3 control-label"
-    for="name"
-    id="category_name_display_as_box"
-  >
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ circulationI18n?.lastDateI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-
-  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
-    <input
-      [ngClass]="{ 'is-invalid': submitted && f.lastDate.errors }"
-      formControlName="lastDate"
-      id="field-category_name"
-      name="lastDate"
-      class="form-control"
-      type="date"
-      maxlength="99"
-    />
-
-    <div *ngIf="submitted && f.lastDate.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.lastDate.errors.required">
-        {{ msg.validationMessage.lastDate }}
-      </div>
-    </div>
-  </div>
-  <!-- to return -->
-  <label
-    class="col-sm-3 control-label"
-    for="name"
-    id="category_name_display_as_box"
-  >
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ circulationI18n?.toReturnI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-
-  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
-    <input
-      [ngClass]="{ 'is-invalid': submitted && f.toReturn.errors }"
-      formControlName="toReturn"
-      id="field-category_name"
-      name="toReturn"
-      class="form-control"
-      type="date"
-      maxlength="99"
-    />
-
-    <div *ngIf="submitted && f.toReturn.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.toReturn.errors.required">
-        {{ msg.validationMessage.toReturn }}
-      </div>
-    </div>
+<div class="ll-modal">
+  <div class="ll-modal__header">
+    <mat-icon class="ll-modal__icon">add_circle</mat-icon>
+    <h2 class="ll-modal__title">{{ 'circulation.addTitle' | translate }}</h2>
+    <button mat-icon-button class="ll-modal__close" (click)="closeModal()" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
 
-  <!-- return date -->
-  <label
-    class="col-sm-3 control-label"
-    for="name"
-    id="category_name_display_as_box"
-  >
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ circulationI18n?.returnDateI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
+  <div class="ll-modal__content">
+    <form [formGroup]="circulationForm" novalidate class="ll-form">
+      <div class="ll-form__grid">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'circulation.colMember' | translate }}</mat-label>
+          <mat-select formControlName="memberName">
+            @for (c of memberNames$; track c.id) {
+              <mat-option [value]="c.id">{{ c.firstname || c.name }} {{ c.surname }}</mat-option>
+            }
+          </mat-select>
+          @if (submitted && f.memberName.errors?.required) {
+            <mat-error>{{ msg.validationMessage.memberName }}</mat-error>
+          }
+        </mat-form-field>
 
-  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
-    <input
-      [ngClass]="{ 'is-invalid': submitted && f.returnDate.errors }"
-      formControlName="returnDate"
-      id="field-category_name"
-      name="category_name"
-      class="form-control"
-      type="date"
-      maxlength="99"
-    />
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'circulation.colBook' | translate }}</mat-label>
+          <mat-select formControlName="bookName">
+            @for (c of bookNames$; track c.id) {
+              <mat-option [value]="c.id">{{ c.title }}</mat-option>
+            }
+          </mat-select>
+          @if (submitted && f.bookName.errors?.required) {
+            <mat-error>{{ msg.validationMessage.bookName }}</mat-error>
+          }
+        </mat-form-field>
 
-    <div *ngIf="submitted && f.returnDate.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.returnDate.errors.required">
-        {{ msg.validationMessage.returnDate }}
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'circulation.colWriter' | translate }}</mat-label>
+          <mat-select formControlName="writer">
+            @for (c of writers$; track c.id) {
+              <mat-option [value]="c.id">{{ c.name }}</mat-option>
+            }
+          </mat-select>
+          @if (submitted && f.writer.errors?.required) {
+            <mat-error>{{ msg.validationMessage.writer }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'circulation.colIssueDate' | translate }}</mat-label>
+          <input matInput type="date" formControlName="issueDate" />
+          @if (submitted && f.issueDate.errors?.required) {
+            <mat-error>{{ msg.validationMessage.issueDate }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'circulation.colLastDate' | translate }}</mat-label>
+          <input matInput type="date" formControlName="lastDate" />
+          @if (submitted && f.lastDate.errors?.required) {
+            <mat-error>{{ msg.validationMessage.lastDate }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'circulation.colToReturn' | translate }}</mat-label>
+          <input matInput type="date" formControlName="toReturn" />
+          @if (submitted && f.toReturn.errors?.required) {
+            <mat-error>{{ msg.validationMessage.toReturn }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'circulation.colReturnDate' | translate }}</mat-label>
+          <input matInput type="date" formControlName="returnDate" />
+          @if (submitted && f.returnDate.errors?.required) {
+            <mat-error>{{ msg.validationMessage.returnDate }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'circulation.colPenalty' | translate }}</mat-label>
+          <input matInput type="text" formControlName="penalty" />
+          @if (submitted && f.penalty.errors?.required) {
+            <mat-error>{{ msg.validationMessage.penalty }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'circulation.colReturnStatus' | translate }}</mat-label>
+          <mat-select formControlName="returnStatus">
+            @for (c of returnStatus$; track c.id) {
+              <mat-option [value]="c.id">{{ c.name }}</mat-option>
+            }
+          </mat-select>
+          @if (submitted && f.returnStatus.errors?.required) {
+            <mat-error>{{ msg.validationMessage.returnStatus }}</mat-error>
+          }
+        </mat-form-field>
       </div>
-    </div>
-  </div>
-  <!-- penalty -->
-  <label
-    class="col-sm-3 control-label"
-    for="name"
-    id="category_name_display_as_box"
-  >
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ circulationI18n?.penaltyI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
 
-  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
-    <input
-      [ngClass]="{ 'is-invalid': submitted && f.penalty.errors }"
-      formControlName="penalty"
-      id="field-category_name"
-      name="penalty"
-      class="form-control"
-      type="text"
-      maxlength="99"
-    />
-
-    <div *ngIf="submitted && f.penalty.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.penalty.errors.required">
-        {{ msg.validationMessage.penalty }}
+      <div class="ll-modal__actions">
+        <button mat-stroked-button type="button" (click)="closeModal()">Cancel</button>
+        <button mat-flat-button color="primary" type="button" (click)="add()">
+          <mat-icon>save</mat-icon> {{ 'ui.save' | translate }}
+        </button>
       </div>
-    </div>
+    </form>
   </div>
-  <!-- return status -->
-  <label
-    class="col-sm-3 control-label"
-    for="name"
-    id="category_name_display_as_box"
-  >
-    <font style="vertical-align: inherit">
-      <font style="vertical-align: inherit">
-        {{ circulationI18n?.returnStatusI18n }}
-      </font> </font
-    ><span class="required">
-      <font style="vertical-align: inherit">
-        <font style="vertical-align: inherit">*</font>
-      </font>
-    </span>
-  </label>
-
-  <div class="col-sm-9 col-md-6 col-lg-6" id="category_name_input_box">
-    <select
-      [ngClass]="{ 'is-invalid': submitted && f.returnStatus.errors }"
-      formControlName="returnStatus"
-      id="field-category_name"
-      name="returnStatus"
-      class="form-control"
-    >
-      <option *ngFor="let c of returnStatus$" value="{{ c.id }}">
-        {{ c.name }}
-      </option>
-    </select>
-    <div *ngIf="submitted && f.returnStatus.errors" class="alert alert-danger">
-      <div *ngIf="submitted && f.returnStatus.errors.required">
-        {{ msg.validationMessage.returnStatus }}
-      </div>
-    </div>
-  </div>
-
-  <br />
-  <!-- add button -->
-  <button (click)="add()" type="button" class="btn btn-info">
-    <i class="fas fa-save"></i>
-    {{ circulationI18n?.addButtonI18n }}
-  </button>
-</form>
+</div>

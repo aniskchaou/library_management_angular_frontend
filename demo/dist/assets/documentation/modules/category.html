@@ -1,0 +1,33 @@
+<p>The Category module is a crucial part of the library management software, designed to help organize and classify books, media, and other resources. It allows librarians to create, manage, and publish categories, making it easier for users to navigate and find specific types of resources.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">Category:</p>
+    <ul>
+        <li><strong>Description:</strong> This field represents the name of the category. It is used to classify various resources within the library system. A well-defined category helps users to easily locate the type of material they are interested in.</li>
+        <li><strong>Usage:</strong> Enter a unique and descriptive name for each category.</li>
+        <li><strong>Example:</strong> "Science Fiction", "Biography", "Children's Books"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string, unique, and no longer than 255 characters.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Slug:</p>
+    <ul>
+        <li><strong>Description:</strong> The slug is a URL-friendly version of the category name. It typically consists of lowercase letters, numbers, and hyphens. It is used in the URL structure of the library system for easier access and better SEO (Search Engine Optimization).</li>
+        <li><strong>Usage:</strong> Automatically generated from the category name but can be manually edited. Should be unique and should not contain spaces or special characters.</li>
+        <li><strong>Example:</strong> "science-fiction", "biography", "childrens-books"</li>
+        <li><strong>Validation:</strong> Must be a non-empty string, unique, and no longer than 255 characters.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Published:</p>
+    <ul>
+        <li><strong>Description:</strong> This boolean field indicates whether the category is published and visible to users within the library system. Unpublished categories can be used for draft purposes or to hide certain categories until they are ready to be made public.</li>
+        <li><strong>Usage:</strong> Set to <code>True</code> if the category should be visible to users, otherwise set to <code>False</code>.</li>
+        <li><strong>Example:</strong> <code>True</code> (published), <code>False</code> (unpublished)</li>
+        <li><strong>Validation:</strong> Must be a boolean value (<code>True</code> or <code>False</code>).</li>
+    </ul>
+</div>

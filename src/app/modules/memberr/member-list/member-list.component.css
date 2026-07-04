@@ -1,6 +1,25 @@
-.dropdown-menu {
-    z-index: 1050; /* Ensure the dropdown menu is on top */
-  position: absolute; /* Position it to stay on top */
-  max-height: 200px; /* Set a maximum height */
-  overflow-y: auto; /* Enable vertical scrolling */
-  }
+:host { display: block; }
+
+.ll-list { background: #fff; }
+.ll-list__tabs { background: #fff; }
+.ll-tab__icon { margin-right: 6px; font-size: 18px; width: 18px; height: 18px; vertical-align: middle; }
+.ll-tab__content { padding: 16px 0; display: flex; flex-direction: column; gap: 16px; }
+
+.ll-list__toolbar { display: flex; justify-content: flex-end; }
+.ll-list__search { width: 100%; max-width: 360px; }
+
+.ll-list__table { background: #fff; border-radius: 4px; overflow: hidden; }
+
+.ll-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 16px; }
+.ll-chart mat-card-content { min-height: 320px; }
+
+.ll-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 500; background: #9e9e9e; }
+.ll-cell { color: rgba(0,0,0,.87); }
+.ll-cell--strong { font-weight: 500; color: #3f51b5; }
+
+.ll-chip--ok ::ng-deep .mdc-evolution-chip__text-label { color: #2e7d32; }
+.ll-chip--ok { --mdc-chip-elevated-container-color: rgba(46,125,50,.12); }
+.ll-chip--off { --mdc-chip-elevated-container-color: rgba(198,40,40,.12); }
+.ll-chip--off ::ng-deep .mdc-evolution-chip__text-label { color: #c62828; }
+
+.ll-menu--danger mat-icon, .ll-menu--danger span { color: #c62828; }

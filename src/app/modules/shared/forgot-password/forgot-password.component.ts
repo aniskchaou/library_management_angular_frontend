@@ -1,22 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-forgot-password',
-  templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.css']
+    selector: 'app-forgot-password',
+    templateUrl: './forgot-password.component.html',
+    styleUrls: ['./forgot-password.component.css'],
+    standalone: false
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  forgotPasswordForm: FormGroup;
+  forgotPasswordForm: UntypedFormGroup;
   submitted = false;
   retrievedImage: string;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router,
+  constructor(private formBuilder: UntypedFormBuilder, private http: HttpClient, private router: Router,
     private toastr: ToastrService) {
     this.forgotPasswordForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]]

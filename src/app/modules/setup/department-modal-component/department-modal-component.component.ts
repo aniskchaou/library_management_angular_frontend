@@ -5,9 +5,10 @@ import { DepartmentService } from 'src/app/main/services/departement.service';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import { ToastrService } from 'ngx-toastr';
 @Component({
-  selector: 'app-department-modal-component',
-  templateUrl: './department-modal-component.component.html',
-  styleUrls: ['./department-modal-component.component.css']
+    selector: 'app-department-modal-component',
+    templateUrl: './department-modal-component.component.html',
+    styleUrls: ['./department-modal-component.component.css'],
+    standalone: false
 })
 export class DepartmentModalComponentComponent extends URLLoader implements OnInit,AfterViewInit {
 
@@ -91,15 +92,12 @@ export class DepartmentModalComponentComponent extends URLLoader implements OnIn
 
 
   saveDepartment() {
-    console.log(this.department)
     if (this.validateForm()) {
-      console.log('Form is valid. Submitting data:', this.department);
       this.departmentService.createDepartment(this.department).subscribe(() => {
         this.activeModal.close(this.department);
         this.toastr.success('Item added successfully!', 'Success');
       });
     } else {
-      console.log('Form is invalid. Errors:', this.errors);
     }
       
     //this.onSaveClick()

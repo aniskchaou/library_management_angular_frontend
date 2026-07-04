@@ -4,9 +4,10 @@ import { Budget } from 'src/app/main/models/Budget';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
 @Component({
-  selector: 'app-budget-modal',
-  templateUrl: './budget-modal.component.html',
-  styleUrls: ['./budget-modal.component.css']
+    selector: 'app-budget-modal',
+    templateUrl: './budget-modal.component.html',
+    styleUrls: ['./budget-modal.component.css'],
+    standalone: false
 })
 export class BudgetModalComponent implements OnInit {
 
@@ -31,7 +32,6 @@ export class BudgetModalComponent implements OnInit {
     } else {
       
     } */
-   console.log(this.budget)
     this.budgetService.createBudget(this.budget).subscribe((newBudget) => {
       this.activeModal.close(newBudget);
     });

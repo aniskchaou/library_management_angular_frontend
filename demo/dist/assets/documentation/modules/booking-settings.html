@@ -1,0 +1,94 @@
+
+<p>The Booking Setting module allows library administrators to configure the booking and circulation settings for members. It includes fields for setting default durations, quotas, and enabling member self-service options for checkouts and check-ins.</p>
+
+<h2>Fields and Descriptions</h2>
+
+<div class="field">
+    <p class="field-title">Booking Time:</p>
+    <ul>
+        <li><strong>Description:</strong> Sets the default circulation duration in days, changing the default "Return Date" in the circulation form.</li>
+        <li><strong>Usage:</strong> Enter the number of days for the default circulation duration.</li>
+        <li><strong>Example:</strong> "14"</li>
+        <li><strong>Validation:</strong> Must be a positive integer.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Booking Quota:</p>
+    <ul>
+        <li><strong>Description:</strong> The combined maximum number of items a member can request, checkout, or loan at a time.</li>
+        <li><strong>Usage:</strong> Enter the booking quota value.</li>
+        <li><strong>Example:</strong> "5"</li>
+        <li><strong>Validation:</strong> Must be a positive integer.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Enable member checkouts:</p>
+    <ul>
+        <li><strong>Description:</strong> Enables or disables the ability for members to do self-checkout of library items through their member area. Suitable for corporate, small business, office, family, and other unattended libraries.</li>
+        <li><strong>Usage:</strong> Select "Yes" to enable self-checkouts, otherwise select "No".</li>
+        <li><strong>Example:</strong> "Yes", "No"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes or No).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Enable member check-ins:</p>
+    <ul>
+        <li><strong>Description:</strong> Enables or disables the ability for members to return items by themselves.</li>
+        <li><strong>Usage:</strong> Select "Yes" to enable self-check-ins, otherwise select "No".</li>
+        <li><strong>Example:</strong> "Yes", "No"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes or No).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Enable member check-ins for overdue items:</p>
+    <ul>
+        <li><strong>Description:</strong> Enables or disables the ability for members to return overdue items by themselves. This setting only works when "Enable member check-ins" is enabled.</li>
+        <li><strong>Usage:</strong> Select "Yes" to enable self-check-ins for overdue items, otherwise select "No".</li>
+        <li><strong>Example:</strong> "Yes", "No"</li>
+        <li><strong>Validation:</strong> Must be a boolean value (Yes or No).</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Member:</p>
+    <ul>
+        <li><strong>Description:</strong> Specifies which member types can do self-checkouts and check-ins.</li>
+        <li><strong>Usage:</strong> Select the applicable member types from the list.</li>
+        <li><strong>Example:</strong> "All Members"</li>
+        <li><strong>Validation:</strong> Must be a valid member type.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Checkout Time:</p>
+    <ul>
+        <li><strong>Description:</strong> Sets the default checkout duration in days. This will be displayed in the request form.</li>
+        <li><strong>Usage:</strong> Enter the default checkout duration in days.</li>
+        <li><strong>Example:</strong> "7"</li>
+        <li><strong>Validation:</strong> Must be a positive integer.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Checkout Limit:</p>
+    <ul>
+        <li><strong>Description:</strong> The maximum checkout duration in days. Members cannot exceed this limit for self-checkout.</li>
+        <li><strong>Usage:</strong> Enter the maximum checkout duration in days.</li>
+        <li><strong>Example:</strong> "21"</li>
+        <li><strong>Validation:</strong> Must be a positive integer.</li>
+    </ul>
+</div>
+
+<div class="field">
+    <p class="field-title">Checkout Quota:</p>
+    <ul>
+        <li><strong>Description:</strong> The maximum number of items a member can check out at a time.</li>
+        <li><strong>Usage:</strong> Enter the checkout quota value.</li>
+        <li><strong>Example:</strong> "10"</li>
+        <li><strong>Validation:</strong> Must be a positive integer.</li>
+    </ul>
+</div>

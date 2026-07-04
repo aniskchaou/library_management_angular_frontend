@@ -11,9 +11,10 @@ import CONFIG from 'src/app/main/urls/urls';
 import { threadId } from 'worker_threads';
 
 @Component({
-  selector: 'app-purshase-suggestion-modal',
-  templateUrl: './purshase-suggestion-modal.component.html',
-  styleUrls: ['./purshase-suggestion-modal.component.css']
+    selector: 'app-purshase-suggestion-modal',
+    templateUrl: './purshase-suggestion-modal.component.html',
+    styleUrls: ['./purshase-suggestion-modal.component.css'],
+    standalone: false
 })
 export class PurshaseSuggestionModalComponent implements OnInit {
 
@@ -42,7 +43,6 @@ export class PurshaseSuggestionModalComponent implements OnInit {
   }
 
   onSaveClick(): void {
-   console.log(this.purchaseSuggestion)
    if(this.validatePurchaseSuggestionForm(this.purchaseSuggestion))
    {
     this.purchaseSuggestionService.createPurchaseSuggestion(this.purchaseSuggestion).subscribe((newSuggestion) => {

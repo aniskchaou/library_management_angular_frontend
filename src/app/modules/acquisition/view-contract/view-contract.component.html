@@ -1,75 +1,74 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="emptyModalLabel">View Contract</h5>
-    <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close">x</button>
+  <h5 class="modal-title" id="emptyModalLabel">View Contract</h5>
+  <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close">x</button>
+</div>
+<div class="modal-body">
+
+
+
+
+
+
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" id="contractTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="details-tab" data-bs-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">
+        <i class="fas fa-file-contract me-1"></i> Details
+      </a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="documents-tab" data-bs-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false">
+        <i class="fas fa-folder-open me-1"></i> Documents
+      </a>
+    </li>
+  </ul>
+  <!-- Tab content -->
+  <div class="tab-content mt-3" id="contractTabsContent">
+    <!-- Details tab -->
+    <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+      <h5 class="card-title">Contract Information</h5>
+      <ul class="list-group list-group-flush">
+        <!-- <li class="list-group-item"><strong>ID:</strong> {{ contract.id }}</li> -->
+        <li class="list-group-item"><strong>Contract Number:</strong> {{ contract.contractNumber }}</li>
+        <li class="list-group-item"><strong>Start Date:</strong> {{ contract.startDate }}</li>
+        <li class="list-group-item"><strong>End Date:</strong> {{ contract.endDate }}</li>
+        <li class="list-group-item"><strong>Vendor:</strong> {{ contract.vendor.name }}</li>
+      </ul>
+      <h5 class="mt-4">Terms</h5>
+      <p class="card-text">{{ contract.terms }}</p>
+    </div>
+    <!-- Documents tab -->
+    <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
+
+      <div class="container mt-5">
+        <h4 class="mb-4">Documents</h4>
+        <div class="list-group">
+          @for (document of files; track document) {
+            <div class="list-group-item">
+              <div class="d-flex justify-content-between align-items-center">
+                <span>{{ document.filename }}</span>
+                <button
+                  class="btn btn-outline-primary"
+                  (click)="downloadFile(document.filename)">
+                  <i class="fas fa-download me-1"></i> Download
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+    </div>
   </div>
-  <div class="modal-body">
-   
-
-
-
-    
-       
-        
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs" id="contractTabs" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="details-tab" data-bs-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">
-                            <i class="fas fa-file-contract me-1"></i> Details
-                        </a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="documents-tab" data-bs-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false">
-                            <i class="fas fa-folder-open me-1"></i> Documents
-                        </a>
-                    </li>
-                </ul>
-                <!-- Tab content -->
-                <div class="tab-content mt-3" id="contractTabsContent">
-                    <!-- Details tab -->
-                    <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
-                        <h5 class="card-title">Contract Information</h5>
-                        <ul class="list-group list-group-flush">
-                            <!-- <li class="list-group-item"><strong>ID:</strong> {{ contract.id }}</li> -->
-                            <li class="list-group-item"><strong>Contract Number:</strong> {{ contract.contractNumber }}</li>
-                            <li class="list-group-item"><strong>Start Date:</strong> {{ contract.startDate }}</li>
-                            <li class="list-group-item"><strong>End Date:</strong> {{ contract.endDate }}</li>
-                            <li class="list-group-item"><strong>Vendor:</strong> {{ contract.vendor.name }}</li>
-                        </ul>
-                        <h5 class="mt-4">Terms</h5>
-                        <p class="card-text">{{ contract.terms }}</p>
-                    </div>
-                    <!-- Documents tab -->
-                    <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
-                    
-                        <div class="container mt-5">
-                            <h4 class="mb-4">Documents</h4>
-                            <div class="list-group">
-                                <div class="list-group-item" *ngFor="let document of files">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span>{{ document.filename }}</span>
-                                        <button 
-                                            class="btn btn-outline-primary" 
-                                            (click)="downloadFile(document.filename)">
-                                            <i class="fas fa-download me-1"></i> Download
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-
-
-
-
-
-
-
-
-                    </div>
-                </div>
-            
-      
- 
 
 
 
@@ -96,8 +95,11 @@
 
 
 
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
-   <!--  <button type="button" class="btn btn-outline-primary">Save changes</button> -->
-  </div>
+
+
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+  <!--  <button type="button" class="btn btn-outline-primary">Save changes</button> -->
+</div>

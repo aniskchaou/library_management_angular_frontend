@@ -3,9 +3,10 @@ import { URLLoader } from 'src/app/main/configs/URLLoader';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
 @Component({
-  selector: 'app-payment-list',
-  templateUrl: './payment-list.component.html',
-  styleUrls: ['./payment-list.component.css'],
+    selector: 'app-payment-list',
+    templateUrl: './payment-list.component.html',
+    styleUrls: ['./payment-list.component.css'],
+    standalone: false
 })
 export class PaymentListComponent extends URLLoader implements OnInit {
   @Input() payments;

@@ -1,7 +1,8 @@
 import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[appStatus]',
+    selector: '[appStatus]',
+    standalone: false
 })
 export class StatusDirective {
   @Input() defaultColor: string;

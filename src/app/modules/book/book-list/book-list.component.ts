@@ -19,9 +19,10 @@ import { UploadBookCoverComponent } from '../upload-book-cover/upload-book-cover
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-book-list',
-  templateUrl: './book-list.component.html',
-  styleUrls: ['./book-list.component.css'],
+    selector: 'app-book-list',
+    templateUrl: './book-list.component.html',
+    styleUrls: ['./book-list.component.css'],
+    standalone: false
 })
 export class BookListComponent extends URLLoader implements OnInit, AfterViewInit {
   @Input() books;
@@ -105,11 +106,11 @@ export class BookListComponent extends URLLoader implements OnInit, AfterViewIni
       centered: true,}); // Open the CategoryViewComponent in modal
     modalRef.componentInstance.book = { ...catalog }; // Pass category data
 
-    console.log(catalog); // Ensure category is passed properly and logged
+
 
     modalRef.result.then(result => {
-      console.log(result); // Handle any result (if needed)
-    }).catch(error => console.log(error)); // Handle any errors
+
+    }).catch(() => {}); // Handle any errors
   }
 
   getRandomColor(): string {
@@ -148,7 +149,7 @@ export class BookListComponent extends URLLoader implements OnInit, AfterViewIni
           this.loadDepartments();
         }); */
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openCheckoutDialog(row): void {
@@ -161,7 +162,7 @@ export class BookListComponent extends URLLoader implements OnInit, AfterViewIni
           this.loadDepartments();
         }); */
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openOnHoldDialog(row): void {
@@ -174,11 +175,10 @@ export class BookListComponent extends URLLoader implements OnInit, AfterViewIni
           this.loadDepartments();
         }); */
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   duplicate(book){
-    console.log(book)
     delete book.id;
             this.catalogItemService.create(CONFIG.URL_BASE+'/book/create',book).then(() => {
               this.toastr.success('Item duplicated successfully!', 'Success');
@@ -197,7 +197,7 @@ export class BookListComponent extends URLLoader implements OnInit, AfterViewIni
           this.loadDepartments();
         }); */
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
 
@@ -211,7 +211,7 @@ export class BookListComponent extends URLLoader implements OnInit, AfterViewIni
           this.loadDepartments();
         }); */
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
   openEditDialog(row): void {
@@ -229,7 +229,7 @@ export class BookListComponent extends URLLoader implements OnInit, AfterViewIni
           this.loadDepartments();
         }); */
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 
 
@@ -242,6 +242,6 @@ export class BookListComponent extends URLLoader implements OnInit, AfterViewIni
       if (result) {
        
       }
-    }).catch(error => console.log(error));
+    }).catch(() => {});
   }
 }

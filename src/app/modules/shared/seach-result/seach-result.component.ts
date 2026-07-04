@@ -6,9 +6,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-seach-result',
-  templateUrl: './seach-result.component.html',
-  styleUrls: ['./seach-result.component.css'],
+    selector: 'app-seach-result',
+    templateUrl: './seach-result.component.html',
+    styleUrls: ['./seach-result.component.css'],
+    standalone: false
 })
 export class SeachResultComponent extends URLLoader implements OnInit {
   searchWord;
@@ -26,7 +27,6 @@ export class SeachResultComponent extends URLLoader implements OnInit {
 
     this.route.paramMap.subscribe((paramMap) => {
       this.searchWord = paramMap.get('search');
-      console.log(this.searchWord);
       this.getResultI18n(CONFIG.getInstance().getLang());
       this.getBookNumber(this.searchWord);
       this.getCategoryNumber(this.searchWord);

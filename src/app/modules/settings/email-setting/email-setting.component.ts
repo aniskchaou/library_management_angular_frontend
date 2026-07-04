@@ -8,9 +8,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-email-setting',
-  templateUrl: './email-setting.component.html',
-  styleUrls: ['./email-setting.component.css'],
+    selector: 'app-email-setting',
+    templateUrl: './email-setting.component.html',
+    styleUrls: ['./email-setting.component.css'],
+    standalone: false
 })
 export class EmailSettingComponent extends URLLoader implements OnInit {
   settings$ = [{}];
@@ -27,7 +28,6 @@ export class EmailSettingComponent extends URLLoader implements OnInit {
 
   edit(id) {
     this.id = id;
-    console.log(id);
   }
   ngOnInit(): void {
     this.getAll();
@@ -74,7 +74,6 @@ export class EmailSettingComponent extends URLLoader implements OnInit {
     this.httpService.getAll(CONFIG.URL_BASE + '/email/1').subscribe(
       (data: Settings[]) => {
         this.settings$ = data;
-        console.log(this.settings$);
         this.loading = false;
       },
       (err: HttpErrorResponse) => {

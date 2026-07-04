@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-ebook-list',
-  templateUrl: './ebook-list.component.html',
-  styleUrls: ['./ebook-list.component.css']
+    selector: 'app-ebook-list',
+    templateUrl: './ebook-list.component.html',
+    styleUrls: ['./ebook-list.component.css'],
+    standalone: false
 })
 export class EbookListComponent implements OnInit {
 

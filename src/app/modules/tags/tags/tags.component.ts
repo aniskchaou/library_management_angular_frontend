@@ -5,9 +5,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 @Component({
-  selector: 'app-tags',
-  templateUrl: './tags.component.html',
-  styleUrls: ['./tags.component.css']
+    selector: 'app-tags',
+    templateUrl: './tags.component.html',
+    styleUrls: ['./tags.component.css'],
+    standalone: false
 })
 export class TagsComponent  implements OnInit{
 
@@ -202,7 +203,6 @@ private mouse = new THREE.Vector2();
 
 /*   private showBookInfo(bookMesh: THREE.Mesh): void {
     const bookInfo = bookMesh.userData as any;
-    console.log(`Book ID: ${bookInfo.id}, Title: ${bookInfo.title}`);
     // Implement your own logic to show the book info (e.g., using a UI element)
   }
  */

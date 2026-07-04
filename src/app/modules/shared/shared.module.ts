@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from 'src/app/main/pipes/translate.pipe';
 import { AddButtonComponent } from './add-button/add-button.component';
 import { LoadingComponent } from './loading/loading.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,31 +16,25 @@ import { BookResultListComponent } from './book-result-list/book-result-list.com
 import { CategoryResultListComponent } from './category-result-list/category-result-list.component';
 import { WriterResultListComponent } from './writer-result-list/writer-result-list.component';
 
-@NgModule({
-  declarations: [
-    SeachResultComponent,
-    AddButtonComponent,
-    BookResultListComponent,
-    CategoryResultListComponent,
-    WriterResultListComponent,
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    HttpClientModule,
-    CommonModule,
-  ],
-  exports: [
-    AddButtonComponent,
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    HttpClientModule,
-    CommonModule,
-  ],
-  providers: [AuthguardService, AuthentificationService],
-})
+@NgModule({ declarations: [
+        SeachResultComponent,
+        AddButtonComponent,
+        BookResultListComponent,
+        CategoryResultListComponent,
+        WriterResultListComponent,
+        TranslatePipe,
+    ],
+    exports: [
+        AddButtonComponent,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        CommonModule,
+        TranslatePipe,
+    ], imports: [BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        CommonModule], providers: [AuthguardService, AuthentificationService, provideHttpClient(withInterceptorsFromDi())] })
 export class SharedModule {}

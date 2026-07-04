@@ -1,108 +1,70 @@
-<div class="card mb-4">
-  <div class="card-body">
-    <!-- create button  -->
-<!-- Add button -->
-<button
-  (click)="openAddDialog()"
-  role="button"
-  
-  class="btn btn-outline-success btn-icon-split"
->
-  <span class="icon text-success">
-    <i class="fas fa-plus"></i>
-  </span>
-  <span class="text">{{ categoryI18n?.addButtonI18n }}</span>
-</button>
-
-<!-- Summary button -->
-<button
-  href="#"
-  role="button"
-  class="btn btn-outline-secondary btn-icon-split"
-  (click)="showChart()"
->
-  <span class="icon text-secondary">
-    <i class="fas fa-chart-line"></i>
-  </span>
-  <span class="text">{{ categoryI18n?.analyticsI18n }}</span>
-</button>
-
-<!-- Refresh button -->
-<button
-  href="#"
-  role="button"
-  class="btn btn-outline-warning btn-icon-split"
-  (click)="reloadPage()"
->
-  <span class="icon text-warning">
-    <i class="fas fa-redo"></i>
-  </span>
-  <span class="text">{{ categoryI18n?.reloadI18n }}</span>
-</button>
-
-
-    <br /><br />
-
-    <div *ngIf="showsummary">
-      <ngx-charts-bar-vertical
-        [view]="view"
-        [scheme]="colorScheme"
-        [results]="data"
-        [gradient]="gradient"
-        [xAxis]="showXAxis"
-        [yAxis]="showYAxis"
-        [legend]="showLegend"
-        [showXAxisLabel]="showXAxisLabel"
-        [showYAxisLabel]="showYAxisLabel"
-        [xAxisLabel]="xAxisLabel"
-        [yAxisLabel]="yAxisLabel"
-        (select)="onSelect($event)"
-      ></ngx-charts-bar-vertical>
-    </div>
+<div class="ll-stats">
+  <div class="ll-stats__toolbar">
+    <button mat-flat-button color="primary" (click)="openAddDialog()">
+      <mat-icon>add</mat-icon> {{ 'ui.add' | translate }}
+    </button>
+    <button mat-stroked-button (click)="showChart()">
+      <mat-icon>insights</mat-icon> {{ 'nav.analytics' | translate }}
+    </button>
+    <button mat-stroked-button (click)="reloadPage()">
+      <mat-icon>refresh</mat-icon> {{ 'ui.reload' | translate }}
+    </button>
   </div>
-</div>
 
+  <div class="ll-stats__kpis">
+    <mat-card appearance="outlined" class="ll-kpi ll-kpi--indigo">
+      <mat-card-content>
+        <div class="ll-kpi__top">
+          <span class="ll-kpi__label">Total Categories</span>
+          <mat-icon>category</mat-icon>
+        </div>
+        <div class="ll-kpi__value">{{ count ?? '—' }}</div>
+        <mat-progress-bar mode="determinate" [value]="100"></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
 
-<!-- category-statistics.component.html -->
+    <mat-card appearance="outlined" class="ll-kpi ll-kpi--ok">
+      <mat-card-content>
+        <div class="ll-kpi__top">
+          <span class="ll-kpi__label">Published</span>
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <div class="ll-kpi__value">{{ status?.published ?? '—' }}</div>
+        <mat-progress-bar mode="determinate" [value]="(count && status?.published) ? (status.published / count) * 100 : 0"></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
 
-<div class="container mt-5">
-
-  <div class="row">
-      <div class="col-md-4 mb-4">
-          <div class="card text-center border">
-              <div class="card-body">
-                  <h5 class="card-title text-dark">Total Categories</h5>
-                  <p class="card-text h1">
-                      <span *ngIf="count">{{ count }}</span>
-                      <span *ngIf="!count">Loading...</span>
-                  </p>
-              </div>
-          </div>
-      </div>
-
-      <div class="col-md-4 mb-4">
-          <div class="card text-center border">
-              <div class="card-body">
-                  <h5 class="card-title text-success">Published Categories</h5>
-                  <p class="card-text h1">
-                      <span *ngIf="status">{{ status.published }}</span>
-                      <span *ngIf="!status">Loading...</span>
-                  </p>
-              </div>
-          </div>
-      </div>
-
-      <div class="col-md-4 mb-4">
-          <div class="card text-center border">
-              <div class="card-body">
-                  <h5 class="card-title text-danger">Unpublished Categories</h5>
-                  <p class="card-text h1">
-                      <span *ngIf="status">{{ status.unpublished }}</span>
-                      <span *ngIf="!status">Loading...</span>
-                  </p>
-              </div>
-          </div>
-      </div>
+    <mat-card appearance="outlined" class="ll-kpi ll-kpi--danger">
+      <mat-card-content>
+        <div class="ll-kpi__top">
+          <span class="ll-kpi__label">Unpublished</span>
+          <mat-icon>cancel</mat-icon>
+        </div>
+        <div class="ll-kpi__value">{{ status?.unpublished ?? '—' }}</div>
+        <mat-progress-bar mode="determinate" [value]="(count && status?.unpublished) ? (status.unpublished / count) * 100 : 0"></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
   </div>
-</div>
 
+  @if (showsummary) {
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <div class="ll-charts__title"><mat-icon>bar_chart</mat-icon> Books by Category</div>
+        <ngx-charts-bar-vertical
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="data"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          (select)="onSelect($event)">
+        </ngx-charts-bar-vertical>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

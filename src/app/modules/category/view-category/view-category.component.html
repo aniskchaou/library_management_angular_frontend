@@ -1,38 +1,67 @@
-<div class="modal-header">
-    <h5 class="modal-title">Category Details</h5>
-    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-      <span aria-hidden="true">&times;</span>
+<div class="ll-modal ll-modal--wide">
+  <div class="ll-modal__header">
+    <mat-icon class="ll-modal__icon">category</mat-icon>
+    <h2 class="ll-modal__title">Category Details</h2>
+    <button mat-icon-button class="ll-modal__close" (click)="closeModal()" aria-label="Close">
+      <mat-icon>close</mat-icon>
     </button>
   </div>
-  
-  <div class="modal-body">
-    <h2>{{ category?.category_name }}</h2>
-    <p><strong>Slug:</strong> {{ category?.slug }}</p>
-    <p><strong>Published:</strong> {{ category?.published ? 'Yes' : 'No' }}</p>
-    <p><strong>Items:</strong> {{ category?.items }}</p>
-    <p><strong>Description:</strong> {{ category?.description || 'No description available' }}</p>
-  </div>
-  
-  <div class="modal-footer">
-    <div class="button-group">
-      <button type="button" class="btn btn-outline-primary" (click)="editRow(category)">
-        <i class="fas fa-edit"></i> Edit
-    </button>
-    
-    <button type="button" class="btn btn-outline-danger" (click)="deleteRow(category)">
-        <i class="fas fa-trash-alt"></i> Delete
-    </button>
-    
-    <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">
-        <i class="fas fa-times"></i> Close
-    </button>
-    
-    <button *ngIf="!category?.published" type="button" class="btn btn-outline-success" (click)="publish(category.id)">
-        <i class="fas fa-paper-plane"></i> Publish
-    </button>
-    
+
+  <div class="ll-modal__content">
+    <div class="ll-view">
+      <mat-card appearance="outlined">
+        <mat-card-content class="ll-view__card-content">
+          <div class="ll-view__avatar">
+            {{ category?.category_name ? category.category_name.charAt(0).toUpperCase() : '?' }}
+          </div>
+          <div class="ll-view__id">
+            <h3>{{ category?.category_name }}</h3>
+            <p class="ll-view__sub">Slug: {{ category?.slug || '—' }}</p>
+            <mat-chip [class.ll-chip--ok]="category?.published" [class.ll-chip--off]="!category?.published">
+              <mat-icon class="ll-chip__icon">{{ category?.published ? 'check_circle' : 'cancel' }}</mat-icon>
+              {{ category?.published ? 'Published' : 'Draft' }}
+            </mat-chip>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card appearance="outlined">
+        <mat-card-content>
+          <dl class="ll-view__details">
+            <div class="ll-view__row">
+              <dt>Category Name</dt>
+              <dd>{{ category?.category_name || '—' }}</dd>
+            </div>
+            <div class="ll-view__row">
+              <dt>Slug</dt>
+              <dd>{{ category?.slug || '—' }}</dd>
+            </div>
+            <div class="ll-view__row">
+              <dt>Items</dt>
+              <dd>{{ category?.items ?? '—' }}</dd>
+            </div>
+            <div class="ll-view__row">
+              <dt>Description</dt>
+              <dd>{{ category?.description || 'No description available' }}</dd>
+            </div>
+          </dl>
+        </mat-card-content>
+      </mat-card>
     </div>
-      
   </div>
-  
-  
+
+  <div class="ll-modal__actions">
+    @if (!category?.published) {
+      <button mat-stroked-button color="primary" (click)="publish(category.id)">
+        <mat-icon>publish</mat-icon> Publish
+      </button>
+    }
+    <button mat-stroked-button (click)="editRow(category)">
+      <mat-icon>edit</mat-icon> Edit
+    </button>
+    <button mat-stroked-button class="ll-btn--danger" (click)="deleteRow(category)">
+      <mat-icon>delete</mat-icon> Delete
+    </button>
+    <button mat-stroked-button (click)="closeModal()">Close</button>
+  </div>
+</div>

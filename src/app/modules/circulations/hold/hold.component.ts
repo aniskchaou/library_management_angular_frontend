@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
@@ -7,17 +7,18 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-hold',
-  templateUrl: './hold.component.html',
+    selector: 'app-hold',
+    templateUrl: './hold.component.html',
+    standalone: false
 })
 export class HoldComponent implements OnInit {
-  holdForm: FormGroup;
+  holdForm: UntypedFormGroup;
   members$: any[] = [];
   books$: any[] = [];
   loading = false;
   submitted = false;
 
-  constructor(private toastr: ToastrService,private activeModal: NgbActiveModal,private fb: FormBuilder, private httpService: HTTPService) {}
+  constructor(private toastr: ToastrService,private activeModal: NgbActiveModal,private fb: UntypedFormBuilder, private httpService: HTTPService) {}
 
   ngOnInit() {
     this.holdForm = this.fb.group({
@@ -86,8 +87,6 @@ closeModal(): void {
       member: selectedMember,
       book: selectedBook,
     };
-
-    console.log(payload)
     this.catalogItemId=formValue.itemBarcode
     this.memberId=formValue.memberName
     this.statusName="On Hold"
@@ -99,7 +98,6 @@ closeModal(): void {
    /*  // Submit the hold data to the backend
     this.httpService.create('/hold/create', payload).then(
       () => {
-        console.log('Hold successfully processed.');
         // Optionally reset form or provide feedback to the user
       },
       (err: HttpErrorResponse) => {
@@ -112,7 +110,6 @@ closeModal(): void {
 
   updateStatus() {
     if (this.catalogItemId && this.memberId && this.statusName) {
-      console.log(this.catalogItemId+''+this.memberId+''+this.statusName)
       this.httpService
         .updateCirculationStatus(this.catalogItemId, this.memberId, this.statusName)
         .subscribe(

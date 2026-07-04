@@ -7,9 +7,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-edit-requested-book',
-  templateUrl: './edit-requested-book.component.html',
-  styleUrls: ['./edit-requested-book.component.css'],
+    selector: 'app-edit-requested-book',
+    templateUrl: './edit-requested-book.component.html',
+    styleUrls: ['./edit-requested-book.component.css'],
+    standalone: false
 })
 export class EditRequestedBookComponent extends URLLoader implements OnInit {
   model;
@@ -43,7 +44,6 @@ export class EditRequestedBookComponent extends URLLoader implements OnInit {
         .get(CONFIG.URL_BASE + '/requestedbook/create' + this.id)
         .subscribe((data: RequestedBook) => {
           this.model = data;
-          console.log(this.model);
         });
     }
   }

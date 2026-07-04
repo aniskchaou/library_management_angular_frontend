@@ -2,9 +2,10 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 
 @Component({
-  selector: 'app-department-list',
-  templateUrl: './department-list.component.html',
-  styleUrls: ['./department-list.component.css']
+    selector: 'app-department-list',
+    templateUrl: './department-list.component.html',
+    styleUrls: ['./department-list.component.css'],
+    standalone: false
 })
 export class DepartmentListComponent extends URLLoader implements OnInit,AfterViewInit {
   @Input() departments=[]

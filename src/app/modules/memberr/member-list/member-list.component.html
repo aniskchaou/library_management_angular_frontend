@@ -1,235 +1,21 @@
-<!-- <table class="table table-bordered" id="dt-member" width="100%" cellspacing="0">
-  <thead>
-    <tr>
-      <th>{{ memberI18n.nameI18n }}</th>
-      <th>{{ memberI18n.type_idI18n }}</th>
-      <th>{{ memberI18n.emailI18n }}</th>
-      <th>{{ memberI18n.mobileI18n }}</th>
-      <th>{{ memberI18n.addressI18n }}</th>
-      <th>{{ memberI18n.statusI18n }}</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tfoot>
-    <tr>
-      <th>{{ memberI18n.nameI18n }}</th>
-      <th>{{ memberI18n.type_idI18n }}</th>
-      <th>{{ memberI18n.emailI18n }}</th>
-      <th>{{ memberI18n.mobileI18n }}</th>
-      <th>{{ memberI18n.addressI18n }}</th>
-      <th>{{ memberI18n.statusI18n }}</th>
-      <th></th>
-    </tr>
-  </tfoot>
-  <tbody>
-    <tr *ngFor="let m of members">
-      <td>{{ m.name }}</td>
-      <td>{{ m.type_id }}</td>
-      <td>
-        <span class="badge badge-info">{{ m.email }}</span>
-      </td>
-      <td>{{ m.mobile }}</td>
-      <td>{{ m.address }}</td>
-      <td>
-        <span class="badge badge-primary">{{ m.status }}</span>
-      </td>
-      <td>  
-<div class="btn-group">
-  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Actions
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" (click)="view(m.id)"><i class="fas fa-eye"></i> View</a>
-    <a class="dropdown-item" (click)="edit(m.id)"><i class="fas fa-edit"></i> Edit</a>
-    <a class="dropdown-item" (click)="delete(m.id)"><i class="fas fa-trash-alt"></i> Delete</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" (click)="checkIn()"><i class="fas fa-sign-in-alt"></i> Check-in</a>
-    <a class="dropdown-item" (click)="checkOut()"><i class="fas fa-sign-out-alt"></i> Check-out</a>
-    <a class="dropdown-item" (click)="addMessage()"><i class="fas fa-plus-circle"></i> Add Message</a>
-    <a class="dropdown-item" (click)="changePassword()"><i class="fas fa-key"></i> Change Password</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="#"><i class="fas fa-handshake"></i> Add Guarantees</a>
-    <a class="dropdown-item" href="#"><i class="fas fa-ban"></i> Manual Restriction</a>
-    <a class="dropdown-item" href="#"><i class="fas fa-history"></i> Circulation History</a>
-    <a class="dropdown-item" href="#"><i class="fas fa-history"></i> Holds History</a>
-    <a class="dropdown-item" href="#"><i class="fas fa-chart-line"></i> Statistics</a>
-    <a class="dropdown-item" href="#"><i class="fas fa-calculator"></i> Accounting</a>
-    <a class="dropdown-item" href="#"><i class="fas fa-history"></i> Modification Log</a>
-    <a class="dropdown-item" href="#"><i class="fas fa-bell"></i> Notices</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="#"><i class="fas fa-sync-alt"></i> Renew</a>
-    <a class="dropdown-item" data-toggle="modal" data-target="#holdModal"><i class="fas fa-hand-holding"></i> Place Hold</a>
-  </div>
-</div>
-
-</td>
-    </tr>
-  </tbody>
-</table> -->
-
-<div class="modal fade" id="holdModal" tabindex="-1" role="dialog" aria-labelledby="holdModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="holdModalLabel">Hold Information</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form method="post" class="form-horizontal" id="holdForm" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8">
-          <!-- Patron Information -->
-          <div class="form-group">
-              <label class="col-sm-3 control-label" for="patron">
-                  Patron:
-              </label>
-              <div class="col-sm-9 col-md-6 col-lg-6">
-                  <input class="form-control" id="patron" name="patron" type="text" value="KOYEL DAS (LIS 89)" readonly />
-              </div>
-          </div>
-        
-          <!-- Notes -->
-          <div class="form-group">
-              <label class="col-sm-3 control-label" for="notes">
-                  Notes:
-              </label>
-              <div class="col-sm-9 col-md-6 col-lg-6">
-                  <textarea class="form-control" id="notes" name="notes">dzfze</textarea>
-              </div>
-          </div>
-        
-          <!-- Pickup at -->
-          <div class="form-group">
-              <label class="col-sm-3 control-label" for="pickup_at">
-                  Pickup at:
-              </label>
-              <div class="col-sm-9 col-md-6 col-lg-6">
-                  <input class="form-control" id="pickup_at" name="pickup_at" type="text" />
-              </div>
-          </div>
-        
-          <!-- Hold expires on date -->
-          <div class="form-group">
-              <label class="col-sm-3 control-label" for="hold_expires">
-                  Hold expires on date:
-              </label>
-              <div class="col-sm-9 col-md-6 col-lg-6">
-                  <input class="form-control" id="hold_expires" name="hold_expires" type="date" value="2024-06-27" />
-              </div>
-          </div>
-        
-          <!-- Non priority hold -->
-          <div class="form-group">
-              <label class="col-sm-3 control-label" for="non_priority_hold">
-                  Non priority hold:
-              </label>
-              <div class="col-sm-9 col-md-6 col-lg-6">
-                  <input class="form-control" id="non_priority_hold" name="non_priority_hold" type="text" value="A non priority hold doesn't prevent a current checkout from renewing" readonly />
-              </div>
-          </div>
-        
-          <!-- Table for titles and information -->
-          <div class="form-group">
-              <div class="col-sm-12">
-                  <table class="table table-bordered">
-                      <thead>
-                          <tr>
-                              <th>Title</th>
-                              <th>Priority</th>
-                              <th>Information</th>
-                              <th>Pickup location</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr>
-                              <td>Robert Frost in recital</td>
-                              <td>1</td>
-                              <td>No items are available to be placed on hold</td>
-                              <td></td>
-                          </tr>
-                          <tr>
-                              <td>Recognition of Robert Frost;</td>
-                              <td>1</td>
-                              <td>No items are available to be placed on hold</td>
-                              <td></td>
-                          </tr>
-                          <tr>
-                              <td>Songs of dogs,</td>
-                              <td>1</td>
-                              <td>No items are available to be placed on hold</td>
-                              <td></td>
-                          </tr>
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-        
-          
-          <div class="form-group">
-              <div class="col-sm-12 text-center">
-                  <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" form="holdForm" class="btn btn-primary">Submit</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- member.component.html -->
-<div>
-  <!-- Bootstrap Tabs with Icons -->
-  <ul class="nav nav-tabs" id="memberTabs" role="tablist">
-    <li class="nav-item" role="presentation">
-      <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">
-        <i class="fas fa-info-circle"></i> Overview
-      </a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">
-        <i class="fas fa-list"></i> List
-      </a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" id="new-arrivals-tab" data-toggle="tab" href="#new-arrivals" role="tab" aria-controls="new-arrivals" aria-selected="false">
-        <i class="fas fa-box-open"></i> New Arrivals
-      </a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" id="blacklist-tab" data-toggle="tab" href="#blacklist" role="tab" aria-controls="blacklist" aria-selected="false">
-        <i class="fas fa-ban"></i> Blacklist
-      </a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" id="unverified-tab" data-toggle="tab" href="#unverified" role="tab" aria-controls="unverified" aria-selected="false">
-        <i class="fas fa-exclamation-circle"></i> Unverified
-      </a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" id="expired-tab" data-toggle="tab" href="#expired" role="tab" aria-controls="expired" aria-selected="false">
-        <i class="fas fa-clock"></i> Expired
-      </a>
-    </li>
-  </ul>
-
-  <!-- Tab Content -->
-  <div class="tab-content" id="memberTabsContent">
-    <!-- Overview Tab -->
-    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
-      <div>
-        <div class="container bg-white p-4 mt-3 rounded">
-          <div class="row">
-            <!-- Chart 1: Number of Members by User Type -->
-            <div class="col-md-6">
-              <h4><i class="fas fa-chart-bar"></i> Number of Members by User Type</h4>
+<div class="ll-list">
+  <mat-tab-group class="ll-list__tabs" mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="200ms">
+    <!-- Overview -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="ll-tab__icon">insights</mat-icon> {{ 'ui.overview' | translate }}
+      </ng-template>
+      <div class="ll-tab__content">
+        <div class="ll-charts">
+          <mat-card appearance="outlined" class="ll-chart">
+            <mat-card-header>
+              <mat-icon mat-card-avatar>bar_chart</mat-icon>
+              <mat-card-title>{{ 'member.chartByUserType' | translate }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
               <ngx-charts-bar-vertical
                 [view]="viewSize"
-                [scheme]="'cool'"
+                [scheme]="materialColorScheme"
                 [results]="membersByUserTypeData"
                 [gradient]="gradient"
                 [xAxis]="true"
@@ -240,28 +26,36 @@
                 [xAxisLabel]="'User Type'"
                 [yAxisLabel]="'Number of Members'">
               </ngx-charts-bar-vertical>
-            </div>
-        
-            <!-- Chart 2: Gender Distribution of Members -->
-            <div class="col-md-6">
-              <h4><i class="fas fa-pie-chart"></i> Gender Distribution of Members</h4>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card appearance="outlined" class="ll-chart">
+            <mat-card-header>
+              <mat-icon mat-card-avatar>pie_chart</mat-icon>
+              <mat-card-title>{{ 'member.chartGender' | translate }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
               <ngx-charts-pie-chart
                 [view]="viewSize"
-                [scheme]="'cool'"
+                [scheme]="materialColorScheme"
                 [results]="genderDistributionData"
                 [legend]="showLegend"
                 [labels]="showLabels"
                 [doughnut]="isDoughnut"
                 [gradient]="gradient">
               </ngx-charts-pie-chart>
-            </div>
-        
-            <!-- Chart 3: Age Distribution of Members -->
-            <div class="col-md-6">
-              <h4><i class="fas fa-line-chart"></i> Age Distribution of Members</h4>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card appearance="outlined" class="ll-chart">
+            <mat-card-header>
+              <mat-icon mat-card-avatar>timeline</mat-icon>
+              <mat-card-title>{{ 'member.chartAge' | translate }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
               <ngx-charts-bar-vertical
                 [view]="viewSize"
-                [scheme]="'cool'"
+                [scheme]="materialColorScheme"
                 [results]="ageDistributionData"
                 [gradient]="gradient"
                 [xAxis]="true"
@@ -272,14 +66,18 @@
                 [xAxisLabel]="'Age Groups'"
                 [yAxisLabel]="'Number of Members'">
               </ngx-charts-bar-vertical>
-            </div>
-        
-            <!-- Chart 4: Number of Members by City -->
-            <div class="col-md-6">
-              <h4><i class="fas fa-bar-chart"></i> Number of Members by City</h4>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card appearance="outlined" class="ll-chart">
+            <mat-card-header>
+              <mat-icon mat-card-avatar>location_city</mat-icon>
+              <mat-card-title>Members by City</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
               <ngx-charts-bar-vertical
                 [view]="viewSize"
-                [scheme]="'cool'"
+                [scheme]="materialColorScheme"
                 [results]="membersByCityData"
                 [gradient]="gradient"
                 [xAxis]="true"
@@ -287,579 +85,171 @@
                 [legend]="showLegend"
                 [showXAxisLabel]="true"
                 [showYAxisLabel]="true"
-                [xAxisLabel]="'Number of Members'"
-                [yAxisLabel]="'City'">
+                [xAxisLabel]="'City'"
+                [yAxisLabel]="'Number of Members'">
               </ngx-charts-bar-vertical>
-            </div>
-          </div>
+            </mat-card-content>
+          </mat-card>
         </div>
-        
-
       </div>
-    </div>
+    </mat-tab>
 
-    <!-- List Tab with ngx-datatable -->
-    <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
-      <div>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search by book title..."
-          (input)="updateFilter($event)"
-        />
+    <!-- List -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="ll-tab__icon">list</mat-icon> List
+      </ng-template>
+      <div class="ll-tab__content">
+        <div class="ll-list__toolbar">
+          <mat-form-field appearance="outline" class="ll-list__search">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="Search by first name..." (input)="updateFilter($event)" />
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </div>
+        <ng-container *ngTemplateOutlet="memberTable; context: { rows: members }"></ng-container>
       </div>
-      <ngx-datatable
-        class="bootstrap"
-        [rows]="members"
-        [columnMode]="'force'"
-        [headerHeight]="50"
-        [footerHeight]="50"
-        [rowHeight]="'auto'"
-        [limit]="10"
-        [loadingIndicator]="loadingIndicator"
-        [reorderable]="reorderable"
-      >
+    </mat-tab>
 
-      <ngx-datatable-column name="Thumbnail">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <!-- Generate random background color -->
-          <div [style.background-color]="getRandomColor()" 
-               style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; font-weight: bold;">
-            {{ row.surname ? row.surname.charAt(0).toUpperCase() : '' }}
-          </div>
-        </ng-template>
-      </ngx-datatable-column>
-         
-        <!-- Surname -->
-        <ngx-datatable-column name="Surname" prop="surname">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            <span style="color: blue;">{{ row.surname }}</span>
-          </ng-template>
-        </ngx-datatable-column>
+    <!-- New Arrivals -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="ll-tab__icon">fiber_new</mat-icon> New Arrivals
+      </ng-template>
+      <div class="ll-tab__content">
+        <ng-container *ngTemplateOutlet="memberTable; context: { rows: newArrivals }"></ng-container>
+      </div>
+    </mat-tab>
 
-        <!-- First Name -->
-        <ngx-datatable-column name="First Name" prop="firstname">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            <span style="color: blue;">{{ row.firstname }}</span>
-          </ng-template>
-        </ngx-datatable-column>
+    <!-- Blacklist -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="ll-tab__icon">block</mat-icon> Blacklist
+      </ng-template>
+      <div class="ll-tab__content">
+        <ng-container *ngTemplateOutlet="memberTable; context: { rows: blockedMembers }"></ng-container>
+      </div>
+    </mat-tab>
 
-        <!-- Email -->
-        <ngx-datatable-column name="Email" prop="email">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            <a href="mailto:{{ row.primary_email }}">{{ row.primary_email }}</a>
-          </ng-template>
-        </ngx-datatable-column>
+    <!-- Unverified -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="ll-tab__icon">help_outline</mat-icon> Unverified
+      </ng-template>
+      <div class="ll-tab__content">
+        <ng-container *ngTemplateOutlet="memberTable; context: { rows: unverifiedAccounts }"></ng-container>
+      </div>
+    </mat-tab>
 
-        <!-- Mobile -->
-        <ngx-datatable-column name="Mobile" prop="mobile">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            <a href="tel:{{ row.primary_phone }}">{{ row.primary_phone }}</a>
-          </ng-template>
-        </ngx-datatable-column>
-
-        <!-- Address -->
-        <ngx-datatable-column name="Address" prop="address">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            {{ row.address }}
-          </ng-template>
-        </ngx-datatable-column>
-
-        <!-- Date of Birth -->
-        <ngx-datatable-column name="Date of Birth" prop="dob">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            {{ row.dob | date:'shortDate' }}
-          </ng-template>
-        </ngx-datatable-column>
-
-        <!-- Gender -->
-        <ngx-datatable-column name="Gender" prop="gender">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            {{ row.gender }}
-          </ng-template>
-        </ngx-datatable-column>
-
-        <!-- Status -->
-        <ngx-datatable-column name="Status" prop="status">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            <span [ngClass]="{ 
-              'text-success': row.status === 'Active' || row.status === 'active', 
-              'text-danger': row.status === 'Inactive' || !row.status 
-            }">
-              {{ row.status === 'Active' ? row.status : (row.status || 'Inactive') }}
-            </span>
-          </ng-template>
-        </ngx-datatable-column>
-
-        <!-- Actions -->
-        <ngx-datatable-column name="Actions" prop="actions">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            <!-- <button type="button" class="btn btn-outline-primary" (click)="openViewDialog(row)">
-              View
-            </button> -->
-            <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-cog"></i> Actions
-          </button>
-          <div class="dropdown-menu">
-             <a class="dropdown-item"  (click)="openViewDialog(row)">
-              <i class="fas fa-eye"></i> View
-             </a>
-              <a class="dropdown-item"  (click)="openEditDialog(row)">
-                  <i class="fas fa-edit"></i> Edit
-              </a>
-              <a class="dropdown-item"  (click)="deleteRow(row)">
-                  <i class="fas fa-trash-alt"></i> Delete
-              </a>
-              <a class="dropdown-item" (click)="openUploadialog(row)">
-                  <i class="fas fa-upload"></i> Upload Documents
-              </a>
-              <a class="dropdown-item" (click)="active(row)">
-                  <i class="fas fa-user-lock"></i> Mark as Active
-              </a>
-              <a class="dropdown-item" (click)="verify(row)">
-                  <i class="fas fa-redo"></i> Mark as Verified
-              </a> 
-              <a class="dropdown-item text-danger"  (click)="block(row)">
-                  <i class="fas fa-trash-alt"></i> Mark as Blocked 
-              </a>
-          </div>
-          </ng-template>
-        </ngx-datatable-column>
-      </ngx-datatable>
-    </div>
-
-    <!-- New Arrivals Tab -->
-    <div class="tab-pane fade" id="new-arrivals" role="tabpanel" aria-labelledby="new-arrivals-tab">
-      <ngx-datatable
-        class="bootstrap"
-        [rows]="newArrivals"
-        [columnMode]="'force'"
-        [headerHeight]="50"
-        [footerHeight]="50"
-        [rowHeight]="'auto'"
-        [limit]="10"
-        [loadingIndicator]="loadingIndicator"
-        [reorderable]="reorderable"
-      >
-        <!-- Surname -->
-        <ngx-datatable-column name="Surname" prop="surname">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            <span style="color: blue;">{{ row.surname }}</span>
-          </ng-template>
-        </ngx-datatable-column>
-
-        <!-- First Name -->
-        <ngx-datatable-column name="First Name" prop="firstname">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            <span style="color: blue;">{{ row.firstName }}</span>
-          </ng-template>
-        </ngx-datatable-column>
-
-        <!-- Email -->
-        <ngx-datatable-column name="Email" prop="email">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            <a href="mailto:{{ row.primary_email }}">{{ row.primary_email }}</a>
-          </ng-template>
-        </ngx-datatable-column>
-
-        <!-- Mobile -->
-        <ngx-datatable-column name="Mobile" prop="mobile">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            <a href="tel:{{ row.primary_phone }}">{{ row.primary_phone }}</a>
-          </ng-template>
-        </ngx-datatable-column>
-
-        <!-- Address -->
-        <ngx-datatable-column name="Address" prop="address">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            {{ row.address }}
-          </ng-template>
-        </ngx-datatable-column>
-
-        <!-- Date of Birth -->
-        <ngx-datatable-column name="Date of Birth" prop="dob">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            {{ row.dob | date:'shortDate' }}
-          </ng-template>
-        </ngx-datatable-column>
-
-        <!-- Gender -->
-        <ngx-datatable-column name="Gender" prop="gender">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            {{ row.gender }}
-          </ng-template>
-        </ngx-datatable-column>
-
-        <!-- Status -->
-        <ngx-datatable-column name="Status" prop="status">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            <span [ngClass]="{ 
-              'text-success': row.status === 'Active' || row.status === 'active', 
-              'text-danger': row.status === 'Inactive' || !row.status 
-            }">
-            {{ row.status === 'Active' ? row.status : (row.status || 'Inactive') }}
-
-            </span>
-          </ng-template>
-        </ngx-datatable-column>
-
-        <!-- Actions -->
-        <ngx-datatable-column name="Actions" prop="actions">
-          <ng-template ngx-datatable-cell-template let-row="row">
-            <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-cog"></i> Actions
-          </button>
-          <div class="dropdown-menu">
-             <a class="dropdown-item"  (click)="openViewDialog(row)">
-              <i class="fas fa-eye"></i> View
-             </a>
-              <a class="dropdown-item"  (click)="openEditDialog(row)">
-                  <i class="fas fa-edit"></i> Edit
-              </a>
-              <a class="dropdown-item"  (click)="deleteRow(row)">
-                  <i class="fas fa-trash-alt"></i> Delete
-              </a>
-              <a class="dropdown-item" (click)="openUploadialog(row)">
-                  <i class="fas fa-upload"></i> Upload Documents
-              </a>
-              <a class="dropdown-item" (click)="active(row)">
-                  <i class="fas fa-user-lock"></i> Mark as Active
-              </a>
-              <a class="dropdown-item" (click)="verify(row)">
-                  <i class="fas fa-redo"></i> Mark as Verified
-              </a> 
-              <a class="dropdown-item text-danger"  (click)="block(row)">
-                  <i class="fas fa-trash-alt"></i> Mark as Blocked 
-              </a>
-          </div>
-          </ng-template>
-        </ngx-datatable-column>
-      </ngx-datatable>
-    </div>
-
-    <!-- Blacklist Tab -->
-    <div class="tab-pane fade" id="blacklist" role="tabpanel" aria-labelledby="blacklist-tab">
-      <ngx-datatable
-      class="bootstrap"
-      [rows]="blockedMembers"
-      [columnMode]="'force'"
-      [headerHeight]="50"
-      [footerHeight]="50"
-      [rowHeight]="'auto'"
-      [limit]="10"
-      [loadingIndicator]="loadingIndicator"
-      [reorderable]="reorderable"
-    >
-      <!-- Surname -->
-      <ngx-datatable-column name="Surname" prop="surname">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <span style="color: blue;">{{ row.surname }}</span>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- First Name -->
-      <ngx-datatable-column name="First Name" prop="firstname">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <span style="color: blue;">{{ row.firstName }}</span>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Email -->
-      <ngx-datatable-column name="Email" prop="email">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <a href="mailto:{{ row.primary_email }}">{{ row.primary_email }}</a>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Mobile -->
-      <ngx-datatable-column name="Mobile" prop="mobile">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <a href="tel:{{ row.primary_phone }}">{{ row.primary_phone }}</a>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Address -->
-      <ngx-datatable-column name="Address" prop="address">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          {{ row.address }}
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Date of Birth -->
-      <ngx-datatable-column name="Date of Birth" prop="dob">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          {{ row.dob | date:'shortDate' }}
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Gender -->
-      <ngx-datatable-column name="Gender" prop="gender">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          {{ row.gender }}
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Status -->
-      <ngx-datatable-column name="Status" prop="status">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <span [ngClass]="{ 'text-success': row.status === 'Active', 'text-danger': row.status === 'Inactive' }">
-            {{ row.status }}
-          </span>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Actions -->
-      <ngx-datatable-column name="Actions" prop="actions">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-cog"></i> Actions
-        </button>
-        <div class="dropdown-menu">
-           <a class="dropdown-item"  (click)="openViewDialog(row)">
-            <i class="fas fa-eye"></i> View
-           </a>
-            <a class="dropdown-item"  (click)="openEditDialog(row)">
-                <i class="fas fa-edit"></i> Edit
-            </a>
-            <a class="dropdown-item"  (click)="deleteRow(row)">
-                <i class="fas fa-trash-alt"></i> Delete
-            </a>
-            <a class="dropdown-item" (click)="openUploadialog(row)">
-                <i class="fas fa-upload"></i> Upload Documents
-            </a>
-            <a class="dropdown-item" (click)="active(row)">
-                <i class="fas fa-user-lock"></i> Mark as Active
-            </a>
-            <a class="dropdown-item" (click)="verify(row)">
-                <i class="fas fa-redo"></i> Mark as Verified
-            </a> 
-            <a class="dropdown-item text-danger"  (click)="block(row)">
-                <i class="fas fa-trash-alt"></i> Mark as Blocked 
-            </a>
-        </div>
-        </ng-template>
-      </ngx-datatable-column>
-    </ngx-datatable>
-    </div>
-
-    <!-- Unverified Tab -->
-    <div class="tab-pane fade" id="unverified" role="tabpanel" aria-labelledby="unverified-tab">
-      <ngx-datatable
-      class="bootstrap"
-      [rows]="unverifiedAccounts"
-      [columnMode]="'force'"
-      [headerHeight]="50"
-      [footerHeight]="50"
-      [rowHeight]="'auto'"
-      [limit]="10"
-      [loadingIndicator]="loadingIndicator"
-      [reorderable]="reorderable"
-    >
-      <!-- Surname -->
-      <ngx-datatable-column name="Surname" prop="surname">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <span style="color: blue;">{{ row.surname }}</span>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- First Name -->
-      <ngx-datatable-column name="First Name" prop="firstname">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <span style="color: blue;">{{ row.firstName }}</span>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Email -->
-      <ngx-datatable-column name="Email" prop="email">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <a href="mailto:{{ row.primary_email }}">{{ row.primary_email }}</a>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Mobile -->
-      <ngx-datatable-column name="Mobile" prop="mobile">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <a href="tel:{{ row.primary_phone }}">{{ row.primary_phone }}</a>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Address -->
-      <ngx-datatable-column name="Address" prop="address">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          {{ row.address }}
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Date of Birth -->
-      <ngx-datatable-column name="Date of Birth" prop="dob">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          {{ row.dob | date:'shortDate' }}
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Gender -->
-      <ngx-datatable-column name="Gender" prop="gender">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          {{ row.gender }}
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Status -->
-      <ngx-datatable-column name="Status" prop="status">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <span [ngClass]="{ 'text-success': row.status === 'Active', 'text-danger': row.status === 'Inactive' }">
-            {{ row.status }}
-          </span>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Actions -->
-      <ngx-datatable-column name="Actions" prop="actions">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-cog"></i> Actions
-        </button>
-        <div class="dropdown-menu">
-           <a class="dropdown-item"  (click)="openViewDialog(row)">
-            <i class="fas fa-eye"></i> View
-           </a>
-            <a class="dropdown-item"  (click)="openEditDialog(row)">
-                <i class="fas fa-edit"></i> Edit
-            </a>
-            <a class="dropdown-item"  (click)="deleteRow(row)">
-                <i class="fas fa-trash-alt"></i> Delete
-            </a>
-            <a class="dropdown-item" (click)="openUploadialog(row)">
-                <i class="fas fa-upload"></i> Upload Documents
-            </a>
-            <a class="dropdown-item" (click)="active(row)">
-                <i class="fas fa-user-lock"></i> Mark as Active
-            </a>
-            <a class="dropdown-item" (click)="verify(row)">
-                <i class="fas fa-redo"></i> Mark as Verified
-            </a> 
-            <a class="dropdown-item text-danger"  (click)="block(row)">
-                <i class="fas fa-trash-alt"></i> Mark as Blocked 
-            </a>
-        </div>
-        </ng-template>
-      </ngx-datatable-column>
-    </ngx-datatable>
-
-    </div>
-
-    <!-- Expired Tab -->
-    <div class="tab-pane fade" id="expired" role="tabpanel" aria-labelledby="expired-tab">
-      <ngx-datatable
-      class="bootstrap"
-      [rows]="expiredAccounts"
-      [columnMode]="'force'"
-      [headerHeight]="50"
-      [footerHeight]="50"
-      [rowHeight]="'auto'"
-      [limit]="10"
-      [loadingIndicator]="loadingIndicator"
-      [reorderable]="reorderable"
-    >
-      <!-- Surname -->
-      <ngx-datatable-column name="Surname" prop="surname">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <span style="color: blue;">{{ row.surname }}</span>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- First Name -->
-      <ngx-datatable-column name="First Name" prop="firstname">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <span style="color: blue;">{{ row.firstName }}</span>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Email -->
-      <ngx-datatable-column name="Email" prop="email">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <a href="mailto:{{ row.primary_email }}">{{ row.primary_email }}</a>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Mobile -->
-      <ngx-datatable-column name="Mobile" prop="mobile">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <a href="tel:{{ row.primary_phone }}">{{ row.primary_phone }}</a>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Address -->
-      <ngx-datatable-column name="Address" prop="address">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          {{ row.address }}
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Date of Birth -->
-      <ngx-datatable-column name="Date of Birth" prop="dob">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          {{ row.dob | date:'shortDate' }}
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Gender -->
-      <ngx-datatable-column name="Gender" prop="gender">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          {{ row.gender }}
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Status -->
-      <ngx-datatable-column name="Status" prop="status">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <span [ngClass]="{ 'text-success': row.status === 'Active', 'text-danger': row.status === 'Inactive' }">
-            {{ row.status }}
-          </span>
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Actions -->
-      <ngx-datatable-column name="Actions" prop="actions">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-cog"></i> Actions
-        </button>
-        <div class="dropdown-menu">
-           <a class="dropdown-item"  (click)="openViewDialog(row)">
-            <i class="fas fa-eye"></i> View
-           </a>
-            <a class="dropdown-item"  (click)="openEditDialog(row)">
-                <i class="fas fa-edit"></i> Edit
-            </a>
-            <a class="dropdown-item"  (click)="deleteRow(row)">
-                <i class="fas fa-trash-alt"></i> Delete
-            </a>
-            <a class="dropdown-item" (click)="openUploadialog(row)">
-                <i class="fas fa-upload"></i> Upload Documents
-            </a>
-            <a class="dropdown-item" (click)="active(row)">
-                <i class="fas fa-user-lock"></i> Mark as Active
-            </a>
-            <a class="dropdown-item" (click)="verify(row)">
-                <i class="fas fa-redo"></i> Mark as Verified
-            </a> 
-            <a class="dropdown-item text-danger"  (click)="block(row)">
-                <i class="fas fa-trash-alt"></i> Mark as Blocked 
-            </a>
-        </div>
-        </ng-template>
-      </ngx-datatable-column>
-    </ngx-datatable>
-
-    </div>
-  </div>
+    <!-- Expired -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="ll-tab__icon">schedule</mat-icon> Expired
+      </ng-template>
+      <div class="ll-tab__content">
+        <ng-container *ngTemplateOutlet="memberTable; context: { rows: expiredAccounts }"></ng-container>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>
 
+<ng-template #memberTable let-rows="rows">
+  <div class="ll-list__table">
+    <ngx-datatable
+      class="bootstrap"
+      [rows]="rows"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [limit]="10"
+      [loadingIndicator]="loadingIndicator"
+      [reorderable]="reorderable">
 
+      <ngx-datatable-column name="Avatar" [width]="80" [sortable]="false">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <div class="ll-avatar" [style.background-color]="getRandomColor()">
+            {{ row.surname ? row.surname.charAt(0).toUpperCase() : '?' }}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
 
+      <ngx-datatable-column name="Surname" prop="surname">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <span class="ll-cell ll-cell--strong">{{ row.surname }}</span>
+        </ng-template>
+      </ngx-datatable-column>
 
+      <ngx-datatable-column name="First Name" prop="firstname">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <span class="ll-cell">{{ row.firstname || row.firstName }}</span>
+        </ng-template>
+      </ngx-datatable-column>
 
+      <ngx-datatable-column name="Email" prop="primary_email">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <a href="mailto:{{ row.primary_email }}">{{ row.primary_email }}</a>
+        </ng-template>
+      </ngx-datatable-column>
 
+      <ngx-datatable-column name="Mobile" prop="primary_phone">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <a href="tel:{{ row.primary_phone }}">{{ row.primary_phone }}</a>
+        </ng-template>
+      </ngx-datatable-column>
 
+      <ngx-datatable-column name="Address" prop="address"></ngx-datatable-column>
 
+      <ngx-datatable-column name="Date of Birth" prop="dob">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          {{ row.dob | date:'shortDate' }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Gender" prop="gender"></ngx-datatable-column>
+
+      <ngx-datatable-column name="Status" prop="status">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <mat-chip-set>
+            <mat-chip [class.ll-chip--ok]="row.status === 'Active' || row.status === 'active'"
+                      [class.ll-chip--off]="!(row.status === 'Active' || row.status === 'active')">
+              {{ row.status === 'Active' ? row.status : (row.status || 'Inactive') }}
+            </mat-chip>
+          </mat-chip-set>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Actions" prop="actions" [sortable]="false" [width]="120">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <button mat-icon-button [matMenuTriggerFor]="actionsMenu" aria-label="Actions">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #actionsMenu="matMenu">
+            <button mat-menu-item (click)="openViewDialog(row)">
+              <mat-icon>visibility</mat-icon><span>View</span>
+            </button>
+            <button mat-menu-item (click)="openEditDialog(row)">
+              <mat-icon>edit</mat-icon><span>Edit</span>
+            </button>
+            <button mat-menu-item (click)="deleteRow(row)">
+              <mat-icon>delete</mat-icon><span>Delete</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="openUploadialog(row)">
+              <mat-icon>upload_file</mat-icon><span>Upload Documents</span>
+            </button>
+            <button mat-menu-item (click)="active(row)">
+              <mat-icon>lock_open</mat-icon><span>Mark as Active</span>
+            </button>
+            <button mat-menu-item (click)="verify(row)">
+              <mat-icon>verified</mat-icon><span>Mark as Verified</span>
+            </button>
+            <button mat-menu-item (click)="block(row)" class="ll-menu--danger">
+              <mat-icon>block</mat-icon><span>Mark as Blocked</span>
+            </button>
+          </mat-menu>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+</ng-template>

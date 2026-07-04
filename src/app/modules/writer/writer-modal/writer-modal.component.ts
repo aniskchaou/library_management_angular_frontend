@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-writer-modal',
-  templateUrl: './writer-modal.component.html',
-  styleUrls: ['./writer-modal.component.css'],
+    selector: 'app-writer-modal',
+    templateUrl: './writer-modal.component.html',
+    styleUrls: ['./writer-modal.component.css'],
+    standalone: false
 })
 export class WriterModalComponent implements OnInit {
   constructor() {}

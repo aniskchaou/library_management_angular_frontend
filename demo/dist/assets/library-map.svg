@@ -1,0 +1,42 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg" style="background-color: #f0f0f0;">
+  <!-- Library Title -->
+  <text x="400" y="30" font-family="Arial" font-size="24" text-anchor="middle">Library Floor Map</text>
+
+  <!-- Sections of the Library -->
+
+  <!-- Fiction Section -->
+  <rect x="50" y="50" width="200" height="150" fill="#add8e6" stroke="#000" />
+  <text x="150" y="130" font-family="Arial" font-size="16" text-anchor="middle">Fiction Section</text>
+
+  <!-- Non-Fiction Section -->
+  <rect x="300" y="50" width="200" height="150" fill="#90ee90" stroke="#000" />
+  <text x="400" y="130" font-family="Arial" font-size="16" text-anchor="middle">Non-Fiction Section</text>
+
+  <!-- Science Section -->
+  <rect x="550" y="50" width="200" height="150" fill="#ffcccb" stroke="#000" />
+  <text x="650" y="130" font-family="Arial" font-size="16" text-anchor="middle">Science Section</text>
+
+  <!-- Technology Section -->
+  <rect x="50" y="250" width="200" height="150" fill="#ffeb3b" stroke="#000" />
+  <text x="150" y="330" font-family="Arial" font-size="16" text-anchor="middle">Technology Section</text>
+
+  <!-- Children's Books -->
+  <rect x="300" y="250" width="200" height="150" fill="#ffb6c1" stroke="#000" />
+  <text x="400" y="330" font-family="Arial" font-size="16" text-anchor="middle">Children's Books</text>
+
+  <!-- Study Area -->
+  <rect x="550" y="250" width="200" height="150" fill="#d3d3d3" stroke="#000" />
+  <text x="650" y="330" font-family="Arial" font-size="16" text-anchor="middle">Study Area</text>
+
+  <!-- Entrances and Exits -->
+  <rect x="700" y="500" width="80" height="40" fill="#a9a9a9" stroke="#000" />
+  <text x="740" y="525" font-family="Arial" font-size="14" text-anchor="middle" fill="#fff">Exit</text>
+
+  <rect x="20" y="500" width="80" height="40" fill="#a9a9a9" stroke="#000" />
+  <text x="60" y="525" font-family="Arial" font-size="14" text-anchor="middle" fill="#fff">Entrance</text>
+
+  <!-- Paths -->
+  <line x1="130" y1="500" x2="130" y2="400" stroke="#000" stroke-width="2" />
+  <line x1="670" y1="500" x2="670" y2="400" stroke="#000" stroke-width="2" />
+
+</svg>

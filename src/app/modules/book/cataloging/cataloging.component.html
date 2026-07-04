@@ -1,0 +1,368 @@
+<div class="ll-page">
+  <header class="ll-page__header">
+    <h1>
+      <mat-icon>library_books</mat-icon>
+      Cataloging Management
+    </h1>
+    <p class="ll-page__lede">
+      Unified cataloging based on <strong>MARC 21 / MARC 21VN</strong>, the
+      <strong>Dewey Decimal Classification (DDC)</strong> framework, and
+      <strong>Dublin Core</strong> for interoperable data exchange with other libraries
+      and institutional repositories.
+    </p>
+  </header>
+
+  <mat-card class="ll-page__card">
+    <mat-tab-group mat-stretch-tabs="false" animationDuration="200ms"
+                   [(selectedIndex)]="selectedTabIndex">
+
+      <!-- ══ TAB 1: MARC 21 Records ══════════════════════════════════════════ -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="ll-tab__icon">list_alt</mat-icon> MARC 21 Records
+        </ng-template>
+        <div class="ll-tab__content">
+
+          <!-- Standards info banner -->
+          <div class="cat-banner">
+            <div class="cat-banner__badges">
+              <span class="cat-badge cat-badge--marc">MARC 21 / MARC 21VN</span>
+              <span class="cat-badge cat-badge--isbd">ISBD</span>
+              <span class="cat-badge cat-badge--lcsh">LCSH / Subject Authority</span>
+              <span class="cat-badge cat-badge--z3950">Z39.50 Compatible</span>
+            </div>
+            <p class="cat-banner__note">
+              Each record follows MARC 21 structure with Leader, Control Fields (001, 003, 005, 008),
+              and Variable Data Fields (020, 041, 082, 100, 245, 246, 250, 264, 300, 490, 520, 650, 700, 856).
+            </p>
+          </div>
+
+          <!-- Search + reload toolbar -->
+          <div class="cat-toolbar">
+            <mat-form-field appearance="outline" class="cat-search">
+              <mat-label>Search by title, ISBN, author, DDC or control number</mat-label>
+              <input matInput [(ngModel)]="searchQuery"
+                     (ngModelChange)="searchCatalog()" name="search">
+              <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            <button mat-stroked-button (click)="load()">
+              <mat-icon>refresh</mat-icon> Reload
+            </button>
+          </div>
+
+          @if (loading) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          }
+
+          <!-- Item list -->
+          <ngx-datatable
+            class="material"
+            [rows]="filteredItems"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="'auto'"
+            [loadingIndicator]="loading"
+            [reorderable]="true">
+
+            <ngx-datatable-column name="Control No." prop="marc_001" [maxWidth]="90">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <code class="cat-ctrl-no">{{ row.marc_001 || row.id }}</code>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="ISBN" prop="isbn" [maxWidth]="140"></ngx-datatable-column>
+
+            <ngx-datatable-column name="Title / 245" prop="title">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <strong>{{ row.title }}</strong>
+                @if (row.subtitle) {
+                  <span class="cat-subtitle"> : {{ row.subtitle }}</span>
+                }
+                @if (row.marc_246) {
+                  <div class="cat-parallel">= {{ row.marc_246 }}</div>
+                }
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Author / 100" prop="writer.name" [maxWidth]="160"></ngx-datatable-column>
+
+            <ngx-datatable-column name="DDC / 082" [maxWidth]="100">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                @if (row.marc_082) {
+                  <mat-chip class="cat-chip-ddc">{{ row.marc_082 }}</mat-chip>
+                } @else {
+                  <span class="cat-missing">—</span>
+                }
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Lang / 041" [maxWidth]="70">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <code>{{ row.marc_041 || '—' }}</code>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="MARC %" [maxWidth]="90">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <div class="cat-completeness">
+                  <div class="cat-completeness__bar"
+                       [style.width.%]="marcCompleteness(row)"
+                       [class.cat-completeness__bar--ok]="marcCompleteness(row) >= 70"
+                       [class.cat-completeness__bar--warn]="marcCompleteness(row) < 70 && marcCompleteness(row) >= 40"
+                       [class.cat-completeness__bar--bad]="marcCompleteness(row) < 40">
+                  </div>
+                  <span class="cat-completeness__label">{{ marcCompleteness(row) }}%</span>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Actions" [sortable]="false" [maxWidth]="110">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <button mat-icon-button color="primary" matTooltip="Edit MARC Record"
+                        (click)="openMarcEditor(row)">
+                  <mat-icon>edit_note</mat-icon>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+
+          </ngx-datatable>
+
+          <!-- MARC field reference -->
+          <mat-expansion-panel class="cat-ref-panel">
+            <mat-expansion-panel-header>
+              <mat-panel-title><mat-icon>help_outline</mat-icon>&nbsp; MARC 21 / MARC 21VN Field Reference</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="cat-ref-grid">
+              <div class="cat-ref-row cat-ref-row--header">
+                <span>Tag</span><span>Field Name</span><span>Description</span><span>Indicator</span>
+              </div>
+              @for (field of marcFieldRef; track field.tag) {
+                <div class="cat-ref-row">
+                  <code class="cat-ref-tag">{{ field.tag }}</code>
+                  <span class="cat-ref-name">{{ field.name }}</span>
+                  <span class="cat-ref-desc">{{ field.desc }}</span>
+                  <code class="cat-ref-ind">{{ field.indicator }}</code>
+                </div>
+              }
+            </div>
+          </mat-expansion-panel>
+
+        </div>
+      </mat-tab>
+
+      <!-- ══ TAB 2: DDC Classification ════════════════════════════════════════ -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="ll-tab__icon">account_tree</mat-icon> DDC Classification
+        </ng-template>
+        <div class="ll-tab__content">
+
+          <div class="cat-banner">
+            <div class="cat-banner__badges">
+              <span class="cat-badge cat-badge--ddc">DDC 23rd Edition</span>
+              <span class="cat-badge cat-badge--marc">MARC 21 082 Field</span>
+            </div>
+            <p class="cat-banner__note">
+              Dewey Decimal Classification assigns a notation (e.g. <code>025.431</code>) from 10 main
+              classes subdivided by tables. The DDC number in <strong>082$a</strong> combined with a
+              Cutter author number forms the complete call number used for physical shelf arrangement.
+            </p>
+          </div>
+
+          <!-- DDC summary cards -->
+          <div class="ddc-summary-cards">
+            @for (cls of ddcSummary; track cls.number) {
+              <div class="ddc-summary-card">
+                <div class="ddc-summary-card__number">{{ cls.number }}</div>
+                <div class="ddc-summary-card__caption">{{ cls.caption }}</div>
+                <div class="ddc-summary-card__count">
+                  {{ getDdcClassCount(cls.number) }} items
+                </div>
+              </div>
+            }
+          </div>
+
+          <div class="cat-toolbar">
+            <mat-form-field appearance="outline" class="cat-search">
+              <mat-label>Filter by DDC number, title or call number</mat-label>
+              <input matInput [(ngModel)]="ddcFilter"
+                     (ngModelChange)="searchDdc()" name="ddcSearch">
+              <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <ngx-datatable
+            class="material"
+            [rows]="ddcFilteredItems"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="'auto'"
+            [reorderable]="true">
+
+            <ngx-datatable-column name="Call Number" prop="call_no" [maxWidth]="130">
+              <ng-template ngx-datatable-cell-template let-value="value">
+                <code class="cat-call-no">{{ value || '—' }}</code>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="DDC (082$a)" [maxWidth]="110">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                @if (row.marc_082) {
+                  <div>
+                    <mat-chip class="cat-chip-ddc">{{ row.marc_082 }}</mat-chip>
+                    <div class="cat-ddc-class">{{ getDdcClass(row.marc_082) }}</div>
+                  </div>
+                } @else {
+                  <span class="cat-missing">Unclassified</span>
+                }
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Title"></ngx-datatable-column>
+
+            <ngx-datatable-column name="Author" prop="writer.name" [maxWidth]="160"></ngx-datatable-column>
+
+            <ngx-datatable-column name="Category" prop="category.category_name" [maxWidth]="140"></ngx-datatable-column>
+
+            <ngx-datatable-column name="Subjects (650)" prop="marc_650">
+              <ng-template ngx-datatable-cell-template let-value="value">
+                <span class="cat-subjects">{{ value || '—' }}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="" [sortable]="false" [maxWidth]="60">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <button mat-icon-button color="primary" matTooltip="Edit DDC / MARC"
+                        (click)="openMarcEditor(row)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+
+          </ngx-datatable>
+
+        </div>
+      </mat-tab>
+
+      <!-- ══ TAB 3: Dublin Core Export ════════════════════════════════════════ -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="ll-tab__icon">share</mat-icon> Dublin Core Export
+        </ng-template>
+        <div class="ll-tab__content">
+
+          <div class="cat-banner">
+            <div class="cat-banner__badges">
+              <span class="cat-badge cat-badge--dc">Dublin Core (DCMI)</span>
+              <span class="cat-badge cat-badge--oai">OAI-PMH</span>
+              <span class="cat-badge cat-badge--json">JSON-LD</span>
+            </div>
+            <p class="cat-banner__note">
+              Dublin Core provides 15 standardized metadata elements for interoperable data exchange.
+              Export records as <strong>OAI-PMH XML</strong> for union catalogues and institutional
+              repositories, or as <strong>JSON-LD</strong> for linked-data applications.
+            </p>
+          </div>
+
+          <!-- Batch export actions -->
+          <div class="dc-export-bar">
+            <mat-form-field appearance="outline" class="cat-search">
+              <mat-label>Search items</mat-label>
+              <input matInput [(ngModel)]="dcSearchQuery"
+                     (ngModelChange)="searchDcItems()" name="dcSearch">
+              <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            <div class="dc-export-actions">
+              <button mat-stroked-button (click)="selectAllDc()">
+                <mat-icon>select_all</mat-icon> Select All ({{ dcFilteredItems.length }})
+              </button>
+              <button mat-stroked-button (click)="clearDcSelection()" [disabled]="!dcSelected.length">
+                <mat-icon>deselect</mat-icon> Clear
+              </button>
+              <button mat-flat-button color="primary" (click)="exportSelectedXml()" [disabled]="!dcSelected.length">
+                <mat-icon>download</mat-icon> Export XML ({{ dcSelected.length }})
+              </button>
+              <button mat-flat-button color="accent" (click)="exportSelectedJson()" [disabled]="!dcSelected.length">
+                <mat-icon>data_object</mat-icon> Export JSON-LD ({{ dcSelected.length }})
+              </button>
+              <button mat-stroked-button (click)="exportAllXml()">
+                <mat-icon>cloud_download</mat-icon> Export All XML
+              </button>
+            </div>
+          </div>
+
+          <!-- Item selection table -->
+          <ngx-datatable
+            class="material"
+            [rows]="dcFilteredItems"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="'auto'"
+            [reorderable]="true">
+
+            <ngx-datatable-column name="" [sortable]="false" [maxWidth]="48">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <input type="checkbox" [checked]="isDcSelected(row)" (change)="toggleDcSelect(row)">
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Title" prop="title"></ngx-datatable-column>
+            <ngx-datatable-column name="Author" prop="writer.name" [maxWidth]="160"></ngx-datatable-column>
+            <ngx-datatable-column name="ISBN" prop="isbn" [maxWidth]="140"></ngx-datatable-column>
+            <ngx-datatable-column name="Language" prop="marc_041" [maxWidth]="80"></ngx-datatable-column>
+
+            <ngx-datatable-column name="DC Completeness" [maxWidth]="140">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <div class="cat-completeness">
+                  <div class="cat-completeness__bar cat-completeness__bar--ok"
+                       [style.width.%]="marcCompleteness(row)"></div>
+                  <span class="cat-completeness__label">{{ marcCompleteness(row) }}%</span>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Rights" prop="dc_rights" [maxWidth]="160">
+              <ng-template ngx-datatable-cell-template let-value="value">
+                <span class="cat-subjects">{{ value || '—' }}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="" [sortable]="false" [maxWidth]="60">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <button mat-icon-button color="primary" matTooltip="Edit DC fields"
+                        (click)="openMarcEditor(row)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+
+          </ngx-datatable>
+
+          <!-- Dublin Core element reference -->
+          <mat-expansion-panel class="cat-ref-panel" style="margin-top: 1.5rem">
+            <mat-expansion-panel-header>
+              <mat-panel-title><mat-icon>help_outline</mat-icon>&nbsp; Dublin Core 15 Elements Reference (DCMI)</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="cat-ref-grid">
+              <div class="cat-ref-row cat-ref-row--header">
+                <span>Element</span><span>MARC Source</span><span>Description</span>
+              </div>
+              @for (el of dcElementRef; track el.element) {
+                <div class="cat-ref-row">
+                  <code class="cat-ref-tag">dc:{{ el.element }}</code>
+                  <code class="cat-ref-name">{{ el.marc }}</code>
+                  <span class="cat-ref-desc">{{ el.desc }}</span>
+                </div>
+              }
+            </div>
+          </mat-expansion-panel>
+
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </mat-card>
+</div>

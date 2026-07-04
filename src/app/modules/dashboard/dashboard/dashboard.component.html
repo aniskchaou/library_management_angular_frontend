@@ -1,473 +1,350 @@
-<div class="container-fluid">
-  <div *ngIf="loading; else loaded">
-    <app-loading></app-loading>
-  </div>
-  <ng-template #loaded>
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">
-        <i class="fas fa-chart-line mr-2"></i>{{ dashboardI18n?.titleI18n }}
+<div class="ll-dashboard">
+  @if (loading) {
+    <div class="ll-dashboard__loading"><app-loading></app-loading></div>
+  } @else {
+    <header class="ll-dashboard__header">
+      <h1>
+        <mat-icon>insights</mat-icon>
+        {{ 'nav.dashboard' | translate }}
       </h1>
+      <p class="ll-dashboard__lede">
+        {{ 'dashboard.lede' | translate }}
+      </p>
+    </header>
 
-      <!-- Description -->
-   
-
-      <!--<a
-      href="#"
-      class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-      ><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a
-    >-->
-    </div>
-    <p class="lead">Monitor and analyze key library metrics in real-time. Use the dashboard to track books, members, categories, issued books, and other important statistics with ease.</p>
-
-
-    <div class="row">
-      <!-- Earnings (Monthly) Card Example -->
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div
-                  class="text-xs font-weight-bold text-primary text-uppercase mb-1"
-                >
-                <i class="fas fa-book mr-2"></i> {{ dashboardI18n?.booksNumberI18n }}
-                </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                  {{ dashboardAnalytics?.bookNumber }}
-                </div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-book fa-2x text-gray-300"></i>
-            </div>
-            </div>
+    <!-- KPI tiles -->
+    <section class="ll-kpis">
+      <mat-card class="ll-kpi ll-kpi--primary">
+        <div class="ll-kpi__body">
+          <div class="ll-kpi__label">
+            <mat-icon>menu_book</mat-icon>
+            <span>{{ 'dashboard.kpiBooks' | translate }}</span>
           </div>
+          <div class="ll-kpi__value">{{ dashboardAnalytics?.bookNumber ?? 0 }}</div>
         </div>
-      </div>
+        <mat-icon class="ll-kpi__bg">menu_book</mat-icon>
+      </mat-card>
 
-      <!-- Earnings (Monthly) Card Example -->
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div
-                  class="text-xs font-weight-bold text-success text-uppercase mb-1"
-                >
-                <i class="fas fa-users mr-2"></i> {{ dashboardI18n?.membersNumberI18n }}
-                </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                  {{ dashboardAnalytics?.memberNumber }}
-                </div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-users fa-2x text-gray-300"></i>
-            </div>
-            </div>
+      <mat-card class="ll-kpi ll-kpi--success">
+        <div class="ll-kpi__body">
+          <div class="ll-kpi__label">
+            <mat-icon>group</mat-icon>
+            <span>{{ 'dashboard.kpiMembers' | translate }}</span>
           </div>
+          <div class="ll-kpi__value">{{ dashboardAnalytics?.memberNumber ?? 0 }}</div>
         </div>
-      </div>
+        <mat-icon class="ll-kpi__bg">group</mat-icon>
+      </mat-card>
 
-      <!-- Earnings (Monthly) Card Example -->
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div
-                  class="text-xs font-weight-bold text-info text-uppercase mb-1"
-                >
-                <i class="fas fa-th-list mr-2"></i> {{ dashboardI18n?.categoriesNumberI18n }}
-                </div>
-                <div class="row no-gutters align-items-center">
-                  <div class="col-auto">
-                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                      {{ dashboardAnalytics?.categoryNumber }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-list-alt fa-2x text-gray-300"></i>
-            </div>
-            </div>
+      <mat-card class="ll-kpi ll-kpi--info">
+        <div class="ll-kpi__body">
+          <div class="ll-kpi__label">
+            <mat-icon>category</mat-icon>
+            <span>{{ 'dashboard.kpiCategories' | translate }}</span>
           </div>
+          <div class="ll-kpi__value">{{ dashboardAnalytics?.categoryNumber ?? 0 }}</div>
         </div>
-      </div>
+        <mat-icon class="ll-kpi__bg">category</mat-icon>
+      </mat-card>
 
-      <!-- Pending Requests Card Example -->
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div
-                  class="text-xs font-weight-bold text-warning text-uppercase mb-1"
-                >
-                <i class="fas fa-book-open mr-2"></i> {{ dashboardI18n?.issueBookNumberI18n }}
-                </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                  {{ dashboardAnalytics?.issueBookNumber }}
-                </div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-book-open fa-2x text-gray-300"></i>
-            </div>
-            </div>
+      <mat-card class="ll-kpi ll-kpi--warning">
+        <div class="ll-kpi__body">
+          <div class="ll-kpi__label">
+            <mat-icon>auto_stories</mat-icon>
+            <span>{{ 'dashboard.kpiIssuedBooks' | translate }}</span>
           </div>
+          <div class="ll-kpi__value">{{ dashboardAnalytics?.issueBookNumber ?? 0 }}</div>
         </div>
-      </div>
+        <mat-icon class="ll-kpi__bg">auto_stories</mat-icon>
+      </mat-card>
+    </section>
 
+    <!-- Chart panels -->
 
-
-      <div class="row">
-        <!-- Number of Items by Category -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="mb-3">{{ dashboardI18n?.itemsByCategoryI18n || 'Number of Items by Category' }}</h4>
-              <ngx-charts-bar-vertical
-                [view]="viewCategory"
-                [scheme]="'cool'"
-                [results]="itemsByCategoryData"
-                [gradient]="gradient"
-                [xAxis]="showXAxis"
-                [yAxis]="showYAxis"
-                [legend]="showLegend"
-                [showXAxisLabel]="showXAxisLabel"
-                [showYAxisLabel]="showYAxisLabel"
-                [xAxisLabel]="xAxisLabelCategory"
-                [yAxisLabel]="yAxisLabelCategory"
-                (select)="onSelect($event)"
-                style="width: 100%; height: 300px;"
-              >
-              </ngx-charts-bar-vertical>
-            </div>
-          </div>
-        </div>
-      
-        <!-- Items Distribution by Media Type -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="mb-3">{{ dashboardI18n?.itemsByMediaTypeI18n || 'Items Distribution by Media Type' }}</h4>
-              <ngx-charts-pie-chart
-                [view]="viewMediaType"
-                [scheme]="'cool'"
-                [results]="itemsByMediaTypeData"
-                [legend]="showLegend"
-                [labels]="showLabels"
-                [doughnut]="isDoughnut"
-                [gradient]="gradient"
-                (select)="onSelect($event)"
-                style="width: 100%; height: 400px;"
-              >
-              </ngx-charts-pie-chart>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h4><i class="fas fa-bar-chart"></i> Number of Members by City</h4>
-              <ngx-charts-bar-vertical
-                [view]="viewCategory"
-                [scheme]="'cool'"
-                [results]="membersByCityData"
-                [gradient]="gradient"
-                [xAxis]="true"
-                [yAxis]="true"
-                [legend]="showLegend"
-                [showXAxisLabel]="true"
-                [showYAxisLabel]="true"
-                [xAxisLabel]="'Number of Members'"
-                [yAxisLabel]="'City'"  style="width: 100%; height: 300px;">
-              </ngx-charts-bar-vertical>
-        </div>
-      </div>
+    <!-- Dashboard settings -->
+    <div class="ll-dash-settings-bar">
+      <button mat-stroked-button (click)="showDashboardSettings = !showDashboardSettings"
+        class="ll-dash-settings-btn">
+        <mat-icon>tune</mat-icon>
+        {{ showDashboardSettings ? 'Close Settings' : 'Dashboard Settings' }}
+      </button>
     </div>
 
+    @if (showDashboardSettings) {
+      <mat-card class="ll-settings-panel">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>visibility</mat-icon> Widget Visibility
+          </mat-card-title>
+          <mat-card-subtitle>Show or hide individual chart widgets</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="ll-settings-panel__body">
+          @for (widget of chartWidgets; track widget.id) {
+            <mat-checkbox [(ngModel)]="widget.visible" (change)="saveWidgetSettings()"
+              class="ll-settings-check">
+              {{ widget.label }}
+            </mat-checkbox>
+          }
+        </mat-card-content>
+      </mat-card>
+    }
 
-
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h4><i class="fas fa-pie-chart"></i> Gender Distribution of Members</h4>
-              <ngx-charts-pie-chart
-                [view]="viewSize"
-                [scheme]="'cool'"
-                [results]="genderDistributionData"
-                [legend]="showLegend"
-                [labels]="showLabels"
-                [doughnut]="isDoughnut"
-                [gradient]="gradient"
-                style="width: 100%; height: 400px;">
-              </ngx-charts-pie-chart>
-        </div>
-      </div>
-      </div>
-
-
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h4>Number of Media Items by Type</h4>
-            <ngx-charts-bar-vertical
-              [view]="viewCategory"
-              [scheme]="'cool'"
-              [results]="mediaItemsByTypeData"
-              [gradient]="gradient"
-              [xAxis]="true"
-              [yAxis]="true"
-              [legend]="showLegend"
-              [showXAxisLabel]="true"
-              [showYAxisLabel]="true"
-              [xAxisLabel]="'Media Type'"
-              [yAxisLabel]="'Items'" style="width: 100%; height: 300px;">
-            </ngx-charts-bar-vertical>
-      </div>
-    </div>
-    </div>
-
-
-      <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h4>Media Distribution by Genre</h4>
-              <ngx-charts-pie-chart
-                [view]="view"
-                [scheme]="'cool'"
-                [results]="mediaByGenreData"
-                [legend]="showLegend"
-                [labels]="showLabels"
-                [doughnut]="isDoughnut"
-                [gradient]="gradient"
-                style="width: 100%; height: 400px;"
-                >
-              </ngx-charts-pie-chart>
-      </div>
-    </div>
-    </div>
-
-
-      
-
-
-      
-        <!-- Acquisition Trends Over Time -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h4>Number of Publications by Authors</h4>
-              <ngx-charts-bar-vertical
-                [view]="viewCategory"
-                [scheme]="'cool'"
-                [results]="publicationsByAuthorsData"
-                [gradient]="gradient"
-                [xAxis]="true"
-                [yAxis]="true"
-                [legend]="showLegend"
-                [showXAxisLabel]="true"
-                [showYAxisLabel]="true"
-                [xAxisLabel]="'Author'"
-                [yAxisLabel]="'Publications'"  style="width: 100%; height: 300px;">
-              </ngx-charts-bar-vertical>
+    <section class="ll-charts"
+      cdkDropList
+      cdkDropListOrientation="mixed"
+      [cdkDropListData]="chartWidgets"
+      (cdkDropListDropped)="dropWidget($event)">
+      @for (widget of chartWidgets; track widget.id) {
+        @if (widget.visible) {
+          <mat-card class="ll-chart" cdkDrag>
+            <div class="ll-drag-handle" cdkDragHandle>
+              <mat-icon>drag_indicator</mat-icon>
             </div>
-          </div>
-        </div>
-      
-        <!-- Example New Chart: Gauge Chart -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h4>Number of Circulations by Member Type</h4>
-              <ngx-charts-bar-vertical
-                [results]="memberTypeData"
-                [view]="viewCategory"
-                [scheme]="'cool'"
-                [gradient]="true"
-                [xAxis]="true"
-                [yAxis]="true"
-                [legend]="false"
-                [showXAxisLabel]="true"
-                [showYAxisLabel]="true"
-                xAxisLabel="Member Type"
-                yAxisLabel="Number of Circulations" >
-              </ngx-charts-bar-vertical>
-            </div>
-          </div>
-        </div>
-       </div>
+            <!-- Drag preview placeholder -->
+            <div *cdkDragPlaceholder class="ll-chart-placeholder"></div>
 
+            @switch (widget.id) {
+              @case ('by-category') {
+                <mat-card-header>
+                  <mat-card-title>{{ 'book.chartByCategory' | translate }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <ngx-charts-bar-vertical
+                    [view]="viewCategory"
+                    [scheme]="materialColorScheme"
+                    [results]="itemsByCategoryData"
+                    [gradient]="gradient"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [legend]="showLegend"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [xAxisLabel]="xAxisLabelCategory"
+                    [yAxisLabel]="yAxisLabelCategory"
+                    (select)="onSelect($event)"
+                    style="width: 100%; height: 300px;">
+                  </ngx-charts-bar-vertical>
+                </mat-card-content>
+              }
+              @case ('by-media') {
+                <mat-card-header>
+                  <mat-card-title>{{ 'book.chartByMedia' | translate }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <ngx-charts-pie-chart
+                    [view]="viewMediaType"
+                    [scheme]="materialColorScheme"
+                    [results]="itemsByMediaTypeData"
+                    [legend]="showLegend"
+                    [labels]="showLabels"
+                    [doughnut]="isDoughnut"
+                    [gradient]="gradient"
+                    (select)="onSelect($event)"
+                    style="width: 100%; height: 360px;">
+                  </ngx-charts-pie-chart>
+                </mat-card-content>
+              }
+              @case ('members-city') {
+                <mat-card-header>
+                  <mat-card-title>Number of Members by City</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <ngx-charts-bar-vertical
+                    [view]="viewCategory"
+                    [scheme]="materialColorScheme"
+                    [results]="membersByCityData"
+                    [gradient]="gradient"
+                    [xAxis]="true"
+                    [yAxis]="true"
+                    [legend]="showLegend"
+                    [showXAxisLabel]="true"
+                    [showYAxisLabel]="true"
+                    [xAxisLabel]="'Number of Members'"
+                    [yAxisLabel]="'City'"
+                    style="width: 100%; height: 300px;">
+                  </ngx-charts-bar-vertical>
+                </mat-card-content>
+              }
+              @case ('gender') {
+                <mat-card-header>
+                  <mat-card-title>Gender Distribution of Members</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <ngx-charts-pie-chart
+                    [view]="viewSize"
+                    [scheme]="materialColorScheme"
+                    [results]="genderDistributionData"
+                    [legend]="showLegend"
+                    [labels]="showLabels"
+                    [doughnut]="isDoughnut"
+                    [gradient]="gradient"
+                    style="width: 100%; height: 360px;">
+                  </ngx-charts-pie-chart>
+                </mat-card-content>
+              }
+              @case ('media-items') {
+                <mat-card-header>
+                  <mat-card-title>Number of Media Items by Type</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <ngx-charts-bar-vertical
+                    [view]="viewCategory"
+                    [scheme]="materialColorScheme"
+                    [results]="mediaItemsByTypeData"
+                    [gradient]="gradient"
+                    [xAxis]="true"
+                    [yAxis]="true"
+                    [legend]="showLegend"
+                    [showXAxisLabel]="true"
+                    [showYAxisLabel]="true"
+                    [xAxisLabel]="'Media Type'"
+                    [yAxisLabel]="'Items'"
+                    style="width: 100%; height: 300px;">
+                  </ngx-charts-bar-vertical>
+                </mat-card-content>
+              }
+              @case ('media-genre') {
+                <mat-card-header>
+                  <mat-card-title>Media Distribution by Genre</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <ngx-charts-pie-chart
+                    [view]="viewMediaType"
+                    [scheme]="materialColorScheme"
+                    [results]="mediaByGenreData"
+                    [legend]="showLegend"
+                    [labels]="showLabels"
+                    [doughnut]="isDoughnut"
+                    [gradient]="gradient"
+                    style="width: 100%; height: 360px;">
+                  </ngx-charts-pie-chart>
+                </mat-card-content>
+              }
+              @case ('publications') {
+                <mat-card-header>
+                  <mat-card-title>Number of Publications by Authors</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <ngx-charts-bar-vertical
+                    [view]="viewCategory"
+                    [scheme]="materialColorScheme"
+                    [results]="publicationsByAuthorsData"
+                    [gradient]="gradient"
+                    [xAxis]="true"
+                    [yAxis]="true"
+                    [legend]="showLegend"
+                    [showXAxisLabel]="true"
+                    [showYAxisLabel]="true"
+                    [xAxisLabel]="'Author'"
+                    [yAxisLabel]="'Publications'"
+                    style="width: 100%; height: 300px;">
+                  </ngx-charts-bar-vertical>
+                </mat-card-content>
+              }
+              @case ('member-type') {
+                <mat-card-header>
+                  <mat-card-title>Number of Circulations by Member Type</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <ngx-charts-bar-vertical
+                    [results]="memberTypeData"
+                    [view]="viewCategory"
+                    [scheme]="materialColorScheme"
+                    [gradient]="true"
+                    [xAxis]="true"
+                    [yAxis]="true"
+                    [legend]="false"
+                    [showXAxisLabel]="true"
+                    [showYAxisLabel]="true"
+                    xAxisLabel="Member Type"
+                    yAxisLabel="Number of Circulations">
+                  </ngx-charts-bar-vertical>
+                </mat-card-content>
+              }
+            }
+          </mat-card>
+        }
+      }
+    </section>
 
-       <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800 ml-3"> 
-          <i class="fas fa-chart-pie mr-2"></i> Library Insight
-        </h1>
-      </div>
+    <!-- Library insight -->
+    <header class="ll-dashboard__header ll-dashboard__header--sub">
+      <h2>
+        <mat-icon>pie_chart</mat-icon>
+        Library Insight
+      </h2>
+      <p class="ll-dashboard__lede">
+        Highlights of top authors, publications, popular genres and more — quick insights to
+        understand trends and optimize library services.
+      </p>
+    </header>
 
-        <!-- Description -->
-<!-- Description -->
-<p class="lead ml-3">
-  The <strong>Library Insights</strong> section highlights key data, including top authors, publications, most borrowed books, popular genres, and more. Gain quick insights to understand trends and optimize library services.
-</p>
+    <mat-card class="ll-insight">
+      <mat-tab-group mat-stretch-tabs="false" animationDuration="200ms">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="ll-tab__icon">person</mat-icon> Top Authors
+          </ng-template>
+          <mat-nav-list class="ll-insight__list">
+            @for (author of topAuthors; track author) {
+              <mat-list-item>
+                <mat-icon matListItemIcon>person</mat-icon>
+                <span matListItemTitle>{{ author[0] }}</span>
+              </mat-list-item>
+            } @empty {
+              <div class="ll-insight__empty">No data available.</div>
+            }
+          </mat-nav-list>
+        </mat-tab>
 
-        
-      
-       <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-              <div class="card-body">
-                  <ul class="nav nav-tabs">
-                      <li class="nav-item">
-                          <a class="nav-link active" data-toggle="tab" href="#TopAuthors">
-                              <i class="fas fa-user mr-2"></i> Top Authors
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" data-toggle="tab" href="#TopPublications">
-                              <i class="fas fa-newspaper mr-2"></i> Top Publications
-                          </a>
-                      </li>
-                    <!--   <li class="nav-item">
-                          <a class="nav-link" data-toggle="tab" href="#MostBorrowedBooks">
-                              <i class="fas fa-book mr-2"></i> Most Borrowed Books
-                          </a>
-                      </li> -->
-                      <li class="nav-item">
-                          <a class="nav-link" data-toggle="tab" href="#MostPopularGenres">
-                              <i class="fas fa-tags mr-2"></i> Most Popular Genres
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" data-toggle="tab" href="#TopCirculatingBooks">
-                              <i class="fas fa-sync-alt mr-2"></i> Top Circulating Books
-                          </a>
-                      </li>
-                      <li class="nav-item disabled">
-                          <a class="nav-link disabled" data-toggle="tab" href="#TopBookSeries">
-                              <i class="fas fa-bookmark mr-2"></i> Top Book Series
-                          </a>
-                      </li>
-                      <!-- <li class="nav-item">
-                          <a class="nav-link" data-toggle="tab" href="#MostRequestedBooks">
-                              <i class="fas fa-request mr-2"></i> Most Requested Books
-                          </a>
-                      </li> -->
-                  </ul>
-      
-                  <div class="tab-content mt-3">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="ll-tab__icon">newspaper</mat-icon> Top Publications
+          </ng-template>
+          <mat-nav-list class="ll-insight__list">
+            @for (publication of topPublications; track publication) {
+              <mat-list-item>
+                <mat-icon matListItemIcon>newspaper</mat-icon>
+                <span matListItemTitle>{{ publication[0] }}</span>
+              </mat-list-item>
+            } @empty {
+              <div class="ll-insight__empty">No data available.</div>
+            }
+          </mat-nav-list>
+        </mat-tab>
 
-                      <!-- Top Authors -->
-                      <div id="TopAuthors" class="container tab-pane active">
-                        <h2>Top Authors</h2>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Author Name</th>
-                                <!--     <th>Books Written</th>
-                                    <th>Total Circulations</th> 
-                                    <th>Average Rating</th> -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let author of topAuthors">
-                                    <td>{{author[0]}}</td>  <!-- Author name -->
-                                <!--     <td>{{author[1]}}</td>  
-                                    <td>{{author[3]}}</td>  
-                                    <td>{{author[2] || 'N/A'}}</td> -->  
-                                </tr>
-                            </tbody>
-                        </table>
-                        
-                      </div>
-                      
-                      <!-- Top Publications -->
-                      <div id="TopPublications" class="container tab-pane fade">
-                          <h4>Top Publications</h4>
-                          
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Publisher Name</th>
-                                      <!--   <th>Total Books Published</th>
-                                        <th>Total Circulations</th>  -->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let publication of topPublications">
-                                        <td>{{publication[0]}}</td>  <!-- Publisher name -->
-                                        <!-- <td>{{publication[1]}}</td> 
-                                        <td>{{publication[2]}}</td>   -->
-                                    </tr>
-                                </tbody>
-                              </table>
-                      </div>
-                      
-                      <!-- Most Borrowed Books -->
-                      
-                      <!-- Most Popular Genres -->
-                      <div id="MostPopularGenres" class="container tab-pane fade">
-                          <h4>Most Popular Genres</h4>
-                          
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Genre</th>
-                                        <!-- <th>Total Books in Genre</th>
-                                        <th>Total Circulations</th>  -->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let genre of mostPopularGenres">
-                                        <td>{{genre[0]}}</td>  <!-- Genre name -->
-                                       <!--  <td>{{genre[1]}}</td>  
-                                        <td>{{genre[2]}}</td>   -->
-                                    </tr>
-                                </tbody>
-                            </table>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="ll-tab__icon">sell</mat-icon> Most Popular Genres
+          </ng-template>
+          <mat-nav-list class="ll-insight__list">
+            @for (genre of mostPopularGenres; track genre) {
+              <mat-list-item>
+                <mat-icon matListItemIcon>sell</mat-icon>
+                <span matListItemTitle>{{ genre[0] }}</span>
+              </mat-list-item>
+            } @empty {
+              <div class="ll-insight__empty">No data available.</div>
+            }
+          </mat-nav-list>
+        </mat-tab>
 
-                        </div>
-                      
-                      <!-- Top Circulating Books -->
-                      <div id="TopCirculatingBooks" class="container tab-pane fade">
-                          <h4>Top Circulating Books</h4>
-                          
-                                  <table class="table table-striped">
-                                      <thead>
-                                          <tr>
-                                              <th>Book Title</th>
-                                           <!--    <th>Author Name</th> 
-                                              <th>Times Circulated</th> -->
-                                          </tr>
-                                      </thead>
-                                      <tbody>
-                                          <tr *ngFor="let book of topCirculatingBooks">
-                                              <td>{{book[0]}}</td>  <!-- Book title -->
-                                              <!-- <td>{{book[2]}}</td>  
-                                              <td>{{book[1]}}</td>   -->
-                                          </tr>
-                                      </tbody>
-                                  </table>
-
-                      </div>
-                      
-                      <!-- Top Book Series -->
-                     
-                      
-                     
-                  </div>
-              </div>
-          </div>
-      </div>
-
-    
-        
-      
-      </div>
-      
-      
-    </div>
-  </ng-template>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="ll-tab__icon">sync</mat-icon> Top Circulating Books
+          </ng-template>
+          <mat-nav-list class="ll-insight__list">
+            @for (book of topCirculatingBooks; track book) {
+              <mat-list-item>
+                <mat-icon matListItemIcon>menu_book</mat-icon>
+                <span matListItemTitle>{{ book[0] }}</span>
+              </mat-list-item>
+            } @empty {
+              <div class="ll-insight__empty">No data available.</div>
+            }
+          </mat-nav-list>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  }
 </div>
-

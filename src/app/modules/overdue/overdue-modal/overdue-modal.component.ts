@@ -5,9 +5,10 @@ import { Overdue } from 'src/app/main/models/Overdue';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
 @Component({
-  selector: 'app-overdue-modal',
-  templateUrl: './overdue-modal.component.html',
-  styleUrls: ['./overdue-modal.component.css']
+    selector: 'app-overdue-modal',
+    templateUrl: './overdue-modal.component.html',
+    styleUrls: ['./overdue-modal.component.css'],
+    standalone: false
 })
 export class OverdueModalComponent implements OnInit {
 

@@ -1,146 +1,53 @@
-<!-- Make sure to include Font Awesome CSS in your project for icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-<div class="container mt-4">
-  <!-- Title with Icon -->
-  <h1 class="h3 mb-2 text-gray-800">
-    <i class="fas fa-ruler mr-2"></i> Physical Descriptions
-  </h1>
-
-  <!-- Description Below Title -->
-  <p class="lead mb-4">
-    View and manage the physical attributes of the item. This section provides detailed information on dimensions, weight, page count, and binding type. Ensure all physical descriptions are accurate to facilitate proper cataloging and handling.
-  </p>
-
-  <!-- Physical Description Table -->
-  <div class="card shadow mb-4">
-    <div class="card-body">
-      <div class="table-responsive">
-        <div *ngIf="loadingIndicator; else loaded">
-          <app-loading></app-loading>
-        </div>
-
-        <ng-template #loaded>
-
-          <button class="btn btn-outline-primary btn-icon-split mb-3" (click)="openAddDialog()">
-            <span class="icon text-white-50">
-              <i class="fas fa-plus"></i>
-            </span>
-            <span class="text">Add Physical Description</span>
-          </button>
-
-
-          <button class="btn btn-outline-info btn-icon-split mb-3" (click)="refreshData()">
-            <span class="icon text-white-50">
-              <i class="fas fa-sync-alt"></i>
-            </span>
-            <span class="text">Refresh</span>
-          </button>
-
-          <!-- Button trigger modal -->
-         
-
-          <div>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search by attributes..."
-              (input)="updateFilter($event)"
-            />
-          </div>
-
-          <ngx-datatable
-            class="bootstrap"
-            [rows]="descriptions"
-            [columnMode]="'force'"
-            [headerHeight]="50"
-            [footerHeight]="50"
-            [rowHeight]="'auto'"
-            [limit]="10"
-            [loadingIndicator]="loadingIndicator"
-            [reorderable]="reorderable"
-            (select)="onSelect($event)"
-            (activate)="onActivate($event)"
-          >
-           <!-- Binding Type -->
-           <ngx-datatable-column name="Binding Type" [prop]="'bindingType'">
-            <ng-template ngx-datatable-cell-template let-row="row">
-              <span style="color: red;">
-                {{ row.bindingType }}
-              </span>
-            </ng-template>
-          </ngx-datatable-column>
-
-
-            <!-- Height -->
-            <ngx-datatable-column name="Height (cm)" [prop]="'height'">
-              <ng-template ngx-datatable-cell-template let-row="row">
-                {{ row.height }}
-              </ng-template>
-            </ngx-datatable-column>
-
-            <!-- Width -->
-            <ngx-datatable-column name="Width (cm)" [prop]="'width'">
-              <ng-template ngx-datatable-cell-template let-row="row">
-                {{ row.width }}
-              </ng-template>
-            </ngx-datatable-column>
-
-            <!-- Thickness -->
-            <ngx-datatable-column name="Thickness (cm)" [prop]="'thickness'">
-              <ng-template ngx-datatable-cell-template let-row="row">
-                {{ row.thickness }}
-              </ng-template>
-            </ngx-datatable-column>
-
-            <!-- Weight -->
-            <ngx-datatable-column name="Weight (g)" [prop]="'weight'">
-              <ng-template ngx-datatable-cell-template let-row="row">
-                {{ row.weight }}
-              </ng-template>
-            </ngx-datatable-column>
-
-            <!-- Page Count -->
-            <ngx-datatable-column name="Page Count" [prop]="'pageCount'">
-              <ng-template ngx-datatable-cell-template let-row="row">
-                {{ row.pageCount }}
-              </ng-template>
-            </ngx-datatable-column>
-
-           
-
-            <!-- Actions -->
-            <ngx-datatable-column name="Actions">
-              <ng-template ngx-datatable-cell-template let-row="row">
-              <!--   <button class="btn btn-sm btn-outline-primary" (click)="openEditDialog(row)" title="Edit">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button class="btn btn-sm btn-outline-danger" (click)="deleteRow(row)" title="Delete">
-                  <i class="fas fa-trash"></i>
-                </button> -->
-                
-                  <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="actionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    Actions
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="actionDropdown">
-                    <li>
-                      <a class="dropdown-item"  (click)="openEditDialog(row)">
-                        <i class="fas fa-edit text-primary"></i> Edit
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item"  (click)="deleteRow(row)">
-                        <i class="fas fa-trash text-danger"></i> Delete
-                      </a>
-                    </li>
-                  </ul>
-                
-                
-              </ng-template>
-            </ngx-datatable-column>
-          </ngx-datatable>
-        </ng-template>
+﻿<div class="ll-page">
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <mat-icon class="ll-page__icon">straighten</mat-icon>
+      <div class="ll-page__title">
+        <h1>{{ 'physicaldescription.pageTitle' | translate }}</h1>
+        <p>{{ 'physicaldescription.pageDesc' | translate }}</p>
       </div>
-    </div>
-  </div>
+      <div class="ll-page__actions">
+        <button mat-flat-button color="primary" (click)="openAddDialog()"><mat-icon>add</mat-icon> {{ 'ui.create' | translate }}</button>
+        <button mat-stroked-button (click)="refreshData()"><mat-icon>refresh</mat-icon> {{ 'ui.reload' | translate }}</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="ll-page__body" appearance="outlined">
+    <mat-card-content>
+      @if (loadingIndicator) {
+        <div class="ll-loading"><mat-progress-spinner diameter="48" mode="indeterminate"></mat-progress-spinner></div>
+      } @else {
+        <mat-tab-group animationDuration="200ms" class="ll-tabs">
+          <mat-tab>
+            <ng-template mat-tab-label><mat-icon class="ll-tab__icon">list</mat-icon> {{ 'ui.list' | translate }}</ng-template>
+            <div class="ll-tab__content">
+              <ngx-datatable class="material" [rows]="descriptions" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10">
+                <ngx-datatable-column name="Binding Type">
+                  <ng-template ngx-datatable-cell-template let-row="row"><span style="color:red">{{ row.bindingType }}</span></ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Height (cm)" prop="height"></ngx-datatable-column>
+                <ngx-datatable-column name="Width (cm)" prop="width"></ngx-datatable-column>
+                <ngx-datatable-column name="Thickness (cm)" prop="thickness"></ngx-datatable-column>
+                <ngx-datatable-column name="Weight (g)" prop="weight"></ngx-datatable-column>
+                <ngx-datatable-column name="Pages" prop="pageCount"></ngx-datatable-column>
+                <ngx-datatable-column name="Actions">
+                  <ng-template ngx-datatable-cell-template let-row="row">
+                    <button mat-icon-button [matMenuTriggerFor]="physMenu"><mat-icon>more_vert</mat-icon></button>
+                    <mat-menu #physMenu="matMenu">
+                      <button mat-menu-item (click)="openEditDialog(row)"><mat-icon>edit</mat-icon> {{ 'ui.edit' | translate }}</button>
+                      <button mat-menu-item (click)="deleteRow(row)"><mat-icon>delete</mat-icon> {{ 'ui.delete' | translate }}</button>
+                    </mat-menu>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label><mat-icon class="ll-tab__icon">menu_book</mat-icon> {{ 'ui.userManual' | translate }}</ng-template>
+            <div class="ll-tab__content"><div [innerHTML]="markdownContent"></div></div>
+          </mat-tab>
+        </mat-tab-group>
+      }
+    </mat-card-content>
+  </mat-card>
 </div>

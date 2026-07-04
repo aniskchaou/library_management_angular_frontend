@@ -1,63 +1,118 @@
-<div class="container-fluid">
-  <div *ngIf="loading; else loaded">
-    <app-loading></app-loading>
-  </div>
-
-  <ng-template #loaded>
-    <!-- Title with Icon -->
-    <h1 class="h3 mb-2 text-gray-800">
-      <i class="fas fa-calendar-check mr-2"></i>{{ menu.circulationReportI18n }}
-    </h1>
-
-    <!-- Description -->
-    <p class="lead mb-4">
-      This section provides detailed reports on the circulation of library items. You can filter the report by member and return status to analyze the usage and return patterns effectively. Use the filters below to customize your report.
-    </p>
-
-    <div class="card shadow mb-4">
-      <div class="card-body">
-        <select
-          class="col-sm-2 custom-select"
-          id="inputGroupSelect04"
-          (change)="selectMember($event.target.value)"
-        >
-          <option selected>Select Member</option>
-          <option value="{{ c.id }}" *ngFor="let c of memberNames$">
-            {{ c.name }}
-          </option>
-        </select>
-
-        <select
-          class="col-sm-2 custom-select"
-          id="inputGroupSelect04"
-          (change)="selectReturnStatus($event.target.value)"
-        >
-          <option selected>Select Return Status</option>
-          <option value="{{ c.id }}" *ngFor="let c of returnStatus$">
-            {{ c.name }}
-          </option>
-        </select>
-
-        <button
-          (click)="search()"
-          href="#"
-          role="button"
-          class="btn btn-info btn-icon-split"
-        >
-          <span class="icon text-white-50">
-            <i class="fas fa-filter"></i>
-          </span>
-          <span class="text">Filter</span>
-        </button>
-      </div>
+<div class="ll-page">
+  @if (loading) {
+    <div class="ll-loading">
+      <mat-progress-spinner mode="indeterminate" diameter="48"></mat-progress-spinner>
     </div>
+  } @else {
+    <!-- Page Header -->
+    <mat-card class="ll-page__header" appearance="outlined">
+      <mat-card-content class="ll-page__header-content">
+        <div class="ll-page__title">
+          <mat-icon class="ll-page__icon">swap_horiz</mat-icon>
+          <div>
+            <h2>{{ 'report.circulationTitle' | translate }}</h2>
+            <p class="ll-page__subtitle">{{ 'report.circulationDesc' | translate }}</p>
+          </div>
+        </div>
+        <div class="ll-page__actions">
+          @if (searchButtonClicked && circulations$?.length) {
+            <button mat-stroked-button (click)="exportToCSV()">
+              <mat-icon>table_view</mat-icon> CSV
+            </button>
+            <button mat-flat-button color="primary" (click)="exportToPDF()">
+              <mat-icon>picture_as_pdf</mat-icon> PDF
+            </button>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
 
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4" *ngIf="searchButtonClicked">
-      <div class="card-body">
-        <div class="table-responsive"></div>
-      </div>
-    </div>
-  </ng-template>
+    <!-- Filters -->
+    <mat-card class="ll-page__body" appearance="outlined">
+      <mat-card-content>
+        <div class="ll-report-filters">
+          <mat-form-field appearance="outline" class="ll-report-filter">
+            <mat-label>{{ 'report.selectMember' | translate }}</mat-label>
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-select (selectionChange)="selectMember($event.value)">
+              <mat-option [value]="undefined">{{ 'report.selectMember' | translate }}</mat-option>
+              @for (c of memberNames$; track c) {
+                <mat-option [value]="c.id">{{ c.firstname }} {{ c.surname }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="ll-report-filter">
+            <mat-label>{{ 'report.selectReturnStatus' | translate }}</mat-label>
+            <mat-icon matPrefix>swap_horiz</mat-icon>
+            <mat-select (selectionChange)="selectReturnStatus($event.value)">
+              <mat-option [value]="undefined">{{ 'report.selectReturnStatus' | translate }}</mat-option>
+              @for (c of returnStatus$; track c) {
+                <mat-option [value]="c.id">{{ c.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <button mat-flat-button color="primary" (click)="search()" class="ll-report-search-btn">
+            <mat-icon>search</mat-icon> {{ 'ui.filter' | translate }}
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Results -->
+    @if (searchButtonClicked) {
+      @if (circulations$?.length) {
+        <mat-card class="ll-page__body" appearance="outlined">
+          <mat-card-content>
+            <div class="ll-report-count">
+              <mat-chip color="primary" selected>
+                <mat-icon matChipAvatar>format_list_numbered</mat-icon>
+                {{ circulations$.length }} results
+              </mat-chip>
+            </div>
+            <div class="ll-report-table-wrap">
+              <table class="ll-report-table mat-elevation-z1">
+                <thead>
+                  <tr>
+                    <th>Member</th>
+                    <th>Book Title</th>
+                    <th>Issue Date</th>
+                    <th>Due Date</th>
+                    <th>Return Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (c of circulations$; track c) {
+                    <tr>
+                      <td>{{ c.memberName?.firstname }} {{ c.memberName?.surname }}</td>
+                      <td class="ll-report-title">{{ c.catalogItemName?.title }}</td>
+                      <td>{{ c.issueDate | date:'dd/MM/yyyy' }}</td>
+                      <td>{{ c.toReturn | date:'dd/MM/yyyy' }}</td>
+                      <td>{{ c.returnDate ? (c.returnDate | date:'dd/MM/yyyy') : '—' }}</td>
+                      <td>
+                        <mat-chip [color]="c.returnDate ? 'primary' : 'warn'" selected>
+                          {{ c.returnStatus?.name || (c.returnDate ? 'Returned' : 'Active') }}
+                        </mat-chip>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      } @else {
+        <mat-card class="ll-page__body" appearance="outlined">
+          <mat-card-content class="ll-empty-state">
+            <mat-icon class="ll-empty-icon">find_in_page</mat-icon>
+            <h3>No circulation records found</h3>
+            <p>Try changing your filter criteria and searching again.</p>
+          </mat-card-content>
+        </mat-card>
+      }
+    }
+  }
 </div>
 

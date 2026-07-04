@@ -1,513 +1,307 @@
-<div class="container-fluid">
-    <div *ngIf="loading; else loaded">
-      <app-loading></app-loading>
-    </div>
-  
-    <ng-template #loaded>
-      <!-- Page Heading -->
-      <h1 class="h4 mb-2 text-gray-800">
-        <i class="fas fa-cog"></i> {{ settingsI18n?.allTitleI18n }}
-      </h1>
-      <p class="text-muted mb-4">
-        Configure the various settings for the application. Use the tabs below to access and modify user preferences, display options, database settings, notifications, library-specific configurations, and booking settings.
-      </p>
-  
-      <!-- Settings Tabs -->
-      <div class="card shadow mb-4">
-        <div class="card-body">
-          <ul class="nav nav-tabs" id="settingsTab" role="tablist">
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                id="library-settings-tab"
-                data-toggle="tab"
-                href="#library-settings"
-                role="tab"
-                aria-controls="library-settings"
-                aria-selected="false"
-              >
-                <i class="fas fa-book"></i> General
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                id="user-settings-tab"
-                data-toggle="tab"
-                href="#user-settings"
-                role="tab"
-                aria-controls="user-settings"
-                aria-selected="true"
-              >
-                <i class="fas fa-users-cog"></i> User
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                id="display-settings-tab"
-                data-toggle="tab"
-                href="#display-settings"
-                role="tab"
-                aria-controls="display-settings"
-                aria-selected="false"
-              >
-                <i class="fas fa-paint-brush"></i> Display
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                id="circulation-settings-tab"
-                data-toggle="tab"
-                href="#circulation-settings"
-                role="tab"
-                aria-controls="circulation-settings"
-                aria-selected="false"
-              >
-                <i class="fas fa-exchange-alt"></i> Circulation
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link disabled"
-                id="database-settings-tab"
-                data-toggle="tab"
-                href="#database-settings"
-                role="tab"
-                aria-controls="database-settings"
-                aria-selected="false"
-              >
-                <i class="fas fa-database"></i> Database
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link disabled"
-                id="notification-settings-tab"
-                data-toggle="tab"
-                href="#notification-settings"
-                role="tab"
-                aria-controls="notification-settings"
-                aria-selected="false"
-              >
-                <i class="fas fa-bell"></i> Notification
-              </a>
-            </li>
-            
-            <li class="nav-item">
-              <a
-                class="nav-link disabled"
-                id="booking-settings-tab"
-                data-toggle="tab"
-                href="#booking-settings"
-                role="tab"
-                aria-controls="booking-settings"
-                aria-selected="false"
-              >
-                <i class="fas fa-calendar-alt"></i> Booking
-              </a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" id="sms-tab" data-bs-toggle="tab" data-bs-target="#sms" type="button" role="tab" aria-controls="sms" aria-selected="false">
-                <i class="fas fa-sms"></i> SMS (Twilio)
-              </a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" id="payment-tab" data-bs-toggle="tab" data-bs-target="#payment" type="button" role="tab" aria-controls="payment" aria-selected="false">
-                <i class="fas fa-credit-card"></i> Payment
-              </a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" id="ai-tab" data-bs-toggle="tab" data-bs-target="#ai" type="button" role="tab" aria-controls="ai" aria-selected="false">
-                <i class="fas fa-robot"></i> AI (chatGPT)
-              </a>
-            </li>
-          </ul>
-          <div class="tab-content" id="settingsTabContent">
-            <!-- User Settings Tab -->
-            <div
-              class="tab-pane fade show active"
-              id="user-settings"
-              role="tabpanel"
-              aria-labelledby="user-settings-tab"
-            >
-              <h5 class="mt-4">
-                <i class="fas fa-users-cog"></i> User Settings
-              </h5>
-              <p>Configure user-related settings and preferences.</p>
-              
-              
-              
-              
-              <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
-                <div class="form-check mb-3">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="allowUserRegistration"
-                    formControlName="allowUserRegistration"
-                  />
-                  <label class="form-check-label" for="allowUserRegistration">
-                    Allow user registration
-                  </label>
-                </div>
-              
-                <div class="form-check mb-3">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="requireEmailVerification"
-                    formControlName="requireEmailVerification"
-                  />
-                  <label class="form-check-label" for="requireEmailVerification">
-                    Require email verification for new users
-                  </label>
-                </div>
-              
-                <div class="form-group">
-                  <label for="defaultUserRole">Default user role:</label>
-                  <select class="form-control w-50" id="defaultUserRole" formControlName="defaultUserRole">
-                    <option value="member">Member</option>
-                    <option value="librarian">Librarian</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </div>
-              
-                <button type="submit" class="btn btn-primary">
-                  <i class="fas fa-save"></i> Save Changes
-                </button>
-              </form>
-              
-
-
-
-
-            </div>
-            <!-- Display Settings Tab -->
-            <div class="tab-pane fade show" id="sms" role="tabpanel" aria-labelledby="sms-tab">
-              <!-- <h4>SMS Settings</h4> -->
-              <app-twilio-settings></app-twilio-settings>
-            </div>
-            <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
-            <!--   <h4>Payment Settings</h4> -->
-              <app-paypal-settings></app-paypal-settings>
-            </div>
-            <div class="tab-pane fade" id="ai" role="tabpanel" aria-labelledby="ai-tab">
-              <!-- <h4>AI Settings</h4> -->
-              <app-openai-settings></app-openai-settings>
-            </div>
-
-
-
-
-
-            <div
-              class="tab-pane fade"
-              id="display-settings"
-              role="tabpanel"
-              aria-labelledby="display-settings-tab"
-            >
-              <h5 class="mt-4">
-                <i class="fas fa-paint-brush"></i> Display Settings
-              </h5>
-              <p>Customize the appearance of the application.</p>
-
-
-
-              <form action="/save_display_settings" method="post">
-                <div class="form-check mb-3">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    id="lightTheme"
-                    name="theme"
-                    value="light"
-                    checked
-                  />
-                  <label class="form-check-label" for="lightTheme">
-                    Light Theme
-                  </label>
-                </div>
-                <div class="form-check mb-3">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    id="darkTheme"
-                    name="theme"
-                    value="dark"
-                  />
-                  <label class="form-check-label" for="darkTheme">
-                    Dark Theme
-                  </label>
-                </div>
-                <div class="form-group mb-3">
-                  <label for="primaryColor">Primary Color:</label>
-                  <input
-                    type="color"
-                    class="form-control form-control-color w-50"
-                    id="primaryColor"
-                    name="primary_color"
-                    value="#007bff"
-                  />
-                </div>
-                <button type="submit" class="btn btn-primary">
-                  <i class="fas fa-save"></i> Save Changes
-                </button>
-              </form>
-
-
-
-            </div>
-            <!-- Database Settings Tab -->
-            <div
-              class="tab-pane fade"
-              id="database-settings"
-              role="tabpanel"
-              aria-labelledby="database-settings-tab"
-            >
-              <h5 class="mt-4">
-                <i class="fas fa-database"></i> Database Settings
-              </h5>
-              <p>Manage backup and database configurations.</p>
-              <form action="/save_backup_settings" method="post">
-                <div class="form-group mb-3">
-                  <label for="backupFrequency">Backup Frequency:</label>
-                  <select
-                    class="form-control w-50"
-                    id="backupFrequency"
-                    name="backup_frequency"
-                  >
-                    <option value="daily">Daily</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="monthly">Monthly</option>
-                  </select>
-                </div>
-                <div class="form-check mb-3">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="enableAutoBackup"
-                    name="enable_auto_backup"
-                    checked
-                  />
-                  <label class="form-check-label" for="enableAutoBackup">
-                    Enable automatic backups
-                  </label>
-                </div>
-                <div class="form-group mb-3">
-                  <label for="backupLocation">Backup Location:</label>
-                  <input
-                    type="text"
-                    class="form-control w-50"
-                    id="backupLocation"
-                    name="backup_location"
-                    value="/backups"
-                  />
-                </div>
-                <button type="submit" class="btn btn-primary">
-                  <i class="fas fa-save"></i> Save Changes
-                </button>
-              </form>
-            </div>
-            <!-- Notification Settings Tab -->
-            <div
-              class="tab-pane fade"
-              id="notification-settings"
-              role="tabpanel"
-              aria-labelledby="notification-settings-tab"
-            >
-              <h5 class="mt-4">
-                <i class="fas fa-bell"></i> Notification Settings
-              </h5>
-              <p>Set preferences for receiving notifications.</p>
-              <form action="/save_notification_settings" method="post">
-                <div class="form-check mb-3">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="notifyAvailability"
-                    name="notify_availability"
-                    checked
-                  />
-                  <label class="form-check-label" for="notifyAvailability">
-                    Receive alerts for item availability
-                  </label>
-                </div>
-                <div class="form-check mb-3">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="notifyDueDates"
-                    name="notify_due_dates"
-                    checked
-                  />
-                  <label class="form-check-label" for="notifyDueDates">
-                    Receive alerts for due dates
-                  </label>
-                </div>
-                <div class="form-check mb-3">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="notifyNewArrivals"
-                    name="notify_new_arrivals"
-                  />
-                  <label class="form-check-label" for="notifyNewArrivals">
-                    Receive alerts for new arrivals
-                  </label>
-                </div>
-                <button type="submit" class="btn btn-primary">
-                  <i class="fas fa-save"></i> Save Changes
-                </button>
-              </form>
-            </div>
-            <!-- Library Settings Tab -->
-            <div
-              class="tab-pane fade"
-              id="library-settings"
-              role="tabpanel"
-              aria-labelledby="library-settings-tab"
-            >
-              <h5 class="mt-4">
-                <i class="fas fa-book"></i> Library Settings
-              </h5>
-              <p>Configure settings related to library operations and fines.</p>
-              <div class="table-responsive">
-                <app-settings-list
-                  (idEvent)="edit($event)"
-                  [settings]="settings$"
-                  [settingsI18n]="settingsI18n"
-                ></app-settings-list>
-                <app-settings-modal
-                  [settingsI18n]="settingsI18n"
-                  [id]="id"
-                ></app-settings-modal>
-              </div>
-            </div>
-            <!-- Booking Settings Tab -->
-            <div
-              class="tab-pane fade"
-              id="booking-settings"
-              role="tabpanel"
-              aria-labelledby="booking-settings-tab"
-            >
-              <h5 class="mt-4">
-                <i class="fas fa-calendar-alt"></i> Booking Settings
-              </h5>
-              <p>Review the current booking settings.</p>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <h6>Booking Time:</h6>
-                  <p class="font-weight-bold" style="font-size: 1.25rem;">7 Days</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <h6>Booking Quota:</h6>
-                  <p class="font-weight-bold" style="font-size: 1.25rem;">5 Items</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <h6>Enable Member Checkouts:</h6>
-                  <p class="font-weight-bold" style="font-size: 1.25rem;">Enabled</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <h6>Enable Member Check-ins:</h6>
-                  <p class="font-weight-bold" style="font-size: 1.25rem;">Enabled</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <h6>Enable Member Check-ins for Overdue Items:</h6>
-                  <p class="font-weight-bold" style="font-size: 1.25rem;">Enabled</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <h6>Member Type:</h6>
-                  <p class="font-weight-bold" style="font-size: 1.25rem;">Standard</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <h6>Checkout Time:</h6>
-                  <p class="font-weight-bold" style="font-size: 1.25rem;">14 Days</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <h6>Checkout Limit:</h6>
-                  <p class="font-weight-bold" style="font-size: 1.25rem;">30 Days</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <h6>Checkout Quota:</h6>
-                  <p class="font-weight-bold" style="font-size: 1.25rem;">10 Items</p>
-                </div>
-              </div>
-            </div>
-            <!-- Circulation Settings Tab -->
-            <div
-              class="tab-pane fade"
-              id="circulation-settings"
-              role="tabpanel"
-              aria-labelledby="circulation-settings-tab"
-            >
-              <h5 class="mt-4">
-                <i class="fas fa-exchange-alt"></i> Circulation Settings
-              </h5>
-              <p>Manage circulation rules and policies.</p>
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#circulationModal">
-                Edit
-              </button>
-  
-              <!-- Modal -->
-              <div class="modal fade" id="circulationModal" tabindex="-1" aria-labelledby="circulationModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="circulationModalLabel">Edit Circulation Settings</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      
-                      <form>
-                        <div class="form-group mb-3">
-                          <label for="finePerDay">Fine per Day</label>
-                          <input type="number" id="finePerDay" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                          <label for="maxFine">Max Fine</label>
-                          <input type="number" id="maxFine" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                          <label for="itemType">Item Type</label>
-                          <input type="text" id="itemType" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                          <label for="loanPeriod">Loan Period</label>
-                          <input type="number" id="loanPeriod" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                          <label for="renewalsAllowed">Renewals Allowed</label>
-                          <input type="number" id="renewalsAllowed" class="form-control" />
-                        </div>
-                        <div class="form-group mb-3">
-                          <label for="holdsAllowed">Holds Allowed</label>
-                          <input type="number" id="holdsAllowed" class="form-control" />
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <div class="item-settings mt-4">
-                <p><strong>Fine per Day:</strong> $0.25</p>
-                <p><strong>Max Fine:</strong> $10.00</p>
-                <p><strong>Item Type:</strong> Book</p>
-                <p><strong>Loan Period:</strong> 21 days</p>
-                <p><strong>Renewals Allowed:</strong> 2</p>
-                <p><strong>Holds Allowed:</strong> Yes</p>
-              </div>
-            </div>
+<div class="ll-page">
+  @if (loading) {
+    <div class="ll-loading"><mat-progress-spinner mode="indeterminate" diameter="48"></mat-progress-spinner></div>
+  } @else {
+    <mat-card class="ll-page__header" appearance="outlined">
+      <mat-card-content class="ll-page__header-content">
+        <div class="ll-page__title">
+          <mat-icon class="ll-page__icon">settings</mat-icon>
+          <div>
+            <h1>{{ 'nav.settings' | translate }}</h1>
+            <p class="ll-page__subtitle">{{ 'settings.pageDesc' | translate }}</p>
           </div>
         </div>
-      </div>
-    </ng-template>
-  </div>
-  
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="ll-page__body" appearance="outlined">
+      <mat-card-content class="ll-tab__wrap">
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="200ms" [(selectedIndex)]="selectedTabIndex">
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="ll-tab__icon">tune</mat-icon> {{ 'settings.tabGeneral' | translate }}
+            </ng-template>
+            <div class="ll-tab__content">
+              <h3 class="ll-section-title">{{ 'settings.sectionLibrary' | translate }}</h3>
+              <p class="ll-section-sub">{{ 'settings.sectionLibraryDesc' | translate }}</p>
+              <app-settings-list
+                (idEvent)="edit($event)"
+                [settings]="settings$"
+                [settingsI18n]="settingsI18n">
+              </app-settings-list>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="ll-tab__icon">manage_accounts</mat-icon> {{ 'settings.tabUser' | translate }}
+            </ng-template>
+            <div class="ll-tab__content">
+              <h3 class="ll-section-title">{{ 'settings.sectionUser' | translate }}</h3>
+              <p class="ll-section-sub">{{ 'settings.sectionUserDesc' | translate }}</p>
+              <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()" class="ll-form">
+                <mat-slide-toggle formControlName="allowUserRegistration" color="primary">
+                  {{ 'settings.allowRegistration' | translate }}
+                </mat-slide-toggle>
+                <mat-slide-toggle formControlName="requireEmailVerification" color="primary">
+                  {{ 'settings.requireEmailVerification' | translate }}
+                </mat-slide-toggle>
+                <mat-form-field appearance="outline" class="ll-form__field">
+                  <mat-label>{{ 'settings.defaultUserRole' | translate }}</mat-label>
+                  <mat-select formControlName="defaultUserRole">
+                    <mat-option value="member">Member</mat-option>
+                    <mat-option value="librarian">Librarian</mat-option>
+                    <mat-option value="admin">Admin</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="ll-form__actions">
+                  <button mat-flat-button color="primary" type="submit">
+                    <mat-icon>save</mat-icon> {{ 'ui.saveChanges' | translate }}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="ll-tab__icon">palette</mat-icon> {{ 'settings.tabDisplay' | translate }}
+            </ng-template>
+            <div class="ll-tab__content">
+              <h3 class="ll-section-title">{{ 'settings.sectionDisplay' | translate }}</h3>
+              <p class="ll-section-sub">{{ 'settings.sectionDisplayDesc' | translate }}</p>
+              <form #displayForm="ngForm" class="ll-form">
+                <mat-radio-group name="theme" [(ngModel)]="displayTheme" (ngModelChange)="onDisplayChange()" color="primary" class="ll-radio-group">
+                  <mat-radio-button value="light">{{ 'settings.lightTheme' | translate }}</mat-radio-button>
+                  <mat-radio-button value="dark">{{ 'settings.darkTheme' | translate }}</mat-radio-button>
+                </mat-radio-group>
+                <mat-form-field appearance="outline" class="ll-form__field">
+                  <mat-label>Primary color</mat-label>
+                  <input matInput type="color" name="primaryColor" [(ngModel)]="primaryColor" (ngModelChange)="onDisplayChange()" />
+                </mat-form-field>
+                <div class="ll-form__actions">
+                  <button mat-flat-button color="primary" type="button" (click)="saveDisplay()">
+                    <mat-icon>save</mat-icon> {{ 'settings.saveChanges' | translate }}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="ll-tab__icon">swap_horiz</mat-icon> {{ 'settings.tabCirculation' | translate }}
+            </ng-template>
+            <div class="ll-tab__content">
+              <h3 class="ll-section-title">{{ 'settings.circulationTitle' | translate }}</h3>
+              <p class="ll-section-sub">{{ 'settings.circulationDesc' | translate }}</p>
+              <div class="ll-kpis">
+                <div class="ll-kpi"><span class="ll-kpi__label">{{ 'settings.kpiFinePerDay' | translate }}</span><span class="ll-kpi__value">$0.25</span></div>
+                <div class="ll-kpi"><span class="ll-kpi__label">{{ 'settings.kpiMaxFine' | translate }}</span><span class="ll-kpi__value">$10.00</span></div>
+                <div class="ll-kpi"><span class="ll-kpi__label">{{ 'settings.kpiLoanPeriod' | translate }}</span><span class="ll-kpi__value">21 days</span></div>
+                <div class="ll-kpi"><span class="ll-kpi__label">{{ 'settings.kpiRenewals' | translate }}</span><span class="ll-kpi__value">2</span></div>
+                <div class="ll-kpi"><span class="ll-kpi__label">{{ 'settings.kpiHolds' | translate }}</span><span class="ll-kpi__value">Yes</span></div>
+              </div>
+              <div class="ll-form__actions" style="margin-top:16px;">
+                <a mat-flat-button color="primary" routerLink="/circulation-rules">
+                  <mat-icon>edit</mat-icon> {{ 'settings.editCirculationRules' | translate }}
+                </a>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="ll-tab__icon">event</mat-icon> {{ 'settings.tabBooking' | translate }}
+            </ng-template>
+            <div class="ll-tab__content">
+              <h3 class="ll-section-title">{{ 'settings.bookingTitle' | translate }}</h3>
+              <p class="ll-section-sub">{{ 'settings.bookingDesc' | translate }}</p>
+              <div class="ll-kpis">
+                <div class="ll-kpi"><span class="ll-kpi__label">{{ 'settings.kpiBookingTime' | translate }}</span><span class="ll-kpi__value">7 Days</span></div>
+                <div class="ll-kpi"><span class="ll-kpi__label">{{ 'settings.kpiBookingQuota' | translate }}</span><span class="ll-kpi__value">5 Items</span></div>
+                <div class="ll-kpi"><span class="ll-kpi__label">{{ 'settings.kpiCheckoutQuota' | translate }}</span><span class="ll-kpi__value">10 Items</span></div>
+                <div class="ll-kpi"><span class="ll-kpi__label">{{ 'settings.kpiCheckoutLimit' | translate }}</span><span class="ll-kpi__value">30 Days</span></div>
+              </div>
+              <div class="ll-form__actions" style="margin-top:16px;">
+                <a mat-flat-button color="primary" routerLink="/booking-settings">
+                  <mat-icon>edit</mat-icon> {{ 'settings.editBookingSettings' | translate }}
+                </a>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="ll-tab__icon">sms</mat-icon> {{ 'settings.tabSMS' | translate }}
+            </ng-template>
+            <div class="ll-tab__content">
+              <app-twilio-settings></app-twilio-settings>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="ll-tab__icon">credit_card</mat-icon> {{ 'settings.tabPaypal' | translate }}
+            </ng-template>
+            <div class="ll-tab__content">
+              <app-paypal-settings></app-paypal-settings>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="ll-tab__icon">smart_toy</mat-icon> {{ 'settings.tabOpenAI' | translate }}
+            </ng-template>
+            <div class="ll-tab__content">
+              <app-openai-settings></app-openai-settings>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="ll-tab__icon">notifications</mat-icon> {{ 'settings.tabNotifications' | translate }}
+            </ng-template>
+            <div class="ll-tab__content">
+              <h3 class="ll-section-title">{{ 'settings.notificationsTitle' | translate }}</h3>
+              <p class="ll-section-sub">{{ 'settings.notificationsDesc' | translate }}</p>
+              <div class="ll-kpis" style="margin-bottom:16px;">
+                <div class="ll-kpi"><span class="ll-kpi__label">{{ 'settings.kpiEmailProvider' | translate }}</span><span class="ll-kpi__value">SMTP</span></div>
+                <div class="ll-kpi"><span class="ll-kpi__label">{{ 'settings.kpiOverdueReminders' | translate }}</span><span class="ll-kpi__value">Enabled</span></div>
+                <div class="ll-kpi"><span class="ll-kpi__label">{{ 'settings.kpiDueDateAlerts' | translate }}</span><span class="ll-kpi__value">3 Days Before</span></div>
+                <div class="ll-kpi"><span class="ll-kpi__label">{{ 'settings.kpiNewArrivals' | translate }}</span><span class="ll-kpi__value">Weekly Digest</span></div>
+              </div>
+              <div class="ll-form__actions">
+                <a mat-flat-button color="primary" routerLink="/emailsettings">
+                  <mat-icon>email</mat-icon> {{ 'settings.configureEmail' | translate }}
+                </a>
+                <a mat-flat-button color="accent" routerLink="/smssettings" style="margin-left:8px;">
+                  <mat-icon>sms</mat-icon> {{ 'settings.configureSMS' | translate }}
+                </a>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="ll-tab__icon">device_hub</mat-icon> {{ 'settings.tabIntegrations' | translate }}
+            </ng-template>
+            <div class="ll-tab__content">
+              <h3 class="ll-section-title">{{ 'settings.integrationsTitle' | translate }}</h3>
+              <p class="ll-section-sub">{{ 'settings.integrationsDesc' | translate }}</p>
+              <form #integrationsForm="ngForm" class="ll-form">
+                <h4 style="margin-bottom:4px;"><mat-icon style="vertical-align:middle;">qr_code_scanner</mat-icon> Barcode / RFID Scanner</h4>
+                <mat-form-field appearance="outline" class="ll-form__field">
+                  <mat-label>Scanner Protocol</mat-label>
+                  <mat-select name="scannerProtocol" [(ngModel)]="deviceSettings.scannerProtocol">
+                    <mat-option value="usb">USB HID</mat-option>
+                    <mat-option value="serial">Serial / RS-232</mat-option>
+                    <mat-option value="tcp">TCP/IP</mat-option>
+                    <mat-option value="bluetooth">Bluetooth</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ll-form__field">
+                  <mat-label>Scanner Host / Port (TCP only)</mat-label>
+                  <input matInput name="scannerHost" [(ngModel)]="deviceSettings.scannerHost" placeholder="192.168.1.100:9100" />
+                </mat-form-field>
+
+                <mat-divider style="margin:12px 0;"></mat-divider>
+                <h4 style="margin-bottom:4px;"><mat-icon style="vertical-align:middle;">print</mat-icon> Barcode Printer</h4>
+                <mat-form-field appearance="outline" class="ll-form__field">
+                  <mat-label>Printer Protocol</mat-label>
+                  <mat-select name="printerProtocol" [(ngModel)]="deviceSettings.printerProtocol">
+                    <mat-option value="usb">USB</mat-option>
+                    <mat-option value="tcp">TCP/IP (ZPL)</mat-option>
+                    <mat-option value="lpd">LPD / LPR</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ll-form__field">
+                  <mat-label>Printer Host / Port</mat-label>
+                  <input matInput name="printerHost" [(ngModel)]="deviceSettings.printerHost" placeholder="192.168.1.200:9100" />
+                </mat-form-field>
+
+                <mat-divider style="margin:12px 0;"></mat-divider>
+                <h4 style="margin-bottom:4px;"><mat-icon style="vertical-align:middle;">security</mat-icon> Magnetic Security Gate</h4>
+                <mat-form-field appearance="outline" class="ll-form__field">
+                  <mat-label>Gate Controller Host / Port</mat-label>
+                  <input matInput name="gateHost" [(ngModel)]="deviceSettings.gateHost" placeholder="192.168.1.50:8080" />
+                </mat-form-field>
+                <mat-slide-toggle name="gateEnabled" [(ngModel)]="deviceSettings.gateEnabled" color="primary">
+                  Enable automatic gate deactivation on checkout
+                </mat-slide-toggle>
+
+                <div class="ll-form__actions" style="margin-top:16px;">
+                  <button mat-flat-button color="primary" type="button" (click)="saveDeviceSettings()">
+                    <mat-icon>save</mat-icon> {{ 'settings.saveIntegrations' | translate }}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="ll-tab__icon">storage</mat-icon> {{ 'settings.tabDatabase' | translate }}
+            </ng-template>
+            <div class="ll-tab__content">
+              <h3 class="ll-section-title">{{ 'settings.databaseTitle' | translate }}</h3>
+              <p class="ll-section-sub">{{ 'settings.databaseDesc' | translate }}</p>
+              <form #dbForm="ngForm" class="ll-form">
+                <h4 style="margin-bottom:4px;"><mat-icon style="vertical-align:middle;">dns</mat-icon> Connection</h4>
+                <mat-form-field appearance="outline" class="ll-form__field">
+                  <mat-label>Database Host</mat-label>
+                  <input matInput name="dbHost" [(ngModel)]="dbSettings.host" placeholder="localhost" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ll-form__field">
+                  <mat-label>Port</mat-label>
+                  <input matInput name="dbPort" [(ngModel)]="dbSettings.port" placeholder="3306" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ll-form__field">
+                  <mat-label>Database Name</mat-label>
+                  <input matInput name="dbName" [(ngModel)]="dbSettings.name" placeholder="librarylab" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ll-form__field">
+                  <mat-label>Username</mat-label>
+                  <input matInput name="dbUser" [(ngModel)]="dbSettings.username" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ll-form__field">
+                  <mat-label>Password</mat-label>
+                  <input matInput name="dbPass" [(ngModel)]="dbSettings.password" type="password" />
+                </mat-form-field>
+
+                <mat-divider style="margin:12px 0;"></mat-divider>
+                <h4 style="margin-bottom:4px;"><mat-icon style="vertical-align:middle;">backup</mat-icon> Backup &amp; Restore</h4>
+                <mat-form-field appearance="outline" class="ll-form__field">
+                  <mat-label>Backup Schedule</mat-label>
+                  <mat-select name="backupSchedule" [(ngModel)]="dbSettings.backupSchedule">
+                    <mat-option value="manual">Manual only</mat-option>
+                    <mat-option value="daily">Daily</mat-option>
+                    <mat-option value="weekly">Weekly</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ll-form__field">
+                  <mat-label>Backup Storage Path</mat-label>
+                  <input matInput name="backupPath" [(ngModel)]="dbSettings.backupPath" placeholder="/var/backups/librarylab" />
+                </mat-form-field>
+
+                <div class="ll-form__actions" style="margin-top:16px;">
+                  <button mat-flat-button color="primary" type="button" (click)="saveDbSettings()">
+                    <mat-icon>save</mat-icon> {{ 'settings.saveDatabase' | translate }}
+                  </button>
+                  <button mat-stroked-button color="accent" type="button" (click)="triggerBackup()" style="margin-left:8px;">
+                    <mat-icon>backup</mat-icon> {{ 'settings.backupNow' | translate }}
+                  </button>
+                </div>
+              </form>
+              @if (dbStatusMessage) {
+                <div class="ll-alert ll-alert--ok" style="margin-top:12px;">{{ dbStatusMessage }}</div>
+              }
+            </div>
+          </mat-tab>
+
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

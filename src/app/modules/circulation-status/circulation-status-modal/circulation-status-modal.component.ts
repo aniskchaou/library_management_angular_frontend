@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-circulation-status-modal',
-  templateUrl: './circulation-status-modal.component.html',
-  styleUrls: ['./circulation-status-modal.component.css'],
+    selector: 'app-circulation-status-modal',
+    templateUrl: './circulation-status-modal.component.html',
+    styleUrls: ['./circulation-status-modal.component.css'],
+    standalone: false
 })
 export class CirculationStatusModalComponent implements OnInit {
   constructor() {}

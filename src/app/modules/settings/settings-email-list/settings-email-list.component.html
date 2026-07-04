@@ -1,28 +1,25 @@
-<table class="table table-bordered" id="table" width="100%" cellspacing="0">
-  <thead>
-    <tr>
-      <th>{{ settingsI18n?.authI18n }}</th>
-      <th>{{ settingsI18n?.enableTLS }}</th>
-      <th>{{ settingsI18n?.hostI18n }}</th>
-      <th>{{ settingsI18n?.emailI18n }}</th>
-    </tr>
-  </thead>
-  <tfoot>
-    <tr>
-      <th>{{ settingsI18n?.authI18n }}</th>
-      <th>{{ settingsI18n?.enableTLS }}</th>
-      <th>{{ settingsI18n?.hostI18n }}</th>
-      <th>{{ settingsI18n?.emailI18n }}</th>
-    </tr>
-  </tfoot>
-  <tbody>
-    <tr>
-      <td>{{ settings.auth }}</td>
-      <td>{{ settings.enableTLS }}</td>
-      <td>{{ settings.host }}</td>
-      <td>
-        {{ settings.email }}
-      </td>
-    </tr>
-  </tbody>
+<table mat-table [dataSource]="settings ? [settings] : []" class="ll-table mat-elevation-z0">
+  <ng-container matColumnDef="auth">
+    <th mat-header-cell *matHeaderCellDef>{{ 'settings.colAuth' | translate }}</th>
+    <td mat-cell *matCellDef="let row">{{ row.auth }}</td>
+  </ng-container>
+  <ng-container matColumnDef="enableTLS">
+    <th mat-header-cell *matHeaderCellDef>{{ 'settings.colTLS' | translate }}</th>
+    <td mat-cell *matCellDef="let row">
+      <mat-chip [class.ll-chip--ok]="row.enableTLS" [class.ll-chip--off]="!row.enableTLS">
+        {{ row.enableTLS ? 'Enabled' : 'Disabled' }}
+      </mat-chip>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="host">
+    <th mat-header-cell *matHeaderCellDef>{{ 'settings.colHost' | translate }}</th>
+    <td mat-cell *matCellDef="let row">{{ row.host }}</td>
+  </ng-container>
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>{{ 'ui.email' | translate }}</th>
+    <td mat-cell *matCellDef="let row">{{ row.email }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>

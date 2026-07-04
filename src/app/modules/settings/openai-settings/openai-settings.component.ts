@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-openai-settings',
-  templateUrl: './openai-settings.component.html',
-  styleUrls: ['./openai-settings.component.css']
+    selector: 'app-openai-settings',
+    templateUrl: './openai-settings.component.html',
+    styleUrls: ['./openai-settings.component.css'],
+    standalone: false
 })
 export class OpenaiSettingsComponent implements OnInit {
 
-  openaiForm: FormGroup;
+  openaiForm: UntypedFormGroup;
   successMessage: string = '';
   errorMessage: string = '';
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private openaiService: HTTPService
   ) {
     this.openaiForm = this.fb.group({
@@ -41,7 +42,7 @@ export class OpenaiSettingsComponent implements OnInit {
       // Update OpenAI API key
       this.openaiService.create(CONFIG.URL_BASE+'/api/openai/properties',this.openaiForm.value).then(
         () => {
-         // this.successMessage = response;
+          this.successMessage = 'OpenAI API key updated successfully';
           this.errorMessage = '';
         },
         (error) => {

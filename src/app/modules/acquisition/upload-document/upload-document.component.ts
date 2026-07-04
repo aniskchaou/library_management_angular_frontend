@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Contract } from 'src/app/main/models/Contract';
 import { FileUploadService } from 'src/app/main/services/FileUploadService ';
 
 @Component({
-  selector: 'app-upload-document',
-  templateUrl: './upload-document.component.html',
-  styleUrls: ['./upload-document.component.css']
+    selector: 'app-upload-document',
+    templateUrl: './upload-document.component.html',
+    styleUrls: ['./upload-document.component.css'],
+    standalone: false
 })
 export class UploadDocumentComponent implements OnInit {
 
   contract:Contract
-  uploadForm: FormGroup;
+  uploadForm: UntypedFormGroup;
   fileToUpload: File = null;
-  constructor(private toast:ToastrService, private fileUploadService:FileUploadService,private fb: FormBuilder,private activeModal: NgbActiveModal) {
+  constructor(private toast:ToastrService, private fileUploadService:FileUploadService,private fb: UntypedFormBuilder,private activeModal: NgbActiveModal) {
     this.uploadForm = this.fb.group({
       file: [null]
     });
@@ -45,7 +46,6 @@ closeModal(): void {
     this.fileUploadService.uploadContract(this.contract.vendor.id,formData)
       .subscribe(response => {
         this.toast.success("The contract is successfully uploaded")
-        console.log(response);
       });
   }
 

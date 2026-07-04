@@ -1,21 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+    selector: 'app-reset-password',
+    templateUrl: './reset-password.component.html',
+    styleUrls: ['./reset-password.component.css'],
+    standalone: false
 })
 export class ResetPasswordComponent implements OnInit {
 
-  resetPasswordForm: FormGroup;
+  resetPasswordForm: UntypedFormGroup;
     submitted = false;
+    hideNew = true;
+    hideConfirm = true;
 
     constructor(
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         private http: HttpClient,
         private router: Router,
         private route: ActivatedRoute // Inject ActivatedRoute to access URL parameters
@@ -34,7 +37,7 @@ export class ResetPasswordComponent implements OnInit {
 
     // Custom validator to check if new password and confirm password match
     mustMatch(controlName: string, matchingControlName: string) {
-        return (formGroup: FormGroup) => {
+        return (formGroup: UntypedFormGroup) => {
             const control = formGroup.controls[controlName];
             const matchingControl = formGroup.controls[matchingControlName];
 

@@ -1,22 +1,23 @@
 // twilio-settings.component.ts
 import { Component, OnInit } from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-twilio-settings',
-  templateUrl: './twilio-settings.component.html',
-  styleUrls: ['./twilio-settings.component.css']
+    selector: 'app-twilio-settings',
+    templateUrl: './twilio-settings.component.html',
+    styleUrls: ['./twilio-settings.component.css'],
+    standalone: false
 })
 export class TwilioSettingsComponent implements OnInit {
-  twilioForm: FormGroup;
+  twilioForm: UntypedFormGroup;
   successMessage: string = '';
   errorMessage: string = '';
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private twilioService: HTTPService
   ) {
     this.twilioForm = this.fb.group({
@@ -44,7 +45,7 @@ export class TwilioSettingsComponent implements OnInit {
       // Update Twilio properties
       this.twilioService.create(CONFIG.URL_BASE+'/api/twilio/properties',this.twilioForm.value).then(
         () => {
-          //this.successMessage = response;
+          this.successMessage = 'Twilio settings updated successfully';
           this.errorMessage = '';
         },
         (error) => {

@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { URLLoader } from 'src/app/main/configs/URLLoader';
 import MemberMessage from 'src/app/main/messages/MemberMessage';
@@ -8,11 +9,13 @@ import MemberTestService from 'src/app/main/mocks/MemberTestService';
 import Member from 'src/app/main/models/Member';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
+import { AddMemberComponent } from '../add-member/add-member.component';
 
 @Component({
-  selector: 'app-member',
-  templateUrl: './member.component.html',
-  styleUrls: ['./member.component.css'],
+    selector: 'app-member',
+    templateUrl: './member.component.html',
+    styleUrls: ['./member.component.css'],
+    standalone: false
 })
 export class MemberComponent extends URLLoader implements OnInit {
   showsummary: boolean = false;
@@ -31,14 +34,19 @@ export class MemberComponent extends URLLoader implements OnInit {
     private memberTestService: MemberTestService,
     private messageService: MemberMessage,
     private httpService: HTTPService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
     super();
   }
 
+  openAddDialog(): void {
+    const modalRef = this.modalService.open(AddMemberComponent, { size: 'xl', centered: true });
+    modalRef.result.then(() => this.getAll()).catch(() => {});
+  }
+
 
   getMemberByLang(lang) {
-     lang='EN'
     this.httpService.getAll(CONFIG.URL_BASE + '/i18n/member/' + lang).subscribe(
       (data) => {
         this.memberI18n = data;
@@ -144,7 +152,6 @@ export class MemberComponent extends URLLoader implements OnInit {
     this.httpService.getAll(CONFIG.URL_BASE + '/member/all').subscribe(
       (data: Member[]) => {
         this.members$ = data;
-        console.log(data)
         this.loading = false;
       },
       (err: HttpErrorResponse) => {

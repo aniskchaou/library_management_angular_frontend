@@ -1,41 +1,58 @@
-<!-- overdue.component.html -->
-
-<div class="container-fluid">
-    <h1 class="h3 mb-2 text-gray-800">Overdues With Fines</h1>
-    <div class="card mb-4">
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered" id="dataTabled" width="100%" cellspacing="0">
-            <thead>
-              <tr>
-                <th>Due Date</th>
-                <th>Patron</th>
-                <th>Patron Library</th>
-                <th>Title</th>
-                <th>Shelving Location</th>
-                <th>Barcode</th>
-                <th>Call Number</th>
-                <th>Price</th>
-                <th>Non-public Note</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>06/05/2024</td>
-                <td>Mr Aniket Pandit (2604)</td>
-                <td>Centerville</td>
-                <td>Journal of politics</td>
-                <td></td>
-                <td>171717</td>
-                <td>P233</td>
-                <td>0.00</td>
-                <td></td>
-              </tr>
-              <!-- Add more rows here if needed -->
-            </tbody>
-          </table>
-        </div>
+<div class="ll-page">
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <mat-icon class="ll-page__icon">attach_money</mat-icon>
+      <div class="ll-page__title">
+        <h1>{{ 'overduefines.pageTitle' | translate }}</h1>
+        <p>{{ 'overduefines.pageDesc' | translate }}</p>
       </div>
-    </div>
-  </div>
-  
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="ll-page__body" appearance="outlined">
+    <mat-card-content>
+      <div class="ll-tab__content">
+        <table mat-table class="ll-table--full-width">
+          <ng-container matColumnDef="dueDate">
+            <th mat-header-cell *matHeaderCellDef>Due Date</th>
+            <td mat-cell *matCellDef="let row">06/05/2024</td>
+          </ng-container>
+          <ng-container matColumnDef="patron">
+            <th mat-header-cell *matHeaderCellDef>Patron</th>
+            <td mat-cell *matCellDef="let row">Mr Aniket Pandit (2604)</td>
+          </ng-container>
+          <ng-container matColumnDef="patronLibrary">
+            <th mat-header-cell *matHeaderCellDef>Patron Library</th>
+            <td mat-cell *matCellDef="let row">Centerville</td>
+          </ng-container>
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef>Title</th>
+            <td mat-cell *matCellDef="let row">Journal of politics</td>
+          </ng-container>
+          <ng-container matColumnDef="shelvingLocation">
+            <th mat-header-cell *matHeaderCellDef>Shelving Location</th>
+            <td mat-cell *matCellDef="let row"></td>
+          </ng-container>
+          <ng-container matColumnDef="barcode">
+            <th mat-header-cell *matHeaderCellDef>Barcode</th>
+            <td mat-cell *matCellDef="let row">171717</td>
+          </ng-container>
+          <ng-container matColumnDef="callNumber">
+            <th mat-header-cell *matHeaderCellDef>Call Number</th>
+            <td mat-cell *matCellDef="let row">P233</td>
+          </ng-container>
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Price</th>
+            <td mat-cell *matCellDef="let row">0.00</td>
+          </ng-container>
+          <ng-container matColumnDef="note">
+            <th mat-header-cell *matHeaderCellDef>Non-public Note</th>
+            <td mat-cell *matCellDef="let row"></td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="['dueDate','patron','patronLibrary','title','shelvingLocation','barcode','callNumber','price','note']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['dueDate','patron','patronLibrary','title','shelvingLocation','barcode','callNumber','price','note']"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+

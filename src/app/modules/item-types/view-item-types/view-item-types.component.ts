@@ -6,9 +6,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-view-item-types',
-  templateUrl: './view-item-types.component.html',
-  styleUrls: ['./view-item-types.component.css']
+    selector: 'app-view-item-types',
+    templateUrl: './view-item-types.component.html',
+    styleUrls: ['./view-item-types.component.css'],
+    standalone: false
 })
 export class ViewItemTypesComponent implements OnInit {
 
@@ -28,11 +29,9 @@ export class ViewItemTypesComponent implements OnInit {
   }
   
   onDelete(item) {
-    console.log(item)
     this.delete(item.id)
   }
   delete(id) {
-    console.log(id)
     var r = confirm('Do you want to delete this recording ?');
     if (r) {
       this.httpService.remove(CONFIG.URL_BASE + '/mediatype/delete/' + id).finally(()=>{

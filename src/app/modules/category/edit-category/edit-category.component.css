@@ -1,0 +1,18 @@
+:host { display: block; }
+
+.ll-modal { display: flex; flex-direction: column; min-width: 520px; max-height: 90vh; }
+.ll-modal__header { display: flex; align-items: center; gap: 8px; padding: 14px 20px; border-bottom: 1px solid rgba(0,0,0,.08); }
+.ll-modal__icon { color: #3f51b5; }
+.ll-modal__title { margin: 0; font-size: 18px; font-weight: 500; flex: 1; }
+.ll-modal__close { margin-left: auto; }
+.ll-modal__content { padding: 20px; overflow: auto; flex: 1; }
+.ll-modal__actions { display: flex; justify-content: flex-end; gap: 8px; padding-top: 12px; margin-top: 16px; border-top: 1px solid rgba(0,0,0,.08); }
+.ll-modal__actions mat-icon { margin-right: 4px; }
+.ll-modal__loading { display: flex; justify-content: center; padding: 40px; }
+
+.ll-form__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px 16px; }
+.ll-form__full { grid-column: 1 / -1; }
+
+@media (max-width: 720px) {
+  .ll-modal { min-width: 0; }
+}

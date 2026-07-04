@@ -1,17 +1,19 @@
 <table class="table table-bordered" id="table" width="100%" cellspacing="0">
   <thead>
     <tr>
-      <th>{{ writerI18n?.nameI18n }}</th>
+      <th>{{ 'writer.colName' | translate }}</th>
     </tr>
   </thead>
   <tfoot>
     <tr>
-      <th>{{ writerI18n?.nameI18n }}</th>
+      <th>{{ 'writer.colName' | translate }}</th>
     </tr>
   </tfoot>
   <tbody>
-    <tr *ngFor="let t of writers">
-      <td>{{ t.name }}</td>
-    </tr>
+    @for (t of writers; track t) {
+      <tr>
+        <td>{{ t.name }}</td>
+      </tr>
+    }
   </tbody>
 </table>

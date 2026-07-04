@@ -1,130 +1,125 @@
-<div class="container mt-4">
-  <h1 class="h3 mb-2 text-gray-800"><i class="fas fa-list"></i> {{ categoryI18n?.allTitleI18n }}</h1>
-  <p class="mb-4">The Category module is a crucial part of the library management software, designed to help organize and classify books, media, and other resources. It allows librarians to create, manage, and publish categories, making it easier for users to navigate and find specific types of resources.</p>
+<div class="ll-page">
+  <mat-card class="ll-page__header" appearance="outlined">
+    <mat-card-content class="ll-page__header-content">
+      <mat-icon class="ll-page__icon">category</mat-icon>
+      <div class="ll-page__title">
+        <h1>{{ 'category.pageTitle' | translate }}</h1>
+        <p>{{ 'category.pageDesc' | translate }}</p>
+      </div>
+      <div class="ll-page__actions">
+        <button mat-stroked-button color="primary" (click)="reloadPage()">
+          <mat-icon>refresh</mat-icon> {{ 'ui.reload' | translate }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#Overview">
-        <i class="fas fa-chart-bar mr-2"></i> Overview
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#List">
-        <i class="fas fa-list mr-2"></i> List
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#UserManual">
-        <i class="fas fa-book mr-2"></i> User Manual
-      </a>
-    </li>
-  </ul>
-
-  <div class="tab-content">
-    <!-- Overview tab content -->
-    <div id="Overview" class="tab-pane custom-tab-pane">
-      <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6">
-                <h4 class="text-center">Books by Category</h4> <!-- Title for Bar Chart -->
-                <ngx-charts-bar-vertical
-                    [results]="barChartData"
-                    [view]="[400,300]"
-                    [scheme]="'cool'"
-                    [gradient]="true"
-                    [xAxis]="true"
-                    [yAxis]="true"
-                    [legend]="false"
-                    [showXAxisLabel]="true"
-                    [showYAxisLabel]="true"
-                    xAxisLabel="Category"
-                    yAxisLabel="Number of Books">
-                </ngx-charts-bar-vertical>
-            </div>
-            <div class="col-md-6">
-                <h4 class="text-center">Book Distribution by Genre</h4> <!-- Title for Pie Chart -->
-                <ngx-charts-pie-chart
-                    [results]="pieChartData"
-                    [view]="[400,300]"
-                    [scheme]="'cool'"
-                    [legend]="false"
-                    [explodeSlices]="false"
-                    [labels]="true">
-                </ngx-charts-pie-chart>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h4 class="text-center">Trend of Book Sales Over Time</h4> <!-- Title for Line Chart -->
-                <ngx-charts-line-chart
-                    [results]="lineChartData"
-                    [view]="[400,300]"
-                    [scheme]="'cool'"
-                    [legend]="false"
-                    [xAxis]="true"
-                    [yAxis]="true"
-                    [autoScale]="true">
-                </ngx-charts-line-chart>
-            </div>
-            <div class="col-md-6">
-                <h4 class="text-center"> Book Sales by Genre</h4> <!-- Title for Doughnut Chart -->
-                <ngx-charts-pie-chart
-                    [results]="doughnutChartData"
-                    [view]="[400,300]"
-                    [scheme]="'cool'"
-                    [legend]="false"
-                    [explodeSlices]="false"
-                    [doughnut]="true"
-                    [labels]="true">
-                </ngx-charts-pie-chart>
-            </div>
-        </div>
+  @if (loading) {
+    <div class="ll-page__loading">
+      <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
     </div>
-    
-    </div>
+  } @else {
+    <mat-card class="ll-page__body" appearance="outlined">
+      <mat-card-content>
+        <app-statistics-category [categoryI18n]="categoryI18n"></app-statistics-category>
 
-    <!-- List tab content -->
-    <div id="List" class="tab-pane show active custom-tab-pane">
-      <div class="container-fluid">
-        <div *ngIf="loading; else loaded">
-          <div class="d-flex justify-content-center">
-            <div class="spinner-border text-primary" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
-          </div>
-        </div>
-
-        <ng-template #loaded>
-          <!-- DataTales Example -->
-          <app-statistics-category [categoryI18n]="categoryI18n"></app-statistics-category>
-          <div class="card mb-4">
-            <div class="card-body">
-              <!-- add category -->
-              <div class="table-responsive">
-                <!-- category list -->
-                <app-category-list
-                  (editEvent)="edit($event)"
-                  (deleteEvent)="delete($event)"
-                  [categories]="categorys$"
-                  [categoryI18n]="categoryI18n">
-                </app-category-list>
-
-                <!-- modal category -->
-                <app-modal-category [categoryI18n]="categoryI18n" [id]="id"></app-modal-category>
+        <mat-tab-group animationDuration="200ms" mat-stretch-tabs="false" class="ll-tabs">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="ll-tab__icon">insights</mat-icon> {{ 'ui.overview' | translate }}
+            </ng-template>
+            <div class="ll-tab__content">
+              <div class="ll-stat-charts">
+                <mat-card appearance="outlined">
+                  <mat-card-header><mat-card-title>{{ 'category.chartByCategory' | translate }}</mat-card-title></mat-card-header>
+                  <mat-card-content>
+                    <div class="ll-stat-chart">
+                      <div class="ll-stat-chart__title"><mat-icon>bar_chart</mat-icon> By Category</div>
+                      @for (item of barChartData; track item.name) {
+                        <div class="ll-stat-bar">
+                          <span class="ll-stat-bar__label">{{ item.name }}</span>
+                          <mat-progress-bar mode="determinate" [value]="getPercent(item.value, barChartData)"></mat-progress-bar>
+                          <span class="ll-stat-bar__value">{{ item.value }}</span>
+                        </div>
+                      }
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+                <mat-card appearance="outlined">
+                  <mat-card-header><mat-card-title>{{ 'category.chartDistribution' | translate }}</mat-card-title></mat-card-header>
+                  <mat-card-content>
+                    <div class="ll-stat-chart">
+                      <div class="ll-stat-chart__title"><mat-icon>pie_chart</mat-icon> Distribution</div>
+                      @for (item of pieChartData; track item.name) {
+                        <div class="ll-stat-bar">
+                          <span class="ll-stat-bar__label">{{ item.name }}</span>
+                          <mat-progress-bar mode="determinate" [value]="getPercent(item.value, pieChartData)"></mat-progress-bar>
+                          <span class="ll-stat-bar__value">{{ item.value }}</span>
+                        </div>
+                      }
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+                <mat-card appearance="outlined">
+                  <mat-card-header><mat-card-title>{{ 'category.chartTrend' | translate }}</mat-card-title></mat-card-header>
+                  <mat-card-content>
+                    <div class="ll-stat-chart">
+                      <div class="ll-stat-chart__title"><mat-icon>show_chart</mat-icon> Trends</div>
+                      @for (series of lineChartData; track series.name) {
+                        @for (point of series.series; track point.name) {
+                          <div class="ll-stat-bar">
+                            <span class="ll-stat-bar__label">{{ point.name }}</span>
+                            <mat-progress-bar mode="determinate" [value]="getSeriesPercent(point.value, series.series)"></mat-progress-bar>
+                            <span class="ll-stat-bar__value">{{ point.value }}</span>
+                          </div>
+                        }
+                      }
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+                <mat-card appearance="outlined">
+                  <mat-card-header><mat-card-title>{{ 'category.chartSalesByGenre' | translate }}</mat-card-title></mat-card-header>
+                  <mat-card-content>
+                    <div class="ll-stat-chart">
+                      <div class="ll-stat-chart__title"><mat-icon>donut_large</mat-icon> By Genre</div>
+                      @for (item of doughnutChartData; track item.name) {
+                        <div class="ll-stat-bar">
+                          <span class="ll-stat-bar__label">{{ item.name }}</span>
+                          <mat-progress-bar mode="determinate" [value]="getPercent(item.value, doughnutChartData)"></mat-progress-bar>
+                          <span class="ll-stat-bar__value">{{ item.value }}</span>
+                        </div>
+                      }
+                    </div>
+                  </mat-card-content>
+                </mat-card>
               </div>
             </div>
-          </div>
-        </ng-template>
-      </div>
-    </div>
+          </mat-tab>
 
-    <!-- User Manual tab content -->
-    <div id="UserManual" class="tab-pane custom-tab-pane">
-      <!-- User Manual content here -->
-      <div>
-         <!-- <markdown [src]="markdownContent" [data]="markdownContent"></markdown>  -->
-          <div  [innerHTML]="markdownContent"></div>
-      </div>
-    </div>
-  </div>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="ll-tab__icon">list</mat-icon> {{ 'ui.list' | translate }}
+            </ng-template>
+            <div class="ll-tab__content">
+              <app-category-list
+                (editEvent)="edit($event)"
+                (deleteEvent)="delete($event)"
+                [categories]="categorys$"
+                [categoryI18n]="categoryI18n">
+              </app-category-list>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="ll-tab__icon">menu_book</mat-icon> {{ 'ui.userManual' | translate }}
+            </ng-template>
+            <div class="ll-tab__content">
+              <div [innerHTML]="markdownContent"></div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+  }
 </div>

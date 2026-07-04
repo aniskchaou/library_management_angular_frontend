@@ -6,9 +6,10 @@ import { Fund } from 'src/app/main/models/Fund';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
 @Component({
-  selector: 'app-fund-modal',
-  templateUrl: './fund-modal.component.html',
-  styleUrls: ['./fund-modal.component.css']
+    selector: 'app-fund-modal',
+    templateUrl: './fund-modal.component.html',
+    styleUrls: ['./fund-modal.component.css'],
+    standalone: false
 })
 export class FundModalComponent implements OnInit {
 
@@ -24,7 +25,6 @@ export class FundModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadBudgets();
-     console.log(this.fund)
     /* if (!this.fund.budget) {
       this.fund.budget = {} as Budget;
     } */
@@ -34,7 +34,6 @@ export class FundModalComponent implements OnInit {
 
   loadBudgets(): void {
      this.budgetService.getAllBudget().subscribe(data => {
-      console.log(data)
         
       this.budgets = data;
       //this.fund.budget = this.budgets.find((b) => b.id === this.fund.budget.id) || null;
@@ -42,10 +41,9 @@ export class FundModalComponent implements OnInit {
   }
 
   onSaveClick(): void {
-    //console.log(this.fund.budget.id)
+    //
     if(this.validateFundForm()){
       this.fund.budget = this.budgets.find(item => item.id === this.fund.budget.id);
-    console.log(this.fund)
       this.fundService.createFund(this.fund).subscribe((newFund) => {
         this.toastr.success('Item added successfully!', 'Success');
         this.activeModal.close(newFund);

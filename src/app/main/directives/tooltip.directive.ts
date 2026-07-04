@@ -1,7 +1,8 @@
 import { Directive, ElementRef, Input, Renderer2, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[appTooltip]'
+    selector: '[appTooltip]',
+    standalone: false
 })
 export class TooltipDirective {
   @Input('appTooltip') tooltipContent: string;
@@ -11,7 +12,6 @@ export class TooltipDirective {
 
   @HostListener('mouseenter') onMouseEnter() {
     if (!this.tooltipElement) {
-      console.log("dd")
       this.showTooltip();
     }
   }

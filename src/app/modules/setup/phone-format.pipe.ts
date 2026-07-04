@@ -1,7 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { parsePhoneNumber, CountryCode } from 'libphonenumber-js';
 
-@Pipe({ name: 'phoneFormat' })
+@Pipe({
+    name: 'phoneFormat',
+    standalone: false
+})
 export class PhoneFormatPipe implements PipeTransform {
   transform(value: string, countryCode: CountryCode = 'US'): string {
     if (!value) return '';

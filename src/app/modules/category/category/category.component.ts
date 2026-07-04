@@ -14,9 +14,10 @@ import { DataService } from 'src/app/main/services/data.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.css'],
+    selector: 'app-category',
+    templateUrl: './category.component.html',
+    styleUrls: ['./category.component.css'],
+    standalone: false
 })
 export class CategoryComponent extends URLLoader implements OnInit {
   categorys$ = [];
@@ -92,13 +93,12 @@ export class CategoryComponent extends URLLoader implements OnInit {
 
 
   edit(obj) {
-    //console.log(id)
+    //
    // this.id = id;
     this.openEditDialog(obj)
   }
 
   delete(id) {
-    console.log(id)
     var r = confirm('Do you want to delete this recording ?');
     if (r) {
       this.httpService.remove(CONFIG.URL_BASE + '/category/delete/' + id).then(()=>{
@@ -158,22 +158,14 @@ export class CategoryComponent extends URLLoader implements OnInit {
   fetchMarkdownFile(): void {
     this.http.get('assets/documentation/modules/category.html', { responseType: 'text' })
       .subscribe(data => {
-        console.log(data)
         this.markdownContent = data;
       });
   }
 
   openEditDialog(category: Category): void {
-    const modalRef = this.modalService.open(EditCategoryComponent);
-    modalRef.componentInstance.category = { ...category }; // Ensure category is passed properly
-  
-    console.log(category); // Ensure category is not undefined here
-
-    modalRef.result.then(result => {
-      console.log(result)
-       this.getAll()
-      
-    }).catch(error => console.log(error));
+    const modalRef = this.modalService.open(EditCategoryComponent, { size: 'xl', centered: true });
+    modalRef.componentInstance.category = { ...category };
+    modalRef.result.then(() => this.getAll()).catch(() => {});
   }
 
  
@@ -183,8 +175,7 @@ export class CategoryComponent extends URLLoader implements OnInit {
 
   fetchAllChartData(): void {
     this.httpService.getBarChartData().subscribe(
-      data => {this.barChartData = data 
-        console.log(data)},
+      data => { this.barChartData = data; },
       error => console.error('Error fetching bar chart data', error)
     );
     this.httpService.getPieChartData().subscribe(
@@ -199,6 +190,18 @@ export class CategoryComponent extends URLLoader implements OnInit {
       data => this.doughnutChartData = data,
       error => console.error('Error fetching doughnut chart data', error)
     );
+  }
+
+  getPercent(value: number, data: any[]): number {
+    if (!data?.length) return 0;
+    const max = Math.max(...data.map(d => d.value || 0));
+    return max > 0 ? Math.round((value / max) * 100) : 0;
+  }
+
+  getSeriesPercent(value: number, series: any[]): number {
+    if (!series?.length) return 0;
+    const max = Math.max(...series.map(p => p.value || 0));
+    return max > 0 ? Math.round((value / max) * 100) : 0;
   }
 }
 

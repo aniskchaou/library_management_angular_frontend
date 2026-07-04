@@ -8,9 +8,10 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 @Component({
-  selector: 'app-shelf-viewer',
-  templateUrl: './shelf-viewer.component.html',
-  styleUrls: ['./shelf-viewer.component.css']
+    selector: 'app-shelf-viewer',
+    templateUrl: './shelf-viewer.component.html',
+    styleUrls: ['./shelf-viewer.component.css'],
+    standalone: false
 })
 export class ShelfViewerComponent implements OnInit {
 
@@ -121,7 +122,6 @@ private mouse = new THREE.Vector2();
   onSelectChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedDepartment = selectElement.value;
-    console.log('Selected department:', this.selectedDepartment);
     this.router.navigateByUrl('/shelf-viewer')
     this.showShelves(this.selectedDepartment)
     
@@ -132,7 +132,6 @@ private mouse = new THREE.Vector2();
     .getAll(CONFIG.URL_BASE + '/book/by-department-shelves?departmentName='+selectedDepartment)
     .subscribe(
       (data:any[]) => {
-        console.log(data)
         this.shelves = data;
         this.clearScene()
         this.initializeScene();
@@ -263,7 +262,6 @@ private mouse = new THREE.Vector2();
 
   private addBook(book: any, bookIndex: number, shelfX: number, shelfY: number): void {
     // Load book image
-    console.log(CONFIG.URL_BASE+'/book/get/'+book.id+'/'+book.imageUrl)
     this.loader.load(CONFIG.URL_BASE+'/book/get/'+book.id+'/'+book.imageUrl, (texture) => {
       const bookMaterial = new THREE.SpriteMaterial({ map: texture });
       const bookSprite = new THREE.Sprite(bookMaterial);
@@ -317,7 +315,6 @@ private mouse = new THREE.Vector2();
 
 /*   private showBookInfo(bookMesh: THREE.Mesh): void {
     const bookInfo = bookMesh.userData as any;
-    console.log(`Book ID: ${bookInfo.id}, Title: ${bookInfo.title}`);
     // Implement your own logic to show the book info (e.g., using a UI element)
   }
  */

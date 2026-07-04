@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-modal-category',
-  templateUrl: './modal-category.component.html',
-  styleUrls: ['./modal-category.component.css'],
+    selector: 'app-modal-category',
+    templateUrl: './modal-category.component.html',
+    styleUrls: ['./modal-category.component.css'],
+    standalone: false
 })
 export class ModalCategoryComponent implements OnInit {
   @Input() id: string;

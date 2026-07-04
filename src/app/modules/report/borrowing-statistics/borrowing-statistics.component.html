@@ -1,0 +1,296 @@
+<div class="bs-root">
+
+  <!-- ── Page header ─────────────────────────────────────────────────────── -->
+  <div class="bs-header">
+    <div class="bs-header__title">
+      <mat-icon>bar_chart</mat-icon>
+      <div>
+        <h1>{{ 'report.borrowingTitle' | translate }}</h1>
+        <p>{{ 'report.borrowingDesc' | translate }}</p>
+      </div>
+    </div>
+    <div class="bs-header__actions">
+      <!-- Date-range selector -->
+      <mat-form-field appearance="outline" class="bs-range-select">
+        <mat-label>Period</mat-label>
+        <mat-select [(ngModel)]="dateRange" (ngModelChange)="onRangeChange()">
+          <mat-option value="30d">Last 30 Days</mat-option>
+          <mat-option value="90d">Last 3 Months</mat-option>
+          <mat-option value="180d">Last 6 Months</mat-option>
+          <mat-option value="1y">Last Year</mat-option>
+          <mat-option value="all">All Time</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-stroked-button (click)="exportCsv()" matTooltip="Export popular titles as CSV">
+        <mat-icon>table_view</mat-icon> CSV
+      </button>
+      <button mat-flat-button color="primary" (click)="exportPdf()" matTooltip="Export as PDF">
+        <mat-icon>picture_as_pdf</mat-icon> PDF
+      </button>
+    </div>
+  </div>
+
+  @if (loading) { <mat-progress-bar mode="indeterminate" class="bs-progress"></mat-progress-bar> }
+
+  <!-- ── KPI cards ───────────────────────────────────────────────────────── -->
+  <div class="bs-kpi-row">
+    <div class="bs-kpi bs-kpi--blue">
+      <mat-icon>import_contacts</mat-icon>
+      <div class="bs-kpi__body">
+        <div class="bs-kpi__num">{{ kpiTotalBorrows | number }}</div>
+        <div class="bs-kpi__label">Total Borrows</div>
+        <div class="bs-kpi__sub">{{ dateRangeLabel() }}</div>
+      </div>
+    </div>
+    <div class="bs-kpi bs-kpi--green">
+      <mat-icon>book</mat-icon>
+      <div class="bs-kpi__body">
+        <div class="bs-kpi__num">{{ kpiActiveLoans | number }}</div>
+        <div class="bs-kpi__label">Active Loans</div>
+        <div class="bs-kpi__sub">Currently checked out</div>
+      </div>
+    </div>
+    <div class="bs-kpi bs-kpi--indigo">
+      <mat-icon>people</mat-icon>
+      <div class="bs-kpi__body">
+        <div class="bs-kpi__num">{{ kpiActiveReaders | number }}</div>
+        <div class="bs-kpi__label">Active Readers</div>
+        <div class="bs-kpi__sub">Members with open loans</div>
+      </div>
+    </div>
+    <div class="bs-kpi bs-kpi--orange">
+      <mat-icon>event_busy</mat-icon>
+      <div class="bs-kpi__body">
+        <div class="bs-kpi__num">{{ kpiOverdue | number }}</div>
+        <div class="bs-kpi__label">Overdue</div>
+        <div class="bs-kpi__sub">Past due date</div>
+      </div>
+    </div>
+    <div class="bs-kpi bs-kpi--teal">
+      <mat-icon>trending_up</mat-icon>
+      <div class="bs-kpi__body">
+        <div class="bs-kpi__num">{{ kpiAvgPerMonth | number }}</div>
+        <div class="bs-kpi__label">Avg / Month</div>
+        <div class="bs-kpi__sub">Average borrows per month</div>
+      </div>
+    </div>
+    <div class="bs-kpi bs-kpi--purple">
+      <mat-icon>auto_stories</mat-icon>
+      <div class="bs-kpi__body">
+        <div class="bs-kpi__num">{{ kpiUniqueTitle | number }}</div>
+        <div class="bs-kpi__label">Unique Titles</div>
+        <div class="bs-kpi__sub">Distinct titles borrowed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Charts row ──────────────────────────────────────────────────────── -->
+  <div class="bs-charts-row">
+
+    <!-- Popular titles bar chart -->
+    <div class="bs-card bs-card--chart">
+      <div class="bs-card__header">
+        <mat-icon>emoji_events</mat-icon>
+        <h2>Most Borrowed Titles <span class="bs-card__sub">Top 15</span></h2>
+      </div>
+      <div class="bs-chart-wrap">
+        @if (titleChartData.length > 0) {
+          <ngx-charts-bar-horizontal
+            [view]="chartView"
+            [scheme]="colorScheme"
+            [results]="titleChartData"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel">
+          </ngx-charts-bar-horizontal>
+        } @else if (!loading) {
+          <div class="bs-empty"><mat-icon>bar_chart</mat-icon><p>No data for this period.</p></div>
+        }
+      </div>
+    </div>
+
+    <!-- Monthly trend line chart -->
+    <div class="bs-card bs-card--chart">
+      <div class="bs-card__header">
+        <mat-icon>show_chart</mat-icon>
+        <h2>Monthly Borrowing Trend <span class="bs-card__sub">Last 12 months</span></h2>
+      </div>
+      <div class="bs-chart-wrap">
+        @if (monthlyTrendData.length > 0) {
+          <ngx-charts-line-chart
+            [view]="trendView"
+            [scheme]="colorSchemeTrend"
+            [results]="monthlyTrendData"
+            [gradient]="false"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabelTrend"
+            [yAxisLabel]="yAxisLabelTrend"
+            [autoScale]="autoScale"
+            [legend]="true">
+          </ngx-charts-line-chart>
+        }
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Popular titles table ─────────────────────────────────────────────── -->
+  <div class="bs-card">
+    <div class="bs-card__header">
+      <mat-icon>format_list_numbered</mat-icon>
+      <h2>Popular Titles Ranking <span class="bs-card__sub">Top 30 by borrow count</span></h2>
+    </div>
+    <div class="bs-table-wrap">
+      <table class="bs-table">
+        <thead>
+          <tr>
+            <th class="bs-th--rank">#</th>
+            <th></th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th class="bs-th--num">Borrows</th>
+            <th class="bs-th--num">Active Loans</th>
+            <th>Last Borrowed</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (t of popularTitles; track t.id) {
+            <tr [class.bs-tr--hot]="t.borrowCount >= 10">
+              <td class="bs-td--rank">
+                @if (t.rank <= 3) {
+                  <span class="bs-medal bs-medal--{{ t.rank }}">{{ t.rank }}</span>
+                } @else {
+                  <span class="bs-rank-num">{{ t.rank }}</span>
+                }
+              </td>
+              <td>
+                <img class="bs-thumb"
+                     [src]="coverUrl(t.id)"
+                     [alt]="t.title"
+                     onerror="this.src='assets/images/no-cover.png'">
+              </td>
+              <td class="bs-td--title">{{ t.title }}</td>
+              <td>{{ t.author }}</td>
+              <td>{{ t.category }}</td>
+              <td class="bs-td--num">
+                <span [class]="borrowBadgeClass(t.borrowCount)">{{ t.borrowCount }}</span>
+              </td>
+              <td class="bs-td--num">
+                @if (t.activeLoans > 0) {
+                  <span class="bs-active-pill">{{ t.activeLoans }}</span>
+                } @else { <span class="bs-muted">—</span> }
+              </td>
+              <td class="bs-td--date">{{ t.lastBorrowed }}</td>
+            </tr>
+          }
+          @if (popularTitles.length === 0 && !loading) {
+            <tr><td colspan="8" class="bs-empty-row">No borrowing records for this period.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── Active readers table ─────────────────────────────────────────────── -->
+  <div class="bs-card">
+    <div class="bs-card__header">
+      <mat-icon>people_alt</mat-icon>
+      <h2>Active Readers <span class="bs-card__sub">Top 20 by open loans</span></h2>
+    </div>
+    <div class="bs-table-wrap">
+      <table class="bs-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Member Name</th>
+            <th>Email</th>
+            <th class="bs-th--num">Open Loans</th>
+            <th class="bs-th--num">Total Borrows</th>
+            <th>Last Activity</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (r of activeReaders; track r.memberId; let i = $index) {
+            <tr>
+              <td class="bs-td--rank"><span class="bs-rank-num">{{ i + 1 }}</span></td>
+              <td>
+                <div class="bs-reader-name">
+                  <span class="bs-reader-avatar">{{ (r.name || '?').charAt(0).toUpperCase() }}</span>
+                  {{ r.name || '—' }}
+                </div>
+              </td>
+              <td class="bs-td--email">{{ r.email }}</td>
+              <td class="bs-td--num">
+                <span class="bs-active-pill">{{ r.activeLoans }}</span>
+              </td>
+              <td class="bs-td--num">{{ r.totalBorrows }}</td>
+              <td class="bs-td--date">{{ r.lastBorrowed }}</td>
+            </tr>
+          }
+          @if (activeReaders.length === 0 && !loading) {
+            <tr><td colspan="6" class="bs-empty-row">No active readers for this period.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── Procurement alerts ───────────────────────────────────────────────── -->
+  <div class="bs-card">
+    <div class="bs-card__header">
+      <mat-icon>shopping_cart</mat-icon>
+      <h2>Procurement Suggestions
+        <span class="bs-card__sub">High-demand titles with active loans (threshold ≥ {{ procurementThreshold }})</span>
+      </h2>
+      <div class="bs-card__header-actions">
+        <mat-form-field appearance="outline" class="bs-threshold-field">
+          <mat-label>Threshold</mat-label>
+          <input matInput type="number" [(ngModel)]="procurementThreshold" (ngModelChange)="onRangeChange()" min="1">
+        </mat-form-field>
+      </div>
+    </div>
+
+    @if (procurementAlerts.length === 0 && !loading) {
+      <div class="bs-procurement-empty">
+        <mat-icon>check_circle</mat-icon>
+        <p>No high-demand titles requiring procurement attention at this threshold.</p>
+      </div>
+    }
+
+    @if (procurementAlerts.length > 0) {
+      <div class="bs-procurement-grid">
+        @for (t of procurementAlerts; track t.id) {
+          <div class="bs-proc-card">
+            <img class="bs-proc-card__cover"
+                 [src]="coverUrl(t.id)"
+                 [alt]="t.title"
+                 onerror="this.src='assets/images/no-cover.png'">
+            <div class="bs-proc-card__body">
+              <div class="bs-proc-card__title">{{ t.title }}</div>
+              <div class="bs-proc-card__author">{{ t.author }}</div>
+              <div class="bs-proc-card__stats">
+                <span class="bs-badge bs-badge--hot" matTooltip="Total borrows in period">
+                  <mat-icon>import_contacts</mat-icon>{{ t.borrowCount }} borrows
+                </span>
+                <span class="bs-active-pill" matTooltip="Currently on loan">
+                  <mat-icon>lock_clock</mat-icon>{{ t.activeLoans }} on loan
+                </span>
+              </div>
+              <div class="bs-proc-card__cat">{{ t.category }}</div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+</div>

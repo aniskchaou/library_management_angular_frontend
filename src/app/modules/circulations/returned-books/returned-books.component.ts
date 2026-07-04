@@ -8,9 +8,10 @@ import { HTTPService } from 'src/app/main/services/HTTPService';
 import CONFIG from 'src/app/main/urls/urls';
 
 @Component({
-  selector: 'app-returned-books',
-  templateUrl: './returned-books.component.html',
-  styleUrls: ['./returned-books.component.css'],
+    selector: 'app-returned-books',
+    templateUrl: './returned-books.component.html',
+    styleUrls: ['./returned-books.component.css'],
+    standalone: false
 })
 export class ReturnedBooksComponent extends URLLoader implements OnInit {
   circulations$ = [];

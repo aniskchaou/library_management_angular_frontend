@@ -8,9 +8,10 @@ import { Vendor } from 'src/app/main/models/Vendor';
 import { HTTPService } from 'src/app/main/services/HTTPService';
 
 @Component({
-  selector: 'app-order-modal',
-  templateUrl: './order-modal.component.html',
-  styleUrls: ['./order-modal.component.css']
+    selector: 'app-order-modal',
+    templateUrl: './order-modal.component.html',
+    styleUrls: ['./order-modal.component.css'],
+    standalone: false
 })
 export class OrderModalComponent implements OnInit {
 
@@ -35,7 +36,6 @@ export class OrderModalComponent implements OnInit {
   }
 
   onSaveClick(): void {
-     console.log(this.order)
      if(this.validateOrderForm(this.order)){
       this.orderService.createOrder(this.order).subscribe((newOrder) => {
         this.toastr.success('Item added successfully!', 'Success');

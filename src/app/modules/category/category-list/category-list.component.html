@@ -1,134 +1,82 @@
-<!-- <table class="table table-bordered" id="dt_cat" width="100%" cellspacing="0">
-  <thead>
-    <tr>
-      <th>{{ categoryI18n?.category_nameI18n }}</th>
-      <th>Slug</th>
-      <th>Published</th>
-      <th>Items</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tfoot>
-    <tr>
-      <th>{{ categoryI18n?.category_name }}</th>
-      <th>Slug</th>
-      <th>Published</th>
-      <th>Items</th>
-      <th>Actions</th>
-    </tr>
-  </tfoot>
-  <tbody *ngIf="categories.length > 0">
-    <tr *ngFor="let c of categories">
-      <td>{{ c.category_name | titlecapital }}</td>
-      <td>{{ c.slug}}</td>
-      <td>  
-        <div class="slide-button" [ngClass]="{'active': c.published}" (click)="toggle(c.id,c.published)">
-          <div class="slider"></div>
+<div class="ll-list">
+  <div class="ll-list__toolbar">
+    <mat-form-field appearance="outline" class="ll-list__search">
+      <mat-label>Search categories…</mat-label>
+      <input matInput type="text" (input)="updateFilter($event)" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <ngx-datatable
+    class="bootstrap ll-list__table"
+    [rows]="categories"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [limit]="10"
+    [loadingIndicator]="loadingIndicator"
+    [reorderable]="reorderable"
+    (select)="onSelect($event)"
+    (activate)="onActivate($event)">
+
+    <ngx-datatable-column name="" [width]="70" [sortable]="false">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        <div class="ll-avatar">
+          {{ row.category_name ? row.category_name.charAt(0).toUpperCase() : '?' }}
         </div>
-          
-      </td>
-      <td>12</td>
-      <td>
-      <div class="btn-group">
-        <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Actions
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="{{ 'category.colName' | translate }}" [prop]="'category_name'">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        <span class="ll-cell--strong">{{ row.category_name | titlecapital }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Slug" [prop]="'slug'">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        <code class="ll-cell--slug">{{ row.slug }}</code>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Published" [prop]="'published'" [width]="120">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        <mat-chip [class.ll-chip--ok]="row.published" [class.ll-chip--off]="!row.published">
+          <mat-icon class="ll-chip__icon">{{ row.published ? 'check_circle' : 'cancel' }}</mat-icon>
+          {{ row.published ? 'Published' : 'Draft' }}
+        </mat-chip>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Items" [width]="80">
+      <ng-template ngx-datatable-cell-template>
+        <span class="ll-cell--muted">N/A</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Actions" [width]="120" [sortable]="false">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        <button mat-icon-button [matMenuTriggerFor]="actions" matTooltip="Actions">
+          <mat-icon>more_vert</mat-icon>
         </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item"  data-toggle="modal" data-target="#edit" (click)="edit(c.id)"><i class="fas fa-edit"></i> Edit</a>
-          <a class="dropdown-item"  (click)="delete(c.id)"><i class="fas fa-trash-alt"></i> Delete</a>
-          <a class="dropdown-item" ><i class="fas fa-eye"></i> View Items</a>
-        </div>
-      </div>
-      
-      </td>
-    </tr>
-  </tbody>
-</table> -->
-<div>
-  <input
-    type="text"
-    class="form-control"
-    placeholder="Search by name..."
-    (input)="updateFilter($event)"
-  />
+        <mat-menu #actions="matMenu">
+          <button mat-menu-item (click)="openViewDialog(row)">
+            <mat-icon>visibility</mat-icon><span>View</span>
+          </button>
+          <button mat-menu-item (click)="editRow(row)">
+            <mat-icon>edit</mat-icon><span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="toggle(row.id, row.published)">
+            <mat-icon>{{ row.published ? 'visibility_off' : 'publish' }}</mat-icon>
+            <span>{{ row.published ? 'Unpublish' : 'Publish' }}</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item class="ll-menu--danger" (click)="deleteRow(row)">
+            <mat-icon>delete</mat-icon><span>Delete</span>
+          </button>
+        </mat-menu>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
 </div>
-
-<ngx-datatable
-  class="bootstrap"
-  [rows]="categories"
-  [columnMode]="'force'"
-  [headerHeight]="50"
-  [footerHeight]="50"
-  [rowHeight]="'auto'"
-  [limit]="10"
-  [loadingIndicator]="loadingIndicator"
-  [reorderable]="reorderable"
-  (select)="onSelect($event)"
-  (activate)="onActivate($event)"
->
-
-<ngx-datatable-column name="Thumbnail">
-  <ng-template ngx-datatable-cell-template let-row="row">
-    <!-- Generate random background color -->
-    <div [style.background-color]="getRandomColor()" 
-         style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; font-weight: bold;">
-      {{ row.category_name ? row.category_name.charAt(0).toUpperCase() : '' }}
-    </div>
-  </ng-template>
-</ngx-datatable-column>
-
-  <!-- Category Name -->
-  <ngx-datatable-column name="{{ categoryI18n?.category_nameI18n }}" [prop]="'category_name'">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      <b>{{ row.category_name | titlecapital }}</b>
-    </ng-template>
-  </ngx-datatable-column>
-
-  <!-- Slug -->
-  <ngx-datatable-column name="Slug" [prop]="'slug'">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row.slug }}
-    </ng-template>
-  </ngx-datatable-column>
-
-  <!-- Published -->
-  <ngx-datatable-column name="Published" [prop]="'published'">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      <div class="slide-button" [ngClass]="{'active': row.published}" (click)="toggle(row.id, row.published)">
-        <div class="slider"></div>
-      </div>
-    </ng-template>
-  </ngx-datatable-column>
-
-  <!-- Items -->
-  <ngx-datatable-column name="Items">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      N/A
-    </ng-template>
-  </ngx-datatable-column>
-
-  <!-- Actions -->
-  <ngx-datatable-column name="Actions">
-    <ng-template ngx-datatable-cell-template let-row="row">
-     <!--  <div class="dropdown action-buttons high-zindex-dropdown">
-        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Actions
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item"  (click)="editRow(row)">
-            <i class="fas fa-edit"></i> Edit
-          </a>
-          <a class="dropdown-item"  (click)="deleteRow(row.id)">
-            <i class="fas fa-trash-alt"></i> Delete
-          </a>
-        </div>
-      </div> -->
-      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="openViewDialog(row)">
-        <i class="fas fa-eye"></i>  View
-      </button>
- 
-    </ng-template>
-  </ngx-datatable-column>
-  
-
-</ngx-datatable>

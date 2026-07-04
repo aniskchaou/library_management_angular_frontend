@@ -1,459 +1,121 @@
-<!-- <form
-  method="post"
-  class="form-horizontal"
-  id="crudForm"
-  autocomplete="off"
-  enctype="multipart/form-data"
-  accept-charset="utf-8"
->
-  <div class="form-div">
-    <div class="form-group odd" id="name_field_box">
-      <label class="col-sm-3 control-label" for="name" id="name_display_as_box">
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.nameI18n }}
-          </font> </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="name_input_box">
-        <input
-          class="form-control"
-          id="field-name"
-          name="name"
-          type="text"
-          [(ngModel)]="model.name"
-          value="{{ model.name }}"
-          maxlength="99"
-        />
-      </div>
-    </div>
-
-    <div class="form-group even" id="user_type_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="user_type_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.MemberI18n }}
-          </font> </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="user_type_input_box">
-        <select class="form-control" name="user_type" id="field-user_type">
-          <option value=""></option>
-          <option value="Member" selected="yes">
-            <font style="vertical-align: inherit">
-              <font style="vertical-align: inherit">Membre</font>
-            </font>
-          </option>
-          <option value="Admin">
-            <font style="vertical-align: inherit">
-              <font style="vertical-align: inherit">Administrateur</font>
-            </font>
-          </option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group odd" id="type_id_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="type_id_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.type_idI18n }}
-          </font>
-        </font>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="type_id_input_box">
-        <select class="form-control" id="field-type_id" name="type_id">
-          <option value=""></option>
-          <option value="150">
-            <font style="vertical-align: inherit">
-              <font style="vertical-align: inherit">Professeur</font>
-            </font>
-          </option>
-          <option value="151">
-            <font style="vertical-align: inherit">
-              <font style="vertical-align: inherit">Etudiant</font>
-            </font>
-          </option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group even" id="email_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="email_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.emailI18n }}
-          </font> </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="email_input_box">
-        <input
-          class="form-control"
-          id="field-email"
-          name="email"
-          type="text"
-          [(ngModel)]="model.email"
-          value="{{ model.email }}"
-          maxlength="250"
-        />
-      </div>
-    </div>
-
-    <div class="form-group odd" id="mobile_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="mobile_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.mobileI18n }}
-          </font> </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="mobile_input_box">
-        <input
-          class="form-control"
-          id="field-mobile"
-          name="mobile"
-          type="text"
-          [(ngModel)]="model.mobile"
-          maxlength="100"
-          value="{{ model.mobile }}"
-        />
-      </div>
-    </div>
-
-    <div class="form-group even" id="password_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="password_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.passwordI18n }}
-          </font> </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="password_input_box">
-        <input
-          class="form-control"
-          id="field-password"
-          name="password"
-          type="password"
-          [(ngModel)]="model.password"
-          value="{{ model.password }}"
-          maxlength="99"
-        />
-      </div>
-    </div>
-
-    <div class="form-group odd" id="address_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="address_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.addressI18n }}
-          </font> </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="address_input_box">
-        <textarea
-          class="form-control"
-          id="field-address"
-          name="address"
-        ></textarea>
-      </div>
-    </div>
-
-    <div class="form-group even" id="status_field_box">
-      <label
-        class="col-sm-3 control-label"
-        for="name"
-        id="status_display_as_box"
-      >
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">
-            {{ memberI18n.statusI18n }}
-          </font> </font
-        ><span class="required">
-          <font style="vertical-align: inherit">
-            <font style="vertical-align: inherit">*</font>
-          </font>
-        </span>
-      </label>
-      <div class="col-sm-9 col-md-6 col-lg-6" id="status_input_box">
-        <select name="status" class="form-control" id="field-status">
-          <option value="0">
-            <font style="vertical-align: inherit">
-              <font style="vertical-align: inherit">Inactif</font>
-            </font>
-          </option>
-          <option value="1" selected="selected">
-            <font style="vertical-align: inherit">
-              <font style="vertical-align: inherit">actif</font>
-            </font>
-          </option>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div class="pDiv">
-    <button (click)="edit()" type="button" class="btn btn-info">
-      <i class="fas fa-save"></i>
-      {{ memberI18n.editButtonI18n }}
+<div class="ll-modal">
+  <div class="ll-modal__header">
+    <mat-icon class="ll-modal__icon">edit</mat-icon>
+    <h2 class="ll-modal__title">Edit Member</h2>
+    <button mat-icon-button class="ll-modal__close" (click)="closeModal()" aria-label="Close">
+      <mat-icon>close</mat-icon>
     </button>
   </div>
-</form>  -->
 
+  <div class="ll-modal__content">
+    <form [formGroup]="memberForm" (ngSubmit)="onSubmit()" class="ll-form" novalidate>
+      <div class="ll-form__grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Salutation</mat-label>
+          <mat-select formControlName="salutation">
+            <mat-option value="Mr">Mr</mat-option>
+            <mat-option value="Mrs">Mrs</mat-option>
+            <mat-option value="Ms">Ms</mat-option>
+            <mat-option value="Dr">Dr</mat-option>
+          </mat-select>
+        </mat-form-field>
 
+        <mat-form-field appearance="outline">
+          <mat-label>Surname</mat-label>
+          <input matInput formControlName="surname" />
+        </mat-form-field>
 
-<div class="modal-header">
-  <h5 class="modal-title" id="emptyModalLabel">Edit Member</h5>
-  <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close">x</button>
-</div>
-<div class="modal-body">
-  <form [formGroup]="memberForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstname" />
+        </mat-form-field>
 
-    <div class="row">
-      <!-- Surname -->
-      <div class="form-group col-md-6">
-        <label for="surname">
-          Surname
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the member's surname. Example: Smith"></i>
-        </label>
-        <input formControlName="surname" class="form-control" id="field-surname" name="surname" type="text" maxlength="99" placeholder="Enter surname" />
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput type="date" formControlName="dob" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Age</mat-label>
+          <input matInput formControlName="age" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Gender</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option value="Female">Female</mat-option>
+            <mat-option value="Male">Male</mat-option>
+            <mat-option value="Other">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Street Number</mat-label>
+          <input matInput formControlName="street_number" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="ll-form__full">
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="address" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>City</mat-label>
+          <input matInput formControlName="city" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>State</mat-label>
+          <input matInput formControlName="state" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>ZIP / Postal Code</mat-label>
+          <input matInput formControlName="zip" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Country</mat-label>
+          <input matInput formControlName="country" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Primary Phone</mat-label>
+          <input matInput formControlName="primary_phone" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Secondary Phone</mat-label>
+          <input matInput formControlName="secondary_phone" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Primary Email</mat-label>
+          <input matInput type="email" formControlName="primary_email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Secondary Email</mat-label>
+          <input matInput type="email" formControlName="secondary_email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Head of Department</mat-label>
+          <input matInput formControlName="headOfDepartment" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Booking Quota</mat-label>
+          <input matInput type="number" formControlName="bookingQuota" />
+        </mat-form-field>
       </div>
-  
-      <!-- First Name -->
-      <div class="form-group col-md-6">
-        <label for="firstname">
-          First Name
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the member's first name. Example: John"></i>
-        </label>
-        <input formControlName="firstname" class="form-control" id="field-firstname" name="firstname" type="text" maxlength="99" placeholder="Enter first name" />
+
+      <div class="ll-modal__actions">
+        <button mat-stroked-button type="button" (click)="onCancel()">Cancel</button>
+        <button mat-flat-button color="primary" type="submit">
+          <mat-icon>save</mat-icon> Save
+        </button>
       </div>
-    </div>
-  
-    <div class="row">
-      <!-- Date of Birth -->
-      <div class="form-group col-md-6">
-        <label for="dob">
-          Date of Birth
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the member's date of birth. Example: 1990-01-01"></i>
-        </label>
-        <input formControlName="dob" class="form-control" id="field-dob" name="dob" type="date" />
-      </div>
-  
-      <!-- Age (Read-only) -->
-   <!--    <div class="form-group col-md-6">
-        <label for="age">
-          Age
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="This field is auto-calculated based on the date of birth. Example: 21 years"></i>
-        </label>
-        <input formControlName="age" class="form-control" id="field-age" name="age" type="text" readonly />
-      </div> -->
-    </div>
-  
-    <div class="row">
-      <!-- Gender -->
-      <div class="form-group col-md-6">
-        <label for="gender">
-          Gender
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Select the member's gender."></i>
-        </label>
-        <select class="form-control" formControlName="gender" id="field-gender" name="gender">
-          <option value="Female">Female</option>
-          <option value="Male">Male</option>
-          <option value="Other">Other</option>
-          <option value="None specified">None specified</option>
-        </select>
-      </div>
-  
-      <!-- Street Number -->
-      <div class="form-group col-md-6">
-        <label for="street_number">
-          Street Number
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the street number. Example: 123"></i>
-        </label>
-        <input formControlName="street_number" class="form-control" id="field-street_number" name="street_number" type="text" placeholder="Enter street number" />
-      </div>
-    </div>
-  
-    <div class="row">
-      <!-- Address -->
-      <div class="form-group col-md-6">
-        <label for="address">
-          Address
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the address. Example: 456 Elm St"></i>
-        </label>
-        <input formControlName="address" class="form-control" id="field-address" name="address" type="text" placeholder="Enter address" />
-      </div>
-  
-      <!-- City -->
-      <div class="form-group col-md-6">
-        <label for="city">
-          City
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the city. Example: Springfield"></i>
-        </label>
-        <input formControlName="city" class="form-control" id="field-city" name="city" type="text" placeholder="Enter city" />
-      </div>
-    </div>
-  
-    <div class="row">
-      <!-- State -->
-      <div class="form-group col-md-6">
-        <label for="state">
-          State
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the state. Example: IL"></i>
-        </label>
-        <input formControlName="state" class="form-control" id="field-state" name="state" type="text" placeholder="Enter state" />
-      </div>
-  
-      <!-- ZIP/Postal Code -->
-      <div class="form-group col-md-6">
-        <label for="zip">
-          ZIP/Postal Code
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the ZIP/Postal code. Example: 62704"></i>
-        </label>
-        <input formControlName="zip" class="form-control" id="field-zip" name="zip" type="text" placeholder="Enter ZIP/Postal code" />
-      </div>
-    </div>
-  
-    <div class="row">
-      <!-- Country -->
-      <div class="form-group col-md-6">
-        <label for="country">
-          Country
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the country. Example: USA"></i>
-        </label>
-        <input formControlName="country" class="form-control" id="field-country" name="country" type="text" placeholder="Enter country" />
-      </div>
-  
-      <!-- Primary Phone -->
-      <div class="form-group col-md-6">
-        <label for="primary_phone">
-          Primary Phone
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the primary phone number. Example: (555) 555-5555"></i>
-        </label>
-        <input formControlName="primary_phone" class="form-control" id="field-primary_phone" name="primary_phone" type="text" placeholder="Enter primary phone" />
-      </div>
-    </div>
-  
-    <div class="row">
-      <!-- Secondary Phone -->
-      <div class="form-group col-md-6">
-        <label for="secondary_phone">
-          Secondary Phone
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the secondary phone number (optional). Example: (555) 555-5556"></i>
-        </label>
-        <input formControlName="secondary_phone" class="form-control" id="field-secondary_phone" name="secondary_phone" type="text" placeholder="Enter secondary phone" />
-      </div>
-  
-      <!-- Primary Email -->
-      <div class="form-group col-md-6">
-        <label for="primary_email">
-          Primary Email
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the primary email address. Example: john.doe@example.com"></i>
-        </label>
-        <input formControlName="primary_email" class="form-control" id="field-primary_email" name="primary_email" type="email" placeholder="Enter primary email" />
-      </div>
-    </div>
-  
-    <div class="row">
-      <!-- Secondary Email -->
-      <div class="form-group col-md-6">
-        <label for="secondary_email">
-          Secondary Email
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the secondary email address (optional). Example: jane.smith@example.com"></i>
-        </label>
-        <input formControlName="secondary_email" class="form-control" id="field-secondary_email" name="secondary_email" type="email" placeholder="Enter secondary email" />
-      </div>
-  
-      <!-- Head of Department -->
-      <div class="form-group col-md-6">
-        <label for="headOfDepartment">
-          Head of Department
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the name of the head of the department. Example: John Doe"></i>
-        </label>
-        <input formControlName="headOfDepartment" type="text" class="form-control" id="field-headOfDepartment" name="headOfDepartment" placeholder="e.g., John Doe, Jane Smith" />
-      </div>
-    </div>
-  
-    <div class="row">
-      <!-- Salutation -->
-      <div class="form-group col-md-6">
-        <label for="salutation">
-          Salutation
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Select a salutation"></i>
-        </label>
-        <select formControlName="salutation" class="form-control" id="field-salutation" name="salutation">
-          <option value="Mr">Mr</option>
-          <option value="Mrs">Mrs</option>
-          <option value="Ms">Ms</option>
-          <option value="Dr">Dr</option>
-        </select>
-      </div>
-  
-      <!-- Booking Quota -->
-      <div class="form-group col-md-6">
-        <label for="bookingQuota">
-          Booking Quota
-          <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter the booking quota for the member"></i>
-        </label>
-        <input formControlName="bookingQuota" class="form-control" id="field-bookingQuota" name="bookingQuota" type="number" placeholder="Enter quota" />
-      </div>
-    </div>
-  
-    <div class="row mt-4">
-      <div class="col-md-12">
-        <button type="submit" class="btn btn-outline-primary" [disabled]="memberForm.invalid">Edit</button>
-      
-      </div>
-    </div>
-  
-  </form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+    </form>
+  </div>
 </div>
